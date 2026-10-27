@@ -51,6 +51,13 @@ describe('BoardsListPage', () => {
   });
 
 
+  it('leads to the board as its users see it, beside the way into its editor', async () => {
+    vi.mocked(api.listBoards).mockResolvedValue({ boards: [{ id: 'b1', name: 'Floor 1', kind: 'canvas', updatedAt: '2026-08-20T00:00:00.000Z' }] });
+    renderPage();
+    expect(await screen.findByRole('link', { name: 'Floor 1 보기' })).toHaveAttribute('href', '/boards/b1');
+    expect(screen.getByRole('link', { name: 'Floor 1' })).toHaveAttribute('href', '/boards/b1/edit');
+  });
+
   it('says when each board was last changed, in readable words rather than raw ISO text', async () => {
     vi.mocked(api.listBoards).mockResolvedValue({ boards: [{ id: 'b1', name: 'Floor 1', kind: 'canvas', updatedAt: '2026-08-20T00:00:00.000Z' }] });
     renderPage();

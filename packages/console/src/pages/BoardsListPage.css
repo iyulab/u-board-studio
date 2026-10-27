@@ -37,7 +37,9 @@
 
 .ub-board-card__footer {
   display: flex;
+  align-items: center;
   justify-content: flex-end;
+  gap: var(--ub-space-3);
   margin-top: auto;
   padding-top: var(--ub-space-2);
 }
@@ -107,4 +109,14 @@
   gap: var(--ub-space-2);
   font-size: var(--ub-font-size-md);
   color: var(--ub-text-normal);
+}
+
+.ub-board-card__view {
+  font-size: var(--ub-font-size-md);
+  color: var(--ub-text-muted);
+  text-decoration: none;
+}
+
+.ub-board-card__view:hover {
+  color: var(--ub-brand);
 }

@@ -14,6 +14,7 @@ interface Text {
   data: string;
   loading: string;
   loadFailed: string;
+  opensBoard: string;
   ok: string;
   problems: string;
 }
@@ -41,6 +42,17 @@ if (root) {
     status.textContent = problems.length === 0 ? text.ok : text.problems.replace('{n}', String(problems.length));
   };
 
+  // A trigger that asks for another board: the page holds the gallery's boards, so that board opens when it is one of
+  // them, and the page says so when it is not — the board's own names for others live in a workspace this page lacks.
+  const opens = ({ board }: { board: string }) => {
+    if ([...picker.options].some(o => o.value === board)) {
+      picker.value = board;
+      void load(board);
+    } else {
+      status.textContent = text.opensBoard.replace('{board}', board);
+    }
+  };
+
   const draw = () => {
     const reading = readPlayground(definition.value, data.value);
     showProblems(reading.problems);
@@ -53,6 +65,7 @@ if (root) {
         board,
         adapters: answers.connectors.map(c => new SnapshotAdapter(c, answers.responses[c.key] ?? {}, answers.capturedAt)),
         labels: korean ? KO_LABELS : undefined,
+        onNavigate: opens,
       })
     );
   };

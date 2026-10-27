@@ -47,6 +47,9 @@ export function retryDelayMs(attempt: number): number {
   return Math.min(2_000 * 2 ** attempt, 60_000);
 }
 
+/** How long the note that a shared link opens one board stays on screen. */
+export const STAYED_PUT_MS = 6_000;
+
 /** Hands an event a board's trigger emits to the page the share link is embedded in, as a `u-board:event` message:
  *  the trigger's name, the board, and the part and state it came from — never a value. A link opened on its own has no
  *  page to tell. Any page may embed a link (the installation's frame-ancestors setting decides which), so the message
@@ -151,6 +154,15 @@ export function App() {
     };
   }, [boardId, token, attempt]);
 
+  // A trigger asking for another board: a shared link opens the one board it was made for, so the viewer is told that
+  // rather than left to wonder why nothing happened. It fades by itself.
+  const [stayedPut, setStayedPut] = useState(false);
+  useEffect(() => {
+    if (!stayedPut) return;
+    const timer = setTimeout(() => setStayedPut(false), STAYED_PUT_MS);
+    return () => clearTimeout(timer);
+  }, [stayedPut]);
+
   // The network coming back is the moment a waiting screen should try, not a minute later.
   const waiting = 'kind' in state && state.kind === 'unavailable';
   useEffect(() => {
@@ -162,18 +174,26 @@ export function App() {
   if ('kind' in state) return <Message state={state} onRetry={retryNow} />;
 
   return (
-    <ViewerPage
-      document={state.document}
-      adapters={state.adapters}
-      pollIntervalMs={SHARE_POLL_INTERVAL_MS}
-      ariaLabel={state.name}
-      labels={KO_LABELS}
-      clock={apiClock.now}
-      elementOrigins={state.elementOrigins}
-      elementFrames={state.elementFrames}
-      boardId={boardId ?? undefined}
-      onTrigger={tellEmbeddingPage}
-    />
+    <>
+      <ViewerPage
+        document={state.document}
+        adapters={state.adapters}
+        pollIntervalMs={SHARE_POLL_INTERVAL_MS}
+        ariaLabel={state.name}
+        labels={KO_LABELS}
+        clock={apiClock.now}
+        elementOrigins={state.elementOrigins}
+        elementFrames={state.elementFrames}
+        boardId={boardId ?? undefined}
+        onTrigger={tellEmbeddingPage}
+        onNavigate={() => setStayedPut(true)}
+      />
+      {stayedPut && (
+        <p className="share-notice" role="status">
+          이 공유 링크는 보드 하나만 엽니다 — 다른 보드로는 이동하지 않습니다.
+        </p>
+      )}
+    </>
   );
 }
 

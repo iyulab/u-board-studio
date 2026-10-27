@@ -23,3 +23,35 @@ test('the playground draws a board from its JSON and points at what is wrong', a
   await expect(status).toHaveText(/문제 없음/);
   expect(errors).toEqual([]);
 });
+
+// A board whose trigger asks for another board: one of the gallery's opens in the playground, any other is said so.
+test('the playground opens the gallery board a trigger asks for, and says so for one it does not have', async ({ page }) => {
+  const errors: string[] = [];
+  page.on('pageerror', e => errors.push(e.message));
+  await page.goto('/playground/?board=heating-nixie');
+  const status = page.locator('[data-status]');
+  await expect(status).toHaveText(/문제 없음/);
+
+  const leading = (board: string) =>
+    JSON.stringify({
+      parts: { go: { as: 'label', title: 'Go' } },
+      layout: { kind: 'grid', items: ['go'] },
+      triggers: [{ on: { event: 'click', part: 'go' }, do: [{ action: 'go-to-board', board }] }],
+    });
+  const definition = page.locator('[data-field="definition"]');
+  const view = page.locator('[data-view]');
+
+  await definition.fill(leading('somewhere-else'));
+  // The page draws a moment after the typing stops: the new board is on screen once its own label is.
+  await expect(view.getByText('Go')).toBeVisible();
+  await view.getByRole('button', { name: /Go/ }).click();
+  await expect(status).toHaveText(/«somewhere-else»/);
+
+  await definition.fill(leading('seoul-air'));
+  await expect(status).toHaveText(/문제 없음/);
+  await expect(view.getByText('Go')).toBeVisible();
+  await view.getByRole('button', { name: /Go/ }).click();
+  await expect(page).toHaveURL(/\/playground\/\?board=seoul-air$/);
+  await expect(page.locator('[data-board-picker]')).toHaveValue('seoul-air');
+  expect(errors).toEqual([]);
+});

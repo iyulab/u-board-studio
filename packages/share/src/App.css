@@ -46,3 +46,22 @@
     color: #f1f5f9;
   }
 }
+
+/* The note that a shared link opens one board: over the foot of the board, quiet, gone by itself. */
+.share-notice {
+  position: fixed;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  max-width: calc(100% - 32px);
+  margin: 0;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: #0f172a;
+  color: #f8fafc;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Pretendard, 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  word-break: keep-all;
+  text-align: center;
+}

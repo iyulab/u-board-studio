@@ -54,7 +54,7 @@ test('a grid board: made as a grid, given items in order, saved, and opened from
   await expect(page.getByText(/^그리드 · 수정/)).toBeVisible();
 
   // Shared, it reads as a grid: two items, the first spanning 8 of 12 columns.
-  await page.getByRole('link', { name: 'Grid Board' }).click();
+  await page.getByRole('link', { name: 'Grid Board', exact: true }).click();
   await page.getByRole('button', { name: '공유', exact: true }).click();
   await page.getByRole('button', { name: '새 공유 링크 생성' }).click();
   const shareUrl = await page.getByLabel('공유 링크 주소').inputValue();

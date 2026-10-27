@@ -27,7 +27,7 @@ test('create a board, add a part, save, and see it persisted after reopening', a
   // The list, not the editor's own «보드» panel (the board's settings) that is still on screen until it goes.
   await expect(page).toHaveURL(/\/boards$/);
   await expect(page.getByRole('heading', { name: '보드', exact: true })).toBeVisible();
-  await page.getByRole('link', { name: 'E2E Board' }).click();
+  await page.getByRole('link', { name: 'E2E Board', exact: true }).click();
   await expect(page.getByRole('button', { name: '저장', exact: true })).toBeVisible();
   // 추가한 부품이 저장된 문서에 남아 있다 — 편집기에 그 부품이 제자리에 하나 그려진다.
   await expect(page.locator('[data-testid="designer-overlay-part-1"]')).toHaveCount(1);

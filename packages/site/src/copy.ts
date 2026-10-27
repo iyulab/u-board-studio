@@ -82,6 +82,8 @@ export interface Copy {
     problems: string;
     loading: string;
     loadFailed: string;
+    /** Said when the board asks to open another board that is not one of the gallery's: `{board}` — its name. */
+    opensBoard: string;
     toTry: string;
   };
   gallery: {
@@ -244,6 +246,7 @@ export const COPY: Record<Locale, Copy> = {
       problems: '문제 {n}개 — 고치면 다시 그립니다.',
       loading: '불러오는 중…',
       loadFailed: '보드를 불러오지 못했습니다.',
+      opensBoard: '이 보드는 보드 «{board}»를 열려 합니다 — 여기서는 갤러리의 보드만 열 수 있습니다.',
       toTry: '편집 화면으로 만들어 보기',
     },
     gallery: {
@@ -396,6 +399,7 @@ export const COPY: Record<Locale, Copy> = {
       problems: '{n} problems — fix them and it is drawn again.',
       loading: 'Loading…',
       loadFailed: 'The board could not be loaded.',
+      opensBoard: 'This board asks to open the board “{board}” — only the gallery’s boards open here.',
       toTry: 'Build one in the editor instead',
     },
     gallery: {

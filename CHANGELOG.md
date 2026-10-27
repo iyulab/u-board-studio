@@ -12,6 +12,16 @@ do when upgrading. Each release's notes carry its section.
 
 ## [Unreleased]
 
+### Added
+
+- **A board has a screen of its own to look at, in the console.** `/boards/<id>` draws the board as its users see it, with
+  no editor around it; the boards list has a «보기» link beside each name, and the screen has a way into the editor. A
+  trigger that asks for another board (`go-to-board`) opens that board's screen there, so a board that leads to others
+  can be walked through. Before, the only screen for a board was its editor, and `/boards/<id>` was not a page.
+- **The playground follows a trigger that asks for another board.** A board of the gallery opens (the picker follows),
+  and for any other the page says that only the gallery's boards open there; before, the click did nothing.
+- **A shared link says that it opens one board** when a trigger asks for another, in place of a click that did nothing.
+
 ## [0.30.0] - 2026-10-27
 
 ### Changed

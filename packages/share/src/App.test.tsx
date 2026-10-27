@@ -1,8 +1,8 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { App, SHARE_POLL_INTERVAL_MS, retryDelayMs, tellEmbeddingPage } from './App.js';
+import { App, SHARE_POLL_INTERVAL_MS, STAYED_PUT_MS, retryDelayMs, tellEmbeddingPage } from './App.js';
 import { apiClock } from './api-base.js';
 
 vi.mock('@iyulab/u-board/viewer', async () => {
@@ -15,6 +15,9 @@ vi.mock('@iyulab/u-board/viewer', async () => {
         <span data-testid="node-ids">{props.document.nodes.map((n: any) => n.id).join(',')}</span>
         <button type="button" onClick={() => props.adapters[0]?.resolve({ path: '/x' })}>
           resolve
+        </button>
+        <button type="button" onClick={() => props.onNavigate?.({ board: 'b2' })}>
+          go
         </button>
         <button type="button" data-board={props.boardId} onClick={() => props.onTrigger?.({ name: 'pump-details', node: 'pump', state: 'fault', board: props.boardId })}>
           trigger
@@ -58,6 +61,27 @@ describe('App', () => {
     (fetch as any).mockResolvedValueOnce({ ok: true, headers: new Headers(), json: async () => ({ name: 'A', document: BOARD, picture, connectorIds: [] }) });
     render(<App />);
     expect(await screen.findByTestId('node-ids')).toHaveTextContent('pump/P1,pump/P2');
+  });
+
+  describe('a trigger that asks for another board', () => {
+    it('says that a shared link opens one board, then lets the note go', async () => {
+      vi.useFakeTimers({ shouldAdvanceTime: true });
+      try {
+        setLocation('?board=b1&token=tok');
+        (fetch as any).mockResolvedValueOnce({ ok: true, headers: new Headers(), json: async () => ({ name: 'A', document: BOARD, picture: DOC, connectorIds: [] }) });
+        render(<App />);
+        const note = () => screen.queryByText(/보드 하나만 엽니다/);
+        expect(note()).not.toBeInTheDocument();
+        fireEvent.click(await screen.findByRole('button', { name: 'go' }));
+        expect(note()).toHaveAttribute('role', 'status');
+        await act(async () => { vi.advanceTimersByTime(STAYED_PUT_MS + 1); });
+        expect(note()).not.toBeInTheDocument();
+        // The board on screen is still the one the link was made for.
+        expect(fetch).toHaveBeenCalledTimes(1);
+      } finally {
+        vi.useRealTimers();
+      }
+    });
   });
 
   describe('events from a board’s triggers', () => {

@@ -154,6 +154,7 @@ export function BoardsListPage({ workspaceId }: { workspaceId: string }) {
                 {KIND_NAMES[b.kind]} · 수정 <Timestamp value={b.updatedAt} />
               </span>
               <div className="ub-board-card__footer">
+                <Link className="ub-board-card__view" to={`/boards/${b.id}`} aria-label={`${b.name} 보기`}>보기</Link>
                 <Button variant="danger" aria-label={`${b.name} 삭제`} onClick={() => handleDelete(b.id)}>삭제</Button>
               </div>
             </Card>

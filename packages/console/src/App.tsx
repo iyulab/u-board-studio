@@ -27,6 +27,11 @@ import { EmptyState } from './design-system/EmptyState.js';
 const BoardEditorPage = lazy(() =>
   import('./pages/BoardEditorPage.js').then(m => ({ default: m.BoardEditorPage }))
 );
+// A board as its users see it — the viewer without the editor. Split off for the same reason: the viewer's stack is not
+// the list's to load.
+const BoardViewPage = lazy(() =>
+  import('./pages/BoardViewPage.js').then(m => ({ default: m.BoardViewPage }))
+);
 
 type RootStatus = 'loading' | 'error' | 'authenticated' | 'needs-bootstrap-signup' | 'needs-login';
 
@@ -194,6 +199,18 @@ export function App({
           <Route
             path="/boards"
             element={<AuthedLayout>{s => <BoardsListPage workspaceId={s.activeWorkspaceId} />}</AuthedLayout>}
+          />
+          <Route
+            path="/boards/:boardId"
+            element={
+              <Suspense fallback={<Loading />}>
+                <RequireSession>
+                  {s =>
+                    s.activeWorkspaceId ? <BoardViewPage workspaceId={s.activeWorkspaceId} /> : <Navigate to="/boards" replace />
+                  }
+                </RequireSession>
+              </Suspense>
+            }
           />
           <Route
             path="/boards/:boardId/edit"
