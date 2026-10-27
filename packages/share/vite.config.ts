@@ -8,5 +8,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: { '/api': 'http://localhost:4000' },
+    // Transformed at start-up, so the first visit does not wait on the chain of modules it asks for.
+    warmup: { clientFiles: ['./src/main.tsx', './src/App.tsx'] },
   },
 });

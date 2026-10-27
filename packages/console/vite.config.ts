@@ -16,6 +16,10 @@ export default defineConfig(({ command, mode }) => {
     resolve: { dedupe: ['@iyulab/u-widgets'] },
     server: {
       proxy: { '/api': 'http://localhost:4000' },
+      // The dev server transforms a module when it is first asked for. Asked for at once by a browser that has just signed
+      // in — the entry, then the two pages loaded on demand, each with its own libraries — that first visit waited on the
+      // whole chain; transformed at start-up, it does not.
+      warmup: { clientFiles: ['./src/main.tsx', './src/App.tsx', './src/pages/BoardEditorPage.tsx', './src/pages/BoardViewPage.tsx'] },
     },
   };
 });
