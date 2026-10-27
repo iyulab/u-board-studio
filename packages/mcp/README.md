@@ -45,7 +45,7 @@ In a client's JSON configuration:
 | `patch_board` | Changes part of a board with a JSON Patch (RFC 6902) on a revision; answers the new revision and advice. |
 | `rename_board` | Renames a board; its id, share links and history stay. |
 | `delete_board` | Deletes a board for good (marked destructive, so a client can ask first). A data source is removed in the console. |
-| `validate` | Checks a board, or a board with a patch, without saving. |
+| `validate` | Checks a board, a board with a patch, or — with neither — the board as it is saved, without saving. |
 | `look` | A picture of a saved board as its viewers see it, with what went wrong while drawing; `focus` one part (`/parts/<id>`), or `appearance` the other paper. Needs Chrome or Edge on this computer, or `UBOARD_BROWSER`. |
 | `list_sources` | The workspace's data sources — never a credential; a static one with the paths it answers and whether its answers are example data. |
 | `sample_source` | What a source's response looks like: each value's JSON Pointer, type and example, and the fields that tell a list's items apart. |
