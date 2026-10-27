@@ -17,6 +17,9 @@ All notable changes to this package are documented here. The format follows
   was called wrong by `validate`.
 - The rules' JSON Patch section says `add` makes only the last part of its path — a new board has no `/data` or `/statuses` to
   add into — and that renaming a part changes every `of` and `each` that names it.
+- **`look` reports a text an element cuts short with "…"** — a built-in marker whose box is too narrow for its name showed
+  "Ex…" while `look` answered "nothing to fix", because nothing spilled. It now says the element cuts a text short and that the
+  node needs more width.
 
 ## [0.25.0] - 2026-10-27
 

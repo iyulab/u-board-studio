@@ -47,6 +47,18 @@ export function findProblems(
     return spill;
   }
 
+  /** How many texts inside `root` are cut short with an ellipsis — a line set to end in "…" when it does not fit (what the
+   *  built-in markers do with a name or a note) that is wider than its box. The reader sees "Ex…"; nothing spills, so
+   *  `spillOf` says nothing of it. */
+  function cutShortIn(root: ShadowRoot): number {
+    let cut = 0;
+    for (const part of root.querySelectorAll('*')) {
+      if (part instanceof HTMLStyleElement) continue;
+      if (getComputedStyle(part).textOverflow === 'ellipsis' && part.scrollWidth > part.clientWidth + 1) cut += 1;
+    }
+    return cut;
+  }
+
   /** How far down the boxes drawn inside `root` reach, shadow roots within it included — the bottom of the content.
    *  Boxes, not the scroll height: a line's text may reach a few px past its line box (a font's own height over a
    *  tight line height), which scrolls nothing and cuts nothing off. */
@@ -71,6 +83,8 @@ export function findProblems(
     const element = frame.querySelector('[data-element]') as HTMLElement | null;
     const spill = element?.shadowRoot ? spillOf(element, element.shadowRoot) : 0;
     if (spill > spillTolerancePx) out.push({ path, message: `its element draws up to ${Math.round(spill)} px past its box — over its neighbours; give the node more room or draw smaller` });
+    const cut = element?.shadowRoot ? cutShortIn(element.shadowRoot) : 0;
+    if (cut > 0) out.push({ path, message: `its element cuts ${cut === 1 ? 'a text' : `${cut} texts`} short with "…" — the box is too narrow for ${cut === 1 ? 'it' : 'them'}; give the node more width (its size) rather than a shorter text` });
     const widget = frame.querySelector('u-widget') as HTMLElement | null;
     const inner = (widget?.shadowRoot?.firstElementChild ?? widget) as HTMLElement | null;
     if (inner) {

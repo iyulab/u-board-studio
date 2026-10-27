@@ -6,6 +6,11 @@ All notable changes to this package are documented here. The format follows
 
 ## [Unreleased]
 
+### Changed
+
+- The rules (`boardRulebook`) say how to size a marker placed by its item's fields: a dot alone is `[14, 14]`, a marker that
+  carries its name, status or note needs the room for the text, and it is the box, not the dot, that is centred on the point.
+
 ## [0.1.0] - 2026-10-27
 
 ### Added

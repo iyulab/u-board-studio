@@ -49,6 +49,16 @@ describe('findProblems', () => {
     ]);
   });
 
+  it('reports a text an element cuts short with an ellipsis — nothing spills, the reader sees "Ex…" — and none that fits', async () => {
+    const line = (width: number) => `<template shadowrootmode="open"><div style="width:${width}px;display:grid"><b style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Excavator A</b></div></template>`;
+    await show(`
+      <div data-node-id="a"><div data-element style="position:relative;width:40px;height:20px">${line(40)}</div></div>
+      <div data-node-id="b"><div data-element style="position:relative;width:200px;height:20px">${line(200)}</div></div>`);
+    expect(await page.evaluate(findProblems, [node('a'), node('b')])).toEqual([
+      { path: '/nodes/a', message: 'its element cuts a text short with "…" — the box is too narrow for it; give the node more width (its size) rather than a shorter text' },
+    ]);
+  });
+
   it('does not count what the element cuts off itself — but does count a positioned part its static clip does not cut', async () => {
     await show(`
       <div data-node-id="a"><div data-element style="position:relative;width:100px;height:50px">
