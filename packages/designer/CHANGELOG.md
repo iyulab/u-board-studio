@@ -10,6 +10,8 @@ All notable changes to this package are documented here. The format follows
 
 - The rules (`boardRulebook`) say how to size a marker placed by its item's fields: a dot alone is `[14, 14]`, a marker that
   carries its name, status or note needs the room for the text, and it is the box, not the dot, that is centred on the point.
+- The rules say that a field's `at` points into one item — with a `list`, an item of it — so a count or total beside the list is read with a
+  read of its own that has no `list`.
 
 ## [0.1.0] - 2026-10-27
 

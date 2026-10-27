@@ -69,6 +69,9 @@ function fakeServer() {
       boards.set('b2', { name: body.name, revision: 1, document: emptyBoard(body.kind) });
       return json(201, { id: 'b2', revision: 1 });
     }
+    if (url.pathname === '/api/share/boards/b2/state') {
+      return json(200, { evaluatedAt: '2026-10-16T09:00:00.000Z', revision: 1, parts: { n: { quality: 'disconnected', reason: 'address' }, ok: { quality: 'live' } } });
+    }
     if (url.pathname === '/api/share/boards/b1/state') {
       return json(200, { evaluatedAt: '2026-10-16T09:00:00.000Z', revision: 4, parts: { a: { state: 'fault', quality: 'live' } } });
     }
@@ -280,6 +283,15 @@ describe('u-board-mcp', () => {
     expect(isError).toBe(false);
     expect(value).toEqual({ evaluatedAt: '2026-10-16T09:00:00.000Z', revision: 4, parts: { a: { state: 'fault', quality: 'live' } } });
     expect(server.requests.at(-1)).toMatchObject({ method: 'GET', path: '/api/share/boards/b1/state' });
+  });
+
+  it('says where to look for a reason the server names in a word — once, for the reasons that appear', async () => {
+    const { value } = await call('board_state', { board: 'b2' });
+    expect(value.parts.n).toEqual({ quality: 'disconnected', reason: 'address' });
+    expect(Object.keys(value.hints)).toEqual(['address']);
+    expect(value.hints.address).toContain('read that with a read of its own');
+    // A state with no such reason is the server's own answer, nothing added.
+    expect((await call('board_state', { board: 'b1' })).value.hints).toBeUndefined();
   });
 
   it('reads one part of a board by JSON Pointer', async () => {

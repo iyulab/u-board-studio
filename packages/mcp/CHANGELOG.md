@@ -20,6 +20,9 @@ All notable changes to this package are documented here. The format follows
 - **`look` reports a text an element cuts short with "…"** — a built-in marker whose box is too narrow for its name showed
   "Ex…" while `look` answered "nothing to fix", because nothing spilled. It now says the element cuts a text short and that the
   node needs more width.
+- **`board_state` says where to look for a connection reason** — it answered a bare `address` for a part whose field points at a value the
+  answer does not have, and an assistant spent dozens of turns guessing. The answer now carries `hints`, once, for each such reason
+  (`address`, `format`) that appears.
 
 ## [0.25.0] - 2026-10-27
 

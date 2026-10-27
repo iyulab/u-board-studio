@@ -166,6 +166,23 @@ const WORKSPACE_TOOLS: ReadonlySet<string> = new Set([
   'list_boards', 'board_state', 'create_board', 'delete_board', 'rename_board', 'list_sources', 'sample_source', 'describe_source', 'create_source',
 ]);
 
+/** What an assistant does about a connection reason that names no cause of its own — said once beside the parts, for the
+ *  reasons that appear. The server says why a part is disconnected in a word; these say where to look. */
+const REASON_HINTS: Record<string, string> = {
+  address:
+    "a part's field points at a value the answer does not have there. With a \"list\", a field's \"at\" is read inside one item of it — what sits beside the list in the answer (a count, a total) is out of its reach: read that with a read of its own that has no \"list\". sample_source shows every pointer that exists.",
+  format: 'the answer is not the shape the read says (a list where there is none, text where JSON is expected). sample_source shows what the source answers.',
+};
+
+/** `board_state`'s answer with a `hints` entry for each reason a part carries that `REASON_HINTS` explains. */
+function withReasonHints(state: unknown): unknown {
+  const parts = (state as { parts?: Record<string, { reason?: string }> } | null)?.parts;
+  if (!parts || typeof state !== 'object') return state;
+  const hints: Record<string, string> = {};
+  for (const { reason } of Object.values(parts)) if (reason !== undefined && REASON_HINTS[reason] !== undefined) hints[reason] = REASON_HINTS[reason];
+  return Object.keys(hints).length > 0 ? { ...(state as object), hints } : state;
+}
+
 export interface BoardToolsOptions {
   /** Draws a saved board as a picture; without one there is no `look`. */
   looker?: Looker;
@@ -248,7 +265,7 @@ export function boardTools(store: BoardStore | WorkspaceStore, { looker, boardSt
           'What a saved board shows now, part by part: the state each part is in (its states rule), its connection quality and why, how old its data is — no values, a few hundred bytes. Ask it before look to check what a change does to the states; look shows how it is drawn.',
         inputSchema: z.strictObject({ board: boardId }),
       },
-      async ({ board }) => tool(() => client.getBoardState(board))
+      async ({ board }) => tool(async () => withReasonHints(await client.getBoardState(board)))
     );
   }
 
