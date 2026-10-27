@@ -48,7 +48,7 @@
     "@canvas-kit/designer": "^0.10.0",
     "@canvas-kit/viewer": "^0.6.1",
     "@iyulab/u-board": "^0.36.0",
-    "@iyulab/u-widgets": "^0.42.0"
+    "@iyulab/u-widgets": "^0.43.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.62.1",
