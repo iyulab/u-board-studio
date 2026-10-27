@@ -12,6 +12,16 @@ do when upgrading. Each release's notes carry its section.
 
 ## [Unreleased]
 
+## [0.30.0] - 2026-10-27
+
+### Changed
+
+- **The image is built from the `u-board-studio` repository, on the published `@iyulab/u-board` 0.36.0 (MIT)** instead
+  of carrying the library's sources. The authoring tool and the board check are `@iyulab/u-board-designer`. The image
+  carries the same behaviour as 0.29.0; the board language, the API and the settings are unchanged. Nothing to do when
+  upgrading. A build provenance attestation now names `iyulab/u-board-studio` (`gh attestation verify … --repo
+  iyulab/u-board-studio`).
+
 ## [0.29.0] - 2026-10-25
 
 ### Added
