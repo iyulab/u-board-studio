@@ -4,6 +4,7 @@ import { type QualityReason, type ResolvedBinding } from '@iyulab/u-board/domain
 import { isHttpRef, readHttpRef, requestPath, resolvedReading, sourceErrorIn, type HttpRef } from '@iyulab/u-board/picture';
 import { HttpStatusError } from './http-status-error.js';
 import { CONNECTOR_ADDRESS_REFUSED } from './connector-network.js';
+import { CATALOG_LIMITS, CatalogError, type SourceCatalog } from './source-catalog/index.js';
 
 /** A last-known value: when the source says it observed it (ISO 8601) and when it was read from the
  *  source (epoch ms). The two differ for a source that publishes its readings on a schedule — an hourly
@@ -55,6 +56,15 @@ export interface ResolveState {
   /** How long an upstream read, and a connection test, may take before it is given up (milliseconds). Default
    * `DEFAULT_READ_TIMEOUT_MS`. */
   readTimeoutMs?: number;
+  /** The catalogs made from sources' description documents, by connector and document (`catalogFor`): kept for
+   * `DEFAULT_CATALOG_TTL_MS`, and read once while a read of the same document is open. */
+  catalogs?: Map<string, CachedCatalog>;
+}
+
+/** A catalog being read, or read and kept since `at` (epoch ms). */
+export interface CachedCatalog {
+  at: number;
+  catalog: Promise<SourceCatalog>;
 }
 
 /** A successful read kept after its reuse window: its body, when it was read, and how long after that it may still
@@ -126,6 +136,7 @@ export function forgetConnector(state: ResolveState, connectorId: string): void 
   for (const map of [state.values, state.failures]) {
     for (const key of map.keys()) if (key.startsWith(`${connectorId}:`)) map.delete(key);
   }
+  for (const key of state.catalogs?.keys() ?? []) if (key.startsWith(`${connectorId} `)) state.catalogs!.delete(key);
   state.tokens.invalidate(connectorId);
 }
 
@@ -609,3 +620,61 @@ export async function testConnector(
 function withoutSecret(connector: HttpConnector, text: string): string {
   return connector.authValue ? text.split(connector.authValue).join('…') : text;
 }
+
+/** What a source answered as its description document, as text — the start of the work of making a catalog of it.
+ *  Asked for the way a description is: XML before JSON (an OData service answers `$metadata` as XML, and many refuse JSON).
+ *  Sent as a binding's reads are — the connector's credentials, redirects not followed, the address policy of
+ *  `state.fetch` — and read only up to the catalog's size limit, whatever the source sends. */
+export async function readDescriptionDocument(connector: HttpConnector, target: URL, state: ResolveState): Promise<string> {
+  const timeoutMs = state.readTimeoutMs ?? DEFAULT_READ_TIMEOUT_MS;
+  let stage: ResolveStage = 'request';
+  const send = async () => {
+    stage = 'token';
+    const headers = { ...(await authHeaders(connector, state.tokens)), Accept: 'application/xml, application/json;q=0.9, */*;q=0.1' };
+    stage = 'request';
+    return state.fetch(requestUrl(connector, target), { headers, redirect: 'manual', signal: AbortSignal.timeout(timeoutMs) });
+  };
+  try {
+    let response = await send();
+    if (response.status === 401 && connector.authType === 'oauth2-client-credentials') {
+      state.tokens.invalidate(connector.id);
+      response = await send();
+    }
+    if (!response.ok) {
+      const { text } = await errorBody(response);
+      throw new HttpStatusError(response.status, `upstream responded ${response.status}`, undefined, text === '' ? undefined : excerptOf(text));
+    }
+    stage = 'response';
+    const declared = Number(response.headers.get('content-length'));
+    if (Number.isFinite(declared) && declared > CATALOG_LIMITS.documentBytes) throw new CatalogError('the description document is larger than the catalog reads');
+    const reader = response.body?.getReader();
+    if (!reader) return '';
+    const decoder = new TextDecoder();
+    let size = 0;
+    let text = '';
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      size += value.byteLength;
+      if (size > CATALOG_LIMITS.documentBytes) {
+        await reader.cancel();
+        throw new CatalogError('the description document is larger than the catalog reads');
+      }
+      text += decoder.decode(value, { stream: true });
+    }
+    return text + decoder.decode();
+  } catch (err) {
+    if (err instanceof CatalogError) throw err;
+    // The words that say what failed (`StageError.message`), as a connection test gives them — never the request, whose
+    // address may carry the connector's key.
+    throw err instanceof StageError ? err : new StageError(stage, err);
+  }
+}
+
+/** The failure of reading a description document, as the words that tell its owner what to fix. */
+export function describeDescriptionFailure(err: unknown): { message: string; status?: number } {
+  if (err instanceof CatalogError) return { message: err.message };
+  if (err instanceof StageError) return { message: err.message, ...(err.status !== undefined ? { status: err.status } : {}) };
+  return { message: 'the description document could not be read' };
+}
+

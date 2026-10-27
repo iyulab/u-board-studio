@@ -69,6 +69,16 @@ assistant with `create_source` — its answers are not a credential.
     characters) its owner writes — the requests it answers and what each holds (`GET /line-1.json — the
     line; its stations under /stations, by "id"`). Whoever binds to it next reads it instead of guessing paths:
     a person in the console, or an assistant through `list_sources`. It is not shown with a shared board.
+    A source that publishes a description of itself — an OData service's `$metadata`, an OpenAPI document — can name
+    it, so that the written description need not hold what the source already says: a **description document**, a kind
+    (`odata` or `openapi`) and a path under the source's base URL (`/$metadata`, `/openapi.json`; the console's «소스가 스스로 내는 설명 문서», `descriptionDocument`
+    through the API — never an address of its own). The server reads it with the source's own credential, within the
+    addresses the installation allows, and answers from it the paths the source offers, the fields of each with their
+    types and key, what it relates to, and the query options it accepts (an OData service's capability restrictions
+    included) — a page at a time, for a source of dozens of sets. An assistant reads it with `describe_source`. It is
+    for finding what to bind: a board's data reads never go through it, and the written description stays the note
+    for a person. An OData `$metadata` is read as XML or as JSON (CSDL JSON; most services answer XML), an OpenAPI
+    document as JSON; a document larger than 4 MB is not read; what is read is kept for ten minutes.
 11. **Errors as errors** — a refused key, a rejected query or a spent quota answered with `401`, `400` or `429`,
     not with `200`. A source that answers them with `200` and a status in the body can still be read: its data
     source says where that status is (the console's «응답 속 오류 위치», `sourceError` through the API), and its

@@ -24,6 +24,8 @@ function failed(error: unknown): ToolResult {
       error.status === 401 ? 'The API token is not valid — ask for a new one (console → workspace settings → API 토큰).' :
       error.status === 403 && error.body.code === 'READ_ONLY_TOKEN' ? 'This token may only read — ask for a write token.' :
       error.status === 403 && error.body.code === 'CREDENTIALS_IN_CONSOLE' ? 'Credentials are entered by a person in the console, never here.' :
+      error.body.code === 'NO_DESCRIPTION_DOCUMENT' ? 'This source names no description document, so it has no catalog. Its owner can name one in the console; until then its own description (list_sources) and sample_source say what it answers.' :
+      error.body.code === 'DESCRIPTION_UNREADABLE' ? 'The source did not give its description document — the message says why. Its owner fixes the document’s path or the source’s credential in the console.' :
       error.status === 404 ? 'Nothing in this workspace has that id — list_boards and list_sources give the ids.' :
       error.body.code === 'INVALID_DOCUMENT' ? 'Fix each issue at its path; describe("rules") says what goes there, describe("kind:<name>") what a kind takes.' :
       undefined;
@@ -388,6 +390,42 @@ export function boardTools(client: UBoardClient, { looker, boardState = true }: 
         sources: (await client.listSources()).map(({ answers, ...source }) => (answers === undefined ? source : { ...source, paths: Object.keys(answers) })),
       }))
   );
+
+  define(
+    'describe_source',
+    {
+      description:
+        "What a data source says about itself, from the description document its owner named for it (OData $metadata, an OpenAPI document): the paths it answers and, for each, the fields of what it answers with — their types, the key, what it relates to — and the query options it accepts. A page of entries at a time; pass `entry` for one in full. A source with a `descriptionDocument` in list_sources has this. Use it to find a path and its fields; sample_source shows a real answer.",
+      inputSchema: z.strictObject({
+        source: z.string().min(1).max(100).describe('The data source id, from list_sources — or its name, when no other source has it.'),
+        entry: z.string().min(1).max(2000).optional().describe('One entry’s path as a page lists it ("/People", "/pet/{petId}"): its fields, key, relations and query options, whole.'),
+        offset: z.number().int().min(0).optional().describe('Without `entry`: how many entries to skip. Default 0.'),
+        limit: z.number().int().min(1).max(200).optional().describe('Without `entry`: how many entries a page holds. Default 50.'),
+      }),
+    },
+    async ({ source, entry, offset, limit }) =>
+      tool(async () => {
+        const id = await sourceId(source);
+        try {
+          return { source: id, ...(await client.getCatalog(id, { ...(entry !== undefined && { entry }), ...(offset !== undefined && { offset }), ...(limit !== undefined && { limit }) })) };
+        } catch (error) {
+          if (entry !== undefined && error instanceof UBoardApiError && error.status === 404) throw new Error(`the source's description has no entry "${entry}" — describe_source without \`entry\` lists the paths`);
+          throw error;
+        }
+      })
+  );
+
+  /** A data source's id from what a person gave: its id, or else its name (case and spaces aside) when only one source
+   *  has it. */
+  async function sourceId(source: string): Promise<string> {
+    const sources = await client.listSources();
+    if (sources.some(s => s.id === source)) return source;
+    const key = source.trim().toLowerCase();
+    const named = sources.filter(s => s.name.trim().toLowerCase() === key);
+    if (named.length > 1) throw new UBoardApiError(404, { code: 'NOT_FOUND', message: `${named.length} sources are named "${source}" — use one's id: ${named.map(s => s.id).join(', ')}` });
+    if (named.length === 0) throw new UBoardApiError(404, { code: 'NOT_FOUND' });
+    return named[0].id;
+  }
 
   define(
     'sample_source',

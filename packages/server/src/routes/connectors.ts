@@ -14,6 +14,7 @@ import {
   type ConnectorChanges,
   type ConnectorOAuthSettings,
   type ConnectorSummary,
+  type DescriptionDocument,
   type HttpConnector,
   type NewHttpConnector,
   type NewStaticConnector,
@@ -22,7 +23,8 @@ import {
 } from '../db/connectors.js';
 import { type Attribution } from '@iyulab/u-board/domain';
 import { isSourceErrorField, type SourceErrorField } from '@iyulab/u-board/picture';
-import { isValidRef, buildResolveTarget, readSource, staticTarget, testConnector, forgetConnector, type ResolveState } from '../resolve-connector.js';
+import { isValidRef, buildResolveTarget, readSource, staticTarget, testConnector, forgetConnector, describeDescriptionFailure, type ResolveState } from '../resolve-connector.js';
+import { catalogFor } from '../source-catalog/service.js';
 
 const OAUTH = 'oauth2-client-credentials';
 const AUTH_TYPES = new Set(['none', 'bearer', 'header', 'query', 'path', OAUTH]);
@@ -65,7 +67,30 @@ function parseDescription(value: unknown): string | null | undefined | false {
 export const STATIC_ANSWERS_MAX_BYTES = 512 * 1024;
 
 /** The settings only an HTTP source has — none of which a static source takes. */
-const HTTP_ONLY = ['baseUrl', 'authType', 'authHeaderName', 'authParamName', 'authValue', 'oauthTokenUrl', 'oauthClientId', 'oauthScope', 'oauthClientAuth', 'sourceError'];
+const HTTP_ONLY = ['baseUrl', 'authType', 'authHeaderName', 'authParamName', 'authValue', 'oauthTokenUrl', 'oauthClientId', 'oauthScope', 'oauthClientAuth', 'sourceError', 'descriptionDocument'];
+
+const DESCRIPTION_DOCUMENT_KINDS = new Set(['odata', 'openapi']);
+
+/** How many entries a page of the catalog holds by default, and the most it may. */
+const CATALOG_PAGE = 50;
+const CATALOG_PAGE_MAX = 200;
+
+/** The longest path a description document may be at. */
+const DESCRIPTION_DOCUMENT_PATH_MAX_LENGTH = 500;
+
+/** A request's `descriptionDocument`: `undefined` when absent (leave it), `null` to clear it, the document to store, or
+ *  `false` when it is not one — a kind (`odata` | `openapi`) and a path relative to the source's base URL, written as a
+ *  path (one leading `/`, no dot segments, no spaces or fragment). Never an address of its own: the document is read
+ *  from the source, with its credentials, and nowhere else. */
+function parseDescriptionDocument(value: unknown): DescriptionDocument | null | undefined | false {
+  if (value === undefined || value === null) return value;
+  if (typeof value !== 'object' || Array.isArray(value)) return false;
+  const { kind, path, ...others } = value as Record<string, unknown>;
+  if (Object.keys(others).length > 0 || typeof kind !== 'string' || !DESCRIPTION_DOCUMENT_KINDS.has(kind)) return false;
+  if (typeof path !== 'string' || path.length > DESCRIPTION_DOCUMENT_PATH_MAX_LENGTH || !/^\/(?!\/)/.test(path) || /[\s#\\]/.test(path)) return false;
+  if (path.split('?')[0]!.split('/').some(segment => segment === '.' || segment === '..')) return false;
+  return { kind: kind as DescriptionDocument['kind'], path };
+}
 
 /** A request's `answers`: `undefined` when absent (leave them), the answers to store, or `false` when they are not —
  *  an object of answers by path, each path one as written (`/equipment`, no query or `..`), and no more than
@@ -177,12 +202,15 @@ function newConnectorSettings(body: any): Omit<NewHttpConnector, 'workspaceId' |
   if (description === false) return 'INVALID_INPUT';
   const sourceError = parseSourceError(body.sourceError);
   if (sourceError === false) return 'INVALID_INPUT';
+  const descriptionDocument = parseDescriptionDocument(body.descriptionDocument);
+  if (descriptionDocument === false) return 'INVALID_INPUT';
   return {
     type: 'http',
     baseUrl: body.baseUrl,
     attribution: attribution ?? undefined,
     description: description ?? undefined,
     sourceError: sourceError ?? undefined,
+    descriptionDocument: descriptionDocument ?? undefined,
     authType: body.authType,
     authHeaderName: body.authType === 'header' ? body.authHeaderName : undefined,
     authParamName: body.authType === 'query' ? body.authParamName.trim() : undefined,
@@ -236,7 +264,9 @@ function connectorChanges(body: any, existing: Connector): ConnectorChanges | st
   if (description === false) return 'INVALID_INPUT';
   const sourceError = parseSourceError(body.sourceError);
   if (sourceError === false) return 'INVALID_INPUT';
-  const changes: ConnectorChanges = { name: body.name, baseUrl: body.baseUrl, attribution, description, sourceError };
+  const descriptionDocument = parseDescriptionDocument(body.descriptionDocument);
+  if (descriptionDocument === false) return 'INVALID_INPUT';
+  const changes: ConnectorChanges = { name: body.name, baseUrl: body.baseUrl, attribution, description, sourceError, descriptionDocument };
   if (body.authType === undefined) return pathKeyKept(changes, existing);
   const authError = validateAuthFields(body, existing);
   if (authError) return authError;
@@ -404,6 +434,52 @@ export function createConnectorsRouter(config: AppConfig, resolveState: ResolveS
     }
     forgetConnector(resolveState, req.params.connectorId);
     res.status(204).send();
+  });
+
+  // What the source says about itself, from the description document the connector names — for discovery: the paths it
+  // answers and the fields of what they answer with, a page of entries at a time, or one entry whole (`?entry=/People`).
+  // The document is read with the connector's own credentials, as a binding's reads are, so a member sees only what a
+  // board of the workspace could read; nothing here goes into a data read.
+  router.get('/:connectorId/catalog', requireWorkspaceMember(db), async (req, res) => {
+    const connector = await findConnector(db, pathParam(req, 'workspaceId'), req.params.connectorId, secrets);
+    if (!connector) {
+      res.status(404).json({ code: 'NOT_FOUND' });
+      return;
+    }
+    if (connector.type !== 'http' || !connector.descriptionDocument) {
+      res.status(409).json({ code: 'NO_DESCRIPTION_DOCUMENT' });
+      return;
+    }
+    let catalog;
+    try {
+      catalog = await catalogFor(connector, resolveState);
+    } catch (err) {
+      res.status(502).json({ code: 'DESCRIPTION_UNREADABLE', ...describeDescriptionFailure(err) });
+      return;
+    }
+    const head = { kind: catalog.kind, ...(catalog.title ? { title: catalog.title } : {}) };
+    if (typeof req.query.entry === 'string') {
+      const entry = catalog.entries.find(e => e.path === req.query.entry);
+      if (!entry) {
+        res.status(404).json({ code: 'NOT_FOUND' });
+        return;
+      }
+      res.status(200).json({ ...head, entry });
+      return;
+    }
+    const offset = Number(req.query.offset ?? 0);
+    const limit = Number(req.query.limit ?? CATALOG_PAGE);
+    if (!Number.isInteger(offset) || offset < 0 || !Number.isInteger(limit) || limit < 1 || limit > CATALOG_PAGE_MAX) {
+      res.status(400).json({ code: 'INVALID_INPUT' });
+      return;
+    }
+    res.status(200).json({
+      ...head,
+      total: catalog.entries.length,
+      ...(catalog.entriesCut ? { entriesCut: catalog.entriesCut } : {}),
+      offset,
+      entries: catalog.entries.slice(offset, offset + limit).map(({ path, shape, about, key, fields }) => ({ path, shape, ...(about ? { about } : {}), ...(key ? { key } : {}), fieldCount: fields.length })),
+    });
   });
 
   router.post('/:connectorId/resolve', requireWorkspaceMember(db), async (req, res) => {

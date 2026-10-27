@@ -33,6 +33,9 @@ const WORKFLOW = `# Changing boards with these tools
 ## Sources
 - A data read's \`from\` is a source's id (list_sources gives them, with what each answers); its \`path\` is a request —
   sample_source({ source, path }) shows what it answers, value by value. A source that needs a key is made by a person in the console.
+- A source with a \`descriptionDocument\` in list_sources publishes what it answers: describe_source({ source }) lists its paths a page at a time,
+  describe_source({ source, entry }) gives one in full — its fields with their types, its key, what it relates to, the query options it accepts.
+  Find the path and the fields there; sample_source then shows a real answer.
 - No source has the values yet (a mock-up, a new screen): create_source({ name, answers: [{ path, answer }], sample: true }) makes one
   that answers what you store, by path — the board reads it with \`from\` + \`path\` as any source, and is moved to a live one by
   changing \`from\` alone. Say the board shows example data.`;

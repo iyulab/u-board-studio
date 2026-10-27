@@ -12,6 +12,7 @@ import {
   type ConnectorOAuthClientAuth,
   type ConnectorTestResult,
   type ConnectorSourceError,
+  type ConnectorDescriptionDocument,
 } from '../api-client.js';
 import { Alert } from '../design-system/Alert.js';
 import { Badge } from '../design-system/Badge.js';
@@ -95,6 +96,9 @@ export function ConnectorsPage({ workspaceId, userId }: { workspaceId: string; u
   const [errorPath, setErrorPath] = useState('');
   const [errorOk, setErrorOk] = useState('');
   const [errorMessagePath, setErrorMessagePath] = useState('');
+  // The document the source publishes about itself: its kind (none, OData, OpenAPI) and its path under the base URL.
+  const [docKind, setDocKind] = useState<'' | 'odata' | 'openapi'>('');
+  const [docPath, setDocPath] = useState('');
   const [authValue, setAuthValue] = useState('');
   const [oauthTokenUrl, setOauthTokenUrl] = useState('');
   const [oauthClientId, setOauthClientId] = useState('');
@@ -152,6 +156,8 @@ export function ConnectorsPage({ workspaceId, userId }: { workspaceId: string; u
     setErrorPath('');
     setErrorOk('');
     setErrorMessagePath('');
+    setDocKind('');
+    setDocPath('');
     setOauthClientAuth('basic');
     setTestPath('');
     setTestOutcome(null);
@@ -183,6 +189,8 @@ export function ConnectorsPage({ workspaceId, userId }: { workspaceId: string; u
     setErrorPath(c.sourceError?.path ?? '');
     setErrorOk(c.sourceError?.ok?.join(', ') ?? '');
     setErrorMessagePath(c.sourceError?.messagePath ?? '');
+    setDocKind(c.descriptionDocument?.kind ?? '');
+    setDocPath(c.descriptionDocument?.path ?? '');
     setOauthClientAuth(c.oauthClientAuth ?? 'basic');
   }
 
@@ -207,9 +215,17 @@ export function ConnectorsPage({ workspaceId, userId }: { workspaceId: string; u
       authParamName: authType === 'query' ? authParamName : undefined,
       ...formCommon(),
       sourceError: formSourceError(),
+      descriptionDocument: formDescriptionDocument(),
       authValue: authType === 'none' ? undefined : authValue || undefined,
       ...(isOAuth ? { oauthTokenUrl, oauthClientId, oauthScope, oauthClientAuth } : {}),
     };
+  }
+
+  /** The description document, as the form holds it: none clears one the connector has. */
+  function formDescriptionDocument(): ConnectorDescriptionDocument | null | undefined {
+    const editing = connectors.find(c => c.id === editingId);
+    if (docKind === '') return editing?.type === 'http' && editing.descriptionDocument ? null : undefined;
+    return { kind: docKind, path: docPath.trim() };
   }
 
   /** Where the source reports errors, as the form holds it: blank clears a setting the connector has. */
@@ -479,6 +495,34 @@ export function ConnectorsPage({ workspaceId, userId }: { workspaceId: string; u
             <FormField label="오류 문구 위치(선택)">
               <input value={errorMessagePath} onChange={e => setErrorMessagePath(e.target.value)} pattern="/.+" placeholder="/message" />
             </FormField>
+          </details>
+          )}
+          {kind === 'http' && (
+          <details className="ub-connector-source-error" open={docKind !== ''}>
+            <summary>소스가 스스로 내는 설명 문서(선택)</summary>
+            <p className="ub-connector-hint">
+              OData 서비스의 <code>$metadata</code>나 OpenAPI 문서처럼 소스가 자기 모양을 직접 알려 준다면 그 위치를 적으세요. 서버가
+              이 데이터소스의 키로 읽어, AI 비서가 읽을 수 있는 경로와 필드·타입·질의 옵션을 알려 줍니다(발견용 — 보드의 데이터 읽기는
+              이 문서를 거치지 않습니다). 위의 «설명»은 사람이 쓰는 메모로 그대로 남습니다.
+            </p>
+            <FormField label="종류">
+              <select value={docKind} onChange={e => setDocKind(e.target.value as '' | 'odata' | 'openapi')}>
+                <option value="">없음</option>
+                <option value="odata">OData ($metadata)</option>
+                <option value="openapi">OpenAPI (JSON)</option>
+              </select>
+            </FormField>
+            {docKind !== '' && (
+              <FormField label="경로(Base URL 아래)">
+                <input
+                  value={docPath}
+                  onChange={e => setDocPath(e.target.value)}
+                  pattern="\s*/[^\s#]*\s*"
+                  placeholder={docKind === 'odata' ? '/$metadata' : '/openapi.json'}
+                  required
+                />
+              </FormField>
+            )}
           </details>
           )}
           <FormField label={kind === 'http' && isOAuth ? '시험할 경로(선택 — 비우면 토큰만)' : '시험할 경로'}>

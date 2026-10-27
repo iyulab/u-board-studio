@@ -114,6 +114,10 @@ ALTER TABLE connectors ADD COLUMN IF NOT EXISTS description TEXT;
 ALTER TABLE connectors ADD COLUMN IF NOT EXISTS source_error JSONB;
 ALTER TABLE connectors ADD COLUMN IF NOT EXISTS answers JSONB;
 ALTER TABLE connectors ADD COLUMN IF NOT EXISTS sample BOOLEAN NOT NULL DEFAULT FALSE;
+-- The description document a source publishes about itself (OData $metadata, an OpenAPI document): its kind, and its path
+-- relative to the source's base URL.
+ALTER TABLE connectors ADD COLUMN IF NOT EXISTS description_doc_kind TEXT CHECK (description_doc_kind IN ('odata', 'openapi'));
+ALTER TABLE connectors ADD COLUMN IF NOT EXISTS description_doc_path TEXT;
 ALTER TABLE connectors ALTER COLUMN base_url DROP NOT NULL;
 DO $$
 BEGIN

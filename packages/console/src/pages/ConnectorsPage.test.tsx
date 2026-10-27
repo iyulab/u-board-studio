@@ -152,6 +152,53 @@ describe('ConnectorsPage', () => {
     await waitFor(() => expect(api.updateConnector).toHaveBeenLastCalledWith('w1', 'c7', expect.objectContaining({ sourceError: null })));
   });
 
+  it('names the document a source publishes about itself — its kind and path — changes it, and clears it when set to none', async () => {
+    const owner = { members: [{ userId: 'u1', email: 'o@x.com', name: 'O', role: 'owner' as const }] };
+    const service = { ...CONNECTOR, id: 'c9', name: 'Service', descriptionDocument: { kind: 'odata' as const, path: '/$metadata' } };
+    vi.mocked(api.listConnectors).mockResolvedValue({ connectors: [service] });
+    vi.mocked(api.listMembers).mockResolvedValue(owner);
+    vi.mocked(api.updateConnector).mockResolvedValue(service);
+    render(
+      <MemoryRouter>
+        <ConnectorsPage workspaceId="w1" userId="u1" />
+      </MemoryRouter>
+    );
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Service 수정' }));
+    expect(screen.getByLabelText('종류')).toHaveValue('odata');
+    expect(screen.getByLabelText('경로(Base URL 아래)')).toHaveValue('/$metadata');
+    fireEvent.change(screen.getByLabelText('종류'), { target: { value: 'openapi' } });
+    fireEvent.change(screen.getByLabelText('경로(Base URL 아래)'), { target: { value: ' /openapi.json ' } });
+    fireEvent.click(screen.getByRole('button', { name: '데이터소스 수정' }));
+    await waitFor(() =>
+      expect(api.updateConnector).toHaveBeenLastCalledWith('w1', 'c9', expect.objectContaining({ descriptionDocument: { kind: 'openapi', path: '/openapi.json' } }))
+    );
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Service 수정' }));
+    fireEvent.change(screen.getByLabelText('종류'), { target: { value: '' } });
+    expect(screen.queryByLabelText('경로(Base URL 아래)')).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: '데이터소스 수정' }));
+    await waitFor(() => expect(api.updateConnector).toHaveBeenLastCalledWith('w1', 'c9', expect.objectContaining({ descriptionDocument: null })));
+  });
+
+  it('sends no description document for a source that has none and names none', async () => {
+    const owner = { members: [{ userId: 'u1', email: 'o@x.com', name: 'O', role: 'owner' as const }] };
+    vi.mocked(api.listConnectors).mockResolvedValue({ connectors: [CONNECTOR] });
+    vi.mocked(api.listMembers).mockResolvedValue(owner);
+    vi.mocked(api.updateConnector).mockResolvedValue(CONNECTOR);
+    render(
+      <MemoryRouter>
+        <ConnectorsPage workspaceId="w1" userId="u1" />
+      </MemoryRouter>
+    );
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Plant API 수정' }));
+    expect(screen.getByLabelText('종류')).toHaveValue('');
+    fireEvent.click(screen.getByRole('button', { name: '데이터소스 수정' }));
+    await waitFor(() => expect(api.updateConnector).toHaveBeenCalled());
+    expect(vi.mocked(api.updateConnector).mock.calls[0]![2]).toHaveProperty('descriptionDocument', undefined);
+  });
+
   it('makes a source that answers what is stored here — its answers by path, tried before saving, marked as example data', async () => {
     const owner = { members: [{ userId: 'u1', email: 'o@x.com', name: 'O', role: 'owner' as const }] };
     const stored = { id: 's1', name: 'Plant (example)', type: 'static' as const, answers: { '/pumps': [{ id: 'P1' }] }, sample: true, updatedAt: 't' };

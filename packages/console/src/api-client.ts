@@ -268,7 +268,15 @@ export interface HttpConnectorSummary extends ConnectorOAuthSettings {
   description?: string;
   /** Where the source says, in an answer it gives with success, that it failed. */
   sourceError?: ConnectorSourceError;
+  /** The document the source publishes about itself, which the server reads for its catalog. */
+  descriptionDocument?: ConnectorDescriptionDocument;
   updatedAt: string;
+}
+
+/** The kind of a source's description document and where it is, relative to the source's base URL. */
+export interface ConnectorDescriptionDocument {
+  kind: 'odata' | 'openapi';
+  path: string;
 }
 
 /** Where a source that answers an error with success (HTTP 200) says so in its answer: the status it writes
@@ -297,7 +305,7 @@ export interface NewStaticConnector {
 export function createConnector(
   workspaceId: string,
   input:
-    | ({ name: string; baseUrl: string; authType: ConnectorAuthType; authHeaderName?: string; authParamName?: string; authValue?: string; attribution?: { text: string; url?: string } | null; description?: string | null; sourceError?: ConnectorSourceError | null } & ConnectorOAuthSettings)
+    | ({ name: string; baseUrl: string; authType: ConnectorAuthType; authHeaderName?: string; authParamName?: string; authValue?: string; attribution?: { text: string; url?: string } | null; description?: string | null; sourceError?: ConnectorSourceError | null; descriptionDocument?: ConnectorDescriptionDocument | null } & ConnectorOAuthSettings)
     | NewStaticConnector
 ) {
   return request<ConnectorSummary>(`/workspaces/${workspaceId}/connectors`, {
@@ -326,7 +334,7 @@ export type ConnectorTestResult =
  *  the stored one. Fails with `PATH_REQUIRED` when there is nothing to call without a path. */
 export function testConnector(
   workspaceId: string,
-  input: { connectorId?: string; path?: string; timeZone?: string; type?: 'http' | 'static'; answers?: Record<string, unknown>; baseUrl?: string; authType?: ConnectorAuthType; authHeaderName?: string; authParamName?: string; authValue?: string; sourceError?: ConnectorSourceError | null } & ConnectorOAuthSettings
+  input: { connectorId?: string; path?: string; timeZone?: string; type?: 'http' | 'static'; answers?: Record<string, unknown>; baseUrl?: string; authType?: ConnectorAuthType; authHeaderName?: string; authParamName?: string; authValue?: string; sourceError?: ConnectorSourceError | null; descriptionDocument?: ConnectorDescriptionDocument | null } & ConnectorOAuthSettings
 ) {
   return request<ConnectorTestResult>(`/workspaces/${workspaceId}/connectors/test`, {
     method: 'POST',
@@ -337,7 +345,7 @@ export function testConnector(
 export function updateConnector(
   workspaceId: string,
   connectorId: string,
-  input: { name?: string; baseUrl?: string; authType?: ConnectorAuthType; authHeaderName?: string; authParamName?: string; authValue?: string; attribution?: { text: string; url?: string } | null; description?: string | null; sourceError?: ConnectorSourceError | null; answers?: Record<string, unknown>; sample?: boolean } & ConnectorOAuthSettings
+  input: { name?: string; baseUrl?: string; authType?: ConnectorAuthType; authHeaderName?: string; authParamName?: string; authValue?: string; attribution?: { text: string; url?: string } | null; description?: string | null; sourceError?: ConnectorSourceError | null; descriptionDocument?: ConnectorDescriptionDocument | null; answers?: Record<string, unknown>; sample?: boolean } & ConnectorOAuthSettings
 ) {
   return request<ConnectorSummary>(`/workspaces/${workspaceId}/connectors/${connectorId}`, {
     method: 'PUT',

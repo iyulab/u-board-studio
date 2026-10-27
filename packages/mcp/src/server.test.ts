@@ -49,6 +49,16 @@ function fakeServer() {
       made.push(source);
       return json(201, source);
     }
+    if (url.pathname.startsWith('/api/workspaces/w1/connectors/') && url.pathname.endsWith('/catalog')) {
+      // Only the first source names a description document.
+      if (!url.pathname.endsWith('/s1/catalog')) return json(409, { code: 'NO_DESCRIPTION_DOCUMENT' });
+      const entry = url.searchParams.get('entry');
+      const pumps = { path: '/Pumps', shape: 'set', key: ['Id'], fields: [{ name: 'Id', type: 'Edm.Int64' }, { name: 'Flow', type: 'Edm.Double', nullable: true }], query: ['$filter', '$top'] };
+      if (entry !== null) return entry === '/Pumps' ? json(200, { kind: 'odata', title: 'Plant', entry: pumps }) : json(404, { code: 'NOT_FOUND' });
+      const offset = Number(url.searchParams.get('offset') ?? 0);
+      const all = [{ path: '/Pumps', shape: 'set', key: ['Id'], fieldCount: 2 }, { path: '/Lines', shape: 'set', fieldCount: 1 }];
+      return json(200, { kind: 'odata', title: 'Plant', total: 2, offset, entries: all.slice(offset, offset + Number(url.searchParams.get('limit') ?? 50)) });
+    }
     if (url.pathname === '/api/workspaces/w1/connectors/s1/resolve') {
       if (body.ref.path === '/down') return json(200, { quality: 'disconnected', reason: 'transport', message: 'connect ECONNREFUSED' });
       if (body.ref.path === '/nowhere') return json(200, { quality: 'disconnected', reason: 'address' });
@@ -134,7 +144,7 @@ describe('u-board-mcp', () => {
   it('offers few tools, each with a strict input', async () => {
     const { tools } = await client.listTools();
     expect(tools.map(t => t.name).sort()).toEqual([
-      'board_state', 'create_board', 'create_source', 'delete_board', 'describe', 'get_board', 'list_boards', 'list_sources', 'patch_board', 'rename_board', 'sample_source', 'validate',
+      'board_state', 'create_board', 'create_source', 'delete_board', 'describe', 'describe_source', 'get_board', 'list_boards', 'list_sources', 'patch_board', 'rename_board', 'sample_source', 'validate',
     ]);
     for (const tool of tools) expect(tool.inputSchema.additionalProperties, tool.name).toBe(false);
   });
@@ -360,6 +370,33 @@ describe('u-board-mcp', () => {
 
   it('lists the data sources, never a credential', async () => {
     expect((await call('list_sources')).value).toEqual({ sources: [{ id: 's1', name: 'Plant API', baseUrl: 'https://plant.example.com', authType: 'bearer' }] });
+  });
+
+  it('answers what a source says about itself a page at a time, and one entry in full', async () => {
+    const page = await call('describe_source', { source: 's1' });
+    expect(page.value).toEqual({
+      source: 's1', kind: 'odata', title: 'Plant', total: 2, offset: 0,
+      entries: [{ path: '/Pumps', shape: 'set', key: ['Id'], fieldCount: 2 }, { path: '/Lines', shape: 'set', fieldCount: 1 }],
+    });
+    expect((await call('describe_source', { source: 's1', offset: 1, limit: 1 })).value.entries.map((e: { path: string }) => e.path)).toEqual(['/Lines']);
+    expect(server.requests.at(-1)!.path).toBe('/api/workspaces/w1/connectors/s1/catalog');
+    const one = await call('describe_source', { source: 's1', entry: '/Pumps' });
+    expect(one.value).toMatchObject({ source: 's1', entry: { path: '/Pumps', key: ['Id'], fields: [{ name: 'Id' }, { name: 'Flow', nullable: true }], query: ['$filter', '$top'] } });
+  });
+
+  it('finds a source by its name for its description, and says when the entry is not there', async () => {
+    expect((await call('describe_source', { source: ' plant api' })).value).toMatchObject({ source: 's1', total: 2 });
+    const missing = await call('describe_source', { source: 's1', entry: '/Nope' });
+    expect(missing.isError).toBe(true);
+    expect(missing.value.error).toContain('has no entry "/Nope"');
+    expect((await call('describe_source', { source: 'Nobody' })).value).toMatchObject({ status: 404, hint: expect.stringContaining('list_sources') });
+  });
+
+  it('says what to do when the source names no description document', async () => {
+    await call('create_source', { name: 'Table', answers: [{ path: '/a', answer: [] }] });
+    const none = await call('describe_source', { source: 's2' });
+    expect(none.isError).toBe(true);
+    expect(none.value).toMatchObject({ status: 409, code: 'NO_DESCRIPTION_DOCUMENT', hint: expect.stringContaining('sample_source') });
   });
 
   it('answers what a source’s response looks like, not the response', async () => {

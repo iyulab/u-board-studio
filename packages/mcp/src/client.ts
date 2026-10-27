@@ -56,7 +56,28 @@ export interface SourceSummary {
   description?: string;
   /** Where it says, in an answer it gives with success, that it failed. */
   sourceError?: SourceError;
+  /** The document it publishes about itself, which `describe_source` reads: its kind, and where it is under the base URL. */
+  descriptionDocument?: { kind: 'odata' | 'openapi'; path: string };
 }
+
+/** One entry of a source's catalog — a path it answers — with what it answers with. */
+export interface CatalogEntry {
+  path: string;
+  shape: 'set' | 'item' | 'list';
+  about?: string;
+  key?: string[];
+  fields: { name: string; type: string; nullable?: true; filter?: false; sort?: false }[];
+  relations?: { name: string; type: string }[];
+  query: string[];
+  required?: string[];
+  fieldsCut?: number;
+}
+
+/** A page of a source's catalog, or — asked for one entry — that entry whole. */
+export type Catalog = { kind: 'odata' | 'openapi'; title?: string } & (
+  | { total: number; offset: number; entriesCut?: number; entries: { path: string; shape: CatalogEntry['shape']; about?: string; key?: string[]; fieldCount: number }[] }
+  | { entry: CatalogEntry }
+);
 
 /** Where a source that answers an error with success says so in its answer. */
 export interface SourceError {
@@ -155,6 +176,17 @@ export class UBoardClient {
 
   async listSources(): Promise<SourceSummary[]> {
     return (await this.request<{ connectors: SourceSummary[] }>('GET', await this.workspacePath('/connectors'))).connectors;
+  }
+
+  /** What source `sourceId` says about itself, from the description document it names: a page of its entries, or one entry
+   *  whole (`entry`). */
+  async getCatalog(sourceId: string, query: { entry?: string; offset?: number; limit?: number } = {}): Promise<Catalog> {
+    const params = new URLSearchParams();
+    if (query.entry !== undefined) params.set('entry', query.entry);
+    if (query.offset !== undefined) params.set('offset', String(query.offset));
+    if (query.limit !== undefined) params.set('limit', String(query.limit));
+    const qs = params.size > 0 ? `?${params}` : '';
+    return this.request('GET', await this.workspacePath(`/connectors/${encodeURIComponent(sourceId)}/catalog${qs}`));
   }
 
   /** Makes a data source that needs no credential: an HTTP one at `baseUrl`, or a static one that answers `answers` by

@@ -5,6 +5,7 @@ import { randomUUID } from 'node:crypto';
 import type { ClientAuthMethod } from '../oauth-client-credentials.js';
 import { recordAuditEvent } from './audit.js';
 import { UNSEALED, SecretUnreadableError, isSealed, type SecretBox } from '../secret-box.js';
+import type { CatalogKind } from '../source-catalog/index.js';
 
 /** How a connector sends its secret: as `Authorization: Bearer`, as a named header, as a named query
  * parameter (`query`), in place of `{key}` in its base URL (`path`), or as OAuth2 client credentials.
@@ -52,6 +53,13 @@ export interface StaticConnector extends ConnectorBase {
   sample: boolean;
 }
 
+/** The document a source publishes to describe itself — its kind, and where it is, relative to the source's base URL. Read
+ *  by the server for discovery only (`GET .../catalog`); a board's data reads never go through it. */
+export interface DescriptionDocument {
+  kind: CatalogKind;
+  path: string;
+}
+
 export interface HttpConnector extends ConnectorBase, ConnectorOAuthSettings {
   type: 'http';
   baseUrl: string;
@@ -62,6 +70,7 @@ export interface HttpConnector extends ConnectorBase, ConnectorOAuthSettings {
   authValue?: string;
   /** Where the source says, in an answer it gives with success, that it failed. */
   sourceError?: SourceErrorField;
+  descriptionDocument?: DescriptionDocument;
 }
 
 /** A data source of a workspace: one called over HTTP, or one that answers what it stores. */
@@ -81,6 +90,7 @@ export interface HttpConnectorSummary extends ConnectorOAuthSettings {
   attribution?: Attribution;
   description?: string;
   sourceError?: SourceErrorField;
+  descriptionDocument?: DescriptionDocument;
   updatedAt: string;
 }
 
@@ -91,6 +101,8 @@ interface OAuthColumns {
   sample: boolean;
   description: string | null;
   source_error: SourceErrorField | null;
+  description_doc_kind: string | null;
+  description_doc_path: string | null;
   attribution_text: string | null;
   attribution_url: string | null;
   oauth_token_url: string | null;
@@ -128,6 +140,10 @@ function attributionFromRow(row: OAuthColumns): Attribution | undefined {
   return row.attribution_text === null ? undefined : { text: row.attribution_text, url: row.attribution_url ?? undefined };
 }
 
+function descriptionDocumentFromRow(row: OAuthColumns): DescriptionDocument | undefined {
+  return row.description_doc_kind === null || row.description_doc_path === null ? undefined : { kind: row.description_doc_kind as CatalogKind, path: row.description_doc_path };
+}
+
 function oauthSettingsFromRow(row: OAuthColumns): ConnectorOAuthSettings {
   return {
     oauthTokenUrl: row.oauth_token_url ?? undefined,
@@ -162,6 +178,7 @@ function rowToConnector(row: ConnectorRow, secrets: SecretBox): Connector {
     authParamName: row.auth_param_name ?? undefined,
     authValue: row.auth_value === null ? undefined : secrets.open(row.auth_value),
     sourceError: row.source_error ?? undefined,
+    descriptionDocument: descriptionDocumentFromRow(row),
     ...oauthSettingsFromRow(row),
   };
 }
@@ -182,8 +199,8 @@ export async function createConnector(db: DbClient, input: NewConnector & { acto
     await tx.query(
       `INSERT INTO connectors (id, workspace_id, name, type, base_url, auth_type, auth_header_name, auth_value,
          oauth_token_url, oauth_client_id, oauth_scope, oauth_client_auth, created_at, updated_at, auth_param_name,
-         attribution_text, attribution_url, description, source_error, answers, sample)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21)`,
+         attribution_text, attribution_url, description, source_error, answers, sample, description_doc_kind, description_doc_path)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23)`,
       [
         connector.id, connector.workspaceId, connector.name, connector.type, http?.baseUrl ?? null,
         http?.authType ?? 'none', http?.authHeaderName ?? null, http?.authValue === undefined ? null : secrets.seal(http.authValue),
@@ -192,6 +209,7 @@ export async function createConnector(db: DbClient, input: NewConnector & { acto
         connector.attribution?.text ?? null, connector.attribution?.url ?? null, connector.description ?? null,
         http?.sourceError === undefined ? null : JSON.stringify(http.sourceError),
         connector.type === 'static' ? JSON.stringify(connector.answers) : null, connector.type === 'static' && connector.sample,
+        http?.descriptionDocument?.kind ?? null, http?.descriptionDocument?.path ?? null,
       ]
     );
     await recordAuditEvent(tx, {
@@ -207,7 +225,7 @@ export async function createConnector(db: DbClient, input: NewConnector & { acto
 export async function listConnectorsForWorkspace(db: DbClient, workspaceId: string): Promise<ConnectorSummary[]> {
   const { rows } = await db.query<ConnectorSummaryRow>(
     `SELECT id, name, type, base_url, auth_type, auth_header_name, auth_param_name, attribution_text, attribution_url, description, source_error,
-            oauth_token_url, oauth_client_id, oauth_scope, oauth_client_auth, answers, sample, updated_at
+            oauth_token_url, oauth_client_id, oauth_scope, oauth_client_auth, answers, sample, description_doc_kind, description_doc_path, updated_at
      FROM connectors WHERE workspace_id = $1`,
     [workspaceId]
   );
@@ -229,6 +247,7 @@ export async function listConnectorsForWorkspace(db: DbClient, workspaceId: stri
     attribution: attributionFromRow(r),
     description: r.description ?? undefined,
     sourceError: r.source_error ?? undefined,
+    descriptionDocument: descriptionDocumentFromRow(r),
     ...oauthSettingsFromRow(r),
     updatedAt: r.updated_at,
   });
@@ -295,6 +314,8 @@ export interface ConnectorChanges {
   description?: string | null;
   /** `undefined` leaves it alone; `null` clears it. */
   sourceError?: SourceErrorField | null;
+  /** `undefined` leaves it alone; `null` clears it. */
+  descriptionDocument?: DescriptionDocument | null;
   /** `undefined` leaves the stored OAuth settings alone; `null` clears them (the connector is
    * leaving OAuth); an object replaces them as a set. */
   oauth?: ConnectorOAuthSettings | null;
@@ -324,6 +345,7 @@ export function applyConnectorChanges(existing: Connector, changes: ConnectorCha
     authHeaderName: changes.authHeaderName === undefined ? existing.authHeaderName : (changes.authHeaderName ?? undefined),
     authParamName: changes.authParamName === undefined ? existing.authParamName : (changes.authParamName ?? undefined),
     sourceError: changes.sourceError === undefined ? existing.sourceError : (changes.sourceError ?? undefined),
+    descriptionDocument: changes.descriptionDocument === undefined ? existing.descriptionDocument : (changes.descriptionDocument ?? undefined),
     authValue: changes.authValue === undefined ? existing.authValue : (changes.authValue ?? undefined),
     oauthTokenUrl: oauthSource.oauthTokenUrl,
     oauthClientId: oauthSource.oauthClientId,
@@ -358,6 +380,7 @@ function changedSettings(before: Connector, after: Connector): string {
     return changed.join(',');
   }
   if (JSON.stringify(after.sourceError) !== JSON.stringify(before.sourceError)) changed.push('source_error');
+  if (JSON.stringify(after.descriptionDocument) !== JSON.stringify(before.descriptionDocument)) changed.push('description_document');
   const auth = (c: HttpConnector) =>
     [c.authType, c.authHeaderName, c.authParamName, c.authValue, c.oauthTokenUrl, c.oauthClientId, c.oauthScope, c.oauthClientAuth].join('\u0000');
   if (auth(after) !== auth(before)) changed.push('auth');
@@ -384,7 +407,7 @@ async function updateConnectorIn(
     `UPDATE connectors SET name = $1, base_url = $2, auth_type = $3, auth_header_name = $4, auth_value = $5,
        oauth_token_url = $6, oauth_client_id = $7, oauth_scope = $8, oauth_client_auth = $9, updated_at = $10,
        auth_param_name = $13, attribution_text = $14, attribution_url = $15, description = $16, source_error = $17,
-       answers = $18, sample = $19
+       answers = $18, sample = $19, description_doc_kind = $20, description_doc_path = $21
      WHERE id = $11 AND workspace_id = $12`,
     [
       updated.name, http?.baseUrl ?? null, http?.authType ?? 'none', http?.authHeaderName ?? null, http?.authValue === undefined ? null : secrets.seal(http.authValue),
@@ -393,6 +416,7 @@ async function updateConnectorIn(
       updated.attribution?.text ?? null, updated.attribution?.url ?? null, updated.description ?? null,
       http?.sourceError === undefined ? null : JSON.stringify(http.sourceError),
       updated.type === 'static' ? JSON.stringify(updated.answers) : null, updated.type === 'static' && updated.sample,
+      http?.descriptionDocument?.kind ?? null, http?.descriptionDocument?.path ?? null,
     ]
   );
   const detail = changedSettings(existing, updated);
