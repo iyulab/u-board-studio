@@ -23,10 +23,11 @@ const board: Board = {
       }
     },
     "camera": {
-      "template": "<article class=\"cm {{c.state}}\" style=\"--b: {{c.battery}}; --m: {{c.memory}}\"><header><h2>{{c.no}}</h2><small>{{c.place}}</small><i class=\"seal\"></i></header><p class=\"last\"><span>마지막 포착</span><b>{{c.animal}}</b><time>{{c.time}}</time></p><p class=\"count\">오늘 촬영 {{c.shots}} · 동물 {{c.hits}}</p><div class=\"bars\"><p><span>전지</span><i class=\"bar b\"></i><em>{{c.battery}}%</em></p><p><span>저장</span><i class=\"bar m\"></i><em>{{c.memory}}%</em></p></div><p class=\"word\">{{c.word}} <small>{{c.note}}</small></p></article>",
+      "template": "<article class=\"cm {{c.state}}\" style=\"--b: {{c.battery}}; --m: {{c.memory}}\"><header><h2>{{c.no}}</h2><small>{{c.place}}</small><i class=\"seal\"></i></header><p class=\"last\"><span>마지막 포착</span><b>{{c.animal}}</b><time>{{c.time}}</time></p><p class=\"count\">오늘 촬영 {{c.shots}} · 동물 {{c.hits}}</p><div class=\"bars\"><p><span>전지</span><i class=\"bar b\"></i><em>{{c.battery}}%</em></p><p><span>저장</span><i class=\"bar m\"></i><em>{{c.memory}}%</em></p></div><p class=\"word\">{{word}} <small>{{c.note}}</small></p></article>",
       "style": ".cm{height:100%;box-sizing:border-box;padding:22px 18px 10px 26px;font-family:\"Nanum Myeongjo\", \"Batang\", \"AppleMyungjo\", serif;color:#2a2420;display:grid;gap:5px;align-content:start}\nheader{display:grid;grid-template-columns:auto 1fr auto;align-items:baseline;gap:8px}\nh2{margin:0;font-size:22px;font-weight:800}\nheader small{font-size:13px;color:#6b5a48;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.seal{align-self:start;display:grid;place-items:center;width:38px;height:38px;font:normal 800 24px \"Nanum Myeongjo\", \"Batang\", \"AppleMyungjo\", serif;border:2.5px solid #2a2420;border-radius:4px}\n.ok .seal::before{content:\"安\"}\n.rare .seal{background:#c8442f;border-color:#c8442f;color:#fff4e6;transform:rotate(-4deg)}.rare .seal::before{content:\"珍\"}\n.battery .seal{color:#d9a63a;border-color:#d9a63a;border-style:dashed}.battery .seal::before{content:\"電\"}\n.fault .seal{color:#fff;background:#2a2420}.fault .seal::before{content:\"障\"}\n.full .seal{color:#2f4f7f;border-color:#2f4f7f;border-width:4px;border-style:double}.full .seal::before{content:\"滿\"}\n.last{margin:0;display:flex;align-items:baseline;gap:8px}\n.last span{font-size:12px;color:#6b5a48}\n.last b{font-size:26px}\n.last time{font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;font-size:13px;color:#6b5a48}\n.count{margin:0;font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;font-size:13px}\n.bars{display:grid;gap:3px}\n.bars p{margin:0;display:grid;grid-template-columns:30px 1fr 40px;align-items:center;gap:6px;font-size:12px}\n.bar{display:block;height:9px;background:#dccba3;border-radius:5px;position:relative;overflow:hidden}\n.bar::after{content:\"\";position:absolute;inset:0 auto 0 0;background:#2a2420}\n.b::after{width:calc(var(--b) * 1%)}.m::after{width:calc(var(--m) * 1%)}\nem{font-style:normal;font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;font-size:12px;text-align:right}\n.battery .b::after{background:#d9a63a}.full .m::after{background:#2f4f7f}\n.word{margin:2px 0 0;font-size:15px;font-weight:800;line-height:1.3}\n.word small{font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;font-size:12px;font-weight:400;color:#5a4a3a}\n.rare .word{color:#c8442f}.fault .last b{color:#8a7a6a}",
       "props": {
-        "c": "object"
+        "c": "object",
+        "word": "string"
       }
     },
     "round": {
@@ -73,6 +74,76 @@ const board: Board = {
         },
         "c7": {
           "at": "/value/c7"
+        },
+        "c1-word": {
+          "at": "/value/c1/state",
+          "names": {
+            "ok": "정상",
+            "rare": "보호종 포착",
+            "battery": "전지 부족",
+            "fault": "촬영 없음",
+            "full": "저장 가득"
+          }
+        },
+        "c2-word": {
+          "at": "/value/c2/state",
+          "names": {
+            "ok": "정상",
+            "rare": "보호종 포착",
+            "battery": "전지 부족",
+            "fault": "촬영 없음",
+            "full": "저장 가득"
+          }
+        },
+        "c3-word": {
+          "at": "/value/c3/state",
+          "names": {
+            "ok": "정상",
+            "rare": "보호종 포착",
+            "battery": "전지 부족",
+            "fault": "촬영 없음",
+            "full": "저장 가득"
+          }
+        },
+        "c4-word": {
+          "at": "/value/c4/state",
+          "names": {
+            "ok": "정상",
+            "rare": "보호종 포착",
+            "battery": "전지 부족",
+            "fault": "촬영 없음",
+            "full": "저장 가득"
+          }
+        },
+        "c5-word": {
+          "at": "/value/c5/state",
+          "names": {
+            "ok": "정상",
+            "rare": "보호종 포착",
+            "battery": "전지 부족",
+            "fault": "촬영 없음",
+            "full": "저장 가득"
+          }
+        },
+        "c6-word": {
+          "at": "/value/c6/state",
+          "names": {
+            "ok": "정상",
+            "rare": "보호종 포착",
+            "battery": "전지 부족",
+            "fault": "촬영 없음",
+            "full": "저장 가득"
+          }
+        },
+        "c7-word": {
+          "at": "/value/c7/state",
+          "names": {
+            "ok": "정상",
+            "rare": "보호종 포착",
+            "battery": "전지 부족",
+            "fault": "촬영 없음",
+            "full": "저장 가득"
+          }
         }
       }
     },
@@ -107,7 +178,8 @@ const board: Board = {
       "element": "camera",
       "of": "cameras",
       "bind": {
-        "c": "c1"
+        "c": "c1",
+        "word": "c1-word"
       }
     },
     "camera-c2": {
@@ -115,7 +187,8 @@ const board: Board = {
       "element": "camera",
       "of": "cameras",
       "bind": {
-        "c": "c2"
+        "c": "c2",
+        "word": "c2-word"
       }
     },
     "camera-c3": {
@@ -123,7 +196,8 @@ const board: Board = {
       "element": "camera",
       "of": "cameras",
       "bind": {
-        "c": "c3"
+        "c": "c3",
+        "word": "c3-word"
       }
     },
     "camera-c4": {
@@ -131,7 +205,8 @@ const board: Board = {
       "element": "camera",
       "of": "cameras",
       "bind": {
-        "c": "c4"
+        "c": "c4",
+        "word": "c4-word"
       }
     },
     "camera-c5": {
@@ -139,7 +214,8 @@ const board: Board = {
       "element": "camera",
       "of": "cameras",
       "bind": {
-        "c": "c5"
+        "c": "c5",
+        "word": "c5-word"
       }
     },
     "camera-c6": {
@@ -147,7 +223,8 @@ const board: Board = {
       "element": "camera",
       "of": "cameras",
       "bind": {
-        "c": "c6"
+        "c": "c6",
+        "word": "c6-word"
       }
     },
     "camera-c7": {
@@ -155,7 +232,8 @@ const board: Board = {
       "element": "camera",
       "of": "cameras",
       "bind": {
-        "c": "c7"
+        "c": "c7",
+        "word": "c7-word"
       }
     },
     "species": {

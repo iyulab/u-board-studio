@@ -23,10 +23,11 @@ const board: Board = {
       }
     },
     "stamp": {
-      "template": "<article class=\"st {{s.state}}\"><div class=\"face\"><p class=\"value\">{{s.range}}<small>해리</small></p><div class=\"art\"><i class=\"beam\"></i><i class=\"tower\"></i><i class=\"rock\"></i></div><h2>{{s.name}}</h2><p class=\"char\">{{s.character}}</p><p class=\"word\">{{s.word}}</p><p class=\"note\">{{s.note}} · {{s.time}}</p><span class=\"mark\" aria-hidden=\"true\"><b>{{s.mark}}</b></span></div></article>",
+      "template": "<article class=\"st {{s.state}}\"><div class=\"face\"><p class=\"value\">{{s.range}}<small>해리</small></p><div class=\"art\"><i class=\"beam\"></i><i class=\"tower\"></i><i class=\"rock\"></i></div><h2>{{s.name}}</h2><p class=\"char\">{{s.character}}</p><p class=\"word\">{{word}}</p><p class=\"note\">{{s.note}} · {{s.time}}</p><span class=\"mark\" aria-hidden=\"true\"><b>{{s.mark}}</b></span></div></article>",
       "style": ".st{height:100%;box-sizing:border-box;padding:11px;background:#fbf6ea;\n-webkit-mask:radial-gradient(circle 5px,#0000 96%,#000) -10px -10px/20px 20px round,linear-gradient(#000 0 0) content-box;\nmask:radial-gradient(circle 5px,#0000 96%,#000) -10px -10px/20px 20px round,linear-gradient(#000 0 0) content-box;\nfont-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#26313f}\n.face{position:relative;height:100%;box-sizing:border-box;border:2px solid #2f6f9f;padding:8px 10px;display:grid;grid-template-rows:auto 1fr auto auto auto auto;gap:2px;background:#fffdf7;overflow:hidden}\n.value{margin:0;font:800 30px/1 \"Nanum Myeongjo\", \"Batang\", \"AppleMyungjo\", serif;color:#2f6f9f}.value small{font:600 12px \"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;margin-left:3px}\n.art{position:relative;min-height:0;background:linear-gradient(#cfe3ef,#eaf3f8 60%,#2f6f9f 60%)}\n.tower{position:absolute;left:50%;bottom:18%;width:30px;height:62%;transform:translateX(-50%);background:repeating-linear-gradient(#fff 0 12px,#c0392b 12px 24px);clip-path:polygon(28% 0,72% 0,100% 100%,0 100%)}\n.tower::before{content:\"\";position:absolute;left:30%;right:30%;top:0;height:10px;background:#fff6c2}\n.rock{position:absolute;left:30%;right:30%;bottom:8%;height:14%;background:#5d5348;border-radius:40% 40% 0 0}\n.beam{position:absolute;left:50%;top:24%;width:100%;height:18px;transform:translate(-50%,-50%);background:linear-gradient(90deg,#0000,#ffe98a 30% 70%,#0000)}\nh2{margin:4px 0 0;font:800 20px/1.2 \"Nanum Myeongjo\", \"Batang\", \"AppleMyungjo\", serif;white-space:nowrap}\n.char{margin:0;font:600 12px ui-monospace,Consolas,monospace;color:#56606c}\n.word{margin:0;font-size:15px;font-weight:800}\n.note{margin:0;font-size:11px;color:#56606c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.mark{position:absolute;pointer-events:none}\n.ok .mark{display:none}\n.fog .mark{right:2px;top:44%;width:118px;height:60px;background:repeating-linear-gradient(180deg,#0000 0 9px,#2a3a52cc 9px 12px);transform:rotate(-8deg)}\n.fog .mark b{display:none}\n.fog .beam{background:linear-gradient(90deg,#0000,#d9dde2 30% 70%,#0000)}\n.fog .word{color:#2a3a52}\n.service .mark{right:14px;top:40%;display:grid;place-items:center;width:74px;height:46px;border:3px solid #2a3a52;color:#2a3a52;transform:rotate(-6deg);font:800 15px \"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;background:#ffffff99}\n.service .word{color:#2a3a52}\n.out .mark{right:10px;top:36%;display:grid;place-items:center;width:86px;height:86px;border:4px double #c0392b;border-radius:50%;color:#c0392b;transform:rotate(-12deg);font:800 17px \"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;background:#fff3}\n.out .art{filter:grayscale(1) brightness(.85)}.out .beam{display:none}.out .value{color:#8a8f96}\n.out .word{color:#c0392b}",
       "props": {
-        "s": "object"
+        "s": "object",
+        "word": "string"
       }
     },
     "round": {
@@ -76,6 +77,78 @@ const board: Board = {
         },
         "s8": {
           "at": "/value/s8"
+        },
+        "s1-word": {
+          "at": "/value/s1/state",
+          "names": {
+            "ok": "정상 점등",
+            "fog": "안개 신호 작동",
+            "out": "소등",
+            "service": "정비 중"
+          }
+        },
+        "s2-word": {
+          "at": "/value/s2/state",
+          "names": {
+            "ok": "정상 점등",
+            "fog": "안개 신호 작동",
+            "out": "소등",
+            "service": "정비 중"
+          }
+        },
+        "s3-word": {
+          "at": "/value/s3/state",
+          "names": {
+            "ok": "정상 점등",
+            "fog": "안개 신호 작동",
+            "out": "소등",
+            "service": "정비 중"
+          }
+        },
+        "s4-word": {
+          "at": "/value/s4/state",
+          "names": {
+            "ok": "정상 점등",
+            "fog": "안개 신호 작동",
+            "out": "소등",
+            "service": "정비 중"
+          }
+        },
+        "s5-word": {
+          "at": "/value/s5/state",
+          "names": {
+            "ok": "정상 점등",
+            "fog": "안개 신호 작동",
+            "out": "소등",
+            "service": "정비 중"
+          }
+        },
+        "s6-word": {
+          "at": "/value/s6/state",
+          "names": {
+            "ok": "정상 점등",
+            "fog": "안개 신호 작동",
+            "out": "소등",
+            "service": "정비 중"
+          }
+        },
+        "s7-word": {
+          "at": "/value/s7/state",
+          "names": {
+            "ok": "정상 점등",
+            "fog": "안개 신호 작동",
+            "out": "소등",
+            "service": "정비 중"
+          }
+        },
+        "s8-word": {
+          "at": "/value/s8/state",
+          "names": {
+            "ok": "정상 점등",
+            "fog": "안개 신호 작동",
+            "out": "소등",
+            "service": "정비 중"
+          }
         }
       }
     },
@@ -110,7 +183,8 @@ const board: Board = {
       "element": "stamp",
       "of": "stations",
       "bind": {
-        "s": "s1"
+        "s": "s1",
+        "word": "s1-word"
       }
     },
     "stamp-s2": {
@@ -118,7 +192,8 @@ const board: Board = {
       "element": "stamp",
       "of": "stations",
       "bind": {
-        "s": "s2"
+        "s": "s2",
+        "word": "s2-word"
       }
     },
     "stamp-s3": {
@@ -126,7 +201,8 @@ const board: Board = {
       "element": "stamp",
       "of": "stations",
       "bind": {
-        "s": "s3"
+        "s": "s3",
+        "word": "s3-word"
       }
     },
     "stamp-s4": {
@@ -134,7 +210,8 @@ const board: Board = {
       "element": "stamp",
       "of": "stations",
       "bind": {
-        "s": "s4"
+        "s": "s4",
+        "word": "s4-word"
       }
     },
     "stamp-s5": {
@@ -142,7 +219,8 @@ const board: Board = {
       "element": "stamp",
       "of": "stations",
       "bind": {
-        "s": "s5"
+        "s": "s5",
+        "word": "s5-word"
       }
     },
     "stamp-s6": {
@@ -150,7 +228,8 @@ const board: Board = {
       "element": "stamp",
       "of": "stations",
       "bind": {
-        "s": "s6"
+        "s": "s6",
+        "word": "s6-word"
       }
     },
     "stamp-s7": {
@@ -158,7 +237,8 @@ const board: Board = {
       "element": "stamp",
       "of": "stations",
       "bind": {
-        "s": "s7"
+        "s": "s7",
+        "word": "s7-word"
       }
     },
     "stamp-s8": {
@@ -166,7 +246,8 @@ const board: Board = {
       "element": "stamp",
       "of": "stations",
       "bind": {
-        "s": "s8"
+        "s": "s8",
+        "word": "s8-word"
       }
     },
     "visibility": {

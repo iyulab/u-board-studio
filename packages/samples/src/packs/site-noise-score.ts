@@ -15,10 +15,11 @@ const board: Board = {
   },
   "elements": {
     "staff": {
-      "template": "<section class=\"sf {{s.state}}\"><header><b>{{s.name}}</b><span>{{s.where}}</span><strong>{{s.now | fixed:1}}<small> dB</small></strong><em>{{s.word}}</em></header><div class=\"staff\"><i class=\"limit\"></i><ol>{{#s.notes}}<li class=\"{{state}}\" style=\"--v: {{db}}\"><b></b><time>{{t}}</time></li>{{/s.notes}}</ol></div></section>",
+      "template": "<section class=\"sf {{s.state}}\"><header><b>{{s.name}}</b><span>{{s.where}}</span><strong>{{s.now | fixed:1}}<small> dB</small></strong><em>{{word}}</em></header><div class=\"staff\"><i class=\"limit\"></i><ol>{{#s.notes}}<li class=\"{{state}}\" style=\"--v: {{db}}\"><b></b><time>{{t}}</time></li>{{/s.notes}}</ol></div></section>",
       "style": ".sf{height:100%;box-sizing:border-box;display:grid;grid-template-columns:190px 1fr;gap:18px;align-items:stretch;font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#1f1d1a}\nheader{display:grid;align-content:center;gap:2px;padding-right:14px;border-right:3px double #1f1d1a;text-align:right}\nheader b{font:700 17px \"Noto Serif KR\", \"Nanum Myeongjo\", \"Batang\", Georgia, serif}\nheader span{font-size:12px;color:#8a8273}\nstrong{font:700 30px \"Noto Serif KR\", \"Nanum Myeongjo\", \"Batang\", Georgia, serif;letter-spacing:-.5px}\nstrong small{font-size:13px;font-weight:400}\nem{font-style:normal;font-size:12px;font-weight:700}\n.sf.over em{color:#c4302b}.sf.near em{color:#b9770e}.sf.ok em{color:#8a8273}\n.staff{position:relative;margin:14px 0 22px;background:repeating-linear-gradient(to bottom, #1f1d1a 0 1px, transparent 1px 22.5px);background-size:100% 91px;background-repeat:no-repeat;height:91px}\n.limit{position:absolute;left:0;right:0;bottom:calc((65 - 40) * 2%);height:0;border-top:2px solid #c4302b;opacity:.85}\nol{position:absolute;inset:0;margin:0;padding:0 8px;list-style:none;display:grid;grid-template-columns:repeat(12,1fr)}\nli{position:relative}\nli b{position:absolute;left:50%;bottom:calc((var(--v) - 40) * 2%);width:16px;height:11px;margin:0 0 -5px -8px;border-radius:50%;background:#1f1d1a;transform:rotate(-20deg)}\nli b::after{content:\"\";position:absolute;right:0;bottom:6px;width:1.6px;height:34px;background:inherit;transform:rotate(20deg);transform-origin:bottom}\nli.over b{background:#c4302b}\nli.over b::before{content:\">\";position:absolute;left:-2px;top:-30px;transform:rotate(20deg);font:900 15px \"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#c4302b}\nli.near b{background:#b9770e}\ntime{position:absolute;left:0;right:0;bottom:-20px;text-align:center;font-size:10px;color:#8a8273}",
       "props": {
-        "s": "object"
+        "s": "object",
+        "word": "string"
       }
     },
     "title": {
@@ -57,6 +58,48 @@ const board: Board = {
         },
         "f": {
           "at": "/value/f"
+        },
+        "a-word": {
+          "at": "/value/a/state",
+          "names": {
+            "ok": "기준 안",
+            "near": "기준 가까움"
+          }
+        },
+        "b-word": {
+          "at": "/value/b/state",
+          "names": {
+            "ok": "기준 안",
+            "near": "기준 가까움"
+          }
+        },
+        "c-word": {
+          "at": "/value/c/state",
+          "names": {
+            "ok": "기준 안",
+            "near": "기준 가까움"
+          }
+        },
+        "d-word": {
+          "at": "/value/d/state",
+          "names": {
+            "ok": "기준 안",
+            "near": "기준 가까움"
+          }
+        },
+        "e-word": {
+          "at": "/value/e/state",
+          "names": {
+            "ok": "기준 안",
+            "near": "기준 가까움"
+          }
+        },
+        "f-word": {
+          "at": "/value/f/state",
+          "names": {
+            "ok": "기준 안",
+            "near": "기준 가까움"
+          }
         }
       }
     },
@@ -83,7 +126,8 @@ const board: Board = {
       "element": "staff",
       "of": "staves",
       "bind": {
-        "s": "a"
+        "s": "a",
+        "word": "a-word"
       }
     },
     "point-b": {
@@ -91,7 +135,8 @@ const board: Board = {
       "element": "staff",
       "of": "staves",
       "bind": {
-        "s": "b"
+        "s": "b",
+        "word": "b-word"
       }
     },
     "point-c": {
@@ -99,7 +144,8 @@ const board: Board = {
       "element": "staff",
       "of": "staves",
       "bind": {
-        "s": "c"
+        "s": "c",
+        "word": "c-word"
       }
     },
     "point-d": {
@@ -107,7 +153,8 @@ const board: Board = {
       "element": "staff",
       "of": "staves",
       "bind": {
-        "s": "d"
+        "s": "d",
+        "word": "d-word"
       }
     },
     "point-e": {
@@ -115,7 +162,8 @@ const board: Board = {
       "element": "staff",
       "of": "staves",
       "bind": {
-        "s": "e"
+        "s": "e",
+        "word": "e-word"
       }
     },
     "point-f": {
@@ -123,7 +171,8 @@ const board: Board = {
       "element": "staff",
       "of": "staves",
       "bind": {
-        "s": "f"
+        "s": "f",
+        "word": "f-word"
       }
     },
     "title": {

@@ -91,7 +91,12 @@ const board: Board = {
           "at": "/rainbow/state"
         },
         "word": {
-          "at": "/rainbow/word"
+          "at": "/rainbow/state",
+          "names": {
+            "closed": "닫힘",
+            "racing": "대회",
+            "open": "열림"
+          }
         },
         "note": {
           "at": "/rainbow/note"
@@ -103,7 +108,12 @@ const board: Board = {
           "at": "/challenge/state"
         },
         "word-2": {
-          "at": "/challenge/word"
+          "at": "/challenge/state",
+          "names": {
+            "closed": "닫힘",
+            "racing": "대회",
+            "open": "열림"
+          }
         },
         "note-2": {
           "at": "/challenge/note"
@@ -115,7 +125,12 @@ const board: Board = {
           "at": "/paradise/state"
         },
         "word-3": {
-          "at": "/paradise/word"
+          "at": "/paradise/state",
+          "names": {
+            "closed": "닫힘",
+            "racing": "대회",
+            "open": "열림"
+          }
         },
         "note-3": {
           "at": "/paradise/note"
@@ -127,7 +142,12 @@ const board: Board = {
           "at": "/bravo/state"
         },
         "word-4": {
-          "at": "/bravo/word"
+          "at": "/bravo/state",
+          "names": {
+            "closed": "닫힘",
+            "racing": "대회",
+            "open": "열림"
+          }
         },
         "note-4": {
           "at": "/bravo/note"
@@ -139,7 +159,12 @@ const board: Board = {
           "at": "/family/state"
         },
         "word-5": {
-          "at": "/family/word"
+          "at": "/family/state",
+          "names": {
+            "closed": "닫힘",
+            "racing": "대회",
+            "open": "열림"
+          }
         },
         "note-5": {
           "at": "/family/note"
@@ -151,7 +176,12 @@ const board: Board = {
           "at": "/hill/state"
         },
         "word-6": {
-          "at": "/hill/word"
+          "at": "/hill/state",
+          "names": {
+            "closed": "닫힘",
+            "racing": "대회",
+            "open": "열림"
+          }
         },
         "note-6": {
           "at": "/hill/note"

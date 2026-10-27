@@ -34,10 +34,11 @@ const board: Board = {
       }
     },
     "floor": {
-      "template": "<section class=\"fl {{f.state}}\"><b>{{f.name}}</b><i></i><span>{{f.word}}</span><strong>{{f.free}}</strong><small>{{f.note}}</small></section>",
+      "template": "<section class=\"fl {{f.state}}\"><b>{{f.name}}</b><i></i><span>{{word}}</span><strong>{{f.free}}</strong><small>{{f.note}}</small></section>",
       "style": ".fl{height:100%;box-sizing:border-box;display:grid;grid-template-columns:76px 56px 1fr auto 210px;align-items:center;gap:16px;padding:0 22px;background:#00703c;border-radius:12px;box-shadow:inset 0 0 0 4px #00703c,inset 0 0 0 7px #ffffff,0 6px 0 rgba(0,0,0,.35);font-family:\"Hangil\", \"Noto Sans KR\", \"Malgun Gothic\", \"Arial\", sans-serif;color:#ffffff}\nb{width:64px;height:52px;border-radius:26px;background:#ffffff;color:#00703c;display:grid;place-items:center;font-size:30px;font-weight:900}\ni{width:48px;height:48px;display:grid;place-items:center;font:900 26px \"Hangil\", \"Noto Sans KR\", \"Malgun Gothic\", \"Arial\", sans-serif;font-style:normal;box-sizing:border-box}\nspan{font-size:28px;font-weight:800}\nstrong{font-size:44px;font-weight:900;font-variant-numeric:tabular-nums}\nsmall{font-size:17px;font-weight:700;opacity:.92;text-align:right}\n.free i{background:#0f4c9c;border-radius:6px;box-shadow:inset 0 0 0 3px #ffffff;color:#ffffff}\n.free i::after{content:\"P\"}\n.busy i{background:#ffd100;clip-path:polygon(50% 4%,98% 94%,2% 94%);color:#111;padding-top:12px}\n.busy i::after{content:\"!\"}\n.full i{border-radius:50%;background:#ffffff;box-shadow:inset 0 0 0 7px #d7261e;color:#111;font-size:15px}\n.full i::after{content:\"만차\"}\n.full strong{color:#ffd3cf}\n.shut{background:#3f4448;box-shadow:inset 0 0 0 4px #3f4448,inset 0 0 0 7px #c8ccd0,0 6px 0 rgba(0,0,0,.35)}\n.shut b{color:#3f4448}\n.shut i{background:#f28c28;transform:rotate(45deg) scale(.78);border:3px solid #111}\n.shut i::after{content:\"\";}\n.shut strong{opacity:.6}",
       "props": {
-        "f": "object"
+        "f": "object",
+        "word": "string"
       }
     },
     "notices": {
@@ -114,6 +115,69 @@ const board: Board = {
         },
         "b4": {
           "at": "/value/b4"
+        },
+        "f3-word": {
+          "at": "/value/f3/state",
+          "names": {
+            "free": "여유",
+            "busy": "혼잡",
+            "full": "만차",
+            "shut": "폐쇄"
+          }
+        },
+        "f2-word": {
+          "at": "/value/f2/state",
+          "names": {
+            "free": "여유",
+            "busy": "혼잡",
+            "full": "만차",
+            "shut": "폐쇄"
+          }
+        },
+        "f1-word": {
+          "at": "/value/f1/state",
+          "names": {
+            "free": "여유",
+            "busy": "혼잡",
+            "full": "만차",
+            "shut": "폐쇄"
+          }
+        },
+        "b1-word": {
+          "at": "/value/b1/state",
+          "names": {
+            "free": "여유",
+            "busy": "혼잡",
+            "full": "만차",
+            "shut": "폐쇄"
+          }
+        },
+        "b2-word": {
+          "at": "/value/b2/state",
+          "names": {
+            "free": "여유",
+            "busy": "혼잡",
+            "full": "만차",
+            "shut": "폐쇄"
+          }
+        },
+        "b3-word": {
+          "at": "/value/b3/state",
+          "names": {
+            "free": "여유",
+            "busy": "혼잡",
+            "full": "만차",
+            "shut": "폐쇄"
+          }
+        },
+        "b4-word": {
+          "at": "/value/b4/state",
+          "names": {
+            "free": "여유",
+            "busy": "혼잡",
+            "full": "만차",
+            "shut": "폐쇄"
+          }
         }
       }
     },
@@ -177,7 +241,8 @@ const board: Board = {
       "element": "floor",
       "of": "floors",
       "bind": {
-        "f": "f3"
+        "f": "f3",
+        "word": "f3-word"
       }
     },
     "floor-f2": {
@@ -185,7 +250,8 @@ const board: Board = {
       "element": "floor",
       "of": "floors",
       "bind": {
-        "f": "f2"
+        "f": "f2",
+        "word": "f2-word"
       }
     },
     "floor-f1": {
@@ -193,7 +259,8 @@ const board: Board = {
       "element": "floor",
       "of": "floors",
       "bind": {
-        "f": "f1"
+        "f": "f1",
+        "word": "f1-word"
       }
     },
     "floor-b1": {
@@ -201,7 +268,8 @@ const board: Board = {
       "element": "floor",
       "of": "floors",
       "bind": {
-        "f": "b1"
+        "f": "b1",
+        "word": "b1-word"
       }
     },
     "floor-b2": {
@@ -209,7 +277,8 @@ const board: Board = {
       "element": "floor",
       "of": "floors",
       "bind": {
-        "f": "b2"
+        "f": "b2",
+        "word": "b2-word"
       }
     },
     "floor-b3": {
@@ -217,7 +286,8 @@ const board: Board = {
       "element": "floor",
       "of": "floors",
       "bind": {
-        "f": "b3"
+        "f": "b3",
+        "word": "b3-word"
       }
     },
     "floor-b4": {
@@ -225,7 +295,8 @@ const board: Board = {
       "element": "floor",
       "of": "floors",
       "bind": {
-        "f": "b4"
+        "f": "b4",
+        "word": "b4-word"
       }
     },
     "notices": {

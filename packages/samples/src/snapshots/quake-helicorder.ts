@@ -13,12 +13,12 @@ export const snapshot: SampleSnapshot = {
       '/net/now': { value: { series: 'SEISMIC NETWORK · 실시간 기록', name: '너울 지진 관측망', date: '10월 22일 목요일', time: '14:36' }, updatedAt: at },
       '/net/stations': {
         value: {
-          a1: { code: 'NW-1', place: '북서 능선 · 암반', state: 'alert', word: '경보', pga: '8.6' },
-          a2: { code: 'NW-2', place: '저수지 둑', state: 'felt', word: '감지', pga: '3.1' },
-          a3: { code: 'N-3', place: '북쪽 터널 입구', state: 'felt', word: '감지', pga: '1.8' },
-          a4: { code: 'C-4', place: '관측망 중심', state: 'calm', word: '평온', pga: '0.2' },
-          a5: { code: 'SE-5', place: '남동 해안 절벽', state: 'calm', word: '평온', pga: '0.1' },
-          a6: { code: 'S-6', place: '남쪽 계곡', state: 'offline', word: '끊김', pga: '—' },
+          a1: { code: 'NW-1', place: '북서 능선 · 암반', state: 'alert', pga: '8.6' },
+          a2: { code: 'NW-2', place: '저수지 둑', state: 'felt', pga: '3.1' },
+          a3: { code: 'N-3', place: '북쪽 터널 입구', state: 'felt', pga: '1.8' },
+          a4: { code: 'C-4', place: '관측망 중심', state: 'calm', pga: '0.2' },
+          a5: { code: 'SE-5', place: '남동 해안 절벽', state: 'calm', pga: '0.1' },
+          a6: { code: 'S-6', place: '남쪽 계곡', state: 'offline', pga: '—' },
         },
         updatedAt: at,
       },

@@ -16,10 +16,11 @@ const board: Board = {
   },
   "elements": {
     "ticket": {
-      "template": "<article class=\"tk {{t.state}}\"><header><b>{{t.no}}</b><span>{{t.where}}</span></header><time>{{t.age}}</time><p>{{t.lines}}</p><footer><small>{{t.printed}}</small><em>{{t.word}}</em></footer></article>",
+      "template": "<article class=\"tk {{t.state}}\"><header><b>{{t.no}}</b><span>{{t.where}}</span></header><time>{{t.age}}</time><p>{{t.lines}}</p><footer><small>{{t.printed}}</small><em>{{word}}</em></footer></article>",
       "style": ".tk{position:relative;height:100%;box-sizing:border-box;display:grid;grid-template-rows:auto auto 1fr auto;padding:16px 16px 26px;background:#fbfaf6;clip-path:polygon(0 0,100% 0,100.00% calc(100% - 10px),93.75% 100%,87.50% calc(100% - 10px),81.25% 100%,75.00% calc(100% - 10px),68.75% 100%,62.50% calc(100% - 10px),56.25% 100%,50.00% calc(100% - 10px),43.75% 100%,37.50% calc(100% - 10px),31.25% 100%,25.00% calc(100% - 10px),18.75% 100%,12.50% calc(100% - 10px),6.25% 100%,0.00% calc(100% - 10px));font-family:\"D2Coding\", \"Consolas\", \"Courier New\", \"Noto Sans Mono\", monospace;color:#1d1d1f;box-shadow:0 2px 0 rgba(0,0,0,.05)}\nheader{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px dashed #1d1d1f;padding-bottom:6px}\nb{font-size:24px;font-weight:800}\nspan{font-size:17px;font-weight:700}\ntime{font-size:46px;font-weight:800;letter-spacing:-.02em;padding:6px 0 4px}\np{margin:0;font-size:18px;line-height:1.5;white-space:pre-line;border-top:2px dashed #1d1d1f;padding-top:8px}\nfooter{display:flex;justify-content:space-between;align-items:center;border-top:2px dashed #1d1d1f;padding-top:6px;font-size:14px}\nem{font-style:normal;font-weight:800;font-size:16px}\n.tk::after{position:absolute;bottom:90px;right:22px;padding:4px 10px;font:900 26px \"D2Coding\", \"Consolas\", \"Courier New\", \"Noto Sans Mono\", monospace;transform:rotate(-14deg);opacity:.85}\n.new header b::before{content:\"NEW \";padding:0 6px;margin-right:4px;background:#1d1d1f;color:#fbfaf6;font-size:15px}\n.cook::after{content:\"조리중\";color:#2456b8;border:4px solid #2456b8;border-radius:6px}\n.cook em{color:#2456b8}\n.done::after{content:\"완료\";color:#cc2b2b;border:4px solid #cc2b2b;border-radius:50%;padding:14px 12px}\n.done em{color:#cc2b2b}\n.late{background:#1d1d1f;color:#fbfaf6}\n.late header,.late p,.late footer{border-color:#fbfaf6}\n.late::after{content:\"!! 지연\";color:#1d1d1f;background:#fbfaf6;border-radius:4px}",
       "props": {
-        "t": "object"
+        "t": "object",
+        "word": "string"
       }
     },
     "stations": {
@@ -62,6 +63,60 @@ const board: Board = {
         },
         "t6": {
           "at": "/value/t6"
+        },
+        "t1-word": {
+          "at": "/value/t1/state",
+          "names": {
+            "new": "대기",
+            "cook": "조리 중",
+            "late": "지연",
+            "done": "픽업 대기"
+          }
+        },
+        "t2-word": {
+          "at": "/value/t2/state",
+          "names": {
+            "new": "대기",
+            "cook": "조리 중",
+            "late": "지연",
+            "done": "픽업 대기"
+          }
+        },
+        "t3-word": {
+          "at": "/value/t3/state",
+          "names": {
+            "new": "대기",
+            "cook": "조리 중",
+            "late": "지연",
+            "done": "픽업 대기"
+          }
+        },
+        "t4-word": {
+          "at": "/value/t4/state",
+          "names": {
+            "new": "대기",
+            "cook": "조리 중",
+            "late": "지연",
+            "done": "픽업 대기"
+          }
+        },
+        "t5-word": {
+          "at": "/value/t5/state",
+          "names": {
+            "new": "대기",
+            "cook": "조리 중",
+            "late": "지연",
+            "done": "픽업 대기"
+          }
+        },
+        "t6-word": {
+          "at": "/value/t6/state",
+          "names": {
+            "new": "대기",
+            "cook": "조리 중",
+            "late": "지연",
+            "done": "픽업 대기"
+          }
         }
       }
     },
@@ -98,7 +153,8 @@ const board: Board = {
       "element": "ticket",
       "of": "tickets",
       "bind": {
-        "t": "t1"
+        "t": "t1",
+        "word": "t1-word"
       }
     },
     "ticket-t2": {
@@ -106,7 +162,8 @@ const board: Board = {
       "element": "ticket",
       "of": "tickets",
       "bind": {
-        "t": "t2"
+        "t": "t2",
+        "word": "t2-word"
       }
     },
     "ticket-t3": {
@@ -114,7 +171,8 @@ const board: Board = {
       "element": "ticket",
       "of": "tickets",
       "bind": {
-        "t": "t3"
+        "t": "t3",
+        "word": "t3-word"
       }
     },
     "ticket-t4": {
@@ -122,7 +180,8 @@ const board: Board = {
       "element": "ticket",
       "of": "tickets",
       "bind": {
-        "t": "t4"
+        "t": "t4",
+        "word": "t4-word"
       }
     },
     "ticket-t5": {
@@ -130,7 +189,8 @@ const board: Board = {
       "element": "ticket",
       "of": "tickets",
       "bind": {
-        "t": "t5"
+        "t": "t5",
+        "word": "t5-word"
       }
     },
     "ticket-t6": {
@@ -138,7 +198,8 @@ const board: Board = {
       "element": "ticket",
       "of": "tickets",
       "bind": {
-        "t": "t6"
+        "t": "t6",
+        "word": "t6-word"
       }
     },
     "stations": {

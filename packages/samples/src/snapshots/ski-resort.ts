@@ -7,12 +7,12 @@ import type { SampleSnapshot } from '../sample-pack.js';
 const at = '2026-01-17T02:00:00Z';
 
 const RUNS = {
-  rainbow: { name: '레인보우', state: 'closed', word: '닫힘', note: '눈사태 예방 · 13시' },
-  challenge: { name: '챌린지', state: 'racing', word: '대회', note: '알파인 대회 중' },
-  paradise: { name: '파라다이스', state: 'open', word: '열림', note: '05:30 정설 · 신설' },
-  bravo: { name: '브라보', state: 'open', word: '열림', note: '05:00 정설' },
-  family: { name: '패밀리', state: 'open', word: '열림', note: '04:30 정설 · 강습 중' },
-  hill: { name: '초보 언덕', state: 'open', word: '열림', note: '04:30 정설' },
+  rainbow: { name: '레인보우', state: 'closed', note: '눈사태 예방 · 13시' },
+  challenge: { name: '챌린지', state: 'racing', note: '알파인 대회 중' },
+  paradise: { name: '파라다이스', state: 'open', note: '05:30 정설 · 신설' },
+  bravo: { name: '브라보', state: 'open', note: '05:00 정설' },
+  family: { name: '패밀리', state: 'open', note: '04:30 정설 · 강습 중' },
+  hill: { name: '초보 언덕', state: 'open', note: '04:30 정설' },
 };
 
 const LIFTS = {

@@ -16,7 +16,6 @@ export const snapshot: SampleSnapshot = {
             "where": "아파트 단지 쪽",
             "now": "57.4",
             "state": "ok",
-            "word": "기준 안",
             "notes": [
               {
                 "t": "13:10",
@@ -85,7 +84,6 @@ export const snapshot: SampleSnapshot = {
             "where": "초등학교 앞",
             "now": "52.1",
             "state": "ok",
-            "word": "기준 안",
             "notes": [
               {
                 "t": "13:10",
@@ -154,7 +152,6 @@ export const snapshot: SampleSnapshot = {
             "where": "간선도로 쪽",
             "now": "58.2",
             "state": "ok",
-            "word": "기준 안",
             "notes": [
               {
                 "t": "13:10",
@@ -223,7 +220,6 @@ export const snapshot: SampleSnapshot = {
             "where": "근린공원 쪽",
             "now": "49.7",
             "state": "ok",
-            "word": "기준 안",
             "notes": [
               {
                 "t": "13:10",
@@ -292,7 +288,6 @@ export const snapshot: SampleSnapshot = {
             "where": "현장 안 — 참고",
             "now": "62.2",
             "state": "near",
-            "word": "기준 가까움",
             "notes": [
               {
                 "t": "13:10",
@@ -361,7 +356,6 @@ export const snapshot: SampleSnapshot = {
             "where": "차량 출입구",
             "now": "64.0",
             "state": "near",
-            "word": "기준 가까움",
             "notes": [
               {
                 "t": "13:10",

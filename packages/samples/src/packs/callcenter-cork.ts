@@ -17,10 +17,11 @@ const board: Board = {
   },
   "elements": {
     "agent": {
-      "template": "<article class=\"nt {{a.state}}\"><s></s><header><b>{{a.name}}</b><i></i></header><p>{{a.word}}</p><dl><dt>지금</dt><dd>{{a.since}}</dd><dt>오늘</dt><dd>{{a.calls}}</dd></dl></article>",
+      "template": "<article class=\"nt {{a.state}}\"><s></s><header><b>{{a.name}}</b><i></i></header><p>{{word}}</p><dl><dt>지금</dt><dd>{{a.since}}</dd><dt>오늘</dt><dd>{{a.calls}}</dd></dl></article>",
       "style": ".nt{position:relative;height:100%;box-sizing:border-box;display:grid;grid-template-rows:auto auto 1fr;gap:4px;padding:22px 16px 12px;background:#fffdf6;box-shadow:2px 4px 6px rgba(60,35,15,.35);font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#2b2a33}\ns{position:absolute;text-decoration:none}\nheader{display:flex;justify-content:space-between;align-items:center}\nb{font:700 26px \"Nanum Pen Script\", \"Gaegu\", \"Comic Sans MS\", cursive;line-height:1}\ni{font-style:normal;font:700 20px \"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;width:30px;height:30px;display:grid;place-items:center;border-radius:50%;border:2px solid #2b2a33}\np{margin:0;font-size:16px;font-weight:800}\ndl{margin:0;display:grid;grid-template-columns:auto 1fr;column-gap:10px;align-content:end;font-size:14px;border-top:1px dashed rgba(43,42,51,.4);padding-top:4px}\ndt{color:#5b5960}\ndd{margin:0;text-align:right;font-weight:700}\n.talk{background:#ffe27a;transform:rotate(-1deg)}\n.talk s{left:30%;right:30%;top:-8px;height:22px;background:rgba(245,236,205,.82);clip-path:polygon(3% 0,97% 6%,100% 50%,96% 100%,2% 94%,0 45%)}\n.talk i::before{content:\"☎\"}\n.ready{background:#c8efc1;transform:rotate(1deg)}\n.ready s{left:calc(50% - 10px);top:2px;width:20px;height:20px;background:radial-gradient(circle at 40% 35%,#ffffff 0 2px,#2f8f46 3px 8px,rgba(0,0,0,.35) 9px,transparent 10px)}\n.ready i{border-radius:50%;border:3px solid #2f8f46}\n.wrap{background:#bfe1f5;clip-path:polygon(0 0,100% 0,100% calc(100% - 24px),calc(100% - 24px) 100%,0 100%)}\n.wrap dl{margin-right:20px}\n.wrap::after{content:\"\";position:absolute;right:0;bottom:0;width:24px;height:24px;background:linear-gradient(135deg,#8fb8d0 50%,transparent 50%)}\n.wrap s{left:calc(50% - 10px);top:2px;width:20px;height:20px;background:radial-gradient(circle at 40% 35%,#ffffff 0 2px,#2f6fb0 3px 8px,rgba(0,0,0,.35) 9px,transparent 10px)}\n.wrap i{border:none}\n.wrap i::before{content:\"✎\";font-size:24px}\n.break{background:#f2d0e4;transform:rotate(4deg);opacity:.92}\n.break s{left:14px;top:4px;width:16px;height:16px;background:radial-gradient(circle at 40% 35%,#ffffff 0 2px,#8a8a8a 3px 8px,rgba(0,0,0,.35) 9px,transparent 10px)}\n.break i{border-style:dashed}\n.break i::before{content:\"‖\"}",
       "props": {
-        "a": "object"
+        "a": "object",
+        "word": "string"
       }
     },
     "queue": {
@@ -98,6 +99,114 @@ const board: Board = {
         },
         "a12": {
           "at": "/value/a12"
+        },
+        "a1-word": {
+          "at": "/value/a1/state",
+          "names": {
+            "talk": "통화 중",
+            "ready": "받을 수 있음",
+            "wrap": "후처리",
+            "break": "휴식"
+          }
+        },
+        "a2-word": {
+          "at": "/value/a2/state",
+          "names": {
+            "talk": "통화 중",
+            "ready": "받을 수 있음",
+            "wrap": "후처리",
+            "break": "휴식"
+          }
+        },
+        "a3-word": {
+          "at": "/value/a3/state",
+          "names": {
+            "talk": "통화 중",
+            "ready": "받을 수 있음",
+            "wrap": "후처리",
+            "break": "휴식"
+          }
+        },
+        "a4-word": {
+          "at": "/value/a4/state",
+          "names": {
+            "talk": "통화 중",
+            "ready": "받을 수 있음",
+            "wrap": "후처리",
+            "break": "휴식"
+          }
+        },
+        "a5-word": {
+          "at": "/value/a5/state",
+          "names": {
+            "talk": "통화 중",
+            "ready": "받을 수 있음",
+            "wrap": "후처리",
+            "break": "휴식"
+          }
+        },
+        "a6-word": {
+          "at": "/value/a6/state",
+          "names": {
+            "talk": "통화 중",
+            "ready": "받을 수 있음",
+            "wrap": "후처리",
+            "break": "휴식"
+          }
+        },
+        "a7-word": {
+          "at": "/value/a7/state",
+          "names": {
+            "talk": "통화 중",
+            "ready": "받을 수 있음",
+            "wrap": "후처리",
+            "break": "휴식"
+          }
+        },
+        "a8-word": {
+          "at": "/value/a8/state",
+          "names": {
+            "talk": "통화 중",
+            "ready": "받을 수 있음",
+            "wrap": "후처리",
+            "break": "휴식"
+          }
+        },
+        "a9-word": {
+          "at": "/value/a9/state",
+          "names": {
+            "talk": "통화 중",
+            "ready": "받을 수 있음",
+            "wrap": "후처리",
+            "break": "휴식"
+          }
+        },
+        "a10-word": {
+          "at": "/value/a10/state",
+          "names": {
+            "talk": "통화 중",
+            "ready": "받을 수 있음",
+            "wrap": "후처리",
+            "break": "휴식"
+          }
+        },
+        "a11-word": {
+          "at": "/value/a11/state",
+          "names": {
+            "talk": "통화 중",
+            "ready": "받을 수 있음",
+            "wrap": "후처리",
+            "break": "휴식"
+          }
+        },
+        "a12-word": {
+          "at": "/value/a12/state",
+          "names": {
+            "talk": "통화 중",
+            "ready": "받을 수 있음",
+            "wrap": "후처리",
+            "break": "휴식"
+          }
         }
       }
     },
@@ -151,7 +260,8 @@ const board: Board = {
       "element": "agent",
       "of": "agents",
       "bind": {
-        "a": "a1"
+        "a": "a1",
+        "word": "a1-word"
       }
     },
     "agent-a2": {
@@ -159,7 +269,8 @@ const board: Board = {
       "element": "agent",
       "of": "agents",
       "bind": {
-        "a": "a2"
+        "a": "a2",
+        "word": "a2-word"
       }
     },
     "agent-a3": {
@@ -167,7 +278,8 @@ const board: Board = {
       "element": "agent",
       "of": "agents",
       "bind": {
-        "a": "a3"
+        "a": "a3",
+        "word": "a3-word"
       }
     },
     "agent-a4": {
@@ -175,7 +287,8 @@ const board: Board = {
       "element": "agent",
       "of": "agents",
       "bind": {
-        "a": "a4"
+        "a": "a4",
+        "word": "a4-word"
       }
     },
     "agent-a5": {
@@ -183,7 +296,8 @@ const board: Board = {
       "element": "agent",
       "of": "agents",
       "bind": {
-        "a": "a5"
+        "a": "a5",
+        "word": "a5-word"
       }
     },
     "agent-a6": {
@@ -191,7 +305,8 @@ const board: Board = {
       "element": "agent",
       "of": "agents",
       "bind": {
-        "a": "a6"
+        "a": "a6",
+        "word": "a6-word"
       }
     },
     "agent-a7": {
@@ -199,7 +314,8 @@ const board: Board = {
       "element": "agent",
       "of": "agents",
       "bind": {
-        "a": "a7"
+        "a": "a7",
+        "word": "a7-word"
       }
     },
     "agent-a8": {
@@ -207,7 +323,8 @@ const board: Board = {
       "element": "agent",
       "of": "agents",
       "bind": {
-        "a": "a8"
+        "a": "a8",
+        "word": "a8-word"
       }
     },
     "agent-a9": {
@@ -215,7 +332,8 @@ const board: Board = {
       "element": "agent",
       "of": "agents",
       "bind": {
-        "a": "a9"
+        "a": "a9",
+        "word": "a9-word"
       }
     },
     "agent-a10": {
@@ -223,7 +341,8 @@ const board: Board = {
       "element": "agent",
       "of": "agents",
       "bind": {
-        "a": "a10"
+        "a": "a10",
+        "word": "a10-word"
       }
     },
     "agent-a11": {
@@ -231,7 +350,8 @@ const board: Board = {
       "element": "agent",
       "of": "agents",
       "bind": {
-        "a": "a11"
+        "a": "a11",
+        "word": "a11-word"
       }
     },
     "agent-a12": {
@@ -239,7 +359,8 @@ const board: Board = {
       "element": "agent",
       "of": "agents",
       "bind": {
-        "a": "a12"
+        "a": "a12",
+        "word": "a12-word"
       }
     },
     "queue": {

@@ -18,17 +18,19 @@ const board: Board = {
   },
   "elements": {
     "dock": {
-      "template": "<section class=\"dk {{d.state}}\"><b>{{d.name}}</b><p><i></i>{{d.word}}</p><small>{{d.note}}</small></section>",
+      "template": "<section class=\"dk {{d.state}}\"><b>{{d.name}}</b><p><i></i>{{word}}</p><small>{{d.note}}</small></section>",
       "style": ".dk{height:100%;box-sizing:border-box;display:grid;grid-template-rows:auto 1fr auto;gap:2px;padding:10px 14px;background:#fff8f2;border-radius:26px;box-shadow:inset 0 6px 0 rgba(255,255,255,.45),inset 0 -8px 0 rgba(0,0,0,.08),0 10px 18px rgba(74,63,69,.18);font-family:\"Nunito\", \"Jua\", \"Noto Sans KR\", \"Malgun Gothic\", sans-serif;color:#4a3f45}\nb{font-size:15px;font-weight:900}\np{margin:0;display:flex;align-items:center;gap:6px;font-size:17px;font-weight:800}\nsmall{font-size:12px;font-weight:600}\ni{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font:900 14px \"Nunito\", \"Jua\", \"Noto Sans KR\", \"Malgun Gothic\", sans-serif;font-style:normal;color:#4a3f45}\n.unload i{background:#f4a98a}\n.unload i::after{content:\"↓\"}\n.wait i{background:#f6d67a}\n.wait i::after{content:\"…\"}\n.empty i{border:3px solid #cfc5c0;box-sizing:border-box}\n.empty{color:#8b7f84}",
       "props": {
-        "d": "object"
+        "d": "object",
+        "word": "string"
       }
     },
     "line": {
-      "template": "<section class=\"ln {{l.state}}\"><i></i><div><b>{{l.name}}</b><small>{{l.note}}</small></div><strong>{{l.rate}}</strong><span>{{l.word}}</span></section>",
+      "template": "<section class=\"ln {{l.state}}\"><i></i><div><b>{{l.name}}</b><small>{{l.note}}</small></div><strong>{{l.rate}}</strong><span>{{word}}</span></section>",
       "style": ".ln{height:100%;box-sizing:border-box;display:grid;grid-template-columns:44px 1fr auto auto;align-items:center;gap:14px;padding:0 18px;background:#8fd3b8;border-radius:46px;box-shadow:inset 0 6px 0 rgba(255,255,255,.45),inset 0 -8px 0 rgba(0,0,0,.08),0 10px 18px rgba(74,63,69,.18);font-family:\"Nunito\", \"Jua\", \"Noto Sans KR\", \"Malgun Gothic\", sans-serif;color:#4a3f45}\ni{width:40px;height:40px;border-radius:50%;background:#fff8f2;display:grid;place-items:center;font:900 18px \"Nunito\", \"Jua\", \"Noto Sans KR\", \"Malgun Gothic\", sans-serif;font-style:normal;box-shadow:inset 0 -3px 0 rgba(0,0,0,.08)}\ndiv{display:grid}\nb{font-size:19px;font-weight:900}\nsmall{font-size:13px;font-weight:600}\nstrong{font-size:20px;font-weight:900}\nspan{padding:3px 12px;border-radius:999px;background:#fff8f2;font-size:14px;font-weight:900}\n.run i::after{content:\"▶\"}\n.jam{background:#ef6b5b;color:#fff}\n.jam i{color:#ef6b5b}\n.jam i::after{content:\"‼\"}\n.jam span{color:#ef6b5b}\n.stop{background:#cfc5c0}\n.stop i::after{content:\"■\"}",
       "props": {
-        "l": "object"
+        "l": "object",
+        "word": "string"
       }
     },
     "rework": {
@@ -91,6 +93,54 @@ const board: Board = {
         },
         "d6": {
           "at": "/value/d6"
+        },
+        "d1-word": {
+          "at": "/value/d1/state",
+          "names": {
+            "unload": "하차 중",
+            "wait": "대기",
+            "empty": "비어 있음"
+          }
+        },
+        "d2-word": {
+          "at": "/value/d2/state",
+          "names": {
+            "unload": "하차 중",
+            "wait": "대기",
+            "empty": "비어 있음"
+          }
+        },
+        "d3-word": {
+          "at": "/value/d3/state",
+          "names": {
+            "unload": "하차 중",
+            "wait": "대기",
+            "empty": "비어 있음"
+          }
+        },
+        "d4-word": {
+          "at": "/value/d4/state",
+          "names": {
+            "unload": "하차 중",
+            "wait": "대기",
+            "empty": "비어 있음"
+          }
+        },
+        "d5-word": {
+          "at": "/value/d5/state",
+          "names": {
+            "unload": "하차 중",
+            "wait": "대기",
+            "empty": "비어 있음"
+          }
+        },
+        "d6-word": {
+          "at": "/value/d6/state",
+          "names": {
+            "unload": "하차 중",
+            "wait": "대기",
+            "empty": "비어 있음"
+          }
         }
       }
     },
@@ -111,6 +161,38 @@ const board: Board = {
         },
         "l4": {
           "at": "/value/l4"
+        },
+        "l1-word": {
+          "at": "/value/l1/state",
+          "names": {
+            "run": "가동",
+            "jam": "정체",
+            "stop": "정지"
+          }
+        },
+        "l2-word": {
+          "at": "/value/l2/state",
+          "names": {
+            "run": "가동",
+            "jam": "정체",
+            "stop": "정지"
+          }
+        },
+        "l3-word": {
+          "at": "/value/l3/state",
+          "names": {
+            "run": "가동",
+            "jam": "정체",
+            "stop": "정지"
+          }
+        },
+        "l4-word": {
+          "at": "/value/l4/state",
+          "names": {
+            "run": "가동",
+            "jam": "정체",
+            "stop": "정지"
+          }
         }
       }
     },
@@ -167,7 +249,8 @@ const board: Board = {
       "element": "dock",
       "of": "docks",
       "bind": {
-        "d": "d1"
+        "d": "d1",
+        "word": "d1-word"
       }
     },
     "dock-d2": {
@@ -175,7 +258,8 @@ const board: Board = {
       "element": "dock",
       "of": "docks",
       "bind": {
-        "d": "d2"
+        "d": "d2",
+        "word": "d2-word"
       }
     },
     "dock-d3": {
@@ -183,7 +267,8 @@ const board: Board = {
       "element": "dock",
       "of": "docks",
       "bind": {
-        "d": "d3"
+        "d": "d3",
+        "word": "d3-word"
       }
     },
     "dock-d4": {
@@ -191,7 +276,8 @@ const board: Board = {
       "element": "dock",
       "of": "docks",
       "bind": {
-        "d": "d4"
+        "d": "d4",
+        "word": "d4-word"
       }
     },
     "dock-d5": {
@@ -199,7 +285,8 @@ const board: Board = {
       "element": "dock",
       "of": "docks",
       "bind": {
-        "d": "d5"
+        "d": "d5",
+        "word": "d5-word"
       }
     },
     "dock-d6": {
@@ -207,7 +294,8 @@ const board: Board = {
       "element": "dock",
       "of": "docks",
       "bind": {
-        "d": "d6"
+        "d": "d6",
+        "word": "d6-word"
       }
     },
     "line-l1": {
@@ -215,7 +303,8 @@ const board: Board = {
       "element": "line",
       "of": "lines",
       "bind": {
-        "l": "l1"
+        "l": "l1",
+        "word": "l1-word"
       }
     },
     "line-l2": {
@@ -223,7 +312,8 @@ const board: Board = {
       "element": "line",
       "of": "lines",
       "bind": {
-        "l": "l2"
+        "l": "l2",
+        "word": "l2-word"
       }
     },
     "line-l3": {
@@ -231,7 +321,8 @@ const board: Board = {
       "element": "line",
       "of": "lines",
       "bind": {
-        "l": "l3"
+        "l": "l3",
+        "word": "l3-word"
       }
     },
     "line-l4": {
@@ -239,7 +330,8 @@ const board: Board = {
       "element": "line",
       "of": "lines",
       "bind": {
-        "l": "l4"
+        "l": "l4",
+        "word": "l4-word"
       }
     },
     "rework": {

@@ -14,12 +14,12 @@ export const snapshot: SampleSnapshot = {
     kitchen: {
       '/kitchen/tickets': {
         value: {
-          t1: { no: 'A-118', where: '테이블 7', state: 'new', age: '00:40', word: '대기', printed: '12:23 출력', lines: '2  김치찌개\n1  제육볶음\n   - 덜 맵게\n3  공기밥' },
-          t2: { no: 'A-117', where: '포장', state: 'cook', age: '06:15', word: '조리 중', printed: '12:17 출력', lines: '1  돈가스\n1  우동\n   - 국물 따로' },
-          t3: { no: 'A-116', where: '테이블 3', state: 'cook', age: '09:50', word: '조리 중', printed: '12:14 출력', lines: '2  제육볶음\n2  된장찌개\n2  공기밥' },
-          t4: { no: 'A-115', where: '테이블 12', state: 'late', age: '17:30', word: '지연', printed: '12:06 출력', lines: '4  부대찌개\n   - 라면사리 2\n4  공기밥' },
-          t5: { no: 'A-114', where: '배달', state: 'cook', age: '12:05', word: '조리 중', printed: '12:12 출력', lines: '1  순두부찌개\n1  고등어구이\n2  공기밥' },
-          t6: { no: 'A-113', where: '테이블 5', state: 'done', age: '14:20', word: '픽업 대기', printed: '12:10 출력', lines: '1  비빔밥\n1  김치찌개\n1  공기밥' },
+          t1: { no: 'A-118', where: '테이블 7', state: 'new', age: '00:40', printed: '12:23 출력', lines: '2  김치찌개\n1  제육볶음\n   - 덜 맵게\n3  공기밥' },
+          t2: { no: 'A-117', where: '포장', state: 'cook', age: '06:15', printed: '12:17 출력', lines: '1  돈가스\n1  우동\n   - 국물 따로' },
+          t3: { no: 'A-116', where: '테이블 3', state: 'cook', age: '09:50', printed: '12:14 출력', lines: '2  제육볶음\n2  된장찌개\n2  공기밥' },
+          t4: { no: 'A-115', where: '테이블 12', state: 'late', age: '17:30', printed: '12:06 출력', lines: '4  부대찌개\n   - 라면사리 2\n4  공기밥' },
+          t5: { no: 'A-114', where: '배달', state: 'cook', age: '12:05', printed: '12:12 출력', lines: '1  순두부찌개\n1  고등어구이\n2  공기밥' },
+          t6: { no: 'A-113', where: '테이블 5', state: 'done', age: '14:20', printed: '12:10 출력', lines: '1  비빔밥\n1  김치찌개\n1  공기밥' },
         },
         updatedAt: at,
       },

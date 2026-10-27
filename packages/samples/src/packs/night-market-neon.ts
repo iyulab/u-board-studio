@@ -19,10 +19,11 @@ const board: Board = {
       "style": ".mq{height:100%;box-sizing:border-box;display:flex;align-items:center;gap:28px;padding:0 28px;border:3px solid #ff4fa3;border-radius:20px;box-shadow:0 0 14px #ff4fa3 inset;font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif}\nh1{margin:0;font:400 58px \"Brush Script MT\", \"Segoe Script\", cursive;color:#fff;text-shadow:0 0 4px #fff,0 0 12px #ff4fa3,0 0 22px #ff4fa3}\np{margin:0;font:700 16px \"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;letter-spacing:.24em;color:#3ef0ff;text-shadow:0 0 8px #3ef0ff}"
     },
     "sign": {
-      "template": "<article class=\"ns {{t.state}}\" style=\"--c: {{t.color}}\"><h2>{{t.name}}</h2><p class=\"menu\">{{t.menu}}</p><div class=\"nums\"><span><b>{{t.wait}}</b>분 대기</span><span><b>{{t.line}}</b>명 줄</span></div><p class=\"word\">{{t.word}}</p></article>",
+      "template": "<article class=\"ns {{t.state}}\" style=\"--c: {{t.color}}\"><h2>{{t.name}}</h2><p class=\"menu\">{{t.menu}}</p><div class=\"nums\"><span><b>{{t.wait}}</b>분 대기</span><span><b>{{t.line}}</b>명 줄</span></div><p class=\"word\">{{word}}</p></article>",
       "style": ".ns{position:relative;height:100%;box-sizing:border-box;padding:18px 16px 14px;display:grid;grid-template-rows:auto auto 1fr auto;gap:6px;border:3px solid var(--c);border-radius:22px;background:rgba(10,4,12,.72);box-shadow:0 0 12px var(--c) inset;font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#fff;text-align:center}\nh2{margin:6px 0 0;font:400 36px/1.1 \"Brush Script MT\", \"Segoe Script\", cursive;color:#fff;text-shadow:0 0 4px #fff,0 0 10px var(--c),0 0 18px var(--c);white-space:nowrap}\n.menu{margin:0;font-size:14px;color:var(--c);text-shadow:0 0 6px var(--c)}\n.nums{display:flex;justify-content:center;gap:26px;align-items:center;font-size:13px;color:#e8dcef}\n.nums b{display:block;font:800 48px \"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#fff;text-shadow:0 0 8px var(--c)}\n.word{margin:0;justify-self:center;padding:2px 14px;border:2px solid var(--c);border-radius:999px;font-size:14px;font-weight:800;color:var(--c);text-shadow:0 0 6px var(--c)}\n.busy .word{border-color:#ffb23e;color:#ffb23e;text-shadow:0 0 8px #ffb23e;box-shadow:0 0 10px #ffb23e}\n.busy::after{content:\"\";position:absolute;left:24px;right:24px;bottom:6px;height:3px;border-radius:2px;background:#ffb23e;box-shadow:0 0 8px #ffb23e}\n.soldout::before{content:\"품절\";position:absolute;left:50%;top:44%;transform:translate(-50%,-50%) rotate(-14deg);white-space:nowrap;padding:2px 18px;border:3px solid #ff3b3b;border-radius:12px;font:900 34px \"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#ff3b3b;text-shadow:0 0 8px #ff3b3b;box-shadow:0 0 12px #ff3b3b,0 0 12px #ff3b3b inset;background:rgba(20,0,0,.55);letter-spacing:.2em}\n.soldout .nums,.soldout .menu{opacity:.35}\n.soldout .word{border-color:#ff3b3b;color:#ff3b3b}\n.closed{border-color:#4a3f4f;box-shadow:none;background:rgba(10,4,12,.5)}\n.closed h2,.closed .menu,.closed .nums b,.closed .word{color:#5d5262;text-shadow:none}\n.closed .word{border-color:#4a3f4f;border-style:dashed}",
       "props": {
-        "t": "object"
+        "t": "object",
+        "word": "string"
       }
     },
     "clock": {
@@ -67,6 +68,78 @@ const board: Board = {
         },
         "h": {
           "at": "/value/h"
+        },
+        "a-word": {
+          "at": "/value/a/state",
+          "names": {
+            "busy": "줄 김",
+            "open": "영업 중",
+            "soldout": "품절",
+            "closed": "영업 끝"
+          }
+        },
+        "b-word": {
+          "at": "/value/b/state",
+          "names": {
+            "busy": "줄 김",
+            "open": "영업 중",
+            "soldout": "품절",
+            "closed": "영업 끝"
+          }
+        },
+        "c-word": {
+          "at": "/value/c/state",
+          "names": {
+            "busy": "줄 김",
+            "open": "영업 중",
+            "soldout": "품절",
+            "closed": "영업 끝"
+          }
+        },
+        "d-word": {
+          "at": "/value/d/state",
+          "names": {
+            "busy": "줄 김",
+            "open": "영업 중",
+            "soldout": "품절",
+            "closed": "영업 끝"
+          }
+        },
+        "e-word": {
+          "at": "/value/e/state",
+          "names": {
+            "busy": "줄 김",
+            "open": "영업 중",
+            "soldout": "품절",
+            "closed": "영업 끝"
+          }
+        },
+        "f-word": {
+          "at": "/value/f/state",
+          "names": {
+            "busy": "줄 김",
+            "open": "영업 중",
+            "soldout": "품절",
+            "closed": "영업 끝"
+          }
+        },
+        "g-word": {
+          "at": "/value/g/state",
+          "names": {
+            "busy": "줄 김",
+            "open": "영업 중",
+            "soldout": "품절",
+            "closed": "영업 끝"
+          }
+        },
+        "h-word": {
+          "at": "/value/h/state",
+          "names": {
+            "busy": "줄 김",
+            "open": "영업 중",
+            "soldout": "품절",
+            "closed": "영업 끝"
+          }
         }
       }
     },
@@ -97,7 +170,8 @@ const board: Board = {
       "element": "sign",
       "of": "trucks",
       "bind": {
-        "t": "a"
+        "t": "a",
+        "word": "a-word"
       }
     },
     "truck-b": {
@@ -105,7 +179,8 @@ const board: Board = {
       "element": "sign",
       "of": "trucks",
       "bind": {
-        "t": "b"
+        "t": "b",
+        "word": "b-word"
       }
     },
     "truck-c": {
@@ -113,7 +188,8 @@ const board: Board = {
       "element": "sign",
       "of": "trucks",
       "bind": {
-        "t": "c"
+        "t": "c",
+        "word": "c-word"
       }
     },
     "truck-d": {
@@ -121,7 +197,8 @@ const board: Board = {
       "element": "sign",
       "of": "trucks",
       "bind": {
-        "t": "d"
+        "t": "d",
+        "word": "d-word"
       }
     },
     "truck-e": {
@@ -129,7 +206,8 @@ const board: Board = {
       "element": "sign",
       "of": "trucks",
       "bind": {
-        "t": "e"
+        "t": "e",
+        "word": "e-word"
       }
     },
     "truck-f": {
@@ -137,7 +215,8 @@ const board: Board = {
       "element": "sign",
       "of": "trucks",
       "bind": {
-        "t": "f"
+        "t": "f",
+        "word": "f-word"
       }
     },
     "truck-g": {
@@ -145,7 +224,8 @@ const board: Board = {
       "element": "sign",
       "of": "trucks",
       "bind": {
-        "t": "g"
+        "t": "g",
+        "word": "g-word"
       }
     },
     "truck-h": {
@@ -153,7 +233,8 @@ const board: Board = {
       "element": "sign",
       "of": "trucks",
       "bind": {
-        "t": "h"
+        "t": "h",
+        "word": "h-word"
       }
     },
     "clock": {
