@@ -29,7 +29,7 @@ const board: Board = {
     },
     "queue": {
       "template": "<p class=\"q {{state}}\"><b>{{minutes}}<small>분</small></b><span>대기 {{teams}}팀</span><em>{{note}}</em></p>",
-      "style": ".q{--c:#059669;margin:0;height:100%;box-sizing:border-box;display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;align-items:center;column-gap:12px;padding:8px 14px;border-radius:14px;background:#fff;border:2px solid var(--c);font-family:var(--u-widget-font-family);color:#1e293b}\n.queue{--c:#d97706}.long{--c:#dc2626}.break{--c:#94a3b8}\nb{grid-row:span 2;font-size:40px;line-height:1;font-weight:800;color:var(--c);font-variant-numeric:tabular-nums}\nb small{font-size:18px;margin-left:2px}\nspan{font-size:20px;font-weight:700;white-space:nowrap}\nem{font-style:normal;font-size:16px;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}",
+      "style": ".q{--c:#059669;margin:0;height:100%;box-sizing:border-box;display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;align-items:center;column-gap:12px;padding:8px 14px;border-radius:14px;background:#fff;border:2px solid var(--c);font-family:var(--u-widget-font-family);color:#1e293b}\n.queue{--c:#d97706}.long{--c:#dc2626}.break{--c:#94a3b8}\nb{grid-row:span 2;font-size:40px;line-height:1;font-weight:800;color:var(--c);font-variant-numeric:tabular-nums}\nb small{font-size:18px;margin-left:2px}\nspan{font-size:20px;font-weight:700;white-space:nowrap}\nem{font-style:normal;font-size:14px;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}",
       "props": {
         "minutes": "number",
         "teams": "number",
