@@ -6,6 +6,19 @@ All notable changes to this package are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- **`describe_source`**: what a data source says about itself, from the description document its owner named for it (an OData
+  `$metadata`, an OpenAPI document) — its paths a page at a time, and for one path in full its fields with their types, its
+  key, what it relates to and the query options it accepts.
+- **A board in a file, with no server**: `u-board-mcp --board <file> [--kind grid|canvas]` works on one board kept in a file
+  (made when it is not there). Its tools are `describe`, `get_board`, `patch_board` and `validate`, with no board named;
+  every change is checked as a server checks it and written to the file at once. Giving a file and a server
+  (`UBOARD_URL` / `UBOARD_TOKEN`) together is refused.
+- **`BoardStore` and `WorkspaceStore`**: the board tools (`boardTools`, `createServer`) take a store of boards — a board to read
+  and to change — instead of the HTTP client itself; the HTTP client is a `WorkspaceStore`, which also offers the tools about
+  the list of boards and the data sources. The tools and their answers for a server are unchanged.
+
 ## [0.24.0] - 2026-10-27
 
 ### Changed

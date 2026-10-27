@@ -3,7 +3,8 @@ import { applyJsonPatch, getByPointer, JsonPatchError } from '@iyulab/u-board/do
 import { lintViewDocument, placedAt, type ViewDocument } from '@iyulab/u-board/picture';
 import { type Board } from '@iyulab/u-board/domain';
 import { checkBoard, sourceAdvice } from '@iyulab/u-board-designer/check';
-import { UBoardApiError, type UBoardClient } from './client.js';
+import { UBoardApiError, type ResolveRef } from './client.js';
+import { isWorkspaceStore, type BoardStore, type WorkspaceStore } from './store.js';
 import { describeTopic, TOPICS } from './describe.js';
 import { shapeOf } from './shape.js';
 import type { Looker } from './look.js';
@@ -121,7 +122,7 @@ const UNREAD: Record<string, string> = {
   transport: 'The source could not be reached. Try again later, or ask the person whether it is up.',
 };
 
-const boardId = z.string().min(1).max(100).describe('The board id, from list_boards.');
+const boardIdSchema = z.string().min(1).max(100).describe('The board id, from list_boards.');
 const revision = z.number().int().positive().optional().describe('The revision the change was made against (from get_board). A board saved since answers 412.');
 /** Said when a writer nests an object in its own first key — the commonest shape mistake, and one the plain schema
  *  error ("expected one of …") does not explain. */
@@ -159,6 +160,12 @@ export interface BoardTool {
   run(args: never): Promise<ToolResult>;
 }
 
+/** The tools that need a store that is a whole workspace: the boards' list and lifecycle, what a board shows now, and the
+ *  data sources. A document on its own has one board and no sources, so it offers the rest. */
+const WORKSPACE_TOOLS: ReadonlySet<string> = new Set([
+  'list_boards', 'board_state', 'create_board', 'delete_board', 'rename_board', 'list_sources', 'sample_source', 'describe_source', 'create_source',
+]);
+
 export interface BoardToolsOptions {
   /** Draws a saved board as a picture; without one there is no `look`. */
   looker?: Looker;
@@ -173,7 +180,18 @@ export interface BoardToolsOptions {
  * and advice — never the document again. Nothing here needs Node: the MCP server registers them, and a browser can
  * hand them to a model as they are.
  */
-export function boardTools(client: UBoardClient, { looker, boardState = true }: BoardToolsOptions = {}): BoardTool[] {
+export function boardTools(store: BoardStore | WorkspaceStore, { looker, boardState = true }: BoardToolsOptions = {}): BoardTool[] {
+  // The tools in WORKSPACE_TOOLS are offered only with a store that is a whole workspace on a server (the filter at the
+  // end) — so in them `client` is one.
+  const client = store as WorkspaceStore;
+  // A store with one board needs none named. (Typed as it is for a workspace: the tools that read it as required are not
+  // offered with a store of one board — `which` gives the id to the ones that are.)
+  const boardId = (store.soleBoard === undefined ? boardIdSchema : boardIdSchema.optional().describe('The board id — leave it out: there is one board.')) as typeof boardIdSchema;
+  const which = (board: string | undefined): string => {
+    const id = board ?? store.soleBoard;
+    if (id === undefined) throw new Error('say which board: its id, from list_boards');
+    return id;
+  };
   const tools: BoardTool[] = [];
   function define<S extends z.ZodObject>(name: string, config: { description: string; inputSchema: S; annotations?: BoardTool['annotations'] }, run: (args: z.infer<S>) => Promise<ToolResult>): void {
     tools.push({ name, ...config, run: run as BoardTool['run'] });
@@ -208,7 +226,7 @@ export function boardTools(client: UBoardClient, { looker, boardState = true }: 
     },
     async ({ board, pointer }) =>
       tool(async () => {
-        const found = await client.getBoard(board);
+        const found = await store.getBoard(which(board));
         const read = found.document;
         return {
           id: found.id,
@@ -300,7 +318,7 @@ export function boardTools(client: UBoardClient, { looker, boardState = true }: 
     },
     async ({ board, revision, patch }) =>
       tool(async () => {
-        return client.patchDocument(board, patch, revision);
+        return store.patchDocument(which(board), patch, revision);
       })
   );
 
@@ -315,14 +333,14 @@ export function boardTools(client: UBoardClient, { looker, boardState = true }: 
         let candidate: unknown = document;
         let revision: number | undefined;
         if (candidate === undefined) {
-          if (!board || !patch) throw new Error('give a document, or a board and a patch');
-          const current = await client.getBoard(board);
+          if (!patch || (!board && store.soleBoard === undefined)) throw new Error('give a document, or a board and a patch');
+          const current = await store.getBoard(which(board));
           revision = current.revision;
           candidate = applyJsonPatch(current.document, patch);
         }
         const { issues, advice } = checkBoard(candidate);
         // As saving advises: a read whose source is not one of the workspace's.
-        if (issues.length === 0) advice.push(...sourceAdvice(candidate as Board, await client.listSources()));
+        if (issues.length === 0) advice.push(...sourceAdvice(candidate as Board, isWorkspaceStore(store) ? await store.listSources() : []));
         // A check of a change to a board saves nothing: say so, with the revision the change is to be sent on — a
         // writer that took the check for the save sends the next patch on a revision the board never reached.
         const unsaved = revision !== undefined && issues.length === 0 && { next: `nothing is saved yet — send this patch with patch_board, on revision ${revision}` };
@@ -347,7 +365,7 @@ export function boardTools(client: UBoardClient, { looker, boardState = true }: 
       },
       async ({ board, focus, appearance, width = 1600, height = 900 }) => {
         try {
-          const found = await client.getBoard(board);
+          const found = await store.getBoard(which(board));
           const read = found.document;
           // What the viewers' page draws: the board's picture, made by the server with its data's items.
           const { picture } = found;
@@ -459,7 +477,7 @@ export function boardTools(client: UBoardClient, { looker, boardState = true }: 
 
   /** A request read from a source named as people name it — by its id, or else by its name (case and spaces aside) when
    *  only that one source has it. Two of the same name are not guessed between: their ids are said instead. */
-  async function readSource(source: string, ref: Parameters<UBoardClient['resolve']>[1]): Promise<{ id: string; read: Awaited<ReturnType<UBoardClient['resolve']>> }> {
+  async function readSource(source: string, ref: ResolveRef): Promise<{ id: string; read: Awaited<ReturnType<WorkspaceStore['resolve']>> }> {
     try {
       return { id: source, read: await client.resolve(source, ref) };
     } catch (error) {
@@ -517,5 +535,5 @@ export function boardTools(client: UBoardClient, { looker, boardState = true }: 
       })
   );
 
-  return tools;
+  return isWorkspaceStore(store) ? tools : tools.filter(tool => !WORKSPACE_TOOLS.has(tool.name));
 }

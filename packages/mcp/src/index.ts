@@ -1,15 +1,29 @@
 #!/usr/bin/env node
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { UBoardClient } from './client.js';
+import { DocumentStore } from './document-store.js';
 import { createServer } from './server.js';
 import { BrowserLooker } from './look.js';
+import { startOf } from './start.js';
 
-// Where the U-Board server is, and the workspace API token to reach it with (console → workspace settings → API 토큰).
-const url = process.env.UBOARD_URL;
-const token = process.env.UBOARD_TOKEN;
-if (!url || !token) {
-  console.error('u-board-mcp: set UBOARD_URL (the U-Board server, e.g. https://board.example.com) and UBOARD_TOKEN (a workspace API token, ubt_…)');
+// Against a U-Board server — where it is, and the workspace API token to reach it with (console → workspace settings →
+// API 토큰) — or on a board kept in a file (`--board <file>`), with no server.
+const start = startOf(process.argv.slice(2), process.env);
+if (start.mode === 'refused') {
+  console.error(start.message);
   process.exit(1);
 }
 
-await createServer(new UBoardClient(url, token), new BrowserLooker(url, token)).connect(new StdioServerTransport());
+if (start.mode === 'server') {
+  await createServer(new UBoardClient(start.url, start.token), new BrowserLooker(start.url, start.token)).connect(new StdioServerTransport());
+} else {
+  let store: DocumentStore;
+  try {
+    store = await DocumentStore.open(start.path, start.kind);
+  } catch (error) {
+    console.error(`u-board-mcp: ${error instanceof Error ? error.message : String(error)}`);
+    process.exit(1);
+  }
+  // No picture of the board is drawn: there is no server page to draw it on, so `look` is not offered.
+  await createServer(store).connect(new StdioServerTransport());
+}

@@ -21,6 +21,25 @@ U-Board server with a workspace API token.
 The token acts as you, in that one workspace. It never carries a data source's credential: a source that
 needs a key, a token or OAuth is set up by a person in the console, and the assistant uses it by its id.
 
+## Or on a board in a file, with no server
+
+The same tools work on one board kept in a file, with no U-Board server and no token — to lay a board out with an
+assistant first, or where there is nothing to run:
+
+```sh
+claude mcp add u-board -- npx -y @iyulab/u-board-mcp --board plant.board.json
+```
+
+The file is made, an empty board, when it is not there (`--kind canvas` or `grid`, the default); a file that is there must be
+a board the server would store, or the server does not start and says why. Every change is checked as a server checks it —
+a refused change leaves the file as it was — and written to the file at once, so you can open it beside the assistant and
+watch it grow. Give either a file (`--board`) or a server (`UBOARD_URL` and `UBOARD_TOKEN`), not both.
+
+With a file there are four tools: `describe`, `get_board`, `patch_board` and `validate`. The board is the file, so they need no board
+named. There is no list of boards, no data source and no live data, so no `board_state`, `look`, `list_sources`,
+`sample_source`, `describe_source` or `create_source`; a board's data reads are the business of whoever draws it with the
+real source later.
+
 ## Or in the console: the chat panel
 
 The board editor has an assistant of its own — **✦ AI 비서**, beside the board. Say what the board should show, and

@@ -5,6 +5,7 @@ import type { BoardTool } from './tools.js';
 
 export { boardTools, type BoardTool, type BoardToolsOptions, type ToolResult } from './tools.js';
 export { UBoardClient, UBoardApiError, type SessionAuth } from './client.js';
+export { isWorkspaceStore, type BoardStore, type WorkspaceStore } from './store.js';
 export { TOPICS } from './describe.js';
 // What `look` checks on the page a board is drawn in, for a host that draws it itself (the console's chat panel).
 export { findProblems, countQualityMarks } from './look-page.js';

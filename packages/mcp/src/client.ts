@@ -1,6 +1,7 @@
 import type { Board } from '@iyulab/u-board/domain';
 import type { BoardFinding } from '@iyulab/u-board-designer/check';
 import type { ViewDocument, ViewDocumentAdvice, ViewKind } from '@iyulab/u-board/picture';
+import type { WorkspaceStore } from './store.js';
 
 /** What the server says went wrong — its code, and whatever it adds (issues, the operation that failed, a revision). */
 export class UBoardApiError extends Error {
@@ -86,6 +87,20 @@ export interface SourceError {
   messagePath?: string;
 }
 
+/** A data source to make: one called over HTTP at `baseUrl`, or one that answers what is stored in it, by path. */
+export type NewSource = { name: string; attribution?: { text: string; url?: string }; description?: string } & (
+  | { baseUrl: string; sourceError?: SourceError }
+  | { answers: Record<string, unknown>; sample?: boolean }
+);
+
+/** A read of a data source, as a binding names it. */
+export interface ResolveRef {
+  path: string;
+  valuePath?: string;
+  timeZone?: string;
+  requestTime?: { delaySeconds?: number; stepSeconds?: number };
+}
+
 /** What reading a data source came to: its value (the whole response, when no `valuePath` narrows it) and how
  *  current it is, or why it could not be read. */
 export interface Resolved {
@@ -114,7 +129,7 @@ export interface SessionAuth {
  * read once from `GET /api/token`. In the console itself, `auth` is the workspace the signed-in person is in, and the
  * session they are signed in with is what the server checks.
  */
-export class UBoardClient {
+export class UBoardClient implements WorkspaceStore {
   private info?: Promise<TokenInfo>;
   private readonly token?: string;
 
@@ -191,21 +206,13 @@ export class UBoardClient {
 
   /** Makes a data source that needs no credential: an HTTP one at `baseUrl`, or a static one that answers `answers` by
    *  path. One that needs a credential is made by a person in the console. */
-  async createSource(
-    input: { name: string; attribution?: { text: string; url?: string }; description?: string } & (
-      | { baseUrl: string; sourceError?: SourceError }
-      | { answers: Record<string, unknown>; sample?: boolean }
-    )
-  ): Promise<SourceSummary> {
+  async createSource(input: NewSource): Promise<SourceSummary> {
     const body = 'answers' in input ? { ...input, type: 'static' } : { ...input, authType: 'none' };
     return this.request('POST', await this.workspacePath('/connectors'), { body });
   }
 
   /** Reads `ref` from data source `sourceId` the way a binding does. */
-  async resolve(
-    sourceId: string,
-    ref: { path: string; valuePath?: string; timeZone?: string; requestTime?: { delaySeconds?: number; stepSeconds?: number } }
-  ): Promise<Resolved> {
+  async resolve(sourceId: string, ref: ResolveRef): Promise<Resolved> {
     return this.request('POST', await this.workspacePath(`/connectors/${encodeURIComponent(sourceId)}/resolve`), { body: { ref } });
   }
 
