@@ -76,7 +76,7 @@ test('makes repository-relative links absolute at the tag, leaves the rest', () 
 
 test('the notes say what changed, then how to install from the registry and from the archive, at this version', () => {
   const notes = releaseNotes(releasePlan('0.1.0', 'abc123'), 'f'.repeat(64), 'See [it](docs/self-hosting.md).');
-  assert.match(notes, /## Changes\n\nSee \[it\]\(https:\/\/github\.com\/iyulab\/U-Board\/blob\/v0\.1\.0\/docs\/self-hosting\.md\)\./);
+  assert.match(notes, /## Changes\n\nSee \[it\]\(https:\/\/github\.com\/iyulab\/u-board-studio\/blob\/v0\.1\.0\/docs\/self-hosting\.md\)\./);
   assert.match(notes, /docker pull ghcr\.io\/iyulab\/u-board:0\.1\.0/);
   assert.match(notes, /sha256sum -c u-board-0\.1\.0-linux-amd64\.tar\.gz\.sha256/);
   assert.match(notes, /docker load -i u-board-0\.1\.0-linux-amd64\.tar\.gz/);
