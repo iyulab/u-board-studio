@@ -12,8 +12,18 @@ do when upgrading. Each release's notes carry its section.
 
 ## [Unreleased]
 
+## [0.31.0] - 2026-10-27
+
 ### Added
 
+- **A data source can name the document it publishes about itself** — an OData service's `$metadata` or an OpenAPI document —
+  so that an assistant finds what to bind without the owner describing it again by hand. In the console's data source form, «소스가
+  스스로 내는 설명 문서» takes its kind and its path under the source's base URL (`descriptionDocument` through the API;
+  never an address of its own). The server reads it with the source's own credential and within the addresses the installation
+  allows, up to 4 MB, and answers the paths the source offers, the fields of each with types and key, what it relates to and the
+  query options it accepts — a page at a time — at `GET /api/workspaces/<id>/connectors/<id>/catalog`, kept for ten minutes.
+  The MCP server's `describe_source` reads it. It is for discovery only: a board's data reads never go through it. The two new
+  columns are added when the server starts; nothing to do when upgrading.
 - **A board has a screen of its own to look at, in the console.** `/boards/<id>` draws the board as its users see it, with
   no editor around it; the boards list has a «보기» link beside each name, and the screen has a way into the editor. A
   trigger that asks for another board (`go-to-board`) opens that board's screen there, so a board that leads to others

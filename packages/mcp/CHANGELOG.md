@@ -6,6 +6,8 @@ All notable changes to this package are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.25.0] - 2026-10-27
+
 ### Added
 
 - **`describe_source`**: what a data source says about itself, from the description document its owner named for it (an OData
