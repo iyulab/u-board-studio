@@ -38,9 +38,14 @@ function failed(error: unknown): ToolResult {
 
 /** What is left after a look, in one line — first in the answer, so a writer that skims to the picture still reads that
  *  the board is not done while problems or advice stand. A part seen up close says so for the part only. */
-function lookStatus(problems: number, advice: number, focus: string | undefined): string {
+function lookStatus(problems: number, advice: number, focus: string | undefined, disconnected = 0): string {
   const count = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
-  const left = [problems > 0 && count(problems, 'problem', 'problems'), advice > 0 && count(advice, 'piece of advice', 'pieces of advice')].filter(Boolean).join(' and ');
+  // A part whose read answers nothing draws its own «no value» notice — a board with one is not done, however clean the layout.
+  const left = [
+    problems > 0 && count(problems, 'problem', 'problems'),
+    advice > 0 && count(advice, 'piece of advice', 'pieces of advice'),
+    disconnected > 0 && `${count(disconnected, 'disconnected part', 'disconnected parts')} (board_state says which, and why)`,
+  ].filter(Boolean).join(' and ');
   if (left) return `not done — ${left} to fix${focus ? ' on this part' : ''}`;
   return focus ? 'nothing to fix on this part — look at the whole board before finishing' : 'done — nothing to fix';
 }
@@ -407,7 +412,7 @@ export function boardTools(store: BoardStore | WorkspaceStore, { looker, boardSt
             })),
           ];
           const problems = focus ? seen.filter(p => concerns(p, focus)) : seen;
-          const said = { type: 'text' as const, text: JSON.stringify({ revision: found.revision, status: lookStatus(problems.length, left, focus), ...report, problems, advice }) };
+          const said = { type: 'text' as const, text: JSON.stringify({ revision: found.revision, status: lookStatus(problems.length, left, focus, focus ? 0 : report.quality.disconnected ?? 0), ...report, problems, advice }) };
           return { content: image ? [{ type: 'image' as const, data: image, mimeType: 'image/png' }, said] : [said] };
         } catch (error) {
           return failed(error);

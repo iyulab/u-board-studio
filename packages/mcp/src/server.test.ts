@@ -116,12 +116,12 @@ async function call(name: string, args: Record<string, unknown> = {}) {
 }
 
 /** `look` on a board, through a looker that answers `problems` — the report's text, and what the looker was asked. */
-async function looking(problems: Array<{ path?: string; message: string }> = []) {
+async function looking(problems: Array<{ path?: string; message: string }> = [], quality: Record<string, number> = {}) {
   const asked: Array<{ request: unknown; document: ViewDocument }> = [];
   const looker: Looker = {
     look: async (request, document) => {
       asked.push({ request, document });
-      return { image: 'iVBORw==', report: { picture: { width: 1600, height: 900 }, problems, quality: {}, console: [] } };
+      return { image: 'iVBORw==', report: { picture: { width: 1600, height: 900 }, problems, quality, console: [] } };
     },
   };
   const mcp = createServer(new UBoardClient('https://board.example.com', 'ubt_test', server.fetchImpl), looker);
@@ -253,6 +253,14 @@ describe('u-board-mcp', () => {
     server.boards.set('b4', { name: 'Clean', revision: 1, document: { parts: {}, layout: { kind: 'grid', items: [] } } });
     expect((await (await looking([{ message: 'x' }, { message: 'y' }])).look('b4')).report.status).toBe('not done — 2 problems to fix');
     expect((await (await looking()).look('b4')).report.status).toBe('done — nothing to fix');
+  });
+
+  it('does not call a board done while a part is disconnected — it draws its own «no value» notice', async () => {
+    server.boards.set('b4', { name: 'Clean', revision: 1, document: { parts: {}, layout: { kind: 'grid', items: [] } } });
+    expect((await (await looking([], { disconnected: 2, stale: 1 })).look('b4')).report.status).toBe('not done — 2 disconnected parts (board_state says which, and why) to fix');
+    expect((await (await looking([{ message: 'x' }], { disconnected: 1 })).look('b4')).report.status).toBe('not done — 1 problem and 1 disconnected part (board_state says which, and why) to fix');
+    // Up close the count is the whole board's, not the part's.
+    expect((await (await looking([], { disconnected: 2 })).look('b1', { focus: '/parts/a' })).report.status).not.toContain('disconnected');
   });
 
   it('says when an operation or a board is wrapped in its own first key — the commonest shape mistake', async () => {

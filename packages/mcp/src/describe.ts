@@ -31,7 +31,7 @@ function workspaceWorkflow(offered: ReadonlySet<string>): string {
     'validate({ document } | { board, patch }) checks without saving, exactly as saving does.',
     ...(offered.has('board_state') ? ['board_state({ board }) — what each part shows now (state, quality), no picture: the cheap check after a change to states or data.'] : []),
     ...(offered.has('look')
-      ? ['look({ board }) after a change — a picture as viewers see it, what went wrong while drawing, and the advice that still stands. Fix both — the board is done when both are empty (its status says so); focus a part to see it up close.']
+      ? ['look({ board }) after a change — a picture as viewers see it, what went wrong while drawing, and the advice that still stands. Fix both, and any part it says is disconnected (board_state says why) — the board is done when its status says so; focus a part to see it up close.']
       : []),
   ];
   return `# Changing boards with these tools
