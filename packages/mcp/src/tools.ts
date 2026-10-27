@@ -193,6 +193,8 @@ export function boardTools(store: BoardStore | WorkspaceStore, { looker, boardSt
     return id;
   };
   const tools: BoardTool[] = [];
+  // The names of the tools this store is offered, known once all are defined — `describe` tells the assistant only of those.
+  let offered: ReadonlySet<string> = new Set();
   function define<S extends z.ZodObject>(name: string, config: { description: string; inputSchema: S; annotations?: BoardTool['annotations'] }, run: (args: z.infer<S>) => Promise<ToolResult>): void {
     tools.push({ name, ...config, run: run as BoardTool['run'] });
   }
@@ -206,7 +208,7 @@ export function boardTools(store: BoardStore | WorkspaceStore, { looker, boardSt
         pointer: z.string().max(200).optional().describe('With topic "schema": the JSON Pointer of one part, e.g. "/$defs/query".'),
       }),
     },
-    async ({ topic, pointer }) => tool(() => describeTopic(topic, pointer))
+    async ({ topic, pointer }) => tool(() => describeTopic(topic, pointer, offered))
   );
 
   define(
@@ -325,7 +327,7 @@ export function boardTools(store: BoardStore | WorkspaceStore, { looker, boardSt
   define(
     'validate',
     {
-      description: 'Checks without saving: a whole board, or what a board would become with a patch. Answers issues (each with its path) and advice.',
+      description: 'Checks without saving: a whole board, what a board would become with a patch, or — with neither — the board as it is saved. Answers issues (each with its path) and advice.',
       inputSchema: z.strictObject({ document: document.optional(), board: boardId.optional(), patch: patch.optional() }),
     },
     async ({ document, board, patch }) =>
@@ -333,14 +335,16 @@ export function boardTools(store: BoardStore | WorkspaceStore, { looker, boardSt
         let candidate: unknown = document;
         let revision: number | undefined;
         if (candidate === undefined) {
-          if (!patch || (!board && store.soleBoard === undefined)) throw new Error('give a document, or a board and a patch');
+          if (!board && store.soleBoard === undefined) throw new Error('give a document, or say which board: its id, from list_boards');
           const current = await store.getBoard(which(board));
-          revision = current.revision;
-          candidate = applyJsonPatch(current.document, patch);
+          // No patch: the board as it is saved, nothing changes — so there is no revision to send a change on.
+          if (patch) revision = current.revision;
+          candidate = patch ? applyJsonPatch(current.document, patch) : current.document;
         }
         const { issues, advice } = checkBoard(candidate);
-        // As saving advises: a read whose source is not one of the workspace's.
-        if (issues.length === 0) advice.push(...sourceAdvice(candidate as Board, isWorkspaceStore(store) ? await store.listSources() : []));
+        // As saving advises: a read whose source is not one of the workspace's. A board in a file has no workspace, so no source is
+        // unknown to it — advising there would only call every read wrong.
+        if (issues.length === 0 && isWorkspaceStore(store)) advice.push(...sourceAdvice(candidate as Board, await store.listSources()));
         // A check of a change to a board saves nothing: say so, with the revision the change is to be sent on — a
         // writer that took the check for the save sends the next patch on a revision the board never reached.
         const unsaved = revision !== undefined && issues.length === 0 && { next: `nothing is saved yet — send this patch with patch_board, on revision ${revision}` };
@@ -535,5 +539,7 @@ export function boardTools(store: BoardStore | WorkspaceStore, { looker, boardSt
       })
   );
 
-  return isWorkspaceStore(store) ? tools : tools.filter(tool => !WORKSPACE_TOOLS.has(tool.name));
+  const offeredTools = isWorkspaceStore(store) ? tools : tools.filter(tool => !WORKSPACE_TOOLS.has(tool.name));
+  offered = new Set(offeredTools.map(tool => tool.name));
+  return offeredTools;
 }

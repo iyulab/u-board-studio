@@ -124,6 +124,27 @@ describe('the board tools over a board in a file', () => {
     expect((await call('get_board', {})).value).toMatchObject({ id: 'board', revision: 1, kind: 'grid' });
   });
 
+  it('writes the rules for the tools it has — none of a server’s, which are not offered', async () => {
+    const rules = ((await client.callTool({ name: 'describe', arguments: { topic: 'rules' } })).content as { text: string }[])[0]!.text;
+    for (const name of ['list_boards', 'create_board', 'list_sources', 'sample_source', 'describe_source', 'create_source', 'board_state', 'look(', 'rename_board']) {
+      expect(rules, name).not.toContain(name);
+    }
+    expect(rules).toContain('get_board({ pointer })');
+    expect(rules).toContain('## JSON Patch');
+    expect(rules).toContain('# Writing a board');
+    expect(rules).toContain('Do not invent a source');
+  });
+
+  it('does not call a read wrong for naming a source: a board in a file has none to name', async () => {
+    const read = { op: 'add', path: '/data', value: { v: { from: 'plant', path: '/v' } } };
+    const checked = await call('validate', { patch: [read, { op: 'add', path: '/parts/a', value: { as: 'stat', of: 'v' } }, { op: 'add', path: '/layout/items/-', value: 'a' }] });
+    expect(checked.value).toMatchObject({ valid: true, advice: [] });
+  });
+
+  it('checks the board as it is saved when nothing else is given', async () => {
+    expect((await call('validate', {})).value).toEqual({ valid: true, issues: [], advice: [] });
+  });
+
   it('draws a board with patches, reading it back and checking it as it goes', async () => {
     const saved = await call('patch_board', { patch: [stat, place], revision: 1 });
     expect(saved.value).toMatchObject({ revision: 2 });

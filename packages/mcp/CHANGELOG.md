@@ -6,6 +6,18 @@ All notable changes to this package are documented here. The format follows
 
 ## [Unreleased]
 
+### Fixed
+
+- **`describe` rules name only the tools the assistant has.** On a board in a file (`--board`) the rules told of `list_boards`,
+  `create_board`, the data sources' tools and `look`, which that mode does not offer, and an assistant followed them to a source
+  that was not there. The rules now carry the workflow of the mode they are read in: a board in a file says there are no sources
+  and no values, and to write the reads the board will need; a server's rules name `board_state` and `look` only when they are offered.
+- **`validate` with neither a document nor a patch checks the board as it is saved.** It refused, naming what it wanted.
+- **A board in a file is no longer advised that its reads name sources "of this workspace"** — it has no workspace, so every read
+  was called wrong by `validate`.
+- The rules' JSON Patch section says `add` makes only the last part of its path — a new board has no `/data` or `/statuses` to
+  add into — and that renaming a part changes every `of` and `each` that names it.
+
 ## [0.25.0] - 2026-10-27
 
 ### Added

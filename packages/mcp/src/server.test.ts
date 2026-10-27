@@ -169,6 +169,8 @@ describe('u-board-mcp', () => {
     expect(rules).toContain('## JSON Patch');
     expect(rules).toContain('# Writing a board');
     expect(rules.indexOf('## JSON Patch')).toBeLessThan(rules.indexOf('# Writing a board'));
+    // A server offers the lists, the sources and the picture — and the rules name them.
+    for (const name of ['list_boards', 'create_board', 'create_source', 'board_state']) expect(rules, name).toContain(name);
     expect((await call('describe', { topic: 'schema', pointer: '/$defs/query' })).value).toHaveProperty('properties');
     const lost = await call('describe', { topic: 'schema', pointer: '/nowhere' });
     expect(lost.isError).toBe(true);
