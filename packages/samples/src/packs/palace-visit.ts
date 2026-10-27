@@ -83,7 +83,12 @@ const board: Board = {
           "at": "/gate/crowd"
         },
         "word": {
-          "at": "/gate/word"
+          "at": "/gate/crowd",
+          "names": {
+            "calm": "여유",
+            "busy": "보통",
+            "crowded": "붐빔"
+          }
         },
         "people": {
           "at": "/gate/people"
@@ -98,7 +103,12 @@ const board: Board = {
           "at": "/throne/crowd"
         },
         "word-2": {
-          "at": "/throne/word"
+          "at": "/throne/crowd",
+          "names": {
+            "calm": "여유",
+            "busy": "보통",
+            "crowded": "붐빔"
+          }
         },
         "people-2": {
           "at": "/throne/people"
@@ -113,7 +123,12 @@ const board: Board = {
           "at": "/council/crowd"
         },
         "word-3": {
-          "at": "/council/word"
+          "at": "/council/crowd",
+          "names": {
+            "calm": "여유",
+            "busy": "보통",
+            "crowded": "붐빔"
+          }
         },
         "people-3": {
           "at": "/council/people"
@@ -128,7 +143,12 @@ const board: Board = {
           "at": "/living/crowd"
         },
         "word-4": {
-          "at": "/living/word"
+          "at": "/living/crowd",
+          "names": {
+            "calm": "여유",
+            "busy": "보통",
+            "crowded": "붐빔"
+          }
         },
         "people-4": {
           "at": "/living/people"
@@ -143,7 +163,12 @@ const board: Board = {
           "at": "/prince/crowd"
         },
         "word-5": {
-          "at": "/prince/word"
+          "at": "/prince/crowd",
+          "names": {
+            "calm": "여유",
+            "busy": "보통",
+            "crowded": "붐빔"
+          }
         },
         "people-5": {
           "at": "/prince/people"
@@ -158,7 +183,12 @@ const board: Board = {
           "at": "/pavilion/crowd"
         },
         "word-6": {
-          "at": "/pavilion/word"
+          "at": "/pavilion/crowd",
+          "names": {
+            "calm": "여유",
+            "busy": "보통",
+            "crowded": "붐빔"
+          }
         },
         "people-6": {
           "at": "/pavilion/people"

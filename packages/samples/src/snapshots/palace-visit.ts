@@ -13,12 +13,12 @@ export const snapshot: SampleSnapshot = {
     palace: {
       '/palace/now': { name: '가람궁', sub: '관람 안내 · 09:00–18:00', date: '10월 21일 수요일', time: '14:30', updatedAt: at },
       '/palace/halls': {
-        gate: { name: '정문', crowd: 'busy', word: '보통', people: 180, next: '15:00 수문장 교대' },
-        throne: { name: '정전', crowd: 'crowded', word: '붐빔', people: 640, next: '해설 15:00' },
-        council: { name: '편전', crowd: 'busy', word: '보통', people: 210, next: '해설 15:20' },
-        living: { name: '침전', crowd: 'calm', word: '여유', people: 95, next: '해설 15:40' },
-        prince: { name: '동궁', crowd: 'calm', word: '여유', people: 70, next: '전시 «세자의 하루»' },
-        pavilion: { name: '정자', crowd: 'busy', word: '보통', people: 260, next: '후원 16:00 입장', special: '오늘만 누마루 개방' },
+        gate: { name: '정문', crowd: 'busy', people: 180, next: '15:00 수문장 교대' },
+        throne: { name: '정전', crowd: 'crowded', people: 640, next: '해설 15:00' },
+        council: { name: '편전', crowd: 'busy', people: 210, next: '해설 15:20' },
+        living: { name: '침전', crowd: 'calm', people: 95, next: '해설 15:40' },
+        prince: { name: '동궁', crowd: 'calm', people: 70, next: '전시 «세자의 하루»' },
+        pavilion: { name: '정자', crowd: 'busy', people: 260, next: '후원 16:00 입장', special: '오늘만 누마루 개방' },
         updatedAt: at,
       },
       '/palace/figures': {
