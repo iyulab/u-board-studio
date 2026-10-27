@@ -6,6 +6,13 @@ All notable changes to this package are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.24.0] - 2026-10-27
+
+### Changed
+
+- **The board check and the rulebook come from `@iyulab/u-board-designer/check`**, and the board language and the viewer
+  from `@iyulab/u-board` 0.36.0 (MIT). The tools and their answers are unchanged.
+
 ## [0.23.0] - 2026-10-25
 
 ### Added

@@ -1,6 +1,6 @@
 {
   "name": "@iyulab/u-board-mcp",
-  "version": "0.23.0",
+  "version": "0.24.0",
   "description": "MCP server that lets an AI assistant read and draw U-Board boards through a workspace API token",
   "type": "module",
   "license": "AGPL-3.0-or-later",
