@@ -1,0 +1,19 @@
+import '@testing-library/jest-dom/vitest';
+import '../../test-support/react-key-warnings';
+
+// jsdom doesn't implement <dialog>'s showModal()/close() (same class of gap as
+// HTMLAnchorElement.prototype.click in packages/designer's authoring tests) — real modal
+// behavior (focus trap, backdrop, Escape-to-close) is exercised by Playwright e2e instead; this
+// only keeps the `open` attribute (and the native `close` event) consistent for component tests.
+if (!HTMLDialogElement.prototype.showModal) {
+  HTMLDialogElement.prototype.showModal = function (this: HTMLDialogElement) {
+    this.setAttribute('open', '');
+  };
+}
+if (!HTMLDialogElement.prototype.close) {
+  HTMLDialogElement.prototype.close = function (this: HTMLDialogElement) {
+    if (!this.open) return;
+    this.removeAttribute('open');
+    this.dispatchEvent(new Event('close'));
+  };
+}

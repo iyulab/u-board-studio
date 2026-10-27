@@ -1,0 +1,29 @@
+node_modules/
+dist/
+.playwright-mcp/
+test-results/
+playwright-report/
+# Written by scripts/release-image.mjs.
+release/
+.worktrees/
+.superpowers/
+
+# Local dev tracking — see AGENTS.md ("Documentation split"). Tracking lives in the enclosing workspace,
+# not here.
+claudedocs/
+CLAUDE.md
+
+.DS_Store
+Thumbs.db
+
+packages/server/*.db
+# PGlite local-dev DB (UBOARD_DATABASE_URL set to a local path, e.g. .env.example's default
+# `./u-board-data`) persists as a directory, not a single file — the *.db glob above doesn't
+# cover it.
+packages/server/u-board-data*/
+packages/*/.env
+!packages/*/.env.example
+
+# Copied in from the repository root by packages/designer/scripts/prepack.mjs at pack time.
+packages/designer/LICENSE
+packages/mcp/LICENSE
