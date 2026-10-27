@@ -25,7 +25,7 @@ import { pathToFileURL } from 'node:url';
 import { createGzip } from 'node:zlib';
 
 export const IMAGE = 'ghcr.io/iyulab/u-board';
-export const REPOSITORY = 'https://github.com/iyulab/U-Board';
+export const REPOSITORY = 'https://github.com/iyulab/u-board-studio';
 // The platform installations run on. One archive per platform; another platform is another build.
 export const PLATFORM = 'linux/amd64';
 const OUT_DIR = 'release';

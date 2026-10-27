@@ -32,13 +32,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/iyulab/U-Board.git",
+    "url": "git+https://github.com/iyulab/u-board-studio.git",
     "directory": "packages/mcp"
   },
   "bugs": {
-    "url": "https://github.com/iyulab/U-Board/issues"
+    "url": "https://github.com/iyulab/u-board-studio/issues"
   },
-  "homepage": "https://github.com/iyulab/U-Board/tree/main/packages/mcp#readme",
+  "homepage": "https://github.com/iyulab/u-board-studio/tree/main/packages/mcp#readme",
   "keywords": [
     "mcp",
     "model-context-protocol",

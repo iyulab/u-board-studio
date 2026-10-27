@@ -16,7 +16,7 @@ docker pull ghcr.io/iyulab/u-board:<version>
 ```
 
 The image, and the archive a release carries (see [Networks without internet access](#networks-without-internet-access)),
-come with a build provenance attestation: `gh attestation verify oci://ghcr.io/iyulab/u-board:<version> --repo iyulab/U-Board`
+come with a build provenance attestation: `gh attestation verify oci://ghcr.io/iyulab/u-board:<version> --repo iyulab/u-board-studio`
 — or the archive's file name in place of `oci://…` — confirms it was built by this repository's
 release workflow, and from which commit.
 

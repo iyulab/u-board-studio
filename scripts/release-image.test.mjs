@@ -64,8 +64,8 @@ test('refuses a version the changelog has no section for, or an empty one', () =
 });
 
 test('makes repository-relative links absolute at the tag, leaves the rest', () => {
-  const blob = 'https://github.com/iyulab/U-Board/blob/v0.1.0/';
-  const raw = 'https://github.com/iyulab/U-Board/raw/v0.1.0/';
+  const blob = 'https://github.com/iyulab/u-board-studio/blob/v0.1.0/';
+  const raw = 'https://github.com/iyulab/u-board-studio/raw/v0.1.0/';
   assert.equal(
     absoluteLinks('[a](docs/x.md#y) [b](https://example.com/z) [c](#here) [d](/root) [e](README.md "Read me")', 'v0.1.0'),
     `[a](${blob}docs/x.md#y) [b](https://example.com/z) [c](#here) [d](/root) [e](${blob}README.md "Read me")`
