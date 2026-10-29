@@ -24,10 +24,11 @@ const board: Board = {
       }
     },
     "pitch": {
-      "template": "<article class=\"pc {{p.state}}\"><header><b>{{p.no}}</b><i></i></header><small>{{p.kind}}</small><p>{{p.party}}</p><em>{{p.word}}</em><span>{{p.note}}</span></article>",
+      "template": "<article class=\"pc {{p.state}}\"><header><b>{{p.no}}</b><i></i></header><small>{{p.kind}}</small><p>{{p.party}}</p><em>{{word}}</em><span>{{p.note}}</span></article>",
       "style": ".pc{width:calc(100% - 12px);height:calc(100% - 14px);box-sizing:border-box;display:grid;grid-template-rows:auto auto 1fr auto auto;gap:2px;padding:12px 14px;background:#fffaf0;box-shadow:5px 5px 0 #7fa865,10px 10px 0 #2f6b4f,12px 14px 14px rgba(60,40,20,.3);font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#2c2a25;border-radius:4px}\nheader{display:flex;justify-content:space-between;align-items:center}\nb{font-size:24px;font-weight:900;letter-spacing:.02em}\ni{position:relative;width:40px;height:30px;background:#d9774a;clip-path:polygon(50% 0,100% 100%,62% 100%,50% 62%,38% 100%,0 100%)}\nsmall{font-size:12px}\np{margin:4px 0 0;font-size:15px;font-weight:800}\nem{font-style:normal;font-size:14px;font-weight:800}\nspan{font-size:12px;border-top:1px solid rgba(44,42,37,.25);padding-top:3px}\n.arriving{box-shadow:5px 5px 0 #e8c78b,10px 10px 0 #c79a4f,12px 14px 14px rgba(60,40,20,.3)}\n.arriving i{background:#d9774a}\n.arriving i::after{content:\"\";position:absolute;inset:4px 6px 0;background:#fffaf0;clip-path:polygon(50% 0,100% 100%,62% 100%,50% 62%,38% 100%,0 100%)}\n.arriving{outline:2px dashed #d9774a;outline-offset:-7px}\n.free i{width:28px;height:28px;clip-path:none;border-radius:50%;background:transparent;border:3px solid #2f6b4f;box-sizing:border-box}\n.free{box-shadow:5px 5px 0 #cfe0c0,10px 10px 0 #a7c08a,12px 14px 14px rgba(60,40,20,.3)}\n.free em{color:#2f6b4f}\n.closed{background:repeating-linear-gradient(-45deg,#fffaf0 0 7px,#eadfcd 7px 14px);box-shadow:5px 5px 0 #c8b9a2,10px 10px 0 #9e8f78,12px 14px 14px rgba(60,40,20,.3)}\n.closed i{clip-path:none;background:transparent;width:28px;height:28px}\n.closed i::before{content:\"✕\";font:900 26px \"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#8c3a1e;line-height:28px}\n.closed em{color:#8c3a1e}",
       "props": {
-        "p": "object"
+        "p": "object",
+        "word": "string"
       }
     },
     "moves": {
@@ -108,6 +109,89 @@ const board: Board = {
         },
         "b5": {
           "at": "/value/b5"
+        },
+        "a1-word": {
+          "at": "/value/a1/state",
+          "names": {
+            "in": "입실",
+            "free": "빈 사이트",
+            "closed": "닫힘"
+          }
+        },
+        "a2-word": {
+          "at": "/value/a2/state",
+          "names": {
+            "in": "입실",
+            "free": "빈 사이트",
+            "closed": "닫힘"
+          }
+        },
+        "a3-word": {
+          "at": "/value/a3/state",
+          "names": {
+            "in": "입실",
+            "free": "빈 사이트",
+            "closed": "닫힘"
+          }
+        },
+        "a4-word": {
+          "at": "/value/a4/state",
+          "names": {
+            "in": "입실",
+            "free": "빈 사이트",
+            "closed": "닫힘"
+          }
+        },
+        "a5-word": {
+          "at": "/value/a5/state",
+          "names": {
+            "in": "입실",
+            "free": "빈 사이트",
+            "closed": "닫힘"
+          }
+        },
+        "b1-word": {
+          "at": "/value/b1/state",
+          "names": {
+            "in": "입실",
+            "free": "빈 사이트",
+            "closed": "닫힘",
+            "arriving": "도착 중"
+          }
+        },
+        "b2-word": {
+          "at": "/value/b2/state",
+          "names": {
+            "in": "입실",
+            "free": "빈 사이트",
+            "closed": "닫힘"
+          }
+        },
+        "b3-word": {
+          "at": "/value/b3/state",
+          "names": {
+            "in": "입실",
+            "free": "빈 사이트",
+            "closed": "닫힘",
+            "arriving": "오는 중"
+          }
+        },
+        "b4-word": {
+          "at": "/value/b4/state",
+          "names": {
+            "in": "입실",
+            "free": "빈 사이트",
+            "closed": "닫힘"
+          }
+        },
+        "b5-word": {
+          "at": "/value/b5/state",
+          "names": {
+            "in": "입실",
+            "free": "빈 사이트",
+            "closed": "닫힘",
+            "arriving": "오는 중"
+          }
         }
       }
     },
@@ -169,7 +253,8 @@ const board: Board = {
       "element": "pitch",
       "of": "pitches",
       "bind": {
-        "p": "a1"
+        "p": "a1",
+        "word": "a1-word"
       }
     },
     "pitch-a2": {
@@ -177,7 +262,8 @@ const board: Board = {
       "element": "pitch",
       "of": "pitches",
       "bind": {
-        "p": "a2"
+        "p": "a2",
+        "word": "a2-word"
       }
     },
     "pitch-a3": {
@@ -185,7 +271,8 @@ const board: Board = {
       "element": "pitch",
       "of": "pitches",
       "bind": {
-        "p": "a3"
+        "p": "a3",
+        "word": "a3-word"
       }
     },
     "pitch-a4": {
@@ -193,7 +280,8 @@ const board: Board = {
       "element": "pitch",
       "of": "pitches",
       "bind": {
-        "p": "a4"
+        "p": "a4",
+        "word": "a4-word"
       }
     },
     "pitch-a5": {
@@ -201,7 +289,8 @@ const board: Board = {
       "element": "pitch",
       "of": "pitches",
       "bind": {
-        "p": "a5"
+        "p": "a5",
+        "word": "a5-word"
       }
     },
     "pitch-b1": {
@@ -209,7 +298,8 @@ const board: Board = {
       "element": "pitch",
       "of": "pitches",
       "bind": {
-        "p": "b1"
+        "p": "b1",
+        "word": "b1-word"
       }
     },
     "pitch-b2": {
@@ -217,7 +307,8 @@ const board: Board = {
       "element": "pitch",
       "of": "pitches",
       "bind": {
-        "p": "b2"
+        "p": "b2",
+        "word": "b2-word"
       }
     },
     "pitch-b3": {
@@ -225,7 +316,8 @@ const board: Board = {
       "element": "pitch",
       "of": "pitches",
       "bind": {
-        "p": "b3"
+        "p": "b3",
+        "word": "b3-word"
       }
     },
     "pitch-b4": {
@@ -233,7 +325,8 @@ const board: Board = {
       "element": "pitch",
       "of": "pitches",
       "bind": {
-        "p": "b4"
+        "p": "b4",
+        "word": "b4-word"
       }
     },
     "pitch-b5": {
@@ -241,7 +334,8 @@ const board: Board = {
       "element": "pitch",
       "of": "pitches",
       "bind": {
-        "p": "b5"
+        "p": "b5",
+        "word": "b5-word"
       }
     },
     "moves": {

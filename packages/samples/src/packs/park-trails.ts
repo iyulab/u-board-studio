@@ -82,7 +82,12 @@ const board: Board = {
           "at": "/centre/status"
         },
         "word": {
-          "at": "/centre/word"
+          "at": "/centre/status",
+          "names": {
+            "busy": "혼잡",
+            "open": "여유",
+            "closed": "입산 마감"
+          }
         },
         "line": {
           "at": "/centre/line"
@@ -97,7 +102,12 @@ const board: Board = {
           "at": "/east/status"
         },
         "word-2": {
-          "at": "/east/word"
+          "at": "/east/status",
+          "names": {
+            "busy": "혼잡",
+            "open": "여유",
+            "closed": "입산 마감"
+          }
         },
         "line-2": {
           "at": "/east/line"
@@ -112,7 +122,12 @@ const board: Board = {
           "at": "/falls/status"
         },
         "word-3": {
-          "at": "/falls/word"
+          "at": "/falls/status",
+          "names": {
+            "busy": "혼잡",
+            "open": "여유",
+            "closed": "입산 마감"
+          }
         },
         "line-3": {
           "at": "/falls/line"
@@ -127,7 +142,12 @@ const board: Board = {
           "at": "/shelter/status"
         },
         "word-4": {
-          "at": "/shelter/word"
+          "at": "/shelter/status",
+          "names": {
+            "busy": "혼잡",
+            "open": "운영",
+            "closed": "입산 마감"
+          }
         },
         "line-4": {
           "at": "/shelter/line"
@@ -142,7 +162,12 @@ const board: Board = {
           "at": "/summit/status"
         },
         "word-5": {
-          "at": "/summit/word"
+          "at": "/summit/status",
+          "names": {
+            "busy": "혼잡",
+            "open": "여유",
+            "closed": "입산 마감"
+          }
         },
         "line-5": {
           "at": "/summit/line"

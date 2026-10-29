@@ -12,11 +12,11 @@ export const snapshot: SampleSnapshot = {
     park: {
       '/park/now': { name: '흰구름산 국립공원', sub: '탐방로 안내', date: '10월 21일 수요일', time: '14:30', updatedAt: at },
       '/park/places': {
-        centre: { name: '솔바람 탐방지원센터', status: 'busy', word: '혼잡', line: '주차 잔여 12', note: '정상 방향 입산 마감 13:00' },
-        east: { name: '물소리 계곡 입구', status: 'open', word: '여유', line: '주차 잔여 64', note: '계곡길 하산 권장 16:30' },
-        falls: { name: '구름폭포', status: 'busy', word: '혼잡', line: '단풍 절정', note: '데크 한 방향 통행' },
-        shelter: { name: '바위샘 대피소', status: 'open', word: '운영', line: '잔여 4자리', note: '예약자만 · 취사 18시까지' },
-        summit: { name: '흰구름봉', status: 'closed', word: '입산 마감', line: '6℃ · 서풍 13m/s', note: '해발 1,214m · 하산만 가능' },
+        centre: { name: '솔바람 탐방지원센터', status: 'busy', line: '주차 잔여 12', note: '정상 방향 입산 마감 13:00' },
+        east: { name: '물소리 계곡 입구', status: 'open', line: '주차 잔여 64', note: '계곡길 하산 권장 16:30' },
+        falls: { name: '구름폭포', status: 'busy', line: '단풍 절정', note: '데크 한 방향 통행' },
+        shelter: { name: '바위샘 대피소', status: 'open', line: '잔여 4자리', note: '예약자만 · 취사 18시까지' },
+        summit: { name: '흰구름봉', status: 'closed', line: '6℃ · 서풍 13m/s', note: '해발 1,214m · 하산만 가능' },
         updatedAt: at,
       },
       '/park/trails': {

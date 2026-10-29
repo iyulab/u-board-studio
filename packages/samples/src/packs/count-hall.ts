@@ -27,10 +27,11 @@ const board: Board = {
   },
   "elements": {
     "station": {
-      "template": "<section class=\"st {{s.state}}\"><header><b>{{s.name}}</b><span>{{s.word}}</span></header><strong>{{s.count}}</strong><small>{{s.sub}}</small></section>",
+      "template": "<section class=\"st {{s.state}}\"><header><b>{{s.name}}</b><span>{{word}}</span></header><strong>{{s.count}}</strong><small>{{s.sub}}</small></section>",
       "style": ".st{height:100%;box-sizing:border-box;display:grid;align-content:space-between;padding:6px 8px;background:#fff;border:3px solid #000000;font-family:\"IBM Plex Mono\", \"D2Coding\", \"JetBrains Mono\", Consolas, \"Courier New\", monospace;color:#000000}\nheader{display:flex;justify-content:space-between;align-items:baseline;gap:6px}\nb{font-size:15px;font-weight:700;text-decoration:underline}\nspan{font-size:13px;font-weight:700;padding:0 4px;border:2px solid #000000}\n.run span{background:#ffe500}\n.done span{background:#000000;color:#fff}\n.stop{border-color:#e5141b;outline:3px solid #e5141b}\n.stop span{background:#e5141b;color:#fff;border-color:#e5141b}\nstrong{font-size:30px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}\nsmall{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}",
       "props": {
-        "s": "object"
+        "s": "object",
+        "word": "string"
       }
     },
     "title": {
@@ -148,6 +149,128 @@ const board: Board = {
             "idle": "idle-blink",
             "*": "next"
           }
+        },
+        "desk-word": {
+          "at": "/value/desk/state",
+          "names": {
+            "done": "완료",
+            "stop": "정지",
+            "idle": "대기"
+          }
+        },
+        "s1-word": {
+          "at": "/value/s1/state",
+          "names": {
+            "done": "완료",
+            "stop": "정지",
+            "idle": "대기",
+            "run": "가동"
+          }
+        },
+        "s2-word": {
+          "at": "/value/s2/state",
+          "names": {
+            "done": "완료",
+            "stop": "정지",
+            "idle": "대기",
+            "run": "가동"
+          }
+        },
+        "s3-word": {
+          "at": "/value/s3/state",
+          "names": {
+            "done": "완료",
+            "stop": "정지",
+            "idle": "대기",
+            "run": "가동"
+          }
+        },
+        "s4-word": {
+          "at": "/value/s4/state",
+          "names": {
+            "done": "완료",
+            "stop": "정지",
+            "idle": "대기"
+          }
+        },
+        "s5-word": {
+          "at": "/value/s5/state",
+          "names": {
+            "done": "완료",
+            "stop": "정지",
+            "idle": "대기",
+            "run": "가동"
+          }
+        },
+        "s6-word": {
+          "at": "/value/s6/state",
+          "names": {
+            "done": "완료",
+            "stop": "정지",
+            "idle": "대기"
+          }
+        },
+        "t1-word": {
+          "at": "/value/t1/state",
+          "names": {
+            "done": "완료",
+            "stop": "정지",
+            "idle": "대기",
+            "run": "심사"
+          }
+        },
+        "t2-word": {
+          "at": "/value/t2/state",
+          "names": {
+            "done": "완료",
+            "stop": "정지",
+            "idle": "대기",
+            "run": "심사"
+          }
+        },
+        "t3-word": {
+          "at": "/value/t3/state",
+          "names": {
+            "done": "완료",
+            "stop": "정지",
+            "idle": "대기",
+            "run": "심사"
+          }
+        },
+        "t4-word": {
+          "at": "/value/t4/state",
+          "names": {
+            "done": "완료",
+            "stop": "정지",
+            "idle": "대기"
+          }
+        },
+        "t5-word": {
+          "at": "/value/t5/state",
+          "names": {
+            "done": "완료",
+            "stop": "정지",
+            "idle": "대기",
+            "run": "심사"
+          }
+        },
+        "t6-word": {
+          "at": "/value/t6/state",
+          "names": {
+            "done": "완료",
+            "stop": "정지",
+            "idle": "대기",
+            "run": "심사"
+          }
+        },
+        "board-word": {
+          "at": "/value/board/state",
+          "names": {
+            "done": "완료",
+            "stop": "정지",
+            "idle": "대기",
+            "run": "진행"
+          }
         }
       }
     },
@@ -195,7 +318,8 @@ const board: Board = {
       "element": "station",
       "of": "stations",
       "bind": {
-        "s": "desk"
+        "s": "desk",
+        "word": "desk-word"
       }
     },
     "s1": {
@@ -203,7 +327,8 @@ const board: Board = {
       "element": "station",
       "of": "stations",
       "bind": {
-        "s": "s1"
+        "s": "s1",
+        "word": "s1-word"
       }
     },
     "s2": {
@@ -211,7 +336,8 @@ const board: Board = {
       "element": "station",
       "of": "stations",
       "bind": {
-        "s": "s2"
+        "s": "s2",
+        "word": "s2-word"
       }
     },
     "s3": {
@@ -219,7 +345,8 @@ const board: Board = {
       "element": "station",
       "of": "stations",
       "bind": {
-        "s": "s3"
+        "s": "s3",
+        "word": "s3-word"
       }
     },
     "s4": {
@@ -227,7 +354,8 @@ const board: Board = {
       "element": "station",
       "of": "stations",
       "bind": {
-        "s": "s4"
+        "s": "s4",
+        "word": "s4-word"
       }
     },
     "s5": {
@@ -235,7 +363,8 @@ const board: Board = {
       "element": "station",
       "of": "stations",
       "bind": {
-        "s": "s5"
+        "s": "s5",
+        "word": "s5-word"
       }
     },
     "s6": {
@@ -243,7 +372,8 @@ const board: Board = {
       "element": "station",
       "of": "stations",
       "bind": {
-        "s": "s6"
+        "s": "s6",
+        "word": "s6-word"
       }
     },
     "t1": {
@@ -251,7 +381,8 @@ const board: Board = {
       "element": "station",
       "of": "stations",
       "bind": {
-        "s": "t1"
+        "s": "t1",
+        "word": "t1-word"
       }
     },
     "t2": {
@@ -259,7 +390,8 @@ const board: Board = {
       "element": "station",
       "of": "stations",
       "bind": {
-        "s": "t2"
+        "s": "t2",
+        "word": "t2-word"
       }
     },
     "t3": {
@@ -267,7 +399,8 @@ const board: Board = {
       "element": "station",
       "of": "stations",
       "bind": {
-        "s": "t3"
+        "s": "t3",
+        "word": "t3-word"
       }
     },
     "t4": {
@@ -275,7 +408,8 @@ const board: Board = {
       "element": "station",
       "of": "stations",
       "bind": {
-        "s": "t4"
+        "s": "t4",
+        "word": "t4-word"
       }
     },
     "t5": {
@@ -283,7 +417,8 @@ const board: Board = {
       "element": "station",
       "of": "stations",
       "bind": {
-        "s": "t5"
+        "s": "t5",
+        "word": "t5-word"
       }
     },
     "t6": {
@@ -291,7 +426,8 @@ const board: Board = {
       "element": "station",
       "of": "stations",
       "bind": {
-        "s": "t6"
+        "s": "t6",
+        "word": "t6-word"
       }
     },
     "board": {
@@ -299,7 +435,8 @@ const board: Board = {
       "element": "station",
       "of": "stations",
       "bind": {
-        "s": "board"
+        "s": "board",
+        "word": "board-word"
       }
     },
     "title": {
