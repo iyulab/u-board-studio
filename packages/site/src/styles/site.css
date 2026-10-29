@@ -108,7 +108,7 @@ main,
 /* Hero: the claim on the left, the drawing that shows it on the right. */
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
   gap: clamp(2rem, 5vw, 4.5rem);
   align-items: center;
   padding: clamp(2rem, 6vw, 4.5rem) 0 clamp(3rem, 7vw, 5.5rem);
@@ -193,6 +193,28 @@ main,
   margin-top: 0.75rem;
   font-size: 0.875rem;
   color: var(--muted);
+}
+
+/* What a board is, in a few sentences, before the rest of the page builds on it. */
+.statement {
+  padding: clamp(2.5rem, 6vw, 4rem) 0;
+  border-top: 1px solid var(--rule);
+}
+
+.statement > p {
+  max-width: 52rem;
+  margin-top: 0.75rem;
+  color: var(--muted);
+}
+
+.statement-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+}
+
+.statement-links a {
+  color: var(--ink);
 }
 
 /* The states a value can be in: the words on the left, the small drawing that shows them on the right. */

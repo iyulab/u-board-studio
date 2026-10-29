@@ -26,6 +26,21 @@ const c = COPY[locale];
     <HeroBoard locale={locale} />
   </section>
 
+  {
+    c.sections
+      .filter(s => s.claim === 'language')
+      .map(s => (
+        <section class="statement" data-claim={s.claim}>
+          <h2>{s.heading}</h2>
+          <p>{s.body}</p>
+          <p class="statement-links">
+            <a href={PATHS.playground[locale]}>{c.playground.heading} →</a>
+            <a href={PATHS.gallery[locale]}>{c.gallery.heading} →</a>
+          </p>
+        </section>
+      ))
+  }
+
   <section class="assistant" aria-labelledby="assistant-heading" data-claim={c.assistant.claim}>
     <div class="assistant-text">
       <h2 id="assistant-heading">{c.assistant.heading}</h2>
@@ -57,7 +72,7 @@ const c = COPY[locale];
   <section class="facts">
     {
       c.sections
-        .filter(s => s.claim !== 'quality')
+        .filter(s => s.claim !== 'quality' && s.claim !== 'language')
         .map(s => (
           <article data-claim={s.claim}>
             <h2>{s.heading}</h2>

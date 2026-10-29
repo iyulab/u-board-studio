@@ -131,13 +131,13 @@ export interface Copy {
 
 export const COPY: Record<Locale, Copy> = {
   ko: {
-    title: 'U-Board — 도면 위에 실시간 데이터를 잇는 공간형 대시보드',
+    title: 'U-Board — 보드 하나로 도면 위에도 격자 위에도, 사람과 AI가 같은 문서로',
     description:
-      '배경 그림 위에 데이터를 연결한 화면을 만들고, 그 화면을 다른 웹 페이지에 넣어 보여 줍니다. 값마다 지금 상태와 그 이유를 함께 표시합니다.',
-    headline: '도면 위에 실시간 데이터를 잇는 공간형 대시보드',
+      '대시보드를 JSON 문서 하나로 씁니다. 도면 위에도 화면 격자 위에도 같은 부품이 놓이고, 사람은 편집기에서 AI는 MCP로 쓰며, 어디서나 같은 뷰어가 그립니다. 값마다 지금 상태와 그 이유를 함께 표시합니다.',
+    headline: '보드 하나로, 도면 위에도 격자 위에도',
     lede: {
       claim: 'lede',
-      text: '도면·네트워크도·지도 같은 배경 위에 값을 놓은 화면을 만들고, 그 화면을 운영 중인 다른 웹 페이지에 넣어 보여 줍니다. 값은 화면을 열어 둔 동안 그 값을 가진 시스템에서 계속 읽어 옵니다.',
+      text: '사람은 편집기에서, AI는 MCP로 같은 JSON 문서를 쓰고, 어디서나 같은 뷰어가 그 문서만 읽어 그립니다. 문서에는 어디서 무엇을 읽는지, 무엇을 보이는지, 어디에 놓는지를 적습니다 — 도면이나 지도 위에도, 화면 폭에 맞춰 줄을 바꾸는 격자 위에도 같은 부품이 놓입니다. 값은 화면을 열어 둔 동안 그 값을 가진 시스템에서 계속 읽어 옵니다.',
     },
     install: '직접 설치',
     tryIt: '브라우저에서 만들어 보기',
@@ -154,6 +154,11 @@ export const COPY: Record<Locale, Copy> = {
       nodes: { pump: '펌프 A', running: '가동 중', load: '부하', temp: '온도', pressure: '압력', conveyor: '컨베이어' },
     },
     sections: [
+      {
+        claim: 'language',
+        heading: '보드는 문서 하나이고, 언어도 하나입니다',
+        body: '문서는 세 가지를 따로 적습니다 — 값을 어디서 읽고 무엇을 뜻하는지(data), 무엇을 보이는지(parts), 어디에 놓는지(layout). 놓는 방식은 도면 위(캔버스)와 격자 둘이고 부품 · 데이터 · 상태는 같습니다. 같은 스키마에서 나온 검사와 규칙서를 사람도 AI도 쓰기 때문에, 틀린 곳은 JSON 경로로 돌아옵니다. 갤러리의 보드 문서를 플레이그라운드에서 직접 고쳐 볼 수 있습니다.',
+      },
       {
         claim: 'quality',
         heading: '값마다 자기 상태를 가집니다',
@@ -202,7 +207,7 @@ export const COPY: Record<Locale, Copy> = {
       {
         claim: 'not-hmi',
         heading: 'HMI·SCADA 패키지가 아닙니다',
-        body: '심벌 라이브러리, 알람 처리, 제어 출력, 화면 이동은 없습니다. 상태를 보여 주는 화면을 그리고, 나머지는 그 화면을 품은 시스템이 맡습니다.',
+        body: '심벌 라이브러리, 알람 처리, 제어 출력은 없습니다. 보드에서 다른 보드로 가는 동작은 이동을 호스트에 청할 뿐입니다. 상태를 보여 주는 화면을 그리고, 나머지는 그 화면을 품은 시스템이 맡습니다.',
       },
       {
         claim: 'not-data',
@@ -263,7 +268,7 @@ export const COPY: Record<Locale, Copy> = {
       title: 'U-Board — 보드 갤러리',
       description: 'U-Board로 그린 보드. 장소를 그린 약도·배치도 위, 값이 그 자리에 놓인 모습을 분야별로 봅니다.',
       heading: 'U-Board로 그린 보드',
-      intro: '배경은 장소를 그린 약도나 배치도, 또는 흐름도·노선도 같은 도식이고, 값은 그 값이 가리키는 자리에 놓입니다. 도면이 없는 일반 대시보드는 위젯을 순서대로 칸에 늘어놓아 화면 폭에 맞춰 줄을 바꿉니다. 공공기관이 개방한 실시간 데이터에 연결한 보드는 녹화한 원천 응답을 보여 주며, 설치한 U-Board에서는 같은 보드가 원천을 직접 읽어 30초마다 갱신합니다. 공장처럼 공개 원천이 없는 분야는 예시 데이터로 그렸습니다.',
+      intro: '모두 같은 보드 언어로 쓴 보드입니다. 배경은 장소를 그린 약도나 배치도, 또는 흐름도·노선도 같은 도식이고, 값은 그 값이 가리키는 자리에 놓입니다. 도면이 없는 일반 대시보드는 같은 부품을 순서대로 칸에 늘어놓아 화면 폭에 맞춰 줄을 바꿉니다. 공공기관이 개방한 실시간 데이터에 연결한 보드는 녹화한 원천 응답을 보여 주며, 설치한 U-Board에서는 같은 보드가 원천을 직접 읽어 30초마다 갱신합니다. 공장처럼 공개 원천이 없는 분야는 예시 데이터로 그렸습니다.',
       index: '보드 목록',
       field: '분야',
       kind: '배경',
@@ -287,13 +292,13 @@ export const COPY: Record<Locale, Copy> = {
     },
   },
   en: {
-    title: 'U-Board — spatial dashboards that bind live data onto floor plans',
+    title: 'U-Board — one board over a floor plan or on a grid, written by people and AI alike',
     description:
-      'Build a view by binding data onto a background drawing, then embed that view in any web page. Every value shows its current state, and why.',
-    headline: 'Spatial dashboards that bind live data onto floor plans',
+      'Write a dashboard as one JSON document. The same parts go over a floor plan or on a screen grid; people write it in an editor and AI through MCP, and the same viewer draws it anywhere. Every value shows its current state, and why.',
+    headline: 'One board, over a floor plan or on a grid',
     lede: {
       claim: 'lede',
-      text: 'Place values on a floor plan, a network diagram or a map, and embed the view in the web pages your operators already use. Each value is read from the system that owns it for as long as the view is open.',
+      text: 'People write it in an editor and AI writes it through MCP — the same JSON document — and the same viewer draws it anywhere, reading only that document. The document says where values are read from, what is shown and where it sits: the same parts go over a floor plan or a map, or on a grid that rewraps to the screen’s width. Each value is read from the system that owns it for as long as the view is open.',
     },
     install: 'Install it',
     tryIt: 'Build one in your browser',
@@ -310,6 +315,11 @@ export const COPY: Record<Locale, Copy> = {
       nodes: { pump: 'Pump A', running: 'Running', load: 'Load', temp: 'Temperature', pressure: 'Pressure', conveyor: 'Conveyor' },
     },
     sections: [
+      {
+        claim: 'language',
+        heading: 'A board is one document, in one language',
+        body: 'The document states three things apart — where values are read from and what they mean (data), what is shown (parts), where it sits (layout). There are two ways to place: over a drawing (canvas) and on a grid, and the parts, data and states are the same. The check and the rule book that people and AI both use come from one schema, so a mistake comes back named by its JSON path. Edit the document of any gallery board in the playground.',
+      },
       {
         claim: 'quality',
         heading: 'Every value carries its own state',
@@ -358,7 +368,7 @@ export const COPY: Record<Locale, Copy> = {
       {
         claim: 'not-hmi',
         heading: 'Not an HMI/SCADA package',
-        body: 'There is no symbol library, alarm handling, control output or screen navigation. U-Board draws status views; the system around them keeps those jobs.',
+        body: 'There is no symbol library, alarm handling or control output. An action that goes from one board to another only asks the host to move there. U-Board draws status views; the system around them keeps those jobs.',
       },
       {
         claim: 'not-data',
@@ -419,7 +429,7 @@ export const COPY: Record<Locale, Copy> = {
       title: 'U-Board — Board gallery',
       description: 'Boards drawn with U-Board: values placed where they belong on a plan or layout of the place, by field.',
       heading: 'Boards drawn with U-Board',
-      intro: 'The background is a plan or layout of the place, or a schematic such as a flow or a network map, and each value sits where it belongs; an ordinary dashboard with no drawing lays its widgets out in order and rewraps to the screen’s width. Boards bound to live data that public bodies open to everyone show recorded answers from the sources; in an installed U-Board the same board reads the source itself and updates every 30 seconds. Fields with no public source, such as a plant, are drawn on example data.',
+      intro: 'Every board here is written in the same board language. The background is a plan or layout of the place, or a schematic such as a flow or a network map, and each value sits where it belongs; an ordinary dashboard with no drawing lays the same parts out in order and rewraps to the screen’s width. Boards bound to live data that public bodies open to everyone show recorded answers from the sources; in an installed U-Board the same board reads the source itself and updates every 30 seconds. Fields with no public source, such as a plant, are drawn on example data.',
       index: 'Boards',
       field: 'Field',
       kind: 'Background',
