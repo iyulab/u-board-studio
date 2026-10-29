@@ -13,10 +13,10 @@ export const snapshot: SampleSnapshot = {
       '/studio/now': { value: { date: '10월 22일 목요일', time: '16:20' }, updatedAt: at },
       '/studio/kilns': {
         value: {
-          gas: { name: '가스가마', kind: 'GAS · 환원', temp: '1,252', target: '1,250', stage: 'soak', word: '머무는 중', progress: '86', eta: '40분 더' },
-          electric1: { name: '전기가마 一', kind: 'ELECTRIC · 재벌', temp: '612', target: '실온', stage: 'cool', word: '식는 중', progress: '70', eta: '내일 08시 열기' },
-          electric2: { name: '전기가마 二', kind: 'ELECTRIC · 초벌', temp: '24', target: '850', stage: 'idle', word: '쉬는 중', progress: '0', eta: '17시 재임' },
-          wood: { name: '장작가마', kind: 'WOOD · 오름', temp: '1,064', target: '1,280', stage: 'heat', word: '오르는 중', progress: '62', eta: '22시 무렵' },
+          gas: { name: '가스가마', kind: 'GAS · 환원', temp: '1,252', target: '1,250', stage: 'soak', progress: '86', eta: '40분 더' },
+          electric1: { name: '전기가마 一', kind: 'ELECTRIC · 재벌', temp: '612', target: '실온', stage: 'cool', progress: '70', eta: '내일 08시 열기' },
+          electric2: { name: '전기가마 二', kind: 'ELECTRIC · 초벌', temp: '24', target: '850', stage: 'idle', progress: '0', eta: '17시 재임' },
+          wood: { name: '장작가마', kind: 'WOOD · 오름', temp: '1,064', target: '1,280', stage: 'heat', progress: '62', eta: '22시 무렵' },
         },
         updatedAt: at,
       },

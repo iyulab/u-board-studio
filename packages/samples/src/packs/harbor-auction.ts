@@ -18,10 +18,11 @@ const board: Board = {
   },
   "elements": {
     "boat": {
-      "template": "<section class=\"bt {{b.state}}\"><span>{{b.word}}</span><b>{{b.name}}</b><strong>{{b.catch}}</strong><small>{{b.note}}</small></section>",
+      "template": "<section class=\"bt {{b.state}}\"><span>{{word}}</span><b>{{b.name}}</b><strong>{{b.catch}}</strong><small>{{b.note}}</small></section>",
       "style": ".bt{height:100%;box-sizing:border-box;display:flex;flex-direction:column;gap:1px;padding:6px 10px 7px;background:#f2e8d0;border:3px solid #1b1a18;font-family:\"Noto Serif KR\", \"Nanum Myeongjo\", \"Batang\", serif;color:#14254a}\nspan{align-self:flex-start;margin-bottom:auto;padding:0 8px;font-size:13px;font-weight:700;color:#f2e8d0;background:#1b1a18}\nb{font-size:15px;font-weight:800}\nstrong{font-size:16px;font-weight:700;line-height:1.2}\nsmall{font-size:12px}\n.sea{border-style:dashed;border-color:#14254a}\n.sea span{background:#f2e8d0;color:#14254a;outline:2px dashed #14254a}\n.return{padding-left:24px;background:linear-gradient(90deg,#1f3f72 0 14px,rgba(31,63,114,.38) 14px,#f2e8d0 70%);border-color:#1f3f72}\n.return span{background:#1f3f72}\n.unload{background:#14254a;color:#f2e8d0}\n.unload span{background:#c9442c}\n.done{padding-right:30px;background:repeating-linear-gradient(135deg,rgba(184,134,40,.75) 0 5px,transparent 5px 10px) right/22px 100% no-repeat,#ecdcb2;color:#43341a;border-color:#7a6a4a}\n.done span{background:#d8a948;color:#1b1a18}",
       "props": {
-        "b": "object"
+        "b": "object",
+        "word": "string"
       }
     },
     "mouth": {
@@ -97,6 +98,87 @@ const board: Board = {
         },
         "d2": {
           "at": "/value/d2"
+        },
+        "s1-word": {
+          "at": "/value/s1/state",
+          "names": {
+            "sea": "조업 중",
+            "return": "귀항 중",
+            "unload": "하역 중",
+            "done": "위판 끝"
+          }
+        },
+        "s2-word": {
+          "at": "/value/s2/state",
+          "names": {
+            "sea": "조업 중",
+            "return": "귀항 중",
+            "unload": "하역 중",
+            "done": "위판 끝"
+          }
+        },
+        "r1-word": {
+          "at": "/value/r1/state",
+          "names": {
+            "sea": "조업 중",
+            "return": "귀항 중",
+            "unload": "하역 중",
+            "done": "위판 끝"
+          }
+        },
+        "r2-word": {
+          "at": "/value/r2/state",
+          "names": {
+            "sea": "조업 중",
+            "return": "귀항 중",
+            "unload": "하역 중",
+            "done": "위판 끝"
+          }
+        },
+        "r3-word": {
+          "at": "/value/r3/state",
+          "names": {
+            "sea": "조업 중",
+            "return": "귀항 중",
+            "unload": "하역 중",
+            "done": "위판 끝"
+          }
+        },
+        "u1-word": {
+          "at": "/value/u1/state",
+          "names": {
+            "sea": "조업 중",
+            "return": "귀항 중",
+            "unload": "하역 중",
+            "done": "위판 끝"
+          }
+        },
+        "u2-word": {
+          "at": "/value/u2/state",
+          "names": {
+            "sea": "조업 중",
+            "return": "귀항 중",
+            "unload": "하역 중",
+            "done": "위판 끝"
+          }
+        },
+        "d1-word": {
+          "at": "/value/d1/state",
+          "names": {
+            "sea": "조업 중",
+            "return": "귀항 중",
+            "unload": "하역 중",
+            "done": "위판 끝"
+          }
+        },
+        "d2-word": {
+          "at": "/value/d2/state",
+          "names": {
+            "sea": "조업 중",
+            "return": "귀항 중",
+            "unload": "하역 중",
+            "done": "위판 끝"
+          }
         }
       }
     },
@@ -164,7 +246,8 @@ const board: Board = {
       "element": "boat",
       "of": "boats",
       "bind": {
-        "b": "s1"
+        "b": "s1",
+        "word": "s1-word"
       }
     },
     "boat-s2": {
@@ -172,7 +255,8 @@ const board: Board = {
       "element": "boat",
       "of": "boats",
       "bind": {
-        "b": "s2"
+        "b": "s2",
+        "word": "s2-word"
       }
     },
     "boat-r1": {
@@ -180,7 +264,8 @@ const board: Board = {
       "element": "boat",
       "of": "boats",
       "bind": {
-        "b": "r1"
+        "b": "r1",
+        "word": "r1-word"
       }
     },
     "boat-r2": {
@@ -188,7 +273,8 @@ const board: Board = {
       "element": "boat",
       "of": "boats",
       "bind": {
-        "b": "r2"
+        "b": "r2",
+        "word": "r2-word"
       }
     },
     "boat-r3": {
@@ -196,7 +282,8 @@ const board: Board = {
       "element": "boat",
       "of": "boats",
       "bind": {
-        "b": "r3"
+        "b": "r3",
+        "word": "r3-word"
       }
     },
     "boat-u1": {
@@ -204,7 +291,8 @@ const board: Board = {
       "element": "boat",
       "of": "boats",
       "bind": {
-        "b": "u1"
+        "b": "u1",
+        "word": "u1-word"
       }
     },
     "boat-u2": {
@@ -212,7 +300,8 @@ const board: Board = {
       "element": "boat",
       "of": "boats",
       "bind": {
-        "b": "u2"
+        "b": "u2",
+        "word": "u2-word"
       }
     },
     "boat-d1": {
@@ -220,7 +309,8 @@ const board: Board = {
       "element": "boat",
       "of": "boats",
       "bind": {
-        "b": "d1"
+        "b": "d1",
+        "word": "d1-word"
       }
     },
     "boat-d2": {
@@ -228,7 +318,8 @@ const board: Board = {
       "element": "boat",
       "of": "boats",
       "bind": {
-        "b": "d2"
+        "b": "d2",
+        "word": "d2-word"
       }
     },
     "mouth": {

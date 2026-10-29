@@ -16,12 +16,12 @@ export const snapshot: SampleSnapshot = {
       '/museum/now': { value: { date: '10월 22일 목요일', time: '10:40' }, updatedAt: at },
       '/museum/rooms': {
         value: {
-          seohwa: { name: '서화', items: '회화·서예 1,240점', temp: '20.1', rh: '57', tband: '19–21', rhband: '50–55', lo: '50', hi: '55', state: 'warn', word: '주의', note: '06시부터 오름 · 공조 2호기 점검 요청' },
-          jikmul: { name: '직물', items: '복식·자수 860점', temp: '19.6', rh: '52', tband: '19–21', rhband: '50–55', lo: '50', hi: '55', state: 'ok', word: '안정', note: '24시간 변동 ±1%' },
-          mokchil: { name: '목칠', items: '목가구·나전칠기 410점', temp: '20.4', rh: '63', tband: '19–22', rhband: '55–60', lo: '55', hi: '60', state: 'alarm', word: '이탈', note: '제습기 B 정지 09:52 · 담당자 출동' },
-          dojagi: { name: '도자', items: '도자기 2,130점', temp: '20.8', rh: '49', tband: '18–22', rhband: '45–55', lo: '45', hi: '55', state: 'ok', word: '안정', note: '24시간 변동 ±2%' },
-          geumsok: { name: '금속', items: '금속공예 690점', temp: '19.9', rh: '36', tband: '18–22', rhband: '30–40', lo: '30', hi: '40', state: 'ok', word: '안정', note: '저습 유지 · 흡습제 교체 10월 20일' },
-          gogo: { name: '고고', items: '출토 유물 3,020점', temp: '19.2', rh: '33', tband: '18–22', rhband: '25–35', lo: '25', hi: '35', state: 'check', word: '점검', note: '반입 작업 중 · 문 열림 10:21부터' },
+          seohwa: { name: '서화', items: '회화·서예 1,240점', temp: '20.1', rh: '57', tband: '19–21', rhband: '50–55', lo: '50', hi: '55', state: 'warn', note: '06시부터 오름 · 공조 2호기 점검 요청' },
+          jikmul: { name: '직물', items: '복식·자수 860점', temp: '19.6', rh: '52', tband: '19–21', rhband: '50–55', lo: '50', hi: '55', state: 'ok', note: '24시간 변동 ±1%' },
+          mokchil: { name: '목칠', items: '목가구·나전칠기 410점', temp: '20.4', rh: '63', tband: '19–22', rhband: '55–60', lo: '55', hi: '60', state: 'alarm', note: '제습기 B 정지 09:52 · 담당자 출동' },
+          dojagi: { name: '도자', items: '도자기 2,130점', temp: '20.8', rh: '49', tband: '18–22', rhband: '45–55', lo: '45', hi: '55', state: 'ok', note: '24시간 변동 ±2%' },
+          geumsok: { name: '금속', items: '금속공예 690점', temp: '19.9', rh: '36', tband: '18–22', rhband: '30–40', lo: '30', hi: '40', state: 'ok', note: '저습 유지 · 흡습제 교체 10월 20일' },
+          gogo: { name: '고고', items: '출토 유물 3,020점', temp: '19.2', rh: '33', tband: '18–22', rhband: '25–35', lo: '25', hi: '35', state: 'check', note: '반입 작업 중 · 문 열림 10:21부터' },
         },
         updatedAt: at,
       },

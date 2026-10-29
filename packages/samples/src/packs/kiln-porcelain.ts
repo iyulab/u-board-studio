@@ -22,10 +22,11 @@ const board: Board = {
       }
     },
     "plate": {
-      "template": "<article class=\"pl {{k.stage}}\" style=\"--p: {{k.progress}}\"><div class=\"rim\"></div><div class=\"ring\"></div><div class=\"well\"><p class=\"kind\">{{k.kind}}</p><h2>{{k.name}}</h2><p class=\"t\"><b>{{k.temp}}</b>℃</p><p class=\"goal\">목표 {{k.target}}℃ · {{k.eta}}</p><p class=\"word\"><i></i>{{k.word}}</p></div></article>",
+      "template": "<article class=\"pl {{k.stage}}\" style=\"--p: {{k.progress}}\"><div class=\"rim\"></div><div class=\"ring\"></div><div class=\"well\"><p class=\"kind\">{{k.kind}}</p><h2>{{k.name}}</h2><p class=\"t\"><b>{{k.temp}}</b>℃</p><p class=\"goal\">목표 {{k.target}}℃ · {{k.eta}}</p><p class=\"word\"><i></i>{{word}}</p></div></article>",
       "style": ".pl{position:relative;height:100%;box-sizing:border-box;border-radius:50%;background:#f6f8fb;box-shadow:inset 0 0 0 3px #1f3f8f,inset 0 0 0 7px #f6f8fb,inset 0 0 0 9px #1f3f8f;font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#1f3f8f}\n.rim{position:absolute;inset:12px;border-radius:50%;background:repeating-conic-gradient(#1f3f8f 0 4deg, #f6f8fb 4deg 9deg, #6f8ccc 9deg 12deg, #f6f8fb 12deg 15deg);-webkit-mask:radial-gradient(closest-side, transparent 86%, #000 86.5% 95%, transparent 95.5%);mask:radial-gradient(closest-side, transparent 86%, #000 86.5% 95%, transparent 95.5%)}\n.ring{position:absolute;inset:60px;border-radius:50%;background:conic-gradient(#1f3f8f calc(var(--p) * 1%), #dfe7f5 0);-webkit-mask:radial-gradient(closest-side, transparent 84%, #000 84.5% 99%, transparent 99.5%);mask:radial-gradient(closest-side, transparent 84%, #000 84.5% 99%, transparent 99.5%)}\n.well{position:absolute;inset:86px;border-radius:50%;display:grid;align-content:center;justify-items:center;text-align:center;background:radial-gradient(circle, #f6f8fb 60%, #dfe7f5)}\n.kind{margin:0;font-size:13px;letter-spacing:.2em;color:#6f8ccc}\nh2{margin:2px 0 0;font:700 34px \"Nanum Brush Script\", \"Nanum Pen Script\", \"Gungsuh\", serif;color:#1f3f8f}\n.t{margin:0;font-size:18px}\n.t b{font:800 48px \"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;letter-spacing:-1px}\n.goal{margin:0;font-size:12px;color:#6f8ccc}\n.word{margin:8px 0 0;display:flex;align-items:center;gap:6px;padding:2px 12px;border:2px solid #1f3f8f;border-radius:999px;font-size:14px;font-weight:800}\ni{font-style:normal;font-size:16px}\n.heat i::before{content:\"火\"}.soak i::before{content:\"雲\"}.cool i::before{content:\"水\"}.idle i::before{content:\"空\"}\n.heat .word{background:#1f3f8f;color:#f6f8fb}\n.soak .word{border-style:double;border-width:4px}\n.cool .word{border-style:dashed}\n.idle{opacity:.75}.idle .word{border-color:#6f8ccc;color:#6f8ccc}",
       "props": {
-        "k": "object"
+        "k": "object",
+        "word": "string"
       }
     },
     "batches": {
@@ -63,6 +64,42 @@ const board: Board = {
         },
         "wood": {
           "at": "/value/wood"
+        },
+        "gas-word": {
+          "at": "/value/gas/kind",
+          "names": {
+            "GAS · 환원": "머무는 중",
+            "ELECTRIC · 재벌": "식는 중",
+            "ELECTRIC · 초벌": "쉬는 중",
+            "WOOD · 오름": "오르는 중"
+          }
+        },
+        "electric1-word": {
+          "at": "/value/electric1/kind",
+          "names": {
+            "GAS · 환원": "머무는 중",
+            "ELECTRIC · 재벌": "식는 중",
+            "ELECTRIC · 초벌": "쉬는 중",
+            "WOOD · 오름": "오르는 중"
+          }
+        },
+        "electric2-word": {
+          "at": "/value/electric2/kind",
+          "names": {
+            "GAS · 환원": "머무는 중",
+            "ELECTRIC · 재벌": "식는 중",
+            "ELECTRIC · 초벌": "쉬는 중",
+            "WOOD · 오름": "오르는 중"
+          }
+        },
+        "wood-word": {
+          "at": "/value/wood/kind",
+          "names": {
+            "GAS · 환원": "머무는 중",
+            "ELECTRIC · 재벌": "식는 중",
+            "ELECTRIC · 초벌": "쉬는 중",
+            "WOOD · 오름": "오르는 중"
+          }
         }
       }
     },
@@ -97,7 +134,8 @@ const board: Board = {
       "element": "plate",
       "of": "kilns",
       "bind": {
-        "k": "gas"
+        "k": "gas",
+        "word": "gas-word"
       }
     },
     "kiln-electric1": {
@@ -105,7 +143,8 @@ const board: Board = {
       "element": "plate",
       "of": "kilns",
       "bind": {
-        "k": "electric1"
+        "k": "electric1",
+        "word": "electric1-word"
       }
     },
     "kiln-electric2": {
@@ -113,7 +152,8 @@ const board: Board = {
       "element": "plate",
       "of": "kilns",
       "bind": {
-        "k": "electric2"
+        "k": "electric2",
+        "word": "electric2-word"
       }
     },
     "kiln-wood": {
@@ -121,7 +161,8 @@ const board: Board = {
       "element": "plate",
       "of": "kilns",
       "bind": {
-        "k": "wood"
+        "k": "wood",
+        "word": "wood-word"
       }
     },
     "curve": {

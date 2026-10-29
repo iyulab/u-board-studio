@@ -17,10 +17,11 @@ const board: Board = {
   },
   "elements": {
     "dome": {
-      "template": "<article class=\"lc {{d.state}}\"><i></i><div><b>{{d.name}}</b><small>{{d.scope}}</small><p>{{d.target}}</p><em>{{d.word}}</em><dl><dt>노출</dt><dd>{{d.frames}}</dd><dt>돔</dt><dd>{{d.slit}}</dd></dl></div></article>",
+      "template": "<article class=\"lc {{d.state}}\"><i></i><div><b>{{d.name}}</b><small>{{d.scope}}</small><p>{{d.target}}</p><em>{{word}}</em><dl><dt>노출</dt><dd>{{d.frames}}</dd><dt>돔</dt><dd>{{d.slit}}</dd></dl></div></article>",
       "style": ".lc{height:100%;box-sizing:border-box;display:grid;grid-template-rows:auto 1fr;justify-items:center;gap:10px;padding:22px 14px 14px;border:8px solid #0b0a10;border-radius:112px 112px 6px 6px / 120px 120px 6px 6px;background:linear-gradient(115deg,transparent 0 31%,#0b0a10 31% 32%,transparent 32% 64%,#0b0a10 64% 65%,transparent 65%),linear-gradient(25deg,transparent 0 45%,#0b0a10 45% 46%,transparent 46%),radial-gradient(circle at 30% 20%,rgba(255,255,255,.35),transparent 55%),#2b4f9e;box-shadow:0 0 0 2px #2c2a3a;font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif}\ni{width:66px;height:66px;border-radius:50%;border:6px solid #0b0a10;box-sizing:border-box;display:grid;place-items:center;font-style:normal;font-size:30px;line-height:1;background:radial-gradient(circle,#2a2838,#14131b);color:#5a5870}\ndiv{width:100%;box-sizing:border-box;background:linear-gradient(160deg,#fbf3da,#f1e6c8);border:4px solid #0b0a10;color:#1d1a24;display:grid;grid-template-rows:auto auto auto auto 1fr;gap:3px;padding:12px 12px;border-radius:4px}\nb{font:700 21px \"Noto Serif KR\", \"Batang\", \"Georgia\", serif}\nsmall{font-size:13px}\np{margin:4px 0 0;font:700 16px \"Noto Serif KR\", \"Batang\", \"Georgia\", serif;min-height:42px}\nem{font-style:normal;font-size:15px;font-weight:800;padding:3px 8px;justify-self:start;border:2px solid #0b0a10}\ndl{margin:6px 0 0;align-self:end;display:grid;grid-template-columns:auto 1fr;column-gap:8px;font-size:14px;border-top:2px solid #0b0a10;padding-top:6px}\ndt{font-weight:700}\ndd{margin:0;text-align:right}\n.open{background:linear-gradient(115deg,transparent 0 31%,#0b0a10 31% 32%,transparent 32% 64%,#0b0a10 64% 65%,transparent 65%),linear-gradient(25deg,transparent 0 45%,#0b0a10 45% 46%,transparent 46%),radial-gradient(circle at 30% 20%,rgba(255,255,255,.35),transparent 55%),#2f8a5f}\n.open i{background:radial-gradient(circle,#fff3c0,#f0c04a 60%,#a77a12);color:#1d1a24}\n.open i::before{content:\"✦\"}\n.open em{background:#f0c04a}\n.standby{background:linear-gradient(115deg,transparent 0 31%,#0b0a10 31% 32%,transparent 32% 64%,#0b0a10 64% 65%,transparent 65%),linear-gradient(25deg,transparent 0 45%,#0b0a10 45% 46%,transparent 46%),radial-gradient(circle at 30% 20%,rgba(255,255,255,.35),transparent 55%),#2b4f9e}\n.standby i{background:linear-gradient(90deg,#f0c04a 50%,#2a2838 50%);color:#1d1a24}\n.standby i::before{content:\"◐\";color:transparent}\n.standby em{background:#dfe6f6}\n.closed{background:linear-gradient(115deg,transparent 0 31%,#0b0a10 31% 32%,transparent 32% 64%,#0b0a10 64% 65%,transparent 65%),linear-gradient(25deg,transparent 0 45%,#0b0a10 45% 46%,transparent 46%),radial-gradient(circle at 30% 20%,rgba(255,255,255,.35),transparent 55%),#6b3f99}\n.closed i::before{content:\"○\"}\n.closed em{background:#e5dcef}\n.service{background:linear-gradient(115deg,transparent 0 31%,#0b0a10 31% 32%,transparent 32% 64%,#0b0a10 64% 65%,transparent 65%),linear-gradient(25deg,transparent 0 45%,#0b0a10 45% 46%,transparent 46%),radial-gradient(circle at 30% 20%,rgba(255,255,255,.35),transparent 55%),#c0392b}\n.service i{background:radial-gradient(circle,#ffd7cf,#c0392b 65%);color:#ffffff}\n.service i::before{content:\"✕\"}\n.service em{background:#c0392b;color:#ffffff}",
       "props": {
-        "d": "object"
+        "d": "object",
+        "word": "string"
       }
     },
     "sky": {
@@ -74,6 +75,38 @@ const board: Board = {
         },
         "d": {
           "at": "/value/d"
+        },
+        "a-word": {
+          "at": "/value/a/state",
+          "names": {
+            "open": "관측 중",
+            "service": "정비",
+            "standby": "대기"
+          }
+        },
+        "b-word": {
+          "at": "/value/b/state",
+          "names": {
+            "open": "관측 중",
+            "service": "정비",
+            "standby": "대기"
+          }
+        },
+        "c-word": {
+          "at": "/value/c/state",
+          "names": {
+            "open": "관측 중",
+            "service": "정비",
+            "standby": "대기"
+          }
+        },
+        "d-word": {
+          "at": "/value/d/state",
+          "names": {
+            "open": "관측 중",
+            "service": "정비",
+            "standby": "대기"
+          }
         }
       }
     },
@@ -127,7 +160,8 @@ const board: Board = {
       "element": "dome",
       "of": "domes",
       "bind": {
-        "d": "a"
+        "d": "a",
+        "word": "a-word"
       }
     },
     "dome-b": {
@@ -135,7 +169,8 @@ const board: Board = {
       "element": "dome",
       "of": "domes",
       "bind": {
-        "d": "b"
+        "d": "b",
+        "word": "b-word"
       }
     },
     "dome-c": {
@@ -143,7 +178,8 @@ const board: Board = {
       "element": "dome",
       "of": "domes",
       "bind": {
-        "d": "c"
+        "d": "c",
+        "word": "c-word"
       }
     },
     "dome-d": {
@@ -151,7 +187,8 @@ const board: Board = {
       "element": "dome",
       "of": "domes",
       "bind": {
-        "d": "d"
+        "d": "d",
+        "word": "d-word"
       }
     },
     "sky": {

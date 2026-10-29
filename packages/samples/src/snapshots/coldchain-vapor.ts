@@ -16,12 +16,12 @@ export const snapshot: SampleSnapshot = {
       '/warehouse/now': { value: { date: '10월 22일 목요일', time: '13:10' }, updatedAt: at },
       '/warehouse/zones': {
         value: {
-          frzA: { name: '냉동 A', en: 'FREEZER A', temp: '-23.8', lo: '-25', hi: '-20', load: '78%', doors: '14회', state: 'ok', word: '정상', note: '아이스크림·냉동 수산' },
-          frzB: { name: '냉동 B', en: 'FREEZER B', temp: '-17.6', lo: '-25', hi: '-20', load: '64%', doors: '9회', state: 'alarm', word: '온도 이탈', note: '18분째 상한 위 · 증발기 점검 출동, 도크 2 출고 보류' },
-          chl1: { name: '냉장 1', en: 'CHILLER 1', temp: '3.4', lo: '0', hi: '5', load: '82%', doors: '31회', state: 'ok', word: '정상', note: '유제품·신선 채소' },
-          chl2: { name: '냉장 2', en: 'CHILLER 2', temp: '6.1', lo: '0', hi: '5', load: '57%', doors: '22회', state: 'defrost', word: '제상 중', note: '제상 12:50–13:20 · 끝나면 30분 안에 복귀' },
-          amb: { name: '정온', en: 'AMBIENT', temp: '16.8', lo: '15', hi: '18', load: '69%', doors: '40회', state: 'door', word: '문 열림', note: '도크 3 쪽 문 9분째 열림 · 상차 중' },
-          ult: { name: '초저온', en: 'ULTRA-LOW', temp: '-71.2', lo: '-80', hi: '-60', load: '35%', doors: '2회', state: 'ok', word: '정상', note: '의약품 · 이중 전원' },
+          frzA: { name: '냉동 A', en: 'FREEZER A', temp: '-23.8', lo: '-25', hi: '-20', load: '78%', doors: '14회', state: 'ok', note: '아이스크림·냉동 수산' },
+          frzB: { name: '냉동 B', en: 'FREEZER B', temp: '-17.6', lo: '-25', hi: '-20', load: '64%', doors: '9회', state: 'alarm', note: '18분째 상한 위 · 증발기 점검 출동, 도크 2 출고 보류' },
+          chl1: { name: '냉장 1', en: 'CHILLER 1', temp: '3.4', lo: '0', hi: '5', load: '82%', doors: '31회', state: 'ok', note: '유제품·신선 채소' },
+          chl2: { name: '냉장 2', en: 'CHILLER 2', temp: '6.1', lo: '0', hi: '5', load: '57%', doors: '22회', state: 'defrost', note: '제상 12:50–13:20 · 끝나면 30분 안에 복귀' },
+          amb: { name: '정온', en: 'AMBIENT', temp: '16.8', lo: '15', hi: '18', load: '69%', doors: '40회', state: 'door', note: '도크 3 쪽 문 9분째 열림 · 상차 중' },
+          ult: { name: '초저온', en: 'ULTRA-LOW', temp: '-71.2', lo: '-80', hi: '-60', load: '35%', doors: '2회', state: 'ok', note: '의약품 · 이중 전원' },
         },
         updatedAt: at,
       },

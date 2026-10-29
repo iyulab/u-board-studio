@@ -23,10 +23,11 @@ const board: Board = {
       }
     },
     "room": {
-      "template": "<article class=\"bx {{r.state}}\"><header><h2>{{r.name}}</h2><small>{{r.items}}</small></header><div class=\"vals\"><p><b>{{r.temp}}</b><span>℃</span></p><p><b>{{r.rh}}</b><span>%RH</span></p></div><div class=\"gauge\" style=\"--v: {{r.rh}}; --lo: {{r.lo}}; --hi: {{r.hi}}\"><div class=\"band\"></div><div class=\"mark\"></div></div><p class=\"std\">기준 {{r.tband}}℃ · {{r.rhband}}%</p><p class=\"word\"><i></i>{{r.word}}</p><p class=\"note\">{{r.note}}</p></article>",
+      "template": "<article class=\"bx {{r.state}}\"><header><h2>{{r.name}}</h2><small>{{r.items}}</small></header><div class=\"vals\"><p><b>{{r.temp}}</b><span>℃</span></p><p><b>{{r.rh}}</b><span>%RH</span></p></div><div class=\"gauge\" style=\"--v: {{r.rh}}; --lo: {{r.lo}}; --hi: {{r.hi}}\"><div class=\"band\"></div><div class=\"mark\"></div></div><p class=\"std\">기준 {{r.tband}}℃ · {{r.rhband}}%</p><p class=\"word\"><i></i>{{word}}</p><p class=\"note\">{{r.note}}</p></article>",
       "style": ".bx{position:relative;height:100%;box-sizing:border-box;padding:18px 18px 14px;border:6px solid transparent;border-radius:6px;background:linear-gradient(160deg, #1f1714, #120d0b) padding-box, linear-gradient(135deg, #e9d2f4, #bfe8dc 26%, #f4c9da 50%, #c4d8f6 74%, #efe3c4) border-box;font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#efe7d6;display:grid;grid-template-rows:auto auto auto auto 1fr auto;gap:8px}\nheader{border-bottom:1px solid #a99f8c;padding-bottom:6px}\nh2{margin:0;font:700 28px \"Nanum Myeongjo\", \"Batang\", \"AppleMyungjo\", serif;letter-spacing:.06em}\nsmall{font-size:12px;color:#a99f8c}\n.vals{display:flex;justify-content:space-between;align-items:baseline}\n.vals p{margin:0}\n.vals b{font:800 50px \"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;letter-spacing:-1px}\n.vals span{font-size:13px;color:#a99f8c;margin-left:2px}\n.gauge{position:relative;margin-top:6px;height:16px;border-radius:8px;background:#2b211d;box-shadow:inset 0 0 0 1px #3a2e28}\n.band{position:absolute;top:0;bottom:0;min-width:10px;left:calc((var(--lo) - 20) * 100% / 60);width:calc((var(--hi) - var(--lo)) * 100% / 60);border-radius:7px;background:linear-gradient(135deg, #e9d2f4, #bfe8dc 26%, #f4c9da 50%, #c4d8f6 74%, #efe3c4);opacity:.85}\n.mark{position:absolute;top:-5px;width:4px;height:24px;margin-left:-2px;left:calc((var(--v) - 20) * 100% / 60);background:#efe7d6;box-shadow:0 0 0 2px #120d0b}\n.std{margin:0;font-size:12px;color:#a99f8c}\n.word{margin:0;align-self:end;justify-self:start;display:flex;align-items:center;gap:8px;padding:3px 14px;border:2px solid #efe7d6;border-radius:3px;font-size:16px;font-weight:800}\ni{font:700 20px \"Nanum Myeongjo\", \"Batang\", \"AppleMyungjo\", serif;font-style:normal}\n.note{margin:0;font-size:12px;line-height:1.45;color:#a99f8c}\n.ok i::before{content:\"安\"}.warn i::before{content:\"注\"}.alarm i::before{content:\"離\"}.check i::before{content:\"檢\"}\n.warn .word{border-style:dashed}\n.alarm{background:linear-gradient(160deg, #1f1714, #120d0b) padding-box, linear-gradient(135deg, #b8352a, #e0705f 50%, #b8352a) border-box}\n.alarm .word{background:#b8352a;border-color:#b8352a;color:#fff}\n.alarm .mark{background:#b8352a;box-shadow:0 0 0 2px #efe7d6}\n.check .word{border-style:dotted}.check .vals,.check .gauge{opacity:.6}",
       "props": {
-        "r": "object"
+        "r": "object",
+        "word": "string"
       }
     },
     "log": {
@@ -70,6 +71,60 @@ const board: Board = {
         },
         "gogo": {
           "at": "/value/gogo"
+        },
+        "seohwa-word": {
+          "at": "/value/seohwa/state",
+          "names": {
+            "warn": "주의",
+            "ok": "안정",
+            "alarm": "이탈",
+            "check": "점검"
+          }
+        },
+        "jikmul-word": {
+          "at": "/value/jikmul/state",
+          "names": {
+            "warn": "주의",
+            "ok": "안정",
+            "alarm": "이탈",
+            "check": "점검"
+          }
+        },
+        "mokchil-word": {
+          "at": "/value/mokchil/state",
+          "names": {
+            "warn": "주의",
+            "ok": "안정",
+            "alarm": "이탈",
+            "check": "점검"
+          }
+        },
+        "dojagi-word": {
+          "at": "/value/dojagi/state",
+          "names": {
+            "warn": "주의",
+            "ok": "안정",
+            "alarm": "이탈",
+            "check": "점검"
+          }
+        },
+        "geumsok-word": {
+          "at": "/value/geumsok/state",
+          "names": {
+            "warn": "주의",
+            "ok": "안정",
+            "alarm": "이탈",
+            "check": "점검"
+          }
+        },
+        "gogo-word": {
+          "at": "/value/gogo/state",
+          "names": {
+            "warn": "주의",
+            "ok": "안정",
+            "alarm": "이탈",
+            "check": "점검"
+          }
         }
       }
     },
@@ -104,7 +159,8 @@ const board: Board = {
       "element": "room",
       "of": "rooms",
       "bind": {
-        "r": "seohwa"
+        "r": "seohwa",
+        "word": "seohwa-word"
       }
     },
     "room-jikmul": {
@@ -112,7 +168,8 @@ const board: Board = {
       "element": "room",
       "of": "rooms",
       "bind": {
-        "r": "jikmul"
+        "r": "jikmul",
+        "word": "jikmul-word"
       }
     },
     "room-mokchil": {
@@ -120,7 +177,8 @@ const board: Board = {
       "element": "room",
       "of": "rooms",
       "bind": {
-        "r": "mokchil"
+        "r": "mokchil",
+        "word": "mokchil-word"
       }
     },
     "room-dojagi": {
@@ -128,7 +186,8 @@ const board: Board = {
       "element": "room",
       "of": "rooms",
       "bind": {
-        "r": "dojagi"
+        "r": "dojagi",
+        "word": "dojagi-word"
       }
     },
     "room-geumsok": {
@@ -136,7 +195,8 @@ const board: Board = {
       "element": "room",
       "of": "rooms",
       "bind": {
-        "r": "geumsok"
+        "r": "geumsok",
+        "word": "geumsok-word"
       }
     },
     "room-gogo": {
@@ -144,7 +204,8 @@ const board: Board = {
       "element": "room",
       "of": "rooms",
       "bind": {
-        "r": "gogo"
+        "r": "gogo",
+        "word": "gogo-word"
       }
     },
     "humidity": {

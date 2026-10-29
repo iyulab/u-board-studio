@@ -43,10 +43,11 @@ const board: Board = {
       "style": ".via{display:block;width:100%;height:100%;box-sizing:border-box;border-radius:50%;background:#08402a;border:7px solid #d9a24a}"
     },
     "charger": {
-      "template": "<article class=\"ic {{c.state}}\"><div class=\"body\"><header><b>{{c.ref}}</b><i></i></header><small>{{c.kind}}</small><p><strong>{{c.kw}}</strong><span>kW</span><em>{{c.word}}</em></p><div class=\"soc\" style=\"--v: {{c.soc}}\"><span></span></div><footer>{{c.note}}</footer></div></article>",
+      "template": "<article class=\"ic {{c.state}}\"><div class=\"body\"><header><b>{{c.ref}}</b><i></i></header><small>{{c.kind}}</small><p><strong>{{c.kw}}</strong><span>kW</span><em>{{word}}</em></p><div class=\"soc\" style=\"--v: {{c.soc}}\"><span></span></div><footer>{{c.note}}</footer></div></article>",
       "style": ".ic{width:100%;height:100%;box-sizing:border-box;padding:0 10px;background:repeating-linear-gradient(180deg,#c9ccd1 0 7px,transparent 7px 16px) left/8px 100% no-repeat,repeating-linear-gradient(180deg,#c9ccd1 0 7px,transparent 7px 16px) right/8px 100% no-repeat;font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#f4f1e6}\n.body{position:relative;height:100%;box-sizing:border-box;display:grid;grid-template-rows:auto auto 1fr auto auto;gap:3px;padding:10px 14px 10px 22px;background:#1c1d1f;border-radius:4px;box-shadow:inset 0 0 0 1px #34363a}\n.body::before{content:\"\";position:absolute;left:8px;top:10px;width:8px;height:8px;border-radius:50%;background:#3a3c40}\nheader{display:flex;justify-content:space-between;align-items:center}\nb{font:800 18px \"JetBrains Mono\", \"Consolas\", \"D2Coding\", monospace;letter-spacing:.04em}\ni{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;font:900 13px \"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;font-style:normal;box-sizing:border-box}\nsmall{font-size:12px;color:#b9bdc4}\np{margin:0;display:flex;align-items:baseline;gap:6px}\nstrong{font:800 34px \"JetBrains Mono\", \"Consolas\", \"D2Coding\", monospace}\np span{font-size:13px;color:#b9bdc4}\nem{margin-left:auto;font-style:normal;font-weight:800;font-size:14px}\n.soc{height:8px;border-radius:2px;background:#33363b;overflow:hidden}\n.soc span{display:block;height:100%;width:calc(var(--v) * 1%);background:#d9a24a}\nfooter{font-size:12px;color:#d6d9de;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\n.charging i{background:#7dff9a;color:#063b1a;box-shadow:0 0 10px #7dff9a}\n.charging i::before{content:\"▶\"}\n.charging em{color:#7dff9a}\n.free i{border:3px solid #6f747c}\n.free strong{color:#6f747c}\n.free em{color:#c9ccd1}\n.blocking i{background:conic-gradient(#ffc04d 0 50%,transparent 50%);border:3px solid #ffc04d}\n.blocking em{color:#ffc04d}\n.fault .body{background:repeating-linear-gradient(-45deg,#1c1d1f 0 8px,#2c1414 8px 16px);box-shadow:inset 0 0 0 2px #ff5a4f}\n.fault i{background:#ff5a4f;color:#2b0605}\n.fault i::before{content:\"✕\"}\n.fault strong{color:#7c6060}\n.fault em{color:#ff5a4f}",
       "props": {
-        "c": "object"
+        "c": "object",
+        "word": "string"
       }
     },
     "title": {
@@ -235,6 +236,78 @@ const board: Board = {
             "fault": "fault",
             "*": "off"
           }
+        },
+        "a1-word": {
+          "at": "/value/a1/state",
+          "names": {
+            "charging": "충전 중",
+            "free": "비어 있음",
+            "fault": "고장",
+            "blocking": "출차 대기"
+          }
+        },
+        "a2-word": {
+          "at": "/value/a2/state",
+          "names": {
+            "charging": "충전 중",
+            "free": "비어 있음",
+            "fault": "고장",
+            "blocking": "출차 대기"
+          }
+        },
+        "a3-word": {
+          "at": "/value/a3/state",
+          "names": {
+            "charging": "충전 중",
+            "free": "비어 있음",
+            "fault": "고장",
+            "blocking": "출차 대기"
+          }
+        },
+        "a4-word": {
+          "at": "/value/a4/state",
+          "names": {
+            "charging": "충전 중",
+            "free": "비어 있음",
+            "fault": "고장",
+            "blocking": "출차 대기"
+          }
+        },
+        "b1-word": {
+          "at": "/value/b1/state",
+          "names": {
+            "charging": "충전 중",
+            "free": "비어 있음",
+            "fault": "고장",
+            "blocking": "출차 대기"
+          }
+        },
+        "b2-word": {
+          "at": "/value/b2/state",
+          "names": {
+            "charging": "충전 중",
+            "free": "비어 있음",
+            "fault": "고장",
+            "blocking": "출차 대기"
+          }
+        },
+        "b3-word": {
+          "at": "/value/b3/state",
+          "names": {
+            "charging": "충전 중",
+            "free": "비어 있음",
+            "fault": "고장",
+            "blocking": "출차 대기"
+          }
+        },
+        "b4-word": {
+          "at": "/value/b4/state",
+          "names": {
+            "charging": "충전 중",
+            "free": "비어 있음",
+            "fault": "고장",
+            "blocking": "출차 대기"
+          }
         }
       }
     },
@@ -311,7 +384,8 @@ const board: Board = {
       "element": "charger",
       "of": "chargers",
       "bind": {
-        "c": "a1"
+        "c": "a1",
+        "word": "a1-word"
       }
     },
     "charger-a2": {
@@ -319,7 +393,8 @@ const board: Board = {
       "element": "charger",
       "of": "chargers",
       "bind": {
-        "c": "a2"
+        "c": "a2",
+        "word": "a2-word"
       }
     },
     "charger-a3": {
@@ -327,7 +402,8 @@ const board: Board = {
       "element": "charger",
       "of": "chargers",
       "bind": {
-        "c": "a3"
+        "c": "a3",
+        "word": "a3-word"
       }
     },
     "charger-a4": {
@@ -335,7 +411,8 @@ const board: Board = {
       "element": "charger",
       "of": "chargers",
       "bind": {
-        "c": "a4"
+        "c": "a4",
+        "word": "a4-word"
       }
     },
     "charger-b1": {
@@ -343,7 +420,8 @@ const board: Board = {
       "element": "charger",
       "of": "chargers",
       "bind": {
-        "c": "b1"
+        "c": "b1",
+        "word": "b1-word"
       }
     },
     "charger-b2": {
@@ -351,7 +429,8 @@ const board: Board = {
       "element": "charger",
       "of": "chargers",
       "bind": {
-        "c": "b2"
+        "c": "b2",
+        "word": "b2-word"
       }
     },
     "charger-b3": {
@@ -359,7 +438,8 @@ const board: Board = {
       "element": "charger",
       "of": "chargers",
       "bind": {
-        "c": "b3"
+        "c": "b3",
+        "word": "b3-word"
       }
     },
     "charger-b4": {
@@ -367,7 +447,8 @@ const board: Board = {
       "element": "charger",
       "of": "chargers",
       "bind": {
-        "c": "b4"
+        "c": "b4",
+        "word": "b4-word"
       }
     },
     "title": {

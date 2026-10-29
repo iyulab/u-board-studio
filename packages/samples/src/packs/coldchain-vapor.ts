@@ -23,10 +23,11 @@ const board: Board = {
       }
     },
     "zone": {
-      "template": "<article class=\"zc {{z.state}}\" style=\"--v: {{z.temp}}; --lo: {{z.lo}}; --hi: {{z.hi}}\"><p class=\"en\">{{z.en}}</p><h2>{{z.name}}</h2><p class=\"t\"><b>{{z.temp}}</b>℃</p><div class=\"th\"><div class=\"band\"></div><div class=\"mark\"></div></div><p class=\"set\">설정 {{z.lo}} ~ {{z.hi}}℃</p><dl><div><dt>적재</dt><dd>{{z.load}}</dd></div><div><dt>문 열림</dt><dd>{{z.doors}}</dd></div></dl><p class=\"word\"><i></i>{{z.word}}</p><p class=\"note\">{{z.note}}</p></article>",
+      "template": "<article class=\"zc {{z.state}}\" style=\"--v: {{z.temp}}; --lo: {{z.lo}}; --hi: {{z.hi}}\"><p class=\"en\">{{z.en}}</p><h2>{{z.name}}</h2><p class=\"t\"><b>{{z.temp}}</b>℃</p><div class=\"th\"><div class=\"band\"></div><div class=\"mark\"></div></div><p class=\"set\">설정 {{z.lo}} ~ {{z.hi}}℃</p><dl><div><dt>적재</dt><dd>{{z.load}}</dd></div><div><dt>문 열림</dt><dd>{{z.doors}}</dd></div></dl><p class=\"word\"><i></i>{{word}}</p><p class=\"note\">{{z.note}}</p></article>",
       "style": ".zc{height:100%;box-sizing:border-box;padding:14px 16px;border:3px solid #05ffa1;border-radius:14px;background:rgba(26,11,46,.62);backdrop-filter:blur(6px);font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#fff;display:grid;grid-template-rows:auto auto auto auto auto auto 1fr auto;gap:6px;box-shadow:0 0 18px rgba(5,255,161,.25)}\n.en{margin:0;font-size:11px;letter-spacing:.5em;color:#01cdfe}\nh2{margin:0;font-size:24px;font-weight:800}\n.t{margin:0;font-size:16px}\n.t b{font:italic 900 46px \"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;letter-spacing:-1px;background:linear-gradient(180deg, #ffffff 0%, #c9d6ff 45%, #6b5bd6 52%, #f4c6ff 100%);-webkit-background-clip:text;background-clip:text;color:transparent}\n.th{position:relative;height:12px;border-radius:6px;background:linear-gradient(90deg, #01cdfe, #b967ff 60%, #ff71ce);opacity:.9}\n.band{position:absolute;top:-3px;bottom:-3px;left:calc((var(--lo) + 80) * 100% / 105);width:calc((var(--hi) - var(--lo)) * 100% / 105);min-width:6px;border:2px solid #fff;border-radius:4px}\n.mark{position:absolute;top:-8px;width:4px;height:28px;margin-left:-2px;left:calc((var(--v) + 80) * 100% / 105);background:#fff;box-shadow:0 0 0 2px #1a0b2e}\n.set{margin:0;font-size:12px;color:#d9c7f5}\ndl{margin:0;display:grid;grid-template-columns:1fr 1fr;gap:4px}\ndl div{background:rgba(255,255,255,.08);border-radius:6px;padding:4px 8px}\ndt{font-size:11px;color:#d9c7f5}dd{margin:0;font-size:16px;font-weight:700}\n.word{margin:0;align-self:end;justify-self:start;display:flex;gap:6px;align-items:center;padding:2px 12px;border:2px solid #05ffa1;border-radius:999px;font-size:15px;font-weight:800;color:#05ffa1}\ni{font-style:normal}\n.note{margin:0;font-size:12px;line-height:1.4;color:#e8dcff}\n.ok i::before{content:\"●\"}\n.defrost{border-color:#01cdfe;box-shadow:0 0 18px rgba(1,205,254,.3)}.defrost .word{border-color:#01cdfe;color:#01cdfe}.defrost i::before{content:\"❄\"}\n.door{border-color:#fffb96;border-style:dashed;box-shadow:none}.door .word{border-color:#fffb96;border-style:dashed;color:#fffb96}.door i::before{content:\"▮\"}\n.alarm{border-color:#ff71ce;border-width:5px;box-shadow:0 0 26px rgba(255,113,206,.6)}.alarm .word{background:#ff71ce;border-color:#ff71ce;color:#1a0b2e}.alarm i::before{content:\"▲\"}.alarm .mark{background:#ff71ce;box-shadow:0 0 0 2px #fff}",
       "props": {
-        "z": "object"
+        "z": "object",
+        "word": "string"
       }
     },
     "docks": {
@@ -70,6 +71,60 @@ const board: Board = {
         },
         "ult": {
           "at": "/value/ult"
+        },
+        "frzA-word": {
+          "at": "/value/frzA/state",
+          "names": {
+            "ok": "정상",
+            "alarm": "온도 이탈",
+            "defrost": "제상 중",
+            "door": "문 열림"
+          }
+        },
+        "frzB-word": {
+          "at": "/value/frzB/state",
+          "names": {
+            "ok": "정상",
+            "alarm": "온도 이탈",
+            "defrost": "제상 중",
+            "door": "문 열림"
+          }
+        },
+        "chl1-word": {
+          "at": "/value/chl1/state",
+          "names": {
+            "ok": "정상",
+            "alarm": "온도 이탈",
+            "defrost": "제상 중",
+            "door": "문 열림"
+          }
+        },
+        "chl2-word": {
+          "at": "/value/chl2/state",
+          "names": {
+            "ok": "정상",
+            "alarm": "온도 이탈",
+            "defrost": "제상 중",
+            "door": "문 열림"
+          }
+        },
+        "amb-word": {
+          "at": "/value/amb/state",
+          "names": {
+            "ok": "정상",
+            "alarm": "온도 이탈",
+            "defrost": "제상 중",
+            "door": "문 열림"
+          }
+        },
+        "ult-word": {
+          "at": "/value/ult/state",
+          "names": {
+            "ok": "정상",
+            "alarm": "온도 이탈",
+            "defrost": "제상 중",
+            "door": "문 열림"
+          }
         }
       }
     },
@@ -104,7 +159,8 @@ const board: Board = {
       "element": "zone",
       "of": "zones",
       "bind": {
-        "z": "frzA"
+        "z": "frzA",
+        "word": "frzA-word"
       }
     },
     "zone-frzB": {
@@ -112,7 +168,8 @@ const board: Board = {
       "element": "zone",
       "of": "zones",
       "bind": {
-        "z": "frzB"
+        "z": "frzB",
+        "word": "frzB-word"
       }
     },
     "zone-chl1": {
@@ -120,7 +177,8 @@ const board: Board = {
       "element": "zone",
       "of": "zones",
       "bind": {
-        "z": "chl1"
+        "z": "chl1",
+        "word": "chl1-word"
       }
     },
     "zone-chl2": {
@@ -128,7 +186,8 @@ const board: Board = {
       "element": "zone",
       "of": "zones",
       "bind": {
-        "z": "chl2"
+        "z": "chl2",
+        "word": "chl2-word"
       }
     },
     "zone-amb": {
@@ -136,7 +195,8 @@ const board: Board = {
       "element": "zone",
       "of": "zones",
       "bind": {
-        "z": "amb"
+        "z": "amb",
+        "word": "amb-word"
       }
     },
     "zone-ult": {
@@ -144,7 +204,8 @@ const board: Board = {
       "element": "zone",
       "of": "zones",
       "bind": {
-        "z": "ult"
+        "z": "ult",
+        "word": "ult-word"
       }
     },
     "frzb-trend": {

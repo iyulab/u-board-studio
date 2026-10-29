@@ -13,12 +13,12 @@ export const snapshot: SampleSnapshot = {
       '/centre/now': { value: { date: '10월 22일 목요일', time: '15:10', intake: '41.2 t' }, updatedAt: at },
       '/centre/lines': {
         value: {
-          pet: { name: '페트병', tint: '#7fb6d4', fill: '82', today: '6.4 t', purity: '96%', state: 'ok', word: '정상', note: '베일 9개 · 다음 반출 16시' },
-          can: { name: '캔', tint: '#b8b2a4', fill: '95', today: '2.1 t', purity: '98%', state: 'full', word: '만재', note: '알루미늄·철 · 베일장 가득, 트럭 대기' },
-          glass: { name: '유리병', tint: '#6c9a6e', fill: '40', today: '3.8 t', purity: '91%', state: 'ok', word: '정상', note: '갈색·녹색·백색 색 선별 3대' },
-          carton: { name: '종이팩', tint: '#e3d8bb', fill: '55', today: '0.9 t', purity: '84%', state: 'warn', word: '혼입 주의', note: '일반 종이 섞임 16% · 손 선별 보강' },
-          plastic: { name: '플라스틱', tint: '#d9926c', fill: '63', today: '4.7 t', purity: '92%', state: 'ok', word: '정상', note: 'PP·PE · 광학 선별기 2대 가동' },
-          vinyl: { name: '비닐', tint: '#c8bfd8', fill: '28', today: '1.2 t', purity: '—', state: 'stop', word: '정지', note: '압축기 유압 누유 13:40 · 수리 중' },
+          pet: { name: '페트병', tint: '#7fb6d4', fill: '82', today: '6.4 t', purity: '96%', state: 'ok', note: '베일 9개 · 다음 반출 16시' },
+          can: { name: '캔', tint: '#b8b2a4', fill: '95', today: '2.1 t', purity: '98%', state: 'full', note: '알루미늄·철 · 베일장 가득, 트럭 대기' },
+          glass: { name: '유리병', tint: '#6c9a6e', fill: '40', today: '3.8 t', purity: '91%', state: 'ok', note: '갈색·녹색·백색 색 선별 3대' },
+          carton: { name: '종이팩', tint: '#e3d8bb', fill: '55', today: '0.9 t', purity: '84%', state: 'warn', note: '일반 종이 섞임 16% · 손 선별 보강' },
+          plastic: { name: '플라스틱', tint: '#d9926c', fill: '63', today: '4.7 t', purity: '92%', state: 'ok', note: 'PP·PE · 광학 선별기 2대 가동' },
+          vinyl: { name: '비닐', tint: '#c8bfd8', fill: '28', today: '1.2 t', purity: '—', state: 'stop', note: '압축기 유압 누유 13:40 · 수리 중' },
         },
         updatedAt: at,
       },

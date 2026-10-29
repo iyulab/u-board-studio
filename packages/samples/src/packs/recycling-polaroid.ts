@@ -24,11 +24,12 @@ const board: Board = {
       }
     },
     "photo": {
-      "template": "<figure class=\"ph {{p.state}}\" style=\"--f: {{p.fill}}; --tint: {{p.tint}}; --tilt: {{tilt}}deg\"><div class=\"pic\"><div class=\"bales\"></div><span class=\"bay\">베일장 {{p.fill}}%</span><i class=\"tape\"></i><i class=\"pin\"></i><i class=\"x\"></i></div><figcaption><b>{{p.name}}</b><span>오늘 {{p.today}} · 순도 {{p.purity}}</span><em>{{p.word}}</em><small>{{p.note}}</small></figcaption></figure>",
+      "template": "<figure class=\"ph {{p.state}}\" style=\"--f: {{p.fill}}; --tint: {{p.tint}}; --tilt: {{tilt}}deg\"><div class=\"pic\"><div class=\"bales\"></div><span class=\"bay\">베일장 {{p.fill}}%</span><i class=\"tape\"></i><i class=\"pin\"></i><i class=\"x\"></i></div><figcaption><b>{{p.name}}</b><span>오늘 {{p.today}} · 순도 {{p.purity}}</span><em>{{word}}</em><small>{{p.note}}</small></figcaption></figure>",
       "style": ".ph{position:absolute;inset:10px;margin:0;box-sizing:border-box;padding:12px 12px 0;background:#fbfaf5;transform:rotate(var(--tilt));box-shadow:0 6px 14px rgba(0,0,0,.55);font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#2a2f3a;display:grid;grid-template-rows:160px 1fr;overflow:hidden}\n.pic{position:relative;overflow:hidden;background:linear-gradient(#cfd9df, #e8ecef 55%, #b9b4a8 56%, #a29d91)}\n.bales{position:absolute;left:10px;right:10px;bottom:0;height:calc(var(--f) * 0.9%);background:repeating-linear-gradient(90deg, transparent 0 40px, rgba(0,0,0,.28) 40px 43px), repeating-linear-gradient(0deg, var(--tint) 0 30px, rgba(0,0,0,.35) 30px 33px);border-top:2px solid rgba(0,0,0,.25)}\n.bay{position:absolute;left:8px;top:6px;padding:0 6px;font:22px \"Nanum Pen Script\", \"Nanum Brush Script\", cursive;background:rgba(255,255,255,.75);color:#2a2f3a}\nfigcaption{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto auto;column-gap:6px;align-content:start;padding:6px 2px 0}\nb{font:28px/1.05 \"Nanum Pen Script\", \"Nanum Brush Script\", cursive;grid-column:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\nspan{font:19px/1.15 \"Nanum Pen Script\", \"Nanum Brush Script\", cursive;grid-column:1 / span 2;margin-top:10px;color:#444b57;white-space:nowrap}\nem{grid-column:2;grid-row:1;align-self:center;white-space:nowrap;font:normal 27px/1 \"Nanum Pen Script\", \"Nanum Brush Script\", cursive;color:#2a2f3a;padding:0 6px}\nsmall{grid-column:1 / span 2;margin-top:6px;font:17px/1.15 \"Nanum Pen Script\", \"Nanum Brush Script\", cursive;color:#5b6270}\ni{position:absolute;display:none}\n.ok em::before{content:\"✓ \";color:#2d7a4b}\n.warn .tape{display:block;top:14px;right:-22px;width:120px;height:26px;background:rgba(244, 206, 82, .88);transform:rotate(32deg)}\n.warn .tape::after{content:\"!\";position:absolute;left:54px;top:-2px;font:800 22px \"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#6b4b00}\n.warn em{text-decoration:underline wavy #c48a00;text-underline-offset:4px}\n.full .pin{display:block;top:8px;left:80%;width:18px;height:18px;margin-left:-9px;border-radius:50%;background:radial-gradient(circle at 35% 35%, #ff8a80, #d23a2f 60%);box-shadow:0 3px 4px rgba(0,0,0,.45)}\n.full em{border:2.5px solid #d23a2f;border-radius:50%;color:#d23a2f;padding:4px 10px}\n.stop .pic{filter:grayscale(1) contrast(.85) brightness(1.1)}\n.stop .x{display:block;inset:0;background:linear-gradient(35deg, transparent 46%, rgba(244, 206, 82, .88) 46% 56%, transparent 56%), linear-gradient(-35deg, transparent 46%, rgba(244, 206, 82, .88) 46% 56%, transparent 56%)}\n.stop em{border:2.5px solid #2a2f3a;padding:2px 8px}",
       "props": {
         "p": "object",
-        "tilt": "string"
+        "tilt": "string",
+        "word": "string"
       }
     },
     "trucks": {
@@ -72,6 +73,60 @@ const board: Board = {
         },
         "vinyl": {
           "at": "/value/vinyl"
+        },
+        "pet-word": {
+          "at": "/value/pet/state",
+          "names": {
+            "ok": "정상",
+            "full": "만재",
+            "warn": "혼입 주의",
+            "stop": "정지"
+          }
+        },
+        "can-word": {
+          "at": "/value/can/state",
+          "names": {
+            "ok": "정상",
+            "full": "만재",
+            "warn": "혼입 주의",
+            "stop": "정지"
+          }
+        },
+        "glass-word": {
+          "at": "/value/glass/state",
+          "names": {
+            "ok": "정상",
+            "full": "만재",
+            "warn": "혼입 주의",
+            "stop": "정지"
+          }
+        },
+        "carton-word": {
+          "at": "/value/carton/state",
+          "names": {
+            "ok": "정상",
+            "full": "만재",
+            "warn": "혼입 주의",
+            "stop": "정지"
+          }
+        },
+        "plastic-word": {
+          "at": "/value/plastic/state",
+          "names": {
+            "ok": "정상",
+            "full": "만재",
+            "warn": "혼입 주의",
+            "stop": "정지"
+          }
+        },
+        "vinyl-word": {
+          "at": "/value/vinyl/state",
+          "names": {
+            "ok": "정상",
+            "full": "만재",
+            "warn": "혼입 주의",
+            "stop": "정지"
+          }
         }
       }
     },
@@ -109,7 +164,8 @@ const board: Board = {
         "tilt": "-2"
       },
       "bind": {
-        "p": "pet"
+        "p": "pet",
+        "word": "pet-word"
       }
     },
     "line-can": {
@@ -120,7 +176,8 @@ const board: Board = {
         "tilt": "1.5"
       },
       "bind": {
-        "p": "can"
+        "p": "can",
+        "word": "can-word"
       }
     },
     "line-glass": {
@@ -131,7 +188,8 @@ const board: Board = {
         "tilt": "-1"
       },
       "bind": {
-        "p": "glass"
+        "p": "glass",
+        "word": "glass-word"
       }
     },
     "line-carton": {
@@ -142,7 +200,8 @@ const board: Board = {
         "tilt": "2"
       },
       "bind": {
-        "p": "carton"
+        "p": "carton",
+        "word": "carton-word"
       }
     },
     "line-plastic": {
@@ -153,7 +212,8 @@ const board: Board = {
         "tilt": "-1.5"
       },
       "bind": {
-        "p": "plastic"
+        "p": "plastic",
+        "word": "plastic-word"
       }
     },
     "line-vinyl": {
@@ -164,7 +224,8 @@ const board: Board = {
         "tilt": "1"
       },
       "bind": {
-        "p": "vinyl"
+        "p": "vinyl",
+        "word": "vinyl-word"
       }
     },
     "intake": {

@@ -13,10 +13,10 @@ export const snapshot: SampleSnapshot = {
       '/observatory/now': { value: { series: '관측 일지 · 맑은 밤', name: '누리 천문대', date: '10월 22일 목요일', time: '23:40' }, updatedAt: at },
       '/observatory/domes': {
         value: {
-          a: { name: 'A 돔', scope: '1.0 m 반사 망원경', target: 'M31 안드로메다은하 — 장노출', state: 'open', word: '관측 중', frames: '96장', slit: '열림' },
-          b: { name: 'B 돔', scope: '60 cm 반사 망원경', target: '목성 — 행성 영상', state: 'open', word: '관측 중', frames: '64장', slit: '열림' },
-          c: { name: 'C 돔', scope: '40 cm 굴절 망원경', target: '— 냉각기 점검', state: 'service', word: '정비', frames: '0장', slit: '닫힘' },
-          d: { name: 'D 돔', scope: '35 cm 광시야 망원경', target: '다음: M42 오리온성운 02:00', state: 'standby', word: '대기', frames: '24장', slit: '열림' },
+          a: { name: 'A 돔', scope: '1.0 m 반사 망원경', target: 'M31 안드로메다은하 — 장노출', state: 'open', frames: '96장', slit: '열림' },
+          b: { name: 'B 돔', scope: '60 cm 반사 망원경', target: '목성 — 행성 영상', state: 'open', frames: '64장', slit: '열림' },
+          c: { name: 'C 돔', scope: '40 cm 굴절 망원경', target: '— 냉각기 점검', state: 'service', frames: '0장', slit: '닫힘' },
+          d: { name: 'D 돔', scope: '35 cm 광시야 망원경', target: '다음: M42 오리온성운 02:00', state: 'standby', frames: '24장', slit: '열림' },
         },
         updatedAt: at,
       },

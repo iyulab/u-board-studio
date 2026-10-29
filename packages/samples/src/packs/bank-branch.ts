@@ -17,10 +17,11 @@ const board: Board = {
   },
   "elements": {
     "place": {
-      "template": "<section class=\"pl {{p.state}}\"><header><b>{{p.name}}</b>{{#p.task}}<span>{{p.task}}</span>{{/p.task}}</header><p><i>{{p.mark}}</i>{{p.word}}</p><small>{{p.note}}</small></section>",
+      "template": "<section class=\"pl {{p.state}}\"><header><b>{{p.name}}</b>{{#p.task}}<span>{{p.task}}</span>{{/p.task}}</header><p><i>{{p.mark}}</i>{{word}}</p><small>{{p.note}}</small></section>",
       "style": ".pl{height:100%;box-sizing:border-box;display:grid;grid-template-rows:auto 1fr auto;gap:4px;padding:12px 14px;background:#fff;border:1.5px solid #d9d6cf;border-radius:14px;font-family:\"Inter\", \"Pretendard\", \"Noto Sans KR\", \"Malgun Gothic\", sans-serif;color:#2f3437;box-shadow:0 1px 0 rgba(0,0,0,.03)}\nheader{display:flex;justify-content:space-between;align-items:baseline;gap:6px}\nb{font-size:15px;font-weight:600}\nspan{font-size:12px;color:#7b7f80;padding:1px 8px;border-radius:999px;background:#f6f4ef}\np{margin:0;display:flex;align-items:center;gap:8px;font-size:16px;font-weight:600}\nsmall{font-size:12px;color:#7b7f80}\ni{font-style:normal;font-size:20px;line-height:1}\n.busy i,.ok i{color:#7f9e8c}\n.away i,.low i{color:#c4694a}\n.free i{color:#7b95ab}\n.off i,.closed i{color:#7b7f80}\n.away{border-color:#c4694a}\n.low{border-color:#c4694a}\n.closed,.off{background:#f6f4ef;color:#7b7f80;border-style:dashed}",
       "props": {
-        "p": "object"
+        "p": "object",
+        "word": "string"
       }
     },
     "ticket": {
@@ -80,6 +81,60 @@ const board: Board = {
         },
         "d6": {
           "at": "/value/d6"
+        },
+        "d1-word": {
+          "at": "/value/d1/state",
+          "names": {
+            "busy": "응대 중",
+            "away": "자리 비움",
+            "free": "대기 없음",
+            "closed": "13:00 열림"
+          }
+        },
+        "d2-word": {
+          "at": "/value/d2/state",
+          "names": {
+            "busy": "응대 중",
+            "away": "자리 비움",
+            "free": "대기 없음",
+            "closed": "13:00 열림"
+          }
+        },
+        "d3-word": {
+          "at": "/value/d3/state",
+          "names": {
+            "busy": "응대 중",
+            "away": "자리 비움",
+            "free": "대기 없음",
+            "closed": "13:00 열림"
+          }
+        },
+        "d4-word": {
+          "at": "/value/d4/state",
+          "names": {
+            "busy": "응대 중",
+            "away": "자리 비움",
+            "free": "대기 없음",
+            "closed": "13:00 열림"
+          }
+        },
+        "d5-word": {
+          "at": "/value/d5/state",
+          "names": {
+            "busy": "응대 중",
+            "away": "자리 비움",
+            "free": "대기 없음",
+            "closed": "13:00 열림"
+          }
+        },
+        "d6-word": {
+          "at": "/value/d6/state",
+          "names": {
+            "busy": "응대 중",
+            "away": "자리 비움",
+            "free": "대기 없음",
+            "closed": "13:00 열림"
+          }
         }
       }
     },
@@ -97,6 +152,27 @@ const board: Board = {
         },
         "r3": {
           "at": "/value/r3"
+        },
+        "r1-word": {
+          "at": "/value/r1/state",
+          "names": {
+            "busy": "상담 중",
+            "free": "비어 있음"
+          }
+        },
+        "r2-word": {
+          "at": "/value/r2/state",
+          "names": {
+            "busy": "상담 중",
+            "free": "비어 있음"
+          }
+        },
+        "r3-word": {
+          "at": "/value/r3/state",
+          "names": {
+            "busy": "상담 중",
+            "free": "비어 있음"
+          }
         }
       }
     },
@@ -117,6 +193,38 @@ const board: Board = {
         },
         "a4": {
           "at": "/value/a4"
+        },
+        "a1-word": {
+          "at": "/value/a1/state",
+          "names": {
+            "ok": "사용 가능",
+            "low": "현금 부족",
+            "off": "점검 중"
+          }
+        },
+        "a2-word": {
+          "at": "/value/a2/state",
+          "names": {
+            "ok": "사용 가능",
+            "low": "현금 부족",
+            "off": "점검 중"
+          }
+        },
+        "a3-word": {
+          "at": "/value/a3/state",
+          "names": {
+            "ok": "사용 가능",
+            "low": "현금 부족",
+            "off": "점검 중"
+          }
+        },
+        "a4-word": {
+          "at": "/value/a4/state",
+          "names": {
+            "ok": "사용 가능",
+            "low": "현금 부족",
+            "off": "점검 중"
+          }
         }
       }
     },
@@ -164,7 +272,8 @@ const board: Board = {
       "element": "place",
       "of": "desks",
       "bind": {
-        "p": "d1"
+        "p": "d1",
+        "word": "d1-word"
       }
     },
     "desk-d2": {
@@ -172,7 +281,8 @@ const board: Board = {
       "element": "place",
       "of": "desks",
       "bind": {
-        "p": "d2"
+        "p": "d2",
+        "word": "d2-word"
       }
     },
     "desk-d3": {
@@ -180,7 +290,8 @@ const board: Board = {
       "element": "place",
       "of": "desks",
       "bind": {
-        "p": "d3"
+        "p": "d3",
+        "word": "d3-word"
       }
     },
     "desk-d4": {
@@ -188,7 +299,8 @@ const board: Board = {
       "element": "place",
       "of": "desks",
       "bind": {
-        "p": "d4"
+        "p": "d4",
+        "word": "d4-word"
       }
     },
     "desk-d5": {
@@ -196,7 +308,8 @@ const board: Board = {
       "element": "place",
       "of": "desks",
       "bind": {
-        "p": "d5"
+        "p": "d5",
+        "word": "d5-word"
       }
     },
     "desk-d6": {
@@ -204,7 +317,8 @@ const board: Board = {
       "element": "place",
       "of": "desks",
       "bind": {
-        "p": "d6"
+        "p": "d6",
+        "word": "d6-word"
       }
     },
     "room-r1": {
@@ -212,7 +326,8 @@ const board: Board = {
       "element": "place",
       "of": "rooms",
       "bind": {
-        "p": "r1"
+        "p": "r1",
+        "word": "r1-word"
       }
     },
     "room-r2": {
@@ -220,7 +335,8 @@ const board: Board = {
       "element": "place",
       "of": "rooms",
       "bind": {
-        "p": "r2"
+        "p": "r2",
+        "word": "r2-word"
       }
     },
     "room-r3": {
@@ -228,7 +344,8 @@ const board: Board = {
       "element": "place",
       "of": "rooms",
       "bind": {
-        "p": "r3"
+        "p": "r3",
+        "word": "r3-word"
       }
     },
     "atm-a1": {
@@ -236,7 +353,8 @@ const board: Board = {
       "element": "place",
       "of": "atms",
       "bind": {
-        "p": "a1"
+        "p": "a1",
+        "word": "a1-word"
       }
     },
     "atm-a2": {
@@ -244,7 +362,8 @@ const board: Board = {
       "element": "place",
       "of": "atms",
       "bind": {
-        "p": "a2"
+        "p": "a2",
+        "word": "a2-word"
       }
     },
     "atm-a3": {
@@ -252,7 +371,8 @@ const board: Board = {
       "element": "place",
       "of": "atms",
       "bind": {
-        "p": "a3"
+        "p": "a3",
+        "word": "a3-word"
       }
     },
     "atm-a4": {
@@ -260,7 +380,8 @@ const board: Board = {
       "element": "place",
       "of": "atms",
       "bind": {
-        "p": "a4"
+        "p": "a4",
+        "word": "a4-word"
       }
     },
     "ticket": {

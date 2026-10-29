@@ -17,10 +17,11 @@ const board: Board = {
   },
   "elements": {
     "lane": {
-      "template": "<article class=\"ln {{l.state}}\"><b>{{l.no}}</b><header><strong>{{l.use}}</strong><small>{{l.who}}</small></header><p style=\"--n: {{l.swimmers}}; --max: {{l.places}}\"><span></span></p><em>{{l.swimmers}} / {{l.places}}</em><i>{{l.word}}</i></article>",
+      "template": "<article class=\"ln {{l.state}}\"><b>{{l.no}}</b><header><strong>{{l.use}}</strong><small>{{l.who}}</small></header><p style=\"--n: {{l.swimmers}}; --max: {{l.places}}\"><span></span></p><em>{{l.swimmers}} / {{l.places}}</em><i>{{word}}</i></article>",
       "style": ".ln{position:relative;height:100%;box-sizing:border-box;display:grid;grid-template-columns:52px 230px 1fr 76px 112px;align-items:center;gap:14px;padding:0 14px 6px 6px;background:linear-gradient(#c9d3da 1px,transparent 1px) 0 0/14px 14px,linear-gradient(90deg,#c9d3da 1px,transparent 1px) 0 0/14px 14px,#fbfcfd;font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#14283a;box-shadow:0 2px 0 rgba(0,0,0,.25)}\n.ln::after{content:\"\";position:absolute;left:0;right:0;bottom:0;height:6px;background:repeating-linear-gradient(90deg,#1f73b7 0 12px,#ffffff 12px 24px)}\nb{display:grid;place-items:center;width:46px;height:46px;background:#123f6b;color:#ffffff;font:800 24px \"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;box-shadow:inset 0 0 0 2px #5cc3d6}\nheader{display:grid}\nstrong{font-size:18px;font-weight:800}\nsmall{font-size:13px}\np{margin:0;height:18px;width:calc(var(--max) * 20px);background:repeating-linear-gradient(90deg,#ffffff 0 16px,transparent 16px 20px);box-shadow:inset 0 0 0 1px #c9d3da;position:relative}\np::before{content:\"\";position:absolute;inset:0;width:calc(var(--max) * 20px - 4px);background:repeating-linear-gradient(90deg,transparent 0 16px,#c9d3da 16px 20px)}\nspan{position:absolute;left:0;top:0;bottom:0;width:calc(var(--n) * 20px);background:repeating-linear-gradient(90deg,#1f73b7 0 16px,transparent 16px 20px)}\nem{font-style:normal;font-size:17px;font-weight:800;text-align:right}\ni{font-style:normal;font-size:15px;font-weight:800;text-align:center;padding:4px 0;border:2px solid #14283a;background:#ffffff}\n.open i::before{content:\"○ \"}\n.class i{background:#f2b632}\n.class i::before{content:\"◆ \"}\n.class::after{background:repeating-linear-gradient(90deg,#f2b632 0 12px,#ffffff 12px 24px)}\n.class span{background:repeating-linear-gradient(90deg,#c98a00 0 16px,transparent 16px 20px)}\n.full i{background:#d13b30;color:#ffffff;border-color:#d13b30}\n.full i::before{content:\"▲ \"}\n.full::after{background:repeating-linear-gradient(90deg,#d13b30 0 12px,#ffffff 12px 24px)}\n.full span{background:repeating-linear-gradient(90deg,#d13b30 0 16px,transparent 16px 20px)}\n.closed{background:repeating-linear-gradient(-45deg,#eef1f3 0 8px,#dfe5ea 8px 16px)}\n.closed i{background:#14283a;color:#ffffff}\n.closed i::before{content:\"✕ \"}\n.closed::after{background:repeating-linear-gradient(-45deg,#14283a 0 4px,#ffffff 4px 8px)}\n.closed b{background:#7b8a96}",
       "props": {
-        "l": "object"
+        "l": "object",
+        "word": "string"
       }
     },
     "water": {
@@ -86,6 +87,78 @@ const board: Board = {
         },
         "l8": {
           "at": "/value/l8"
+        },
+        "l1-word": {
+          "at": "/value/l1/state",
+          "names": {
+            "open": "자유",
+            "full": "만원",
+            "class": "강습",
+            "closed": "닫힘"
+          }
+        },
+        "l2-word": {
+          "at": "/value/l2/state",
+          "names": {
+            "open": "자유",
+            "full": "만원",
+            "class": "강습",
+            "closed": "닫힘"
+          }
+        },
+        "l3-word": {
+          "at": "/value/l3/state",
+          "names": {
+            "open": "자유",
+            "full": "만원",
+            "class": "강습",
+            "closed": "닫힘"
+          }
+        },
+        "l4-word": {
+          "at": "/value/l4/state",
+          "names": {
+            "open": "자유",
+            "full": "만원",
+            "class": "강습",
+            "closed": "닫힘"
+          }
+        },
+        "l5-word": {
+          "at": "/value/l5/state",
+          "names": {
+            "open": "자유",
+            "full": "만원",
+            "class": "강습",
+            "closed": "닫힘"
+          }
+        },
+        "l6-word": {
+          "at": "/value/l6/state",
+          "names": {
+            "open": "자유",
+            "full": "만원",
+            "class": "강습",
+            "closed": "닫힘"
+          }
+        },
+        "l7-word": {
+          "at": "/value/l7/state",
+          "names": {
+            "open": "자유",
+            "full": "만원",
+            "class": "강습",
+            "closed": "닫힘"
+          }
+        },
+        "l8-word": {
+          "at": "/value/l8/state",
+          "names": {
+            "open": "자유",
+            "full": "만원",
+            "class": "강습",
+            "closed": "닫힘"
+          }
         }
       }
     },
@@ -139,7 +212,8 @@ const board: Board = {
       "element": "lane",
       "of": "lanes",
       "bind": {
-        "l": "l1"
+        "l": "l1",
+        "word": "l1-word"
       }
     },
     "lane-l2": {
@@ -147,7 +221,8 @@ const board: Board = {
       "element": "lane",
       "of": "lanes",
       "bind": {
-        "l": "l2"
+        "l": "l2",
+        "word": "l2-word"
       }
     },
     "lane-l3": {
@@ -155,7 +230,8 @@ const board: Board = {
       "element": "lane",
       "of": "lanes",
       "bind": {
-        "l": "l3"
+        "l": "l3",
+        "word": "l3-word"
       }
     },
     "lane-l4": {
@@ -163,7 +239,8 @@ const board: Board = {
       "element": "lane",
       "of": "lanes",
       "bind": {
-        "l": "l4"
+        "l": "l4",
+        "word": "l4-word"
       }
     },
     "lane-l5": {
@@ -171,7 +248,8 @@ const board: Board = {
       "element": "lane",
       "of": "lanes",
       "bind": {
-        "l": "l5"
+        "l": "l5",
+        "word": "l5-word"
       }
     },
     "lane-l6": {
@@ -179,7 +257,8 @@ const board: Board = {
       "element": "lane",
       "of": "lanes",
       "bind": {
-        "l": "l6"
+        "l": "l6",
+        "word": "l6-word"
       }
     },
     "lane-l7": {
@@ -187,7 +266,8 @@ const board: Board = {
       "element": "lane",
       "of": "lanes",
       "bind": {
-        "l": "l7"
+        "l": "l7",
+        "word": "l7-word"
       }
     },
     "lane-l8": {
@@ -195,7 +275,8 @@ const board: Board = {
       "element": "lane",
       "of": "lanes",
       "bind": {
-        "l": "l8"
+        "l": "l8",
+        "word": "l8-word"
       }
     },
     "water": {
