@@ -25,8 +25,8 @@ export const snapshot: SampleSnapshot = {
         },
         updatedAt: at,
       },
-      '/hub/intake': { value: { limit: '1,200', kw: 707, pct: 59, word: '계약 전력의 59%' }, updatedAt: at },
-      '/hub/battery': { value: { capacity: 600, kw: 300, soc: 46, mode: 'discharging', word: '방전' }, updatedAt: at },
+      '/hub/intake': { value: { limit: '1,200', kw: 707, pct: 59 }, updatedAt: at },
+      '/hub/battery': { value: { capacity: 600, kw: 300, soc: 46, mode: 'discharging' }, updatedAt: at },
       '/hub/figures': {
         value: [
           { label: '지금 충전 전력', value: '1,007', note: 'kW — 5기 합' },

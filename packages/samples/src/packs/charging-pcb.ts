@@ -25,17 +25,18 @@ const board: Board = {
   },
   "elements": {
     "intake": {
-      "template": "<article class=\"pk\"><b>U1</b><small>수전 · 계약 {{m.limit}} kW</small><p><strong>{{m.kw}}</strong><span>kW</span></p><div class=\"bar\" style=\"--v: {{m.pct}}\"><span></span></div><footer>{{m.word}}</footer></article>",
+      "template": "<article class=\"pk\"><b>U1</b><small>수전 · 계약 {{m.limit}} kW</small><p><strong>{{m.kw}}</strong><span>kW</span></p><div class=\"bar\" style=\"--v: {{m.pct}}\"><span></span></div><footer>계약 전력의 {{m.pct}}%</footer></article>",
       "style": ".pk{height:100%;box-sizing:border-box;display:grid;grid-template-rows:auto auto 1fr auto auto;gap:3px;padding:10px 14px;background:#1c1d1f;border-radius:6px;border:2px solid #d9a24a;font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#f4f1e6}\nb{font:800 18px \"JetBrains Mono\", \"Consolas\", \"D2Coding\", monospace}\nsmall{font-size:12px;color:#b9bdc4}\np{margin:0;display:flex;align-items:baseline;gap:6px}\nstrong{font:800 30px \"JetBrains Mono\", \"Consolas\", \"D2Coding\", monospace}\nspan{font-size:13px;color:#b9bdc4}\n.bar{height:8px;border-radius:2px;background:#33363b;overflow:hidden}\n.bar span{display:block;height:100%;width:calc(var(--v) * 1%);background:#d9a24a}\nfooter{font-size:12px}",
       "props": {
         "m": "object"
       }
     },
     "battery": {
-      "template": "<article class=\"bt {{e.mode}}\"><b>BT1</b><small>ESS · {{e.capacity}} kWh</small><p><strong>{{e.kw}}</strong><span>kW {{e.word}}</span></p><div class=\"cells\" style=\"--v: {{e.soc}}\"><span></span></div><footer>충전량 {{e.soc}}%</footer></article>",
+      "template": "<article class=\"bt {{e.mode}}\"><b>BT1</b><small>ESS · {{e.capacity}} kWh</small><p><strong>{{e.kw}}</strong><span>kW {{word}}</span></p><div class=\"cells\" style=\"--v: {{e.soc}}\"><span></span></div><footer>충전량 {{e.soc}}%</footer></article>",
       "style": ".bt{height:100%;box-sizing:border-box;display:grid;grid-template-rows:auto auto 1fr auto auto;gap:3px;padding:10px 14px;background:#1c1d1f;border-radius:6px;border:2px solid #d9a24a;font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#f4f1e6}\nb{font:800 18px \"JetBrains Mono\", \"Consolas\", \"D2Coding\", monospace}\nsmall{font-size:12px;color:#b9bdc4}\np{margin:0;display:flex;align-items:baseline;gap:6px}\nstrong{font:800 30px \"JetBrains Mono\", \"Consolas\", \"D2Coding\", monospace}\nspan{font-size:13px;color:#b9bdc4}\n.cells{height:10px;border-radius:2px;background:repeating-linear-gradient(90deg,#33363b 0 14px,#1c1d1f 14px 16px);overflow:hidden}\n.cells span{display:block;height:100%;width:calc(var(--v) * 1%);background:repeating-linear-gradient(90deg,#d9a24a 0 14px,#1c1d1f 14px 16px)}\nfooter{font-size:12px}\n.discharging p span{color:#ffc04d}",
       "props": {
-        "e": "object"
+        "e": "object",
+        "word": "string"
       }
     },
     "via": {
@@ -92,7 +93,13 @@ const board: Board = {
       "time": "updatedAt",
       "fresh": 300,
       "fields": {
-        "value": {}
+        "value": {},
+        "value-word": {
+          "at": "/value/mode",
+          "names": {
+            "discharging": "방전"
+          }
+        }
       }
     },
     "chargers": {
@@ -360,7 +367,8 @@ const board: Board = {
       "element": "battery",
       "of": "battery",
       "bind": {
-        "e": "value"
+        "e": "value",
+        "word": "value-word"
       }
     },
     "via-0": {

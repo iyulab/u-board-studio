@@ -27,7 +27,7 @@ const board: Board = {
   },
   "elements": {
     "base": {
-      "template": "<article class=\"bs\"><small>BASE</small><b>{{b.name}}</b><p>{{b.word}}</p></article>",
+      "template": "<article class=\"bs\"><small>BASE</small><b>{{b.name}}</b><p>대기 {{b.waiting}} · 충전 {{b.charging}}</p></article>",
       "style": ".bs{height:100%;box-sizing:border-box;display:grid;align-content:center;justify-items:center;gap:2px;background:#203a5c;border:3px double #fbf3df;border-radius:50%;font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#fbf3df;text-align:center}\nsmall{font:700 11px \"Futura\", \"Century Gothic\", \"Malgun Gothic\", sans-serif;letter-spacing:.3em}\nb{font:800 17px \"Futura\", \"Century Gothic\", \"Malgun Gothic\", sans-serif}\np{margin:0;font-size:12px}",
       "props": {
         "b": "object"

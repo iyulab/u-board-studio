@@ -72,12 +72,12 @@
   "campsite-papercut": {
     "width": 800,
     "height": 496,
-    "hash": "0c1a616b546e0287"
+    "hash": "e05e262d3b0c8426"
   },
   "charging-pcb": {
     "width": 800,
     "height": 496,
-    "hash": "934cf0077f7e2b88"
+    "hash": "3634f44a95ca7ce3"
   },
   "clinic-kiosk": {
     "width": 386,
@@ -122,7 +122,7 @@
   "drone-routes": {
     "width": 800,
     "height": 496,
-    "hash": "262f0604dd219572"
+    "hash": "7f89952e7d405781"
   },
   "elevator-tui": {
     "width": 800,
@@ -272,7 +272,7 @@
   "observatory-glass": {
     "width": 800,
     "height": 496,
-    "hash": "5377f2f486dc933c"
+    "hash": "ae7e42d3a139729e"
   },
   "offshore-wind-chart": {
     "width": 800,

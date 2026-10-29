@@ -23,7 +23,6 @@ export const snapshot: SampleSnapshot = {
       '/observatory/sky': {
         value: {
           state: 'good',
-          word: '관측 적합',
           note: '맑음 · 달 없음',
           readings: [
             { label: '구름량', value: '10 %' },

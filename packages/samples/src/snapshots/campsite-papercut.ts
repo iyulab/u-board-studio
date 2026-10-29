@@ -49,7 +49,7 @@ export const snapshot: SampleSnapshot = {
         updatedAt: at,
       },
       '/camp/weather': {
-        value: { now: '14 °C', low: '6 °C', wind: '2 m/s', sunset: '17:48', fire: 'allowed', word: '화로대에서만' },
+        value: { now: '14 °C', low: '6 °C', wind: '2 m/s', sunset: '17:48', fire: 'allowed' },
         updatedAt: at,
       },
       '/camp/figures': {

@@ -25,10 +25,11 @@ const board: Board = {
       }
     },
     "sky": {
-      "template": "<section class=\"rw {{s.state}}\"><ol>{{#s.readings}}<li><small>{{label}}</small><b>{{value}}</b></li>{{/s.readings}}</ol><div><small>하늘</small><b>{{s.word}}</b><span>{{s.note}}</span></div></section>",
+      "template": "<section class=\"rw {{s.state}}\"><ol>{{#s.readings}}<li><small>{{label}}</small><b>{{value}}</b></li>{{/s.readings}}</ol><div><small>하늘</small><b>{{word}}</b><span>{{s.note}}</span></div></section>",
       "style": ".rw{position:relative;height:100%;aspect-ratio:1;margin:0 auto;box-sizing:border-box;border-radius:50%;border:10px solid #0b0a10;background:repeating-conic-gradient(from 22.5deg,#2b4f9e 0 40deg,#0b0a10 40deg 45deg,#6b3f99 45deg 85deg,#0b0a10 85deg 90deg);font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;overflow:hidden}\nol{position:absolute;inset:0;margin:0;padding:0;list-style:none}\nli{position:absolute;width:118px;height:70px;margin:-35px -59px;box-sizing:border-box;background:linear-gradient(160deg,#fbf3da,#f1e6c8);border:4px solid #0b0a10;color:#1d1a24;border-radius:10px;display:grid;align-content:center;justify-items:center;text-align:center}\nli:nth-child(1){left:50%;top:17%}\nli:nth-child(2){left:83%;top:50%}\nli:nth-child(3){left:50%;top:83%}\nli:nth-child(4){left:17%;top:50%}\nli small{font-size:12px;font-weight:700}\nli b{font:700 21px \"Noto Serif KR\", \"Batang\", \"Georgia\", serif}\ndiv{position:absolute;left:50%;top:50%;width:150px;height:150px;margin:-75px;box-sizing:border-box;border-radius:50%;border:8px solid #0b0a10;display:grid;align-content:center;justify-items:center;text-align:center;background:radial-gradient(circle,#fff3c0,#f0c04a 70%);color:#1d1a24}\ndiv small{font-size:12px;font-weight:700}\ndiv b{font:700 26px \"Noto Serif KR\", \"Batang\", \"Georgia\", serif}\ndiv span{font-size:11px;padding:0 10px}\n.poor div{background:radial-gradient(circle,#e8e2ef,#8d86a3 70%)}",
       "props": {
-        "s": "object"
+        "s": "object",
+        "word": "string"
       }
     },
     "programme": {
@@ -116,7 +117,13 @@ const board: Board = {
       "time": "updatedAt",
       "fresh": 600,
       "fields": {
-        "value": {}
+        "value": {},
+        "value-word": {
+          "at": "/value/state",
+          "names": {
+            "good": "관측 적합"
+          }
+        }
       }
     },
     "programme": {
@@ -196,7 +203,8 @@ const board: Board = {
       "element": "sky",
       "of": "sky",
       "bind": {
-        "s": "value"
+        "s": "value",
+        "word": "value-word"
       }
     },
     "programme": {

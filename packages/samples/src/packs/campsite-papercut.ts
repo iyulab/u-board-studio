@@ -39,10 +39,11 @@ const board: Board = {
       }
     },
     "weather": {
-      "template": "<section class=\"wt {{w.fire}}\"><h2>오늘 저녁</h2><dl><dt>지금 기온</dt><dd>{{w.now}}</dd><dt>밤 최저</dt><dd>{{w.low}}</dd><dt>바람</dt><dd>{{w.wind}}</dd><dt>해 지는 시각</dt><dd>{{w.sunset}}</dd></dl><p><b>모닥불</b><span>{{w.word}}</span></p></section>",
+      "template": "<section class=\"wt {{w.fire}}\"><h2>오늘 저녁</h2><dl><dt>지금 기온</dt><dd>{{w.now}}</dd><dt>밤 최저</dt><dd>{{w.low}}</dd><dt>바람</dt><dd>{{w.wind}}</dd><dt>해 지는 시각</dt><dd>{{w.sunset}}</dd></dl><p><b>모닥불</b><span>{{word}}</span></p></section>",
       "style": ".wt{width:calc(100% - 12px);height:calc(100% - 14px);box-sizing:border-box;display:grid;grid-template-rows:auto 1fr auto;gap:8px;padding:16px 20px;background:#fffaf0;border-radius:4px;box-shadow:5px 5px 0 #cfe0c0,10px 10px 0 #a7c08a,12px 14px 14px rgba(60,40,20,.3);font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#2c2a25}\nh2{margin:0;font-size:20px;font-weight:900}\ndl{margin:0;display:grid;grid-template-columns:1fr auto;row-gap:6px;font-size:15px;align-content:start}\ndt{font-weight:700}\ndd{margin:0;font-weight:900}\np{margin:0;display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-radius:999px;background:#f3b33d;font-weight:800}\n.allowed p span::before{content:\"▲ \"}\n.banned p{background:repeating-linear-gradient(-45deg,#f1d8c9 0 6px,#fffaf0 6px 12px);color:#8c3a1e}\n.banned p span::before{content:\"✕ \"}",
       "props": {
-        "w": "object"
+        "w": "object",
+        "word": "string"
       }
     },
     "title": {
@@ -210,7 +211,13 @@ const board: Board = {
       "time": "updatedAt",
       "fresh": 3600,
       "fields": {
-        "value": {}
+        "value": {},
+        "value-word": {
+          "at": "/value/fire",
+          "names": {
+            "allowed": "화로대에서만"
+          }
+        }
       }
     },
     "now": {
@@ -351,7 +358,8 @@ const board: Board = {
       "element": "weather",
       "of": "weather",
       "bind": {
-        "w": "value"
+        "w": "value",
+        "word": "value-word"
       }
     },
     "title": {

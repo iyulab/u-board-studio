@@ -11,7 +11,7 @@ export const snapshot: SampleSnapshot = {
   responses: {
     fleet: {
       '/fleet/now': { value: { series: 'ISLAND AIR DELIVERY', name: '물결 군도 드론 배송', date: '10월 22일 목요일', time: '13:50' }, updatedAt: at },
-      '/fleet/base': { value: { name: '본부 섬', word: '대기 3 · 충전 1' }, updatedAt: at },
+      '/fleet/base': { value: { name: '본부 섬', waiting: 3, charging: 1 }, updatedAt: at },
       '/fleet/stops': {
         value: {
           light: { name: '등대섬', cargo: '우편 2 · 상비약 1', state: 'done', at: '13:32', route: '완료' },
