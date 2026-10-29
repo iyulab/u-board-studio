@@ -87,7 +87,9 @@ which the check fails again) and
 `npm run check:public-text` (no private tracking ids, local paths, or hosts outside the
 allowlist in [`public-text.json`](public-text.json) — a link to a new public site means adding it
 there), and `npm run check:doc-links` (every relative link in the
-Markdown docs reaches a file and heading that exist). See [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
+Markdown docs reaches a file and heading that exist). `npm run check:site-links` is not part of `npm run check`:
+it asks the network whether every address the introduction site sends a reader to still answers, and is run before a change
+to those addresses is pushed. See [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
 Run `npm run check` (or at least `npm run typecheck` and `npm test`) locally before opening a pull request.
 
 When upgrading a dependency that several workspaces share, install it for all of them in one
