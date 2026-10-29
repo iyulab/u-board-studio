@@ -1,7 +1,9 @@
 # Response headers Cloudflare Pages adds to every page of the introduction site.
-# Only what holds for every page without a script policy: no framing, no sniffing, no device permissions.
-# A script policy (Content-Security-Policy) needs the gallery's boards drawn under it first — see the site's e2e.
+# The content security policy: scripts only from the site's own files (a page's script is a file, never inline — see
+# astro.config.mjs), styles may be inline (the library's viewer and the pages' own styles set them), pictures also as
+# data (a board's background drawing is one), no frames, no plugins. The Cloudflare analytics beacon is the one outside
+# origin let in. e2e/csp.spec.ts draws the site's pages under exactly this policy and fails on any violation.
 /*
   X-Content-Type-Options: nosniff
-  Content-Security-Policy: frame-ancestors 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self'; connect-src 'self' https://cloudflareinsights.com; worker-src 'self' blob:; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
