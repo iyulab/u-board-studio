@@ -16,10 +16,11 @@ const board: Board = {
   },
   "elements": {
     "room": {
-      "template": "<article class=\"rm {{r.state}}\" style=\"--c: {{r.color}}\"><div class=\"top\"></div><header><b>{{r.name}}</b><i></i></header><small>{{r.age}} · {{r.teachers}}</small><p style=\"--n: {{r.here}}; --max: {{r.total}}\"><span></span></p><em><strong>{{r.here}}</strong> / {{r.total}}명 <span>{{r.word}}</span></em><footer>{{r.note}}</footer></article>",
+      "template": "<article class=\"rm {{r.state}}\" style=\"--c: {{r.color}}\"><div class=\"top\"></div><header><b>{{r.name}}</b><i></i></header><small>{{r.age}} · {{r.teachers}}</small><p style=\"--n: {{r.here}}; --max: {{r.total}}\"><span></span></p><em><strong>{{r.here}}</strong> / {{r.total}}명 <span>{{word}}</span></em><footer>{{r.note}}</footer></article>",
       "style": ".rm{height:100%;box-sizing:border-box;display:grid;grid-template-rows:22px auto auto 1fr auto auto;gap:6px;padding:0 16px 14px;background:var(--c);border-radius:6px;box-shadow:inset 0 -6px 0 rgba(0,0,0,.18),inset 0 0 0 2px rgba(0,0,0,.12);font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#1f2328}\n.top{margin:0 -16px;background:radial-gradient(circle at 12px 11px,rgba(255,255,255,.6) 0 2.5px,rgba(255,255,255,.22) 3px 7.5px,rgba(0,0,0,.18) 8px 9px,transparent 9.5px) 0 0/24px 22px repeat-x}\nheader{display:flex;justify-content:space-between;align-items:center}\nb{font-size:22px;font-weight:900}\ni{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#fbfaf6;box-shadow:inset 0 -3px 0 rgba(0,0,0,.2);font:900 18px \"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;font-style:normal}\nsmall{font-size:13px;font-weight:700}\np{margin:0;height:18px;width:calc(var(--max) * 17px);position:relative;align-self:center;background:radial-gradient(circle at 8px 9px,transparent 0 5.5px,rgba(31,35,40,.45) 6px 7.5px,transparent 8px) 0 0/17px 18px repeat-x;background-size:17px 18px;background-repeat:repeat-x}\np span{position:absolute;left:0;top:0;bottom:0;width:calc(var(--n) * 17px);background:radial-gradient(circle at 8px 9px,#f5c518 0 6.5px,#9a7b00 7px 8px,transparent 8.5px) 0 0/17px 18px repeat-x}\nem{font-style:normal;font-size:15px;font-weight:800}\nem strong{font-size:24px}\nem span{margin-left:6px;padding:2px 8px;border-radius:999px;background:#fbfaf6;font-size:13px}\nfooter{font-size:13px;font-weight:600;padding:5px 8px;border-radius:4px;background:rgba(255,255,255,.65)}\n.play i::before{content:\"▶\";color:#1f6fbf}\n.outside i{background:#f5c518}\n.outside i::before{content:\"☀\";color:#8a5a00}\n.nap i{background:#2c3e66}\n.nap i::before{content:\"☾\";color:#f5c518}\n.leaving i::before{content:\"←\";color:#d9372b}\n.leaving em span{background:#d9372b;color:#fbfaf6}",
       "props": {
-        "r": "object"
+        "r": "object",
+        "word": "string"
       }
     },
     "title": {
@@ -93,6 +94,60 @@ const board: Board = {
         },
         "sky": {
           "at": "/value/sky"
+        },
+        "star-word": {
+          "at": "/value/star/state",
+          "names": {
+            "nap": "낮잠",
+            "play": "실내 놀이",
+            "leaving": "하원 중",
+            "outside": "바깥 놀이"
+          }
+        },
+        "petal-word": {
+          "at": "/value/petal/state",
+          "names": {
+            "nap": "낮잠",
+            "play": "실내 놀이",
+            "leaving": "하원 중",
+            "outside": "바깥 놀이"
+          }
+        },
+        "sprout-word": {
+          "at": "/value/sprout/state",
+          "names": {
+            "nap": "낮잠",
+            "play": "실내 놀이",
+            "leaving": "하원 중",
+            "outside": "바깥 놀이"
+          }
+        },
+        "sun-word": {
+          "at": "/value/sun/state",
+          "names": {
+            "nap": "낮잠",
+            "play": "실내 놀이",
+            "leaving": "하원 중",
+            "outside": "바깥 놀이"
+          }
+        },
+        "sea-word": {
+          "at": "/value/sea/state",
+          "names": {
+            "nap": "낮잠",
+            "play": "실내 놀이",
+            "leaving": "하원 중",
+            "outside": "바깥 놀이"
+          }
+        },
+        "sky-word": {
+          "at": "/value/sky/state",
+          "names": {
+            "nap": "낮잠",
+            "play": "실내 놀이",
+            "leaving": "하원 중",
+            "outside": "바깥 놀이"
+          }
         }
       }
     },
@@ -164,7 +219,8 @@ const board: Board = {
       "element": "room",
       "of": "rooms",
       "bind": {
-        "r": "star"
+        "r": "star",
+        "word": "star-word"
       }
     },
     "room-petal": {
@@ -172,7 +228,8 @@ const board: Board = {
       "element": "room",
       "of": "rooms",
       "bind": {
-        "r": "petal"
+        "r": "petal",
+        "word": "petal-word"
       }
     },
     "room-sprout": {
@@ -180,7 +237,8 @@ const board: Board = {
       "element": "room",
       "of": "rooms",
       "bind": {
-        "r": "sprout"
+        "r": "sprout",
+        "word": "sprout-word"
       }
     },
     "room-sun": {
@@ -188,7 +246,8 @@ const board: Board = {
       "element": "room",
       "of": "rooms",
       "bind": {
-        "r": "sun"
+        "r": "sun",
+        "word": "sun-word"
       }
     },
     "room-sea": {
@@ -196,7 +255,8 @@ const board: Board = {
       "element": "room",
       "of": "rooms",
       "bind": {
-        "r": "sea"
+        "r": "sea",
+        "word": "sea-word"
       }
     },
     "room-sky": {
@@ -204,7 +264,8 @@ const board: Board = {
       "element": "room",
       "of": "rooms",
       "bind": {
-        "r": "sky"
+        "r": "sky",
+        "word": "sky-word"
       }
     },
     "title": {

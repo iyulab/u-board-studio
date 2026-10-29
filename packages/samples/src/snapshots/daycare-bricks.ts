@@ -12,12 +12,12 @@ export const snapshot: SampleSnapshot = {
       '/care/now': { value: { series: '우리 반 오늘 · 하원 시간', name: '도담 어린이집', date: '10월 22일 목요일', time: '15:40' }, updatedAt: at },
       '/care/rooms': {
         value: {
-          star: { name: '아기별반', age: '만 0세', teachers: '교사 1', color: '#f7b2c4', state: 'nap', word: '낮잠', here: 3, total: 3, note: '16:00에 깨워 우유' },
-          petal: { name: '꽃잎반', age: '만 1세', teachers: '교사 1', color: '#ffd166', state: 'play', word: '실내 놀이', here: 4, total: 5, note: '1명 결석 — 감기' },
-          sprout: { name: '새싹반', age: '만 2세', teachers: '교사 1', color: '#9fd8a0', state: 'leaving', word: '하원 중', here: 5, total: 7, note: '2명 하원 · 15:30 보호자' },
-          sun: { name: '햇살반', age: '만 3세', teachers: '교사 1', color: '#ffb36b', state: 'outside', word: '바깥 놀이', here: 13, total: 14, note: '놀이터 — 16:00까지' },
-          sea: { name: '바다반', age: '만 4세', teachers: '교사 1', color: '#7cc6e8', state: 'play', word: '실내 놀이', here: 15, total: 15, note: '블록 쌓기 · 모두 등원' },
-          sky: { name: '하늘반', age: '만 5세', teachers: '교사 1', color: '#b9a7ef', state: 'leaving', word: '하원 중', here: 10, total: 15, note: '4명 하원 · 1명 결석' },
+          star: { name: '아기별반', age: '만 0세', teachers: '교사 1', color: '#f7b2c4', state: 'nap', here: 3, total: 3, note: '16:00에 깨워 우유' },
+          petal: { name: '꽃잎반', age: '만 1세', teachers: '교사 1', color: '#ffd166', state: 'play', here: 4, total: 5, note: '1명 결석 — 감기' },
+          sprout: { name: '새싹반', age: '만 2세', teachers: '교사 1', color: '#9fd8a0', state: 'leaving', here: 5, total: 7, note: '2명 하원 · 15:30 보호자' },
+          sun: { name: '햇살반', age: '만 3세', teachers: '교사 1', color: '#ffb36b', state: 'outside', here: 13, total: 14, note: '놀이터 — 16:00까지' },
+          sea: { name: '바다반', age: '만 4세', teachers: '교사 1', color: '#7cc6e8', state: 'play', here: 15, total: 15, note: '블록 쌓기 · 모두 등원' },
+          sky: { name: '하늘반', age: '만 5세', teachers: '교사 1', color: '#b9a7ef', state: 'leaving', here: 10, total: 15, note: '4명 하원 · 1명 결석' },
         },
         updatedAt: at,
       },

@@ -13,11 +13,11 @@ export const snapshot: SampleSnapshot = {
       '/watch/now': { value: { date: '10월 23일 금요일', time: '08:10', risk: '경계', level: 'high', note: '실효습도 31% · 북서풍' }, updatedAt: at },
       '/watch/posts': {
         value: {
-          t1: { name: '솔매봉 감시탑', elev: '812', state: 'calm', word: '평온', view: '18', wind: '북서 4 m/s', time: '08:08' },
-          t2: { name: '범바위 카메라', elev: '540', state: 'smoke', word: '연기 발견', view: '9', wind: '북서 5 m/s', time: '08:09' },
-          t3: { name: '갈매재 감시탑', elev: '626', state: 'watch', word: '연기 확인 중', view: '14', wind: '서 3 m/s', time: '08:07' },
-          t4: { name: '동막골 카메라', elev: '388', state: 'offline', word: '통신 끊김', view: '—', wind: '—', time: '07:31' },
-          t5: { name: '큰골봉 감시탑', elev: '734', state: 'calm', word: '평온', view: '21', wind: '북서 6 m/s', time: '08:09' },
+          t1: { name: '솔매봉 감시탑', elev: '812', state: 'calm', view: '18', wind: '북서 4 m/s', time: '08:08' },
+          t2: { name: '범바위 카메라', elev: '540', state: 'smoke', view: '9', wind: '북서 5 m/s', time: '08:09' },
+          t3: { name: '갈매재 감시탑', elev: '626', state: 'watch', view: '14', wind: '서 3 m/s', time: '08:07' },
+          t4: { name: '동막골 카메라', elev: '388', state: 'offline', view: '—', wind: '—', time: '07:31' },
+          t5: { name: '큰골봉 감시탑', elev: '734', state: 'calm', view: '21', wind: '북서 6 m/s', time: '08:09' },
         },
         updatedAt: at,
       },

@@ -14,12 +14,12 @@ export const snapshot: SampleSnapshot = {
       '/dam/now': { value: { series: '수문 운영 · 기관실', name: '누리댐', date: '10월 22일 목요일', time: '13:40' }, updatedAt: at },
       '/dam/gates': {
         value: {
-          g1: { name: '1번 수문', state: 'open', open: 40, word: '방류', flow: '120 m³/s' },
-          g2: { name: '2번 수문', state: 'open', open: 40, word: '방류', flow: '120 m³/s' },
-          g3: { name: '3번 수문', state: 'shut', open: 0, word: '닫힘', flow: '0 m³/s' },
-          g4: { name: '4번 수문', state: 'shut', open: 0, word: '닫힘', flow: '0 m³/s' },
-          g5: { name: '5번 수문', state: 'fault', open: 0, word: '점검', flow: '유압 경보 — 닫힘 유지' },
-          g6: { name: '6번 수문', state: 'open', open: 20, word: '방류', flow: '60 m³/s' },
+          g1: { name: '1번 수문', state: 'open', open: 40, flow: '120 m³/s' },
+          g2: { name: '2번 수문', state: 'open', open: 40, flow: '120 m³/s' },
+          g3: { name: '3번 수문', state: 'shut', open: 0, flow: '0 m³/s' },
+          g4: { name: '4번 수문', state: 'shut', open: 0, flow: '0 m³/s' },
+          g5: { name: '5번 수문', state: 'fault', open: 0, flow: '유압 경보 — 닫힘 유지' },
+          g6: { name: '6번 수문', state: 'open', open: 20, flow: '60 m³/s' },
         },
         updatedAt: at,
       },

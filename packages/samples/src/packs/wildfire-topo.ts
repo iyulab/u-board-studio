@@ -31,10 +31,11 @@ const board: Board = {
   },
   "elements": {
     "post": {
-      "template": "<article class=\"ps {{p.state}}\"><i class=\"sym\"></i><div><h2>{{p.name}} <small>{{p.elev}} m</small></h2><p class=\"word\">{{p.word}}</p><p class=\"obs\">가시 {{p.view}} km · {{p.wind}} · {{p.time}}</p></div></article>",
+      "template": "<article class=\"ps {{p.state}}\"><i class=\"sym\"></i><div><h2>{{p.name}} <small>{{p.elev}} m</small></h2><p class=\"word\">{{word}}</p><p class=\"obs\">가시 {{p.view}} km · {{p.wind}} · {{p.time}}</p></div></article>",
       "style": ".ps{height:100%;box-sizing:border-box;display:grid;grid-template-columns:34px 1fr;gap:8px;align-items:center;padding:6px 8px;background:rgba(253,252,247,.92);border:1.5px solid #1f1d1a;font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#1f1d1a}\n.sym{position:relative;width:30px;height:30px;display:block}\n.sym::before{content:\"\";position:absolute;inset:3px 2px 1px;clip-path:polygon(50% 0,100% 100%,0 100%);background:#1f1d1a}\n.sym::after{content:\"\";position:absolute;inset:9px 8px 4px;clip-path:polygon(50% 0,100% 100%,0 100%);background:#fdfcf7}\n.watch .sym{border:2px dotted #d9822b;border-radius:50%;box-sizing:border-box}.watch .sym::before{inset:5px 5px 4px}.watch .sym::after{inset:10px 10px 6px}\n.smoke{border:3px solid #c62f22}.smoke .sym::before{background:#c62f22}.smoke .sym::after{display:none}\n.offline{border-style:dashed;color:#8a857a}.offline .sym::before{background:#8a857a}\nh2{margin:0;font-size:15px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\nh2 small{font-size:11px;font-weight:400;color:#5a564e}\n.word{margin:1px 0 0;font-size:14px;font-weight:700}\n.watch .word{color:#a85a12}.smoke .word{color:#c62f22}\n.obs{margin:1px 0 0;font-size:11px;color:#5a564e;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}",
       "props": {
-        "p": "object"
+        "p": "object",
+        "word": "string"
       }
     },
     "fire": {
@@ -87,6 +88,51 @@ const board: Board = {
         },
         "t5": {
           "at": "/value/t5"
+        },
+        "t1-word": {
+          "at": "/value/t1/state",
+          "names": {
+            "calm": "평온",
+            "smoke": "연기 발견",
+            "watch": "연기 확인 중",
+            "offline": "통신 끊김"
+          }
+        },
+        "t2-word": {
+          "at": "/value/t2/state",
+          "names": {
+            "calm": "평온",
+            "smoke": "연기 발견",
+            "watch": "연기 확인 중",
+            "offline": "통신 끊김"
+          }
+        },
+        "t3-word": {
+          "at": "/value/t3/state",
+          "names": {
+            "calm": "평온",
+            "smoke": "연기 발견",
+            "watch": "연기 확인 중",
+            "offline": "통신 끊김"
+          }
+        },
+        "t4-word": {
+          "at": "/value/t4/state",
+          "names": {
+            "calm": "평온",
+            "smoke": "연기 발견",
+            "watch": "연기 확인 중",
+            "offline": "통신 끊김"
+          }
+        },
+        "t5-word": {
+          "at": "/value/t5/state",
+          "names": {
+            "calm": "평온",
+            "smoke": "연기 발견",
+            "watch": "연기 확인 중",
+            "offline": "통신 끊김"
+          }
         }
       }
     },
@@ -177,7 +223,8 @@ const board: Board = {
       "element": "post",
       "of": "posts",
       "bind": {
-        "p": "t1"
+        "p": "t1",
+        "word": "t1-word"
       }
     },
     "post-t2": {
@@ -185,7 +232,8 @@ const board: Board = {
       "element": "post",
       "of": "posts",
       "bind": {
-        "p": "t2"
+        "p": "t2",
+        "word": "t2-word"
       }
     },
     "post-t3": {
@@ -193,7 +241,8 @@ const board: Board = {
       "element": "post",
       "of": "posts",
       "bind": {
-        "p": "t3"
+        "p": "t3",
+        "word": "t3-word"
       }
     },
     "post-t4": {
@@ -201,7 +250,8 @@ const board: Board = {
       "element": "post",
       "of": "posts",
       "bind": {
-        "p": "t4"
+        "p": "t4",
+        "word": "t4-word"
       }
     },
     "post-t5": {
@@ -209,7 +259,8 @@ const board: Board = {
       "element": "post",
       "of": "posts",
       "bind": {
-        "p": "t5"
+        "p": "t5",
+        "word": "t5-word"
       }
     },
     "fire": {

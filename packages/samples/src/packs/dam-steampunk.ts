@@ -17,10 +17,11 @@ const board: Board = {
   },
   "elements": {
     "gate": {
-      "template": "<article class=\"gt {{g.state}}\"><div class=\"dl\" style=\"--v: {{g.open}}\"><i></i><span>{{g.open}} %</span></div><footer><u></u><b>{{g.name}}</b><em>{{g.word}}</em><small>{{g.flow}}</small></footer></article>",
+      "template": "<article class=\"gt {{g.state}}\"><div class=\"dl\" style=\"--v: {{g.open}}\"><i></i><span>{{g.open}} %</span></div><footer><u></u><b>{{g.name}}</b><em>{{word}}</em><small>{{g.flow}}</small></footer></article>",
       "style": ".gt{height:100%;box-sizing:border-box;display:grid;grid-template-rows:1fr auto;justify-items:center;gap:6px;font-family:\"Noto Serif KR\", \"Batang\", \"Georgia\", serif;color:#2a1f14}\n.dl{position:relative;width:166px;height:166px;border-radius:50%;box-sizing:border-box;border:12px solid transparent;background:radial-gradient(circle,#efe3c2 0 60%,transparent 60.5%) padding-box,conic-gradient(from -135deg,transparent 0 270.5deg,#efe3c2 270.5deg) padding-box,repeating-conic-gradient(from -135deg,#2a1f14 0 1.4deg,transparent 1.4deg 27deg) padding-box,radial-gradient(circle,transparent 0 64%,#2a1f14 64.5% 66%,transparent 66.5%) padding-box,linear-gradient(#efe3c2,#efe3c2) padding-box,linear-gradient(160deg,#e6c77a,#c29a4a 40%,#8c6a28 70%,#d4b064) border-box;box-shadow:0 0 0 2px #5c4418,0 5px 0 #120d0a}\n.dl::after{content:\"\";position:absolute;left:50%;top:50%;width:14px;height:14px;margin:-7px;border-radius:50%;background:linear-gradient(160deg,#e6c77a,#c29a4a 40%,#8c6a28 70%,#d4b064);box-shadow:0 0 0 2px #5c4418}\ni{position:absolute;left:50%;top:50%;width:4px;height:60px;margin-left:-2px;margin-top:-56px;background:#d23a26;transform-origin:50% 56px;transform:rotate(calc(var(--v) * 2.7deg - 135deg));clip-path:polygon(50% 0,100% 85%,100% 100%,0 100%,0 85%)}\nspan{position:absolute;left:0;right:0;bottom:30px;text-align:center;font:700 16px \"Courier New\", \"Nanum Gothic Coding\", monospace}\nfooter{width:100%;box-sizing:border-box;border-radius:6px;background:radial-gradient(circle at 10px 10px,#e9d08c 2.5px,#5c4418 3.5px,transparent 4px),radial-gradient(circle at calc(100% - 10px) 10px,#e9d08c 2.5px,#5c4418 3.5px,transparent 4px),radial-gradient(circle at 10px calc(100% - 10px),#e9d08c 2.5px,#5c4418 3.5px,transparent 4px),radial-gradient(circle at calc(100% - 10px) calc(100% - 10px),#e9d08c 2.5px,#5c4418 3.5px,transparent 4px),linear-gradient(160deg,#e6c77a,#c29a4a 40%,#8c6a28 70%,#d4b064);box-shadow:inset 0 0 0 2px #6e5220,inset 0 0 0 4px #e9d08c,0 4px 0 #120d0a;color:#2a1f14;display:grid;grid-template-columns:auto 1fr auto;grid-template-rows:auto auto;column-gap:10px;align-items:center;padding:6px 14px}\nu{grid-row:span 2;width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#6d6a64,#1c1a18);box-shadow:0 0 0 2px #5c4418}\nb{font-size:17px;font-weight:700}\nem{font-style:normal;font:700 14px \"Courier New\", \"Nanum Gothic Coding\", monospace;text-align:right}\nsmall{grid-column:2 / span 2;font:13px \"Courier New\", \"Nanum Gothic Coding\", monospace}\n.open u{background:radial-gradient(circle at 35% 35%,#fff3c4,#ffb52e 55%,#a86a00);box-shadow:0 0 0 2px #5c4418,0 0 12px 3px rgba(255,181,46,.7)}\n.open em::before{content:\"● \"}\n.shut em::before{content:\"○ \"}\n.shut .dl{filter:saturate(.6)}\n.fault u{background:radial-gradient(circle at 35% 35%,#ffc2b8,#d23a26 55%,#6e1208);box-shadow:0 0 0 2px #5c4418,0 0 12px 3px rgba(210,58,38,.6)}\n.fault footer{background:repeating-linear-gradient(-45deg,#e8c23a 0 10px,#2a1f14 10px 20px);color:#ffffff}\n.fault footer b,.fault footer em,.fault footer small{background:#2a1f14;padding:0 4px}\n.fault em::before{content:\"✕ \"}\n.fault i{background:#8b8178}",
       "props": {
-        "g": "object"
+        "g": "object",
+        "word": "string"
       }
     },
     "sight": {
@@ -80,6 +81,54 @@ const board: Board = {
         },
         "g6": {
           "at": "/value/g6"
+        },
+        "g1-word": {
+          "at": "/value/g1/state",
+          "names": {
+            "open": "방류",
+            "shut": "닫힘",
+            "fault": "점검"
+          }
+        },
+        "g2-word": {
+          "at": "/value/g2/state",
+          "names": {
+            "open": "방류",
+            "shut": "닫힘",
+            "fault": "점검"
+          }
+        },
+        "g3-word": {
+          "at": "/value/g3/state",
+          "names": {
+            "open": "방류",
+            "shut": "닫힘",
+            "fault": "점검"
+          }
+        },
+        "g4-word": {
+          "at": "/value/g4/state",
+          "names": {
+            "open": "방류",
+            "shut": "닫힘",
+            "fault": "점검"
+          }
+        },
+        "g5-word": {
+          "at": "/value/g5/state",
+          "names": {
+            "open": "방류",
+            "shut": "닫힘",
+            "fault": "점검"
+          }
+        },
+        "g6-word": {
+          "at": "/value/g6/state",
+          "names": {
+            "open": "방류",
+            "shut": "닫힘",
+            "fault": "점검"
+          }
         }
       }
     },
@@ -133,7 +182,8 @@ const board: Board = {
       "element": "gate",
       "of": "gates",
       "bind": {
-        "g": "g1"
+        "g": "g1",
+        "word": "g1-word"
       }
     },
     "gate-g2": {
@@ -141,7 +191,8 @@ const board: Board = {
       "element": "gate",
       "of": "gates",
       "bind": {
-        "g": "g2"
+        "g": "g2",
+        "word": "g2-word"
       }
     },
     "gate-g3": {
@@ -149,7 +200,8 @@ const board: Board = {
       "element": "gate",
       "of": "gates",
       "bind": {
-        "g": "g3"
+        "g": "g3",
+        "word": "g3-word"
       }
     },
     "gate-g4": {
@@ -157,7 +209,8 @@ const board: Board = {
       "element": "gate",
       "of": "gates",
       "bind": {
-        "g": "g4"
+        "g": "g4",
+        "word": "g4-word"
       }
     },
     "gate-g5": {
@@ -165,7 +218,8 @@ const board: Board = {
       "element": "gate",
       "of": "gates",
       "bind": {
-        "g": "g5"
+        "g": "g5",
+        "word": "g5-word"
       }
     },
     "gate-g6": {
@@ -173,7 +227,8 @@ const board: Board = {
       "element": "gate",
       "of": "gates",
       "bind": {
-        "g": "g6"
+        "g": "g6",
+        "word": "g6-word"
       }
     },
     "reservoir": {
