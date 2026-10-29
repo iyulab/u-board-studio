@@ -122,12 +122,12 @@
   "drone-routes": {
     "width": 800,
     "height": 496,
-    "hash": "fbb79f7862a3538d"
+    "hash": "262f0604dd219572"
   },
   "elevator-tui": {
     "width": 800,
     "height": 496,
-    "hash": "e67fd8d270c73b27"
+    "hash": "3d13f6b6ffd86fd7"
   },
   "factory-floor": {
     "width": 800,
@@ -167,7 +167,7 @@
   "harbor-radar": {
     "width": 800,
     "height": 496,
-    "hash": "c9865b45182541e4"
+    "hash": "e80ad9e4e538fef4"
   },
   "heating-nixie": {
     "width": 800,

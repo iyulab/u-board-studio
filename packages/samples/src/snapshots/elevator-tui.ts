@@ -13,12 +13,12 @@ export const snapshot: SampleSnapshot = {
       '/lift/now': { value: { series: 'LIFT GROUP CONTROL · 저층·고층 겸용', name: '한울 타워 승강기 관제', date: '10월 22일 목요일', time: '12:05' }, updatedAt: at },
       '/lift/cars': {
         value: {
-          a: { id: 'A', floor: 3, state: 'down', load: 80, word: '하강 · 만원 근접' },
-          b: { id: 'B', floor: 11, state: 'down', load: 55, word: '하강 중' },
-          c: { id: 'C', floor: 1, state: 'idle', load: 0, word: '1층 대기' },
-          d: { id: 'D', floor: 18, state: 'up', load: 20, word: '상승 중' },
-          e: { id: 'E', floor: 14, state: 'trapped', load: 15, word: '갇힘 2명 · 12:03' },
-          f: { id: 'F', floor: 22, state: 'service', load: 0, word: '정비 · 문 센서' },
+          a: { id: 'A', floor: 3, state: 'down', warn: '만원 근접', load: 80 },
+          b: { id: 'B', floor: 11, state: 'down', load: 55 },
+          c: { id: 'C', floor: 1, state: 'idle', at: '1층', load: 0 },
+          d: { id: 'D', floor: 18, state: 'up', load: 20 },
+          e: { id: 'E', floor: 14, state: 'trapped', people: 2, since: '12:03', load: 15 },
+          f: { id: 'F', floor: 22, state: 'service', reason: '문 센서', load: 0 },
         },
         updatedAt: at,
       },

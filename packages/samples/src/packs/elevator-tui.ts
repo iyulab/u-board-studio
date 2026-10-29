@@ -24,10 +24,11 @@ const board: Board = {
       }
     },
     "tag": {
-      "template": "<p class=\"tg {{e.state}}\"><b>{{e.id}}호기</b><span>{{e.word}}</span></p>",
+      "template": "<p class=\"tg {{e.state}}\"><b>{{e.id}}호기</b><span>{{#e.at}}{{e.at}} {{/e.at}}{{word}}{{#e.people}} {{e.people}}명{{/e.people}}{{#e.since}} · {{e.since}}{{/e.since}}{{#e.warn}} · {{e.warn}}{{/e.warn}}{{#e.reason}} · {{e.reason}}{{/e.reason}}</span></p>",
       "style": ".tg{margin:0;height:100%;box-sizing:border-box;display:grid;justify-items:center;align-content:center;font:15px \"D2Coding\", \"Consolas\", \"Courier New\", monospace;color:#ffffff}\nb{color:#ffff55}\nspan{font-size:13px;white-space:nowrap}\n.trapped span{background:#ff5555;color:#ffffff;padding:0 4px}\n.service span{color:#ffff55}",
       "props": {
-        "e": "object"
+        "e": "object",
+        "word": "string"
       }
     },
     "title": {
@@ -87,6 +88,42 @@ const board: Board = {
         },
         "f": {
           "at": "/value/f"
+        },
+        "a-word": {
+          "at": "/value/a/state",
+          "names": {
+            "down": "하강"
+          }
+        },
+        "b-word": {
+          "at": "/value/b/state",
+          "names": {
+            "down": "하강 중"
+          }
+        },
+        "c-word": {
+          "at": "/value/c/state",
+          "names": {
+            "idle": "대기"
+          }
+        },
+        "d-word": {
+          "at": "/value/d/state",
+          "names": {
+            "up": "상승 중"
+          }
+        },
+        "e-word": {
+          "at": "/value/e/state",
+          "names": {
+            "trapped": "갇힘"
+          }
+        },
+        "f-word": {
+          "at": "/value/f/state",
+          "names": {
+            "service": "정비"
+          }
         }
       }
     },
@@ -148,7 +185,8 @@ const board: Board = {
       "element": "tag",
       "of": "cars",
       "bind": {
-        "e": "a"
+        "e": "a",
+        "word": "a-word"
       }
     },
     "shaft-b": {
@@ -164,7 +202,8 @@ const board: Board = {
       "element": "tag",
       "of": "cars",
       "bind": {
-        "e": "b"
+        "e": "b",
+        "word": "b-word"
       }
     },
     "shaft-c": {
@@ -180,7 +219,8 @@ const board: Board = {
       "element": "tag",
       "of": "cars",
       "bind": {
-        "e": "c"
+        "e": "c",
+        "word": "c-word"
       }
     },
     "shaft-d": {
@@ -196,7 +236,8 @@ const board: Board = {
       "element": "tag",
       "of": "cars",
       "bind": {
-        "e": "d"
+        "e": "d",
+        "word": "d-word"
       }
     },
     "shaft-e": {
@@ -212,7 +253,8 @@ const board: Board = {
       "element": "tag",
       "of": "cars",
       "bind": {
-        "e": "e"
+        "e": "e",
+        "word": "e-word"
       }
     },
     "shaft-f": {
@@ -228,7 +270,8 @@ const board: Board = {
       "element": "tag",
       "of": "cars",
       "bind": {
-        "e": "f"
+        "e": "f",
+        "word": "f-word"
       }
     },
     "title": {

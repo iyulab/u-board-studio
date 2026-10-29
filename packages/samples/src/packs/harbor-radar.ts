@@ -22,10 +22,11 @@ const board: Board = {
       }
     },
     "blip": {
-      "template": "<div class=\"bp {{v.state}}\"><i></i><p><b>{{v.call}}</b><small>{{v.knots}} kn · {{v.word}}</small></p></div>",
+      "template": "<div class=\"bp {{v.state}}\"><i></i><p><b>{{v.call}}</b><small>{{v.knots}} kn · {{#v.since}}{{v.since}} {{/v.since}}{{word}}</small></p></div>",
       "style": ".bp{height:100%;display:flex;align-items:center;gap:8px;font-family:\"D2Coding\", \"Consolas\", \"Menlo\", monospace;color:#39ff7a;text-shadow:0 0 6px rgba(57,255,122,.7)}\ni{flex:none;width:28px;height:28px;display:grid;place-items:center;font-style:normal;font-size:20px;line-height:1}\np{margin:0;display:grid;padding:2px 6px;background:rgba(2,16,6,.75);border-left:2px solid currentColor}\nb{font-size:15px;white-space:nowrap}\nsmall{font-size:12px;white-space:nowrap;opacity:.9}\n.fishing i::before{content:\"●\"}\n.underway i::before{content:\"▶\"}\n.alarm{color:#ffb627;text-shadow:0 0 8px rgba(255,182,39,.8)}.alarm i::before{content:\"▲\"}.alarm i{outline:2px solid #ffb627;outline-offset:2px;border-radius:50%}\n.lost{opacity:.55}.lost i::before{content:\"✕\"}.lost p{border-left-style:dashed}",
       "props": {
-        "v": "object"
+        "v": "object",
+        "word": "string"
       }
     },
     "roster": {
@@ -72,6 +73,48 @@ const board: Board = {
         },
         "v7": {
           "at": "/value/v7"
+        },
+        "v1-word": {
+          "at": "/value/v1/state",
+          "names": {
+            "fishing": "조업"
+          }
+        },
+        "v2-word": {
+          "at": "/value/v2/state",
+          "names": {
+            "underway": "귀항"
+          }
+        },
+        "v3-word": {
+          "at": "/value/v3/state",
+          "names": {
+            "fishing": "조업"
+          }
+        },
+        "v4-word": {
+          "at": "/value/v4/state",
+          "names": {
+            "alarm": "금지구역 접근"
+          }
+        },
+        "v5-word": {
+          "at": "/value/v5/state",
+          "names": {
+            "lost": "끊김"
+          }
+        },
+        "v6-word": {
+          "at": "/value/v6/state",
+          "names": {
+            "underway": "출항"
+          }
+        },
+        "v7-word": {
+          "at": "/value/v7/state",
+          "names": {
+            "fishing": "조업"
+          }
         }
       }
     },
@@ -106,7 +149,8 @@ const board: Board = {
       "element": "blip",
       "of": "boats",
       "bind": {
-        "v": "v1"
+        "v": "v1",
+        "word": "v1-word"
       }
     },
     "boat-v2": {
@@ -114,7 +158,8 @@ const board: Board = {
       "element": "blip",
       "of": "boats",
       "bind": {
-        "v": "v2"
+        "v": "v2",
+        "word": "v2-word"
       }
     },
     "boat-v3": {
@@ -122,7 +167,8 @@ const board: Board = {
       "element": "blip",
       "of": "boats",
       "bind": {
-        "v": "v3"
+        "v": "v3",
+        "word": "v3-word"
       }
     },
     "boat-v4": {
@@ -130,7 +176,8 @@ const board: Board = {
       "element": "blip",
       "of": "boats",
       "bind": {
-        "v": "v4"
+        "v": "v4",
+        "word": "v4-word"
       }
     },
     "boat-v5": {
@@ -138,7 +185,8 @@ const board: Board = {
       "element": "blip",
       "of": "boats",
       "bind": {
-        "v": "v5"
+        "v": "v5",
+        "word": "v5-word"
       }
     },
     "boat-v6": {
@@ -146,7 +194,8 @@ const board: Board = {
       "element": "blip",
       "of": "boats",
       "bind": {
-        "v": "v6"
+        "v": "v6",
+        "word": "v6-word"
       }
     },
     "boat-v7": {
@@ -154,7 +203,8 @@ const board: Board = {
       "element": "blip",
       "of": "boats",
       "bind": {
-        "v": "v7"
+        "v": "v7",
+        "word": "v7-word"
       }
     },
     "roster": {

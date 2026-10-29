@@ -34,10 +34,11 @@ const board: Board = {
       }
     },
     "stop": {
-      "template": "<article class=\"lb {{s.state}}\"><header><b>{{s.name}}</b><i></i></header><p>{{s.cargo}}</p><small>{{s.word}}</small></article>",
+      "template": "<article class=\"lb {{s.state}}\"><header><b>{{s.name}}</b><i></i></header><p>{{s.cargo}}</p><small>{{#s.lead}}{{s.lead}} · {{/s.lead}}{{#s.eta}}{{s.eta}}분 {{/s.eta}}{{#s.at}}{{s.at}} {{/s.at}}{{word}}{{#s.trail}} · {{s.trail}}{{/s.trail}}</small></article>",
       "style": ".lb{position:relative;height:100%;box-sizing:border-box;display:grid;grid-template-rows:auto 1fr auto;gap:2px;padding:8px 12px 8px 22px;background:#fbf3df;border:2px solid #203a5c;border-radius:4px 22px 22px 4px;font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#203a5c}\n.lb::before{content:\"\";position:absolute;left:7px;top:50%;width:8px;height:8px;margin-top:-4px;border-radius:50%;border:2px solid #203a5c;background:#bfdcd6}\nheader{display:flex;justify-content:space-between;align-items:center;gap:6px}\nb{font:800 15px \"Futura\", \"Century Gothic\", \"Malgun Gothic\", sans-serif;white-space:nowrap}\ni{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;font:900 12px \"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;font-style:normal;color:#fff;transform:rotate(-12deg)}\np{margin:0;font-size:13px;font-weight:700}\nsmall{font-size:12px;font-weight:800}\n.flying i{background:#c8342b}\n.flying i::before{content:\"▶\"}\n.flying small{color:#c8342b}\n.due i{background:#203a5c}\n.due i::before{content:\"◷\"}\n.hold i{background:#e08a1e}\n.hold i::before{content:\"▲\"}\n.hold small{color:#9a5a00}\n.done{opacity:.8}\n.done i{background:#8a8f93}\n.done i::before{content:\"✓\"}\n.done small{color:#8a8f93}",
       "props": {
-        "s": "object"
+        "s": "object",
+        "word": "string"
       }
     },
     "banner": {
@@ -193,6 +194,48 @@ const board: Board = {
             "done": "idle",
             "*": "next"
           }
+        },
+        "light-word": {
+          "at": "/value/light/state",
+          "names": {
+            "done": "도착"
+          }
+        },
+        "north-word": {
+          "at": "/value/north/state",
+          "names": {
+            "flying": "뒤 도착"
+          }
+        },
+        "salt-word": {
+          "at": "/value/salt/state",
+          "names": {
+            "due": "출발"
+          }
+        },
+        "clinic-word": {
+          "at": "/value/clinic/state",
+          "names": {
+            "flying": "뒤 도착"
+          }
+        },
+        "school-word": {
+          "at": "/value/school/state",
+          "names": {
+            "hold": "보류"
+          }
+        },
+        "harbour-word": {
+          "at": "/value/harbour/state",
+          "names": {
+            "due": "출발"
+          }
+        },
+        "farm-word": {
+          "at": "/value/farm/state",
+          "names": {
+            "done": "도착"
+          }
         }
       }
     },
@@ -245,7 +288,8 @@ const board: Board = {
       "element": "stop",
       "of": "stops",
       "bind": {
-        "s": "light"
+        "s": "light",
+        "word": "light-word"
       }
     },
     "stop-north": {
@@ -253,7 +297,8 @@ const board: Board = {
       "element": "stop",
       "of": "stops",
       "bind": {
-        "s": "north"
+        "s": "north",
+        "word": "north-word"
       }
     },
     "stop-salt": {
@@ -261,7 +306,8 @@ const board: Board = {
       "element": "stop",
       "of": "stops",
       "bind": {
-        "s": "salt"
+        "s": "salt",
+        "word": "salt-word"
       }
     },
     "stop-clinic": {
@@ -269,7 +315,8 @@ const board: Board = {
       "element": "stop",
       "of": "stops",
       "bind": {
-        "s": "clinic"
+        "s": "clinic",
+        "word": "clinic-word"
       }
     },
     "stop-school": {
@@ -277,7 +324,8 @@ const board: Board = {
       "element": "stop",
       "of": "stops",
       "bind": {
-        "s": "school"
+        "s": "school",
+        "word": "school-word"
       }
     },
     "stop-harbour": {
@@ -285,7 +333,8 @@ const board: Board = {
       "element": "stop",
       "of": "stops",
       "bind": {
-        "s": "harbour"
+        "s": "harbour",
+        "word": "harbour-word"
       }
     },
     "stop-farm": {
@@ -293,7 +342,8 @@ const board: Board = {
       "element": "stop",
       "of": "stops",
       "bind": {
-        "s": "farm"
+        "s": "farm",
+        "word": "farm-word"
       }
     },
     "banner": {
