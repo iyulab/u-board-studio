@@ -61,3 +61,22 @@ test('the policy blocks what it should: a script written into the page does not 
   expect(ran).toBe(false);
   expect((await violations(page)).length).toBeGreaterThan(0);
 });
+
+// The live site has Cloudflare's analytics beacon injected at its edge (the preview server injects nothing, so the pages above
+// never load it). The policy names its two origins; this loads a stand-in script from the beacon's address that reports to the
+// beacon's collector, so removing either origin from the policy fails here rather than silently ending the page-view count.
+test('the policy lets the analytics beacon load and report', async ({ page }) => {
+  await underPolicy(page);
+  await page.route('https://static.cloudflareinsights.com/beacon.min.js', route =>
+    route.fulfill({ contentType: 'text/javascript', body: "fetch('https://cloudflareinsights.com/cdn-cgi/rum', { method: 'POST', body: '{}', keepalive: true }).then(() => { window.__reported = true; }, () => { window.__reported = false; });" })
+  );
+  await page.route('https://cloudflareinsights.com/cdn-cgi/rum', route => route.fulfill({ status: 204, headers: { 'access-control-allow-origin': '*' } }));
+  await page.goto('/');
+  await page.evaluate(() => {
+    const script = document.createElement('script');
+    script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    document.head.appendChild(script);
+  });
+  await expect.poll(() => page.evaluate(() => (window as unknown as { __reported?: boolean }).__reported)).toBe(true);
+  expect(await violations(page)).toEqual([]);
+});
