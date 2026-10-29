@@ -41,6 +41,8 @@ export interface Copy {
   tryIt: string;
   readSource: string;
   signIn: string;
+  /** Under the board at the top: where to see it whole. */
+  hero: { open: string };
   figure: {
     caption: string;
     plant: string;
@@ -141,8 +143,9 @@ export const COPY: Record<Locale, Copy> = {
     tryIt: '브라우저에서 만들어 보기',
     readSource: '소스 보기',
     signIn: '초대받은 계정으로 데모 인스턴스에 로그인',
+    hero: { open: '이 보드 보기' },
     figure: {
-      caption: '값마다 자기 상태를 표시합니다. 정상인 값에는 테두리가 없습니다.',
+      caption: '값마다 자기 상태를 표시합니다. 정상인 값에는 테두리가 없습니다. 이 그림의 원천은 세 상태를 보이려고 페이지 안에 둔 예시입니다.',
       plant: '2라인 펌프실',
       live: '정상',
       stale: '갱신 지연',
@@ -190,7 +193,7 @@ export const COPY: Record<Locale, Copy> = {
         {
           claim: 'delivery-demo',
           heading: '설치 전에 보기',
-          body: '이 페이지 맨 위의 보드는 제품의 뷰어가 지금 그리는 화면입니다. 값은 페이지 안의 예시 원천에서 읽습니다. 보드 만들기는 “브라우저에서 만들어 보기”에서 설치 없이 해 볼 수 있고, 공유 링크까지는 이유랩이 운영하는 데모 인스턴스에서 초대받은 계정으로 써 볼 수 있습니다.',
+          body: '이 페이지 맨 위의 보드는 갤러리의 한 판으로, 제품의 뷰어가 지금 그리는 화면입니다. 값은 그 판의 예시 응답에서 읽습니다. 보드 만들기는 “브라우저에서 만들어 보기”에서 설치 없이 해 볼 수 있고, 공유 링크까지는 이유랩이 운영하는 데모 인스턴스에서 초대받은 계정으로 써 볼 수 있습니다.',
         },
       ],
     },
@@ -296,8 +299,9 @@ export const COPY: Record<Locale, Copy> = {
     tryIt: 'Build one in your browser',
     readSource: 'Read the source',
     signIn: 'Sign in to the demo instance with an invited account',
+    hero: { open: 'See this board' },
     figure: {
-      caption: 'Every value shows its own state. A value that is live has no frame.',
+      caption: 'Every value shows its own state. A value that is live has no frame. The source of this drawing is a sample kept in the page to show the three states.',
       plant: 'Line 2 pump room',
       live: 'Live',
       stale: 'Stale',
@@ -345,7 +349,7 @@ export const COPY: Record<Locale, Copy> = {
         {
           claim: 'delivery-demo',
           heading: 'See it before you install',
-          body: 'The board at the top of this page is what the product\x27s viewer draws, right now, reading its values from a sample source inside the page. Building a board can be tried in your browser, nothing to install; share links can be tried on the demo instance iyulab operates, with an invited account.',
+          body: 'The board at the top of this page is one board of the gallery, drawn by the product\x27s viewer right now, reading its values from that board\x27s example answers. Building a board can be tried in your browser, nothing to install; share links can be tried on the demo instance iyulab operates, with an invited account.',
         },
       ],
     },

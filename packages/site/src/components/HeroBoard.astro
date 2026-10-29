@@ -1,0 +1,80 @@
+---
+// The board at the top of the home page: one board of the gallery, drawn by the library viewer from its recorded answers —
+// what the product draws, not a picture made for the page. Its picture (the thumbnail) is what a browser without script,
+// a search result and a link preview show; with script the viewer takes its place.
+import { SAMPLE_PACKS } from '@iyulab/u-board-samples';
+import { COPY, PATHS, type Locale } from '../copy';
+import { HERO_BOARD, boardExtent, boardPaths, recordedNote, thumbnailOf } from '../gallery';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const c = COPY[locale];
+const pack = SAMPLE_PACKS.find(p => p.id === HERO_BOARD);
+if (!pack) throw new Error(`The hero board "${HERO_BOARD}" is not in the gallery`);
+const title = pack.title[locale];
+const thumb = thumbnailOf(pack.id);
+const extent = boardExtent(pack);
+const aspect = extent ? `aspect-ratio: ${extent.width} / ${extent.height}; --ratio: ${(extent.width / extent.height).toFixed(3)}` : undefined;
+---
+
+<figure class="hero-board">
+  <div class="sample-board" style={aspect} data-sample-board={pack.id} data-label={title}>
+    {thumb ? <img src={thumb.path} width={thumb.width} height={thumb.height} alt={title} /> : <noscript>{pack.summary[locale]}</noscript>}
+  </div>
+  <figcaption data-claim="hero">
+    <span class="hero-note">{recordedNote(pack, locale)}</span>
+    <span class="hero-links">
+      <a href={boardPaths(pack.id)[locale]}>{c.hero.open}: {title} →</a>
+      <a href={`${PATHS.playground[locale]}?board=${pack.id}`}>{c.gallery.board.openPlayground} →</a>
+    </span>
+  </figcaption>
+</figure>
+
+<script>
+  import '../live/gallery';
+</script>
+
+<style>
+  .hero-board {
+    margin: 0;
+    /* The board's box takes its height from its own width (cqi). */
+    container-type: inline-size;
+  }
+  .sample-board {
+    width: 100%;
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    overflow: hidden;
+    background: #ffffff;
+  }
+  .sample-board img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  /* The viewer's toolbar and credit line sit inside the box with the board: as tall as the board is at this width, plus those two. */
+  .sample-board.live {
+    aspect-ratio: auto !important;
+    height: min(80vh, 760px, calc(100cqi / var(--ratio, 1.6) + 76px));
+  }
+  figcaption {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.25rem 1.5rem;
+    margin-top: 0.75rem;
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+  .hero-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.25rem;
+  }
+  .hero-links a {
+    color: var(--ink);
+  }
+</style>

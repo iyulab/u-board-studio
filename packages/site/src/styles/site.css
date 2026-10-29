@@ -195,10 +195,25 @@ main,
   color: var(--muted);
 }
 
-/* Three facts, side by side and unboxed — they are of equal weight. */
+/* The states a value can be in: the words on the left, the small drawing that shows them on the right. */
+.quality {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+  padding: clamp(2.5rem, 6vw, 4rem) 0;
+  border-top: 1px solid var(--rule);
+}
+
+.quality-text p {
+  margin-top: 0.75rem;
+  color: var(--muted);
+}
+
+/* The remaining facts, side by side and unboxed — they are of equal weight. */
 .facts {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(1.5rem, 4vw, 3.5rem);
   padding: clamp(2.5rem, 6vw, 4rem) 0;
   border-top: 1px solid var(--rule);
@@ -306,7 +321,8 @@ main,
 }
 
 @media (max-width: 56rem) {
-  .hero {
+  .hero,
+  .quality {
     grid-template-columns: minmax(0, 1fr);
   }
   .facts,

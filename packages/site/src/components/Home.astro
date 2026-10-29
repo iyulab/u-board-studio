@@ -1,5 +1,6 @@
 ---
 import Page from './Page.astro';
+import HeroBoard from './HeroBoard.astro';
 import PlantFigure from './PlantFigure.astro';
 import { COPY, APP_URL, PATHS, SOURCE_URL, SELF_HOSTING_URL, type Locale } from '../copy';
 
@@ -22,7 +23,7 @@ const c = COPY[locale];
       </p>
       <p class="sign-in"><a href={PATHS.gallery[locale]} data-claim="gallery">{c.gallery.heading}</a> · <a href={PATHS.playground[locale]}>{c.playground.heading}</a> · <a href={SOURCE_URL}>{c.readSource}</a> · <a href={APP_URL}>{c.signIn}</a></p>
     </div>
-    <PlantFigure figure={c.figure} />
+    <HeroBoard locale={locale} />
   </section>
 
   <section class="assistant" aria-labelledby="assistant-heading" data-claim={c.assistant.claim}>
@@ -39,14 +40,30 @@ const c = COPY[locale];
     </figure>
   </section>
 
+  {
+    c.sections
+      .filter(s => s.claim === 'quality')
+      .map(s => (
+        <section class="quality" data-claim={s.claim}>
+          <div class="quality-text">
+            <h2>{s.heading}</h2>
+            <p>{s.body}</p>
+          </div>
+          <PlantFigure figure={c.figure} />
+        </section>
+      ))
+  }
+
   <section class="facts">
     {
-      c.sections.map(s => (
-        <article data-claim={s.claim}>
-          <h2>{s.heading}</h2>
-          <p>{s.body}</p>
-        </article>
-      ))
+      c.sections
+        .filter(s => s.claim !== 'quality')
+        .map(s => (
+          <article data-claim={s.claim}>
+            <h2>{s.heading}</h2>
+            <p>{s.body}</p>
+          </article>
+        ))
     }
   </section>
 

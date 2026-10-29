@@ -5,8 +5,8 @@
 import Page from './Page.astro';
 import Card from './Card.astro';
 import { COPY, PATHS, SITE_URL, type Locale } from '../copy';
-import { isInstallable, ownKeyConnectors, tagsOf, type SamplePack } from '@iyulab/u-board-samples';
-import { boardExtent, boardFiles, boardPaths, dataOf, definitionShown, relatedTo, shortDescription, thumbnailOf } from '../gallery';
+import { tagsOf, type SamplePack } from '@iyulab/u-board-samples';
+import { boardExtent, boardFiles, boardPaths, dataOf, definitionShown, recordedNote, relatedTo, shortDescription, thumbnailOf } from '../gallery';
 
 interface Props {
   locale: Locale;
@@ -17,10 +17,6 @@ const { locale, pack } = Astro.props;
 const c = COPY[locale];
 const g = c.gallery;
 const b = g.board;
-const time = (iso: string) =>
-  new Intl.DateTimeFormat(locale === 'ko' ? 'ko-KR' : 'en-GB', {
-    year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZone: 'Asia/Seoul', timeZoneName: 'short',
-  }).format(new Date(iso));
 const title = pack.title[locale];
 const description = shortDescription(pack.summary[locale], locale);
 const paths = boardPaths(pack.id);
@@ -30,8 +26,7 @@ const thumb = thumbnailOf(pack.id);
 const extent = boardExtent(pack);
 const aspect = extent ? `aspect-ratio: ${extent.width} / ${extent.height}; --ratio: ${(extent.width / extent.height).toFixed(3)}` : undefined;
 const portrait = !!extent && extent.height > extent.width;
-const ownKeys = ownKeyConnectors(pack).map(k => g.ownKey.replace('{host}', new URL(k.ownKey!.signUpUrl).host));
-const recorded = isInstallable(pack) ? [g.recorded.replace('{time}', time(pack.snapshot.capturedAt)), ...ownKeys].join(' ') : g.example;
+const recorded = recordedNote(pack, locale);
 const definition = definitionShown(pack, b.imageElided);
 const data = JSON.stringify(dataOf(pack), null, 2);
 const related = relatedTo(pack);

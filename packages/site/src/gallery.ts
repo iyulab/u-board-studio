@@ -1,11 +1,14 @@
 // What the gallery's pages know about each board, worked out when the site is built: its address in each language,
 // its tags, its thumbnail, a description short enough for a search result, and its definition and data as shown.
 
-import { SAMPLE_PACKS, tagsOf, type SamplePack } from '@iyulab/u-board-samples';
+import { SAMPLE_PACKS, isInstallable, ownKeyConnectors, tagsOf, type SamplePack } from '@iyulab/u-board-samples';
 import { toViewDocument } from '@iyulab/u-board/domain';
 import { sizedNodes, type CanvasView } from '@iyulab/u-board/picture';
 import thumbs from './thumbs.json';
-import type { Locale } from './copy';
+import { COPY, type Locale } from './copy';
+
+/** The board the home page draws at its top: one that shows a whole system — flow, states and a trend — at a glance. */
+export const HERO_BOARD = 'water-pumps';
 
 export const boardPaths = (id: string) => ({ ko: `/gallery/${id}/`, en: `/en/gallery/${id}/` });
 
@@ -84,4 +87,17 @@ export function relatedTo(pack: SamplePack, count = 6): Card[] {
     .sort((a, b) => b.score - a.score)
     .slice(0, count)
     .map(({ card }) => card);
+}
+
+const when = (iso: string, locale: Locale) =>
+  new Intl.DateTimeFormat(locale === 'ko' ? 'ko-KR' : 'en-GB', {
+    year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZone: 'Asia/Seoul', timeZoneName: 'short',
+  }).format(new Date(iso));
+
+/** The line under a drawn board saying what its values are: a source's recorded answers, or example data written for the board. */
+export function recordedNote(pack: SamplePack, locale: Locale): string {
+  const g = COPY[locale].gallery;
+  if (!isInstallable(pack)) return g.example;
+  const ownKeys = ownKeyConnectors(pack).map(k => g.ownKey.replace('{host}', new URL(k.ownKey!.signUpUrl).host));
+  return [g.recorded.replace('{time}', when(pack.snapshot.capturedAt, locale)), ...ownKeys].join(' ');
 }
