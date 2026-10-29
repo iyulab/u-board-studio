@@ -1,0 +1,7 @@
+# Response headers Cloudflare Pages adds to every page of the introduction site.
+# Only what holds for every page without a script policy: no framing, no sniffing, no device permissions.
+# A script policy (Content-Security-Policy) needs the gallery's boards drawn under it first — see the site's e2e.
+/*
+  X-Content-Type-Options: nosniff
+  Content-Security-Policy: frame-ancestors 'none'
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()

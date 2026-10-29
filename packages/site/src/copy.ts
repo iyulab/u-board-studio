@@ -16,9 +16,13 @@ export type PageId = keyof typeof PATHS;
 
 export const SITE_URL = 'https://board.u-platform.kr';
 export const APP_URL = 'https://board-app.u-platform.kr/';
-export const SOURCE_URL = 'https://github.com/iyulab/U-Board';
+// Two repositories, two licenses: the board language and the viewer are the library (MIT); the authoring view, the
+// server, the console and the MCP server are the product (AGPL-3.0 and a commercial license).
+export const SOURCE_URL = 'https://github.com/iyulab/u-board-studio';
+export const LIBRARY_URL = 'https://github.com/iyulab/U-Board';
 export const DOCS_URL = 'https://github.com/iyulab/U-Board/tree/main/docs';
-export const SELF_HOSTING_URL = 'https://github.com/iyulab/U-Board/blob/main/docs/self-hosting.md';
+export const PRODUCT_DOCS_URL = 'https://github.com/iyulab/u-board-studio/tree/main/docs';
+export const SELF_HOSTING_URL = 'https://github.com/iyulab/u-board-studio/blob/main/docs/self-hosting.md';
 export const NPM_URL = 'https://www.npmjs.com/package/@iyulab/u-board';
 export const CONTACT_URL = 'https://u-platform.kr/contact';
 
@@ -53,7 +57,7 @@ export interface Copy {
   notHeading: string;
   not: Section[];
   license: Section;
-  footer: { source: string; docs: string; selfHosting: string; npm: string; contact: string };
+  footer: { source: string; library: string; docs: string; productDocs: string; selfHosting: string; npm: string; contact: string };
   otherLanguage: string;
   try: {
     title: string;
@@ -181,7 +185,7 @@ export const COPY: Record<Locale, Copy> = {
         {
           claim: 'delivery-library',
           heading: '라이브러리로 자기 앱 안에',
-          body: '저작 화면과 뷰어를 npm 패키지 @iyulab/u-board로 가져다 자기 웹 앱 안에 넣을 수 있습니다.',
+          body: '보드 언어와 뷰어는 npm 패키지 @iyulab/u-board(MIT)로, 저작 화면은 @iyulab/u-board-designer(AGPL-3.0, 상용 라이선스 가능)로 가져다 자기 웹 앱 안에 넣을 수 있습니다.',
         },
         {
           claim: 'delivery-demo',
@@ -211,11 +215,13 @@ export const COPY: Record<Locale, Copy> = {
     license: {
       claim: 'license',
       heading: '열린 소스',
-      body: '소스는 AGPL-3.0으로 공개되어 있습니다. AGPL 조건을 따르기 어려운 조직에는 상용 라이선스를 드립니다.',
+      body: '보드 언어와 뷰어(라이브러리)는 MIT 라이선스로, 저작 화면·서버·콘솔·MCP 서버(제품)는 AGPL-3.0으로 공개되어 있습니다. AGPL 조건을 따르기 어려운 조직에는 제품의 상용 라이선스를 드립니다.',
     },
     footer: {
-      source: '소스',
+      source: '제품 소스',
+      library: '라이브러리 소스',
       docs: '문서',
+      productDocs: '서버·MCP 문서',
       selfHosting: '직접 설치',
       npm: 'npm 패키지',
       contact: '문의',
@@ -334,7 +340,7 @@ export const COPY: Record<Locale, Copy> = {
         {
           claim: 'delivery-library',
           heading: 'A library inside your app',
-          body: 'Bring the authoring view and the viewer into your own web application with the npm package @iyulab/u-board.',
+          body: 'Bring the board language and the viewer into your own web application with the npm package @iyulab/u-board (MIT), and the authoring view with @iyulab/u-board-designer (AGPL-3.0, a commercial license is available).',
         },
         {
           claim: 'delivery-demo',
@@ -364,11 +370,13 @@ export const COPY: Record<Locale, Copy> = {
     license: {
       claim: 'license',
       heading: 'Open source',
-      body: 'The source is published under AGPL-3.0. A commercial license is available for organizations that cannot adopt AGPL-3.0 terms.',
+      body: 'The board language and the viewer (the library) are published under the MIT license; the authoring view, the server, the console and the MCP server (the product) under AGPL-3.0. A commercial license for the product is available for organizations that cannot adopt AGPL-3.0 terms.',
     },
     footer: {
-      source: 'Source',
+      source: 'Product source',
+      library: 'Library source',
       docs: 'Documentation',
+      productDocs: 'Server and MCP docs',
       selfHosting: 'Self-hosting',
       npm: 'npm package',
       contact: 'Contact',

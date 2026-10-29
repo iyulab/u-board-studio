@@ -9,7 +9,9 @@ import {
   PATHS,
   SITE_URL,
   SOURCE_URL,
+  LIBRARY_URL,
   DOCS_URL,
+  PRODUCT_DOCS_URL,
   SELF_HOSTING_URL,
   NPM_URL,
   CONTACT_URL,
@@ -86,7 +88,9 @@ const image = Astro.props.image ?? { path: `/og-${locale}.png`, width: 1200, hei
       <div class="foot-inner">
         <nav aria-label={locale === 'ko' ? '사이트 바깥 링크' : 'Elsewhere'}>
           <a href={SOURCE_URL}>{c.footer.source}</a>
+          <a href={LIBRARY_URL}>{c.footer.library}</a>
           <a href={DOCS_URL}>{c.footer.docs}</a>
+          <a href={PRODUCT_DOCS_URL}>{c.footer.productDocs}</a>
           <a href={SELF_HOSTING_URL}>{c.footer.selfHosting}</a>
           <a href={NPM_URL}>{c.footer.npm}</a>
           <a href={CONTACT_URL}>{c.footer.contact}</a>
