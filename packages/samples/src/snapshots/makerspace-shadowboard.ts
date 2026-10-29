@@ -32,11 +32,11 @@ export const snapshot: SampleSnapshot = {
       },
       '/shop/machines': {
         value: {
-          p1: { name: '프린터 1', kind: '3D 프린터 · FDM', state: 'running', word: '출력 중', job: '드론 프레임', pct: 62, left: '48분 남음' },
-          p2: { name: '프린터 2', kind: '3D 프린터 · FDM', state: 'running', word: '출력 중', job: '화분 받침 4개', pct: 18, left: '2시간 10분' },
-          p3: { name: '프린터 3', kind: '3D 프린터 · 레진', state: 'booked', word: '19:30 예약', job: '피규어 시제품', pct: 0, left: '회원 301' },
-          laser: { name: '레이저 커터', kind: '60 W · 합판 6 mm', state: 'running', word: '가공 중', job: '책꽂이 옆판', pct: 75, left: '7분 남음' },
-          cnc: { name: 'CNC 라우터', kind: '600 × 900', state: 'fault', word: '고장', job: '스핀들 베어링 교체', pct: 0, left: '부품 금요일' },
+          p1: { name: '프린터 1', kind: '3D 프린터 · FDM', state: 'running', job: '드론 프레임', pct: 62, left: '48분 남음' },
+          p2: { name: '프린터 2', kind: '3D 프린터 · FDM', state: 'running', job: '화분 받침 4개', pct: 18, left: '2시간 10분' },
+          p3: { name: '프린터 3', kind: '3D 프린터 · 레진', state: 'booked', at: '19:30', job: '피규어 시제품', pct: 0, left: '회원 301' },
+          laser: { name: '레이저 커터', kind: '60 W · 합판 6 mm', state: 'running', job: '책꽂이 옆판', pct: 75, left: '7분 남음' },
+          cnc: { name: 'CNC 라우터', kind: '600 × 900', state: 'fault', job: '스핀들 베어링 교체', pct: 0, left: '부품 금요일' },
         },
         updatedAt: at,
       },

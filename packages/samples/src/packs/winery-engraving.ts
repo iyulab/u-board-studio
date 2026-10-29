@@ -17,10 +17,11 @@ const board: Board = {
   },
   "elements": {
     "tank": {
-      "template": "<article class=\"tk {{k.state}}\"><div class=\"vessel\" style=\"--v: {{k.level}}\"><span class=\"wine\"></span><i></i></div><h3>{{k.name}}</h3><small>{{k.grape}}</small><dl><dt>온도</dt><dd>{{k.temp}}</dd><dt>당도</dt><dd>{{k.brix}}</dd></dl><em>{{k.word}}</em></article>",
+      "template": "<article class=\"tk {{k.state}}\"><div class=\"vessel\" style=\"--v: {{k.level}}\"><span class=\"wine\"></span><i></i></div><h3>{{k.name}}</h3><small>{{k.grape}}</small><dl><dt>온도</dt><dd>{{k.temp}}</dd><dt>당도</dt><dd>{{k.brix}}</dd></dl><em>{{word}}{{#k.day}} {{k.day}}일째{{/k.day}}</em></article>",
       "style": ".tk{height:100%;box-sizing:border-box;display:grid;grid-template-rows:1fr auto auto auto auto;justify-items:center;gap:3px;font-family:\"Nanum Myeongjo\", \"Noto Serif KR\", \"Batang\", serif;color:#3b2a1a;text-align:center}\n.vessel{position:relative;width:96px;height:100%;min-height:150px;box-sizing:border-box;border:2px solid #3b2a1a;border-radius:46px 46px 6px 6px / 26px 26px 6px 6px;background:repeating-linear-gradient(90deg,#cdbb98 0 1px,transparent 1px 6px),#f3ead6;overflow:hidden}\n.wine{position:absolute;left:0;right:0;bottom:0;height:calc(var(--v) * 1%);background:repeating-linear-gradient(45deg,#6e1f2c 0 1px,transparent 1px 5px),repeating-linear-gradient(-45deg,#6e1f2c 0 1px,transparent 1px 5px);border-top:2px solid #6e1f2c}\ni{position:absolute;left:50%;top:18px;transform:translateX(-50%);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#f3ead6;border:1.5px solid #3b2a1a;font:700 16px \"Nanum Myeongjo\", \"Noto Serif KR\", \"Batang\", serif;font-style:normal}\nh3{margin:4px 0 0;font-size:18px;font-weight:800}\nsmall{font-size:13px;font-style:italic;color:#7a6248}\ndl{margin:0;display:grid;grid-template-columns:auto auto;column-gap:8px;font-size:13px}\ndt{color:#7a6248}\ndd{margin:0;font-weight:800}\nem{font-size:13px;font-weight:800;font-style:normal;border-top:1px solid #3b2a1a;padding-top:2px}\n.fermenting i::before{content:\"∘°\"}\n.resting i::before{content:\"⧗\"}\n.warm i{background:#b5361f;color:#f3ead6;border-color:#b5361f}\n.warm i::before{content:\"▲\"}\n.warm em,.warm dd:first-of-type{color:#b5361f}\n.empty .vessel{background:#f3ead6}\n.empty i::before{content:\"✕\"}\n.empty em{color:#7a6248}",
       "props": {
-        "k": "object"
+        "k": "object",
+        "word": "string"
       }
     },
     "barrel": {
@@ -87,6 +88,60 @@ const board: Board = {
         },
         "t6": {
           "at": "/value/t6"
+        },
+        "t1-word": {
+          "at": "/value/t1/state",
+          "names": {
+            "fermenting": "발효",
+            "warm": "온도 높음",
+            "resting": "발효 끝 · 안정",
+            "empty": "비움 · 세척"
+          }
+        },
+        "t2-word": {
+          "at": "/value/t2/state",
+          "names": {
+            "fermenting": "발효",
+            "warm": "온도 높음",
+            "resting": "발효 끝 · 안정",
+            "empty": "비움 · 세척"
+          }
+        },
+        "t3-word": {
+          "at": "/value/t3/state",
+          "names": {
+            "fermenting": "발효",
+            "warm": "온도 높음",
+            "resting": "발효 끝 · 안정",
+            "empty": "비움 · 세척"
+          }
+        },
+        "t4-word": {
+          "at": "/value/t4/state",
+          "names": {
+            "fermenting": "발효",
+            "warm": "온도 높음",
+            "resting": "발효 끝 · 안정",
+            "empty": "비움 · 세척"
+          }
+        },
+        "t5-word": {
+          "at": "/value/t5/state",
+          "names": {
+            "fermenting": "발효",
+            "warm": "온도 높음",
+            "resting": "발효 끝 · 안정",
+            "empty": "비움 · 세척"
+          }
+        },
+        "t6-word": {
+          "at": "/value/t6/state",
+          "names": {
+            "fermenting": "발효",
+            "warm": "온도 높음",
+            "resting": "발효 끝 · 안정",
+            "empty": "비움 · 세척"
+          }
         }
       }
     },
@@ -172,7 +227,8 @@ const board: Board = {
       "element": "tank",
       "of": "tanks",
       "bind": {
-        "k": "t1"
+        "k": "t1",
+        "word": "t1-word"
       }
     },
     "tank-t2": {
@@ -180,7 +236,8 @@ const board: Board = {
       "element": "tank",
       "of": "tanks",
       "bind": {
-        "k": "t2"
+        "k": "t2",
+        "word": "t2-word"
       }
     },
     "tank-t3": {
@@ -188,7 +245,8 @@ const board: Board = {
       "element": "tank",
       "of": "tanks",
       "bind": {
-        "k": "t3"
+        "k": "t3",
+        "word": "t3-word"
       }
     },
     "tank-t4": {
@@ -196,7 +254,8 @@ const board: Board = {
       "element": "tank",
       "of": "tanks",
       "bind": {
-        "k": "t4"
+        "k": "t4",
+        "word": "t4-word"
       }
     },
     "tank-t5": {
@@ -204,7 +263,8 @@ const board: Board = {
       "element": "tank",
       "of": "tanks",
       "bind": {
-        "k": "t5"
+        "k": "t5",
+        "word": "t5-word"
       }
     },
     "tank-t6": {
@@ -212,7 +272,8 @@ const board: Board = {
       "element": "tank",
       "of": "tanks",
       "bind": {
-        "k": "t6"
+        "k": "t6",
+        "word": "t6-word"
       }
     },
     "barrel-b1": {

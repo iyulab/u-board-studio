@@ -97,7 +97,12 @@ const board: Board = {
           "at": "/port/name"
         },
         "word": {
-          "at": "/port/word"
+          "at": "/port/status",
+          "names": {
+            "ok": "운항",
+            "delay": "지연",
+            "cancel": "결항"
+          }
         },
         "next": {
           "at": "/port/next"
@@ -109,7 +114,12 @@ const board: Board = {
           "at": "/sol/name"
         },
         "word-2": {
-          "at": "/sol/word"
+          "at": "/sol/status",
+          "names": {
+            "ok": "운항",
+            "delay": "지연",
+            "cancel": "결항"
+          }
         },
         "next-2": {
           "at": "/sol/next"
@@ -121,7 +131,12 @@ const board: Board = {
           "at": "/sand/name"
         },
         "word-3": {
-          "at": "/sand/word"
+          "at": "/sand/status",
+          "names": {
+            "ok": "운항",
+            "delay": "지연",
+            "cancel": "결항"
+          }
         },
         "next-3": {
           "at": "/sand/next"
@@ -133,7 +148,12 @@ const board: Board = {
           "at": "/rock/name"
         },
         "word-4": {
-          "at": "/rock/word"
+          "at": "/rock/status",
+          "names": {
+            "ok": "운항",
+            "delay": "지연",
+            "cancel": "결항"
+          }
         },
         "next-4": {
           "at": "/rock/next"
@@ -145,7 +165,12 @@ const board: Board = {
           "at": "/light/name"
         },
         "word-5": {
-          "at": "/light/word"
+          "at": "/light/status",
+          "names": {
+            "ok": "운항",
+            "delay": "지연",
+            "cancel": "결항"
+          }
         },
         "next-5": {
           "at": "/light/next"
@@ -157,7 +182,12 @@ const board: Board = {
           "at": "/gull/name"
         },
         "word-6": {
-          "at": "/gull/word"
+          "at": "/gull/status",
+          "names": {
+            "ok": "운항",
+            "delay": "지연",
+            "cancel": "결항"
+          }
         },
         "next-6": {
           "at": "/gull/next"
@@ -169,7 +199,12 @@ const board: Board = {
           "at": "/far/name"
         },
         "word-7": {
-          "at": "/far/word"
+          "at": "/far/status",
+          "names": {
+            "ok": "운항",
+            "delay": "지연",
+            "cancel": "결항"
+          }
         },
         "next-7": {
           "at": "/far/next"

@@ -12,13 +12,13 @@ export const snapshot: SampleSnapshot = {
     ferry: {
       '/ferry/now': { name: '해솔항 여객선', sub: '섬 항로 운항 현황', date: '10월 21일 수요일', time: '14:30', updatedAt: at },
       '/ferry/piers': {
-        port: { name: '해솔항', status: 'ok', word: '운항', next: '15:00', ship: '해솔1호 → 솔섬' },
-        sol: { name: '솔섬', status: 'ok', word: '운항', next: '15:40', ship: '해솔1호 → 해솔항' },
-        sand: { name: '모래섬', status: 'ok', word: '운항', next: '15:20', ship: '모래섬호 → 해솔항' },
-        rock: { name: '큰바위섬', status: 'ok', word: '운항', next: '15:10', ship: '새벽별호 → 해솔항' },
-        light: { name: '등대섬', status: 'delay', word: '지연', next: '16:00', ship: '솔바람호 → 솔섬' },
-        gull: { name: '갈매기섬', status: 'delay', word: '지연', next: '16:30', ship: '갈매기호 · 너울 대기' },
-        far: { name: '먼섬', status: 'cancel', word: '결항', next: '내일 07:30', ship: '풍랑주의보' },
+        port: { name: '해솔항', status: 'ok', next: '15:00', ship: '해솔1호 → 솔섬' },
+        sol: { name: '솔섬', status: 'ok', next: '15:40', ship: '해솔1호 → 해솔항' },
+        sand: { name: '모래섬', status: 'ok', next: '15:20', ship: '모래섬호 → 해솔항' },
+        rock: { name: '큰바위섬', status: 'ok', next: '15:10', ship: '새벽별호 → 해솔항' },
+        light: { name: '등대섬', status: 'delay', next: '16:00', ship: '솔바람호 → 솔섬' },
+        gull: { name: '갈매기섬', status: 'delay', next: '16:30', ship: '갈매기호 · 너울 대기' },
+        far: { name: '먼섬', status: 'cancel', next: '내일 07:30', ship: '풍랑주의보' },
         updatedAt: at,
       },
       '/ferry/routes': {

@@ -24,10 +24,11 @@ const board: Board = {
       }
     },
     "machine": {
-      "template": "<article class=\"mc {{m.state}}\"><header><b>{{m.name}}</b><i></i></header><small>{{m.kind}}</small><p>{{m.job}}</p><div class=\"bar\" style=\"--v: {{m.pct}}\"><span></span></div><footer><em>{{m.word}}</em><span>{{m.left}}</span></footer></article>",
+      "template": "<article class=\"mc {{m.state}}\"><header><b>{{m.name}}</b><i></i></header><small>{{m.kind}}</small><p>{{m.job}}</p><div class=\"bar\" style=\"--v: {{m.pct}}\"><span></span></div><footer><em>{{#m.at}}{{m.at}} {{/m.at}}{{word}}</em><span>{{m.left}}</span></footer></article>",
       "style": ".mc{height:100%;box-sizing:border-box;display:grid;grid-template-rows:auto auto 1fr auto auto;gap:5px;padding:12px 14px;background:#faf7f0;border-radius:4px;box-shadow:0 3px 0 #2c3136;font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#1e2226}\nheader{display:flex;justify-content:space-between;align-items:center}\nb{font-size:17px;font-weight:900}\ni{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;font:900 12px \"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;font-style:normal;box-sizing:border-box}\nsmall{font-size:12px;color:#5b6168}\np{margin:0;font-size:14px;font-weight:700}\n.bar{height:8px;border-radius:4px;background:#e2ddd2;overflow:hidden}\n.bar span{display:block;height:100%;width:calc(var(--v) * 1%);background:#3b4651}\nfooter{display:flex;justify-content:space-between;font-size:13px}\nem{font-style:normal;font-weight:900}\n.running i{background:#2e8b57;color:#fff}\n.running i::before{content:\"▶\"}\n.idle i{border:3px solid #9aa0a6}\n.booked i{background:#f2c230;color:#1e2226}\n.booked i::before{content:\"◷\"}\n.fault{background:repeating-linear-gradient(-45deg,#faf7f0 0 8px,#f1dfda 8px 16px)}\n.fault i{background:#c21f1a;color:#fff}\n.fault i::before{content:\"✕\"}\n.fault em{color:#c21f1a}",
       "props": {
-        "m": "object"
+        "m": "object",
+        "word": "string"
       }
     },
     "title": {
@@ -121,6 +122,36 @@ const board: Board = {
         },
         "cnc": {
           "at": "/value/cnc"
+        },
+        "p1-word": {
+          "at": "/value/p1/state",
+          "names": {
+            "running": "출력 중"
+          }
+        },
+        "p2-word": {
+          "at": "/value/p2/state",
+          "names": {
+            "running": "출력 중"
+          }
+        },
+        "p3-word": {
+          "at": "/value/p3/state",
+          "names": {
+            "booked": "예약"
+          }
+        },
+        "laser-word": {
+          "at": "/value/laser/state",
+          "names": {
+            "running": "가공 중"
+          }
+        },
+        "cnc-word": {
+          "at": "/value/cnc/state",
+          "names": {
+            "fault": "고장"
+          }
         }
       }
     },
@@ -261,7 +292,8 @@ const board: Board = {
       "element": "machine",
       "of": "machines",
       "bind": {
-        "m": "p1"
+        "m": "p1",
+        "word": "p1-word"
       }
     },
     "machine-p2": {
@@ -269,7 +301,8 @@ const board: Board = {
       "element": "machine",
       "of": "machines",
       "bind": {
-        "m": "p2"
+        "m": "p2",
+        "word": "p2-word"
       }
     },
     "machine-p3": {
@@ -277,7 +310,8 @@ const board: Board = {
       "element": "machine",
       "of": "machines",
       "bind": {
-        "m": "p3"
+        "m": "p3",
+        "word": "p3-word"
       }
     },
     "machine-laser": {
@@ -285,7 +319,8 @@ const board: Board = {
       "element": "machine",
       "of": "machines",
       "bind": {
-        "m": "laser"
+        "m": "laser",
+        "word": "laser-word"
       }
     },
     "machine-cnc": {
@@ -293,7 +328,8 @@ const board: Board = {
       "element": "machine",
       "of": "machines",
       "bind": {
-        "m": "cnc"
+        "m": "cnc",
+        "word": "cnc-word"
       }
     },
     "title": {

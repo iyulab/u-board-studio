@@ -13,12 +13,12 @@ export const snapshot: SampleSnapshot = {
       '/cellar/now': { value: { series: '수확 · 2026 빈티지', name: '솔바람 와이너리', date: '10월 22일 목요일', time: '10:30' }, updatedAt: at },
       '/cellar/tanks': {
         value: {
-          t1: { name: '1번 탱크', grape: '카베르네 소비뇽', state: 'fermenting', word: '발효 5일째', temp: '26 °C', brix: '14.2', level: 82 },
-          t2: { name: '2번 탱크', grape: '메를로', state: 'fermenting', word: '발효 7일째', temp: '24 °C', brix: '9.8', level: 78 },
-          t3: { name: '3번 탱크', grape: '시라', state: 'warm', word: '온도 높음', temp: '31 °C', brix: '18.0', level: 85 },
-          t4: { name: '4번 탱크', grape: '샤르도네', state: 'fermenting', word: '발효 9일째', temp: '16 °C', brix: '12.1', level: 70 },
-          t5: { name: '5번 탱크', grape: '피노 누아', state: 'resting', word: '발효 끝 · 안정', temp: '18 °C', brix: '-1.2', level: 76 },
-          t6: { name: '6번 탱크', grape: '—', state: 'empty', word: '비움 · 세척', temp: '—', brix: '—', level: 0 },
+          t1: { name: '1번 탱크', grape: '카베르네 소비뇽', state: 'fermenting', day: 5, temp: '26 °C', brix: '14.2', level: 82 },
+          t2: { name: '2번 탱크', grape: '메를로', state: 'fermenting', day: 7, temp: '24 °C', brix: '9.8', level: 78 },
+          t3: { name: '3번 탱크', grape: '시라', state: 'warm', temp: '31 °C', brix: '18.0', level: 85 },
+          t4: { name: '4번 탱크', grape: '샤르도네', state: 'fermenting', day: 9, temp: '16 °C', brix: '12.1', level: 70 },
+          t5: { name: '5번 탱크', grape: '피노 누아', state: 'resting', temp: '18 °C', brix: '-1.2', level: 76 },
+          t6: { name: '6번 탱크', grape: '—', state: 'empty', temp: '—', brix: '—', level: 0 },
         },
         updatedAt: at,
       },
