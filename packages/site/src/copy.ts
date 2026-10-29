@@ -59,7 +59,7 @@ export interface Copy {
   notHeading: string;
   not: Section[];
   license: Section;
-  footer: { source: string; library: string; docs: string; productDocs: string; selfHosting: string; npm: string; contact: string };
+  footer: { product: string; library: string; source: string; docs: string; selfHosting: string; npm: string; contact: string };
   otherLanguage: string;
   try: {
     title: string;
@@ -226,10 +226,10 @@ export const COPY: Record<Locale, Copy> = {
       body: '보드 언어와 뷰어(라이브러리)는 MIT 라이선스로, 저작 화면·서버·콘솔·MCP 서버(제품)는 AGPL-3.0으로 공개되어 있습니다. AGPL 조건을 따르기 어려운 조직에는 제품의 상용 라이선스를 드립니다.',
     },
     footer: {
-      source: '제품 소스',
-      library: '라이브러리 소스',
+      product: '제품 (AGPL-3.0)',
+      library: '라이브러리 (MIT)',
+      source: '소스',
       docs: '문서',
-      productDocs: '서버·MCP 문서',
       selfHosting: '직접 설치',
       npm: 'npm 패키지',
       contact: '문의',
@@ -387,10 +387,10 @@ export const COPY: Record<Locale, Copy> = {
       body: 'The board language and the viewer (the library) are published under the MIT license; the authoring view, the server, the console and the MCP server (the product) under AGPL-3.0. A commercial license for the product is available for organizations that cannot adopt AGPL-3.0 terms.',
     },
     footer: {
-      source: 'Product source',
-      library: 'Library source',
+      product: 'Product (AGPL-3.0)',
+      library: 'Library (MIT)',
+      source: 'Source',
       docs: 'Documentation',
-      productDocs: 'Server and MCP docs',
       selfHosting: 'Self-hosting',
       npm: 'npm package',
       contact: 'Contact',

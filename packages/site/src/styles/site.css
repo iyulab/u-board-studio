@@ -325,6 +325,22 @@ main,
   gap: 0.5rem 1.5rem;
 }
 
+.foot-inner nav p {
+  margin: 0;
+}
+
+/* A group of links with its name in front: the product, the library. */
+.foot-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+}
+
+.foot-group strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
 .foot-meta {
   display: flex;
   flex-wrap: wrap;

@@ -75,7 +75,7 @@ const image = Astro.props.image ?? { path: `/og-${locale}.png`, width: 1200, hei
       <nav aria-label={locale === 'ko' ? '바로가기' : 'Shortcuts'}>
         <a href={PATHS.gallery[locale]} aria-current={page === 'gallery' ? 'page' : undefined}>{c.gallery.nav}</a>
         <a href={PATHS.playground[locale]} aria-current={page === 'playground' ? 'page' : undefined}>{c.playground.nav}</a>
-        <a href={DOCS_URL}>{c.footer.docs}</a>
+        <a href={PRODUCT_DOCS_URL}>{c.footer.docs}</a>
         <a href={paths[other]} hreflang={other} lang={other}>{c.otherLanguage}</a>
       </nav>
     </header>
@@ -87,13 +87,21 @@ const image = Astro.props.image ?? { path: `/og-${locale}.png`, width: 1200, hei
     <footer class="foot">
       <div class="foot-inner">
         <nav aria-label={locale === 'ko' ? '사이트 바깥 링크' : 'Elsewhere'}>
-          <a href={SOURCE_URL}>{c.footer.source}</a>
-          <a href={LIBRARY_URL}>{c.footer.library}</a>
-          <a href={DOCS_URL}>{c.footer.docs}</a>
-          <a href={PRODUCT_DOCS_URL}>{c.footer.productDocs}</a>
-          <a href={SELF_HOSTING_URL}>{c.footer.selfHosting}</a>
-          <a href={NPM_URL}>{c.footer.npm}</a>
-          <a href={CONTACT_URL}>{c.footer.contact}</a>
+          <p class="foot-group">
+            <strong>{c.footer.product}</strong>
+            <a href={SOURCE_URL}>{c.footer.source}</a>
+            <a href={PRODUCT_DOCS_URL}>{c.footer.docs}</a>
+            <a href={SELF_HOSTING_URL}>{c.footer.selfHosting}</a>
+          </p>
+          <p class="foot-group">
+            <strong>{c.footer.library}</strong>
+            <a href={LIBRARY_URL}>{c.footer.source}</a>
+            <a href={DOCS_URL}>{c.footer.docs}</a>
+            <a href={NPM_URL}>{c.footer.npm}</a>
+          </p>
+          <p class="foot-group">
+            <a href={CONTACT_URL}>{c.footer.contact}</a>
+          </p>
         </nav>
         <div class="foot-meta">
           <uplatform-affiliation product="u-board" lang={locale} theme="light"></uplatform-affiliation>
