@@ -28,7 +28,9 @@
     "www.data.go.kr",
     "www.airkorea.or.kr",
     "www.kma.go.kr",
-    "api.openai.com"
+    "api.openai.com",
+    "static.cloudflareinsights.com",
+    "cloudflareinsights.com"
   ],
   "githubRepos": [
     "iyulab/U-Board",
