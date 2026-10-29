@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import { COPY } from '../src/copy';
-import { sampleBoard } from '../src/live/sample-board';
-import { savedBoard, STORAGE_KEY } from '../src/live/saved-board';
+import { SAMPLE_PACKS } from '@iyulab/u-board-samples';
+import { HERO_BOARD } from '../src/gallery';
+import { savedBoard, STORAGE_KEY, OLD_STORAGE_KEYS } from '../src/live/saved-board';
 
-const board = sampleBoard({ plant: COPY.en.figure.plant, ...COPY.en.figure.nodes });
+const board = SAMPLE_PACKS.find(p => p.id === HERO_BOARD)!.board;
 const store = (value: string | null) => ({ getItem: (key: string) => (key === STORAGE_KEY ? value : null) });
 
 describe('the board the playground keeps in the browser', () => {
@@ -18,5 +18,9 @@ describe('the board the playground keeps in the browser', () => {
     expect(savedBoard(store(JSON.stringify({ parts: {} })))).toBeUndefined();
     expect(savedBoard(undefined)).toBeUndefined();
   });
-});
 
+  // The page's sources changed with the board it opens; a board saved under the old key reads one that is gone.
+  it('does not read a board an earlier version of the page saved', () => {
+    for (const old of OLD_STORAGE_KEYS) expect(old).not.toBe(STORAGE_KEY);
+  });
+});

@@ -1,5 +1,5 @@
-// The "build one in your browser" page: the product's authoring view on the pump-room sample, with
-// the same in-page source the board at the top of the home page reads. Nothing leaves the browser —
+// The "build one in your browser" page: the product's authoring view on a board of the gallery, with the answers
+// recorded for that board — the board at the top of the home page, opened for editing. Nothing leaves the browser —
 // saving keeps the board in localStorage, so it opens again where it was left.
 
 import { createElement } from 'react';
@@ -8,10 +8,12 @@ import { BoardAuthoring, KO_DESIGNER_LABELS } from '@iyulab/u-board-designer';
 import type { Board } from '@iyulab/u-board';
 import '@iyulab/u-board/styles.css';
 import '@iyulab/u-board-designer/styles.css';
-import { savedBoard, STORAGE_KEY } from './saved-board';
-import { sampleBoard, SampleAdapter, SAMPLE_ADAPTER_ID, type SampleBoardText } from './sample-board';
+import { loadSamplePack, snapshotAdapters } from '@iyulab/u-board-samples/lazy';
+import { savedBoard, STORAGE_KEY, OLD_STORAGE_KEYS } from './saved-board';
 
-interface PlaygroundText extends SampleBoardText {
+interface PlaygroundText {
+  /** The gallery board to start from. */
+  board: string;
   source: string;
   saved: string;
   unsaved: string;
@@ -49,17 +51,29 @@ for (const host of document.querySelectorAll<HTMLElement>('[data-playground]')) 
     window.location.reload();
   });
 
-  host.replaceChildren();
-  createRoot(host).render(
-    createElement(BoardAuthoring, {
-      initialBoard: savedBoard(storage()) ?? sampleBoard(text),
-      adapters: [new SampleAdapter()],
-      sourceLabels: { [SAMPLE_ADAPTER_ID]: text.source },
-      onSave: save,
-      onDirtyChange: (dirty: boolean) => {
-        if (status && dirty) status.textContent = text.unsaved;
-      },
-      labels: korean ? KO_DESIGNER_LABELS : undefined,
-    })
-  );
+  void loadSamplePack(text.board).then(pack => {
+    if (!pack) return;
+    // A board saved by an earlier version of this page reads a source this page no longer has.
+    for (const key of OLD_STORAGE_KEYS) {
+      try {
+        storage()?.removeItem(key);
+      } catch {
+        // nothing to remove
+      }
+    }
+    const adapters = snapshotAdapters(pack);
+    host.replaceChildren();
+    createRoot(host).render(
+      createElement(BoardAuthoring, {
+        initialBoard: savedBoard(storage()) ?? pack.board,
+        adapters,
+        sourceLabels: Object.fromEntries(adapters.map(a => [a.id, text.source])),
+        onSave: save,
+        onDirtyChange: (dirty: boolean) => {
+          if (status && dirty) status.textContent = text.unsaved;
+        },
+        labels: korean ? KO_DESIGNER_LABELS : undefined,
+      })
+    );
+  });
 }

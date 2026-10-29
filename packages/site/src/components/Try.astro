@@ -1,6 +1,8 @@
 ---
 import Page from './Page.astro';
+import { SAMPLE_PACKS } from '@iyulab/u-board-samples';
 import { COPY, type Locale } from '../copy';
+import { HERO_BOARD } from '../gallery';
 
 interface Props {
   locale: Locale;
@@ -9,9 +11,10 @@ interface Props {
 const { locale } = Astro.props;
 const c = COPY[locale];
 const t = c.try;
+const pack = SAMPLE_PACKS.find(p => p.id === HERO_BOARD);
+if (!pack) throw new Error(`The board "${HERO_BOARD}" is not in the gallery`);
 const playground = JSON.stringify({
-  plant: c.figure.plant,
-  ...c.figure.nodes,
+  board: HERO_BOARD,
   source: t.source,
   saved: t.saved,
   unsaved: t.unsaved,
@@ -22,7 +25,7 @@ const playground = JSON.stringify({
   <section class="try" data-claim="try">
     <div class="try-head">
       <h1>{t.heading}</h1>
-      <p>{t.intro}</p>
+      <p>{t.intro.replace('{board}', pack.title[locale])}</p>
       <p class="try-narrow">{t.narrow}</p>
     </div>
     <div class="try-tools">
