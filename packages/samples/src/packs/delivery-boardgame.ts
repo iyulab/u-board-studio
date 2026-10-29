@@ -22,10 +22,12 @@ const board: Board = {
       }
     },
     "lane": {
-      "template": "<article class=\"ln {{d.state}}\" style=\"--step: {{d.step}}; --c: {{d.color}}\"><header><b>{{d.name}}</b><small>{{d.area}}</small><p>{{d.done}} / {{d.total}}건</p></header><div class=\"track\"><span class=\"st\">출발</span><div class=\"cells\"><div class=\"walked\"></div><i class=\"pawn\"></i></div><span class=\"go\">도착</span></div><aside class=\"card\"><em>{{d.card}}</em><small>{{d.word}}</small></aside><p class=\"note\">{{d.note}}</p></article>",
+      "template": "<article class=\"ln {{d.state}}\" style=\"--step: {{d.step}}; --c: {{d.color}}\"><header><b>{{d.name}}</b><small>{{d.area}}</small><p>{{d.done}} / {{d.total}}건</p></header><div class=\"track\"><span class=\"st\">출발</span><div class=\"cells\"><div class=\"walked\"></div><i class=\"pawn\"></i></div><span class=\"go\">도착</span></div><aside class=\"card\"><em>{{card}}</em><small>{{#d.arrivedAt}}{{d.arrivedAt}} {{/d.arrivedAt}}{{word}}{{#d.delay}} {{d.delay}}분{{/d.delay}}{{#d.absent}} {{d.absent}} · 주소 {{d.badAddress}}{{/d.absent}}</small></aside><p class=\"note\">{{d.note}}</p></article>",
       "style": ".ln{height:100%;box-sizing:border-box;display:grid;grid-template-columns:150px 1fr 120px;grid-template-rows:1fr auto;column-gap:14px;align-items:center;padding:8px 12px;background:#fffaf0;border:3px solid #3b2f2a;border-radius:14px;font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#3b2f2a}\nheader{grid-row:1 / span 2;display:grid;gap:2px}\nb{font:28px/1 \"Jua\", \"Do Hyeon\", \"Black Han Sans\", \"Pretendard\", sans-serif;color:var(--c)}\nsmall{font-size:12px;color:#6b5d55}\nheader p{margin:4px 0 0;font:800 18px \"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif}\n.track{display:grid;grid-template-columns:42px 1fr 42px;align-items:center;gap:4px}\n.st,.go{display:grid;place-items:center;height:44px;border:2px solid #3b2f2a;border-radius:8px;font:13px \"Jua\", \"Do Hyeon\", \"Black Han Sans\", \"Pretendard\", sans-serif;background:#f2c230}\n.go{background:#3c9a5f;color:#fff}\n.cells{position:relative;height:44px;border:2px solid #3b2f2a;border-radius:6px;background:repeating-linear-gradient(90deg, #fffdf6 0 calc(5% - 2px), #3b2f2a calc(5% - 2px) 5%)}\n.walked{position:absolute;inset:0;background:repeating-linear-gradient(90deg, color-mix(in srgb, var(--c) 35%, #fff) 0 calc(5% - 2px), #3b2f2a calc(5% - 2px) 5%);clip-path:inset(0 calc(100% - var(--step) * 5%) 0 0)}\n.pawn{position:absolute;bottom:4px;width:26px;height:34px;left:calc(var(--step) * 5% - 2.5% - 13px);background:var(--c);clip-path:polygon(50% 0, 72% 10%, 74% 34%, 100% 48%, 88% 62%, 70% 58%, 82% 100%, 18% 100%, 30% 58%, 12% 62%, 0 48%, 26% 34%, 28% 10%);filter:drop-shadow(0 1px 0 #3b2f2a)}\n.card{grid-row:1 / span 2;grid-column:3;display:grid;place-items:center;align-content:center;gap:2px;height:96px;border:3px solid #3b2f2a;border-radius:10px;background:#3c9a5f;color:#fff;box-shadow:3px 3px 0 #3b2f2a}\n.card em{font:normal 22px/1 \"Jua\", \"Do Hyeon\", \"Black Han Sans\", \"Pretendard\", sans-serif;white-space:nowrap}\n.card small{color:inherit;font-weight:800;font-size:13px}\n.note{grid-column:2;margin:2px 0 0;font-size:13px;color:#6b5d55}\n.delay .card{background:#f2c230;color:#3b2f2a;border-style:dashed}\n.problem .card{background:#d6453d;transform:rotate(-6deg)}\n.problem .card em::before{content:\"! \"}\n.done .card{background:linear-gradient(135deg, #f7d774, #c9962b);color:#3b2f2a}\n.done .cells{opacity:.7}",
       "props": {
-        "d": "object"
+        "d": "object",
+        "card": "string",
+        "word": "string"
       }
     },
     "tally": {
@@ -69,6 +71,114 @@ const board: Board = {
         },
         "v6": {
           "at": "/value/v6"
+        },
+        "v1-card": {
+          "at": "/value/v1/state",
+          "names": {
+            "ok": "GO",
+            "delay": "한 턴 쉬기",
+            "problem": "문제",
+            "done": "완주"
+          }
+        },
+        "v1-word": {
+          "at": "/value/v1/state",
+          "names": {
+            "ok": "순조",
+            "delay": "지연",
+            "problem": "부재",
+            "done": "도착"
+          }
+        },
+        "v2-card": {
+          "at": "/value/v2/state",
+          "names": {
+            "ok": "GO",
+            "delay": "한 턴 쉬기",
+            "problem": "문제",
+            "done": "완주"
+          }
+        },
+        "v2-word": {
+          "at": "/value/v2/state",
+          "names": {
+            "ok": "순조",
+            "delay": "지연",
+            "problem": "부재",
+            "done": "도착"
+          }
+        },
+        "v3-card": {
+          "at": "/value/v3/state",
+          "names": {
+            "ok": "GO",
+            "delay": "한 턴 쉬기",
+            "problem": "문제",
+            "done": "완주"
+          }
+        },
+        "v3-word": {
+          "at": "/value/v3/state",
+          "names": {
+            "ok": "순조",
+            "delay": "지연",
+            "problem": "부재",
+            "done": "도착"
+          }
+        },
+        "v4-card": {
+          "at": "/value/v4/state",
+          "names": {
+            "ok": "GO",
+            "delay": "한 턴 쉬기",
+            "problem": "문제",
+            "done": "완주"
+          }
+        },
+        "v4-word": {
+          "at": "/value/v4/state",
+          "names": {
+            "ok": "순조",
+            "delay": "지연",
+            "problem": "부재",
+            "done": "도착"
+          }
+        },
+        "v5-card": {
+          "at": "/value/v5/state",
+          "names": {
+            "ok": "GO",
+            "delay": "한 턴 쉬기",
+            "problem": "문제",
+            "done": "완주"
+          }
+        },
+        "v5-word": {
+          "at": "/value/v5/state",
+          "names": {
+            "ok": "순조",
+            "delay": "지연",
+            "problem": "부재",
+            "done": "도착"
+          }
+        },
+        "v6-card": {
+          "at": "/value/v6/state",
+          "names": {
+            "ok": "GO",
+            "delay": "한 턴 쉬기",
+            "problem": "문제",
+            "done": "완주"
+          }
+        },
+        "v6-word": {
+          "at": "/value/v6/state",
+          "names": {
+            "ok": "순조",
+            "delay": "지연",
+            "problem": "부재",
+            "done": "도착"
+          }
         }
       }
     },
@@ -103,7 +213,9 @@ const board: Board = {
       "element": "lane",
       "of": "drivers",
       "bind": {
-        "d": "v1"
+        "d": "v1",
+        "card": "v1-card",
+        "word": "v1-word"
       }
     },
     "driver-v2": {
@@ -111,7 +223,9 @@ const board: Board = {
       "element": "lane",
       "of": "drivers",
       "bind": {
-        "d": "v2"
+        "d": "v2",
+        "card": "v2-card",
+        "word": "v2-word"
       }
     },
     "driver-v3": {
@@ -119,7 +233,9 @@ const board: Board = {
       "element": "lane",
       "of": "drivers",
       "bind": {
-        "d": "v3"
+        "d": "v3",
+        "card": "v3-card",
+        "word": "v3-word"
       }
     },
     "driver-v4": {
@@ -127,7 +243,9 @@ const board: Board = {
       "element": "lane",
       "of": "drivers",
       "bind": {
-        "d": "v4"
+        "d": "v4",
+        "card": "v4-card",
+        "word": "v4-word"
       }
     },
     "driver-v5": {
@@ -135,7 +253,9 @@ const board: Board = {
       "element": "lane",
       "of": "drivers",
       "bind": {
-        "d": "v5"
+        "d": "v5",
+        "card": "v5-card",
+        "word": "v5-word"
       }
     },
     "driver-v6": {
@@ -143,7 +263,9 @@ const board: Board = {
       "element": "lane",
       "of": "drivers",
       "bind": {
-        "d": "v6"
+        "d": "v6",
+        "card": "v6-card",
+        "word": "v6-word"
       }
     },
     "tally": {

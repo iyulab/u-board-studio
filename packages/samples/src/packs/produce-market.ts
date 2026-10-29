@@ -35,10 +35,11 @@ const board: Board = {
       }
     },
     "hall": {
-      "template": "<section class=\"hl {{h.state}}\"><header><b>{{h.name}}</b><span>{{h.word}}</span></header><strong>{{h.item}}</strong><i style=\"--p: {{h.progress}}\"><u></u></i><small>{{h.note}}</small></section>",
+      "template": "<section class=\"hl {{h.state}}\"><header><b>{{h.name}}</b><span>{{#h.start}}{{h.start}} {{/h.start}}{{word}}</span></header><strong>{{h.item}}</strong><i style=\"--p: {{h.progress}}\"><u></u></i><small>{{h.note}}</small></section>",
       "style": ".hl{height:100%;box-sizing:border-box;display:grid;grid-template-rows:auto 1fr auto auto;gap:8px;padding:12px 16px;background:#f1ede3;border:2px solid #141414;box-shadow:4px 4px 0 #141414;font-family:\"Noto Serif KR\", \"Nanum Myeongjo\", \"Batang\", serif;color:#141414}\nheader{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid #141414;padding-bottom:4px}\nb{font-size:18px;font-weight:800}\nspan{font:700 13px \"Noto Sans KR\", \"Malgun Gothic\", sans-serif;padding:1px 8px;border:1.5px solid #141414}\nstrong{align-self:center;font-size:30px;font-weight:900}\ni{display:block;height:14px;border:1.5px solid #141414;background:#f1ede3}\nu{display:block;height:100%;width:calc(var(--p) * 1%);background:#141414}\nsmall{font:13px \"Noto Sans KR\", \"Malgun Gothic\", sans-serif}\n.now span{color:#f1ede3;background:#a5161d;border-color:#a5161d}\n.done{color:#4b4740}\n.done u{background:#8a857b}\n.done span{color:#f1ede3;background:#8a857b;border-color:#8a857b}\n.wait{border-style:dashed;box-shadow:none}",
       "props": {
-        "h": "object"
+        "h": "object",
+        "word": "string"
       }
     },
     "prices": {
@@ -103,6 +104,38 @@ const board: Board = {
         },
         "h4": {
           "at": "/value/h4"
+        },
+        "h1-word": {
+          "at": "/value/h1/state",
+          "names": {
+            "now": "경매 중",
+            "done": "끝",
+            "wait": "시작"
+          }
+        },
+        "h2-word": {
+          "at": "/value/h2/state",
+          "names": {
+            "now": "경매 중",
+            "done": "끝",
+            "wait": "시작"
+          }
+        },
+        "h3-word": {
+          "at": "/value/h3/state",
+          "names": {
+            "now": "경매 중",
+            "done": "끝",
+            "wait": "시작"
+          }
+        },
+        "h4-word": {
+          "at": "/value/h4/state",
+          "names": {
+            "now": "경매 중",
+            "done": "끝",
+            "wait": "시작"
+          }
         }
       }
     },
@@ -167,7 +200,8 @@ const board: Board = {
       "element": "hall",
       "of": "halls",
       "bind": {
-        "h": "h1"
+        "h": "h1",
+        "word": "h1-word"
       }
     },
     "hall-h2": {
@@ -175,7 +209,8 @@ const board: Board = {
       "element": "hall",
       "of": "halls",
       "bind": {
-        "h": "h2"
+        "h": "h2",
+        "word": "h2-word"
       }
     },
     "hall-h3": {
@@ -183,7 +218,8 @@ const board: Board = {
       "element": "hall",
       "of": "halls",
       "bind": {
-        "h": "h3"
+        "h": "h3",
+        "word": "h3-word"
       }
     },
     "hall-h4": {
@@ -191,7 +227,8 @@ const board: Board = {
       "element": "hall",
       "of": "halls",
       "bind": {
-        "h": "h4"
+        "h": "h4",
+        "word": "h4-word"
       }
     },
     "prices": {

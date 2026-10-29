@@ -18,10 +18,10 @@ export const snapshot: SampleSnapshot = {
       },
       '/market/halls': {
         value: {
-          h1: { name: '채소 1동', item: '배추', state: 'now', word: '경매 중', progress: 62, note: '62% · 남은 반입 470톤' },
-          h2: { name: '채소 2동', item: '무', state: 'now', word: '경매 중', progress: 35, note: '35% · 남은 반입 210톤' },
-          h3: { name: '과일동', item: '사과 · 배', state: 'done', word: '끝', progress: 100, note: '03:50 경매 끝' },
-          h4: { name: '특작동', item: '버섯 · 고추', state: 'wait', word: '05:00 시작', progress: 0, note: '반입 확인 중' },
+          h1: { name: '채소 1동', item: '배추', state: 'now', progress: 62, note: '62% · 남은 반입 470톤' },
+          h2: { name: '채소 2동', item: '무', state: 'now', progress: 35, note: '35% · 남은 반입 210톤' },
+          h3: { name: '과일동', item: '사과 · 배', state: 'done', progress: 100, note: '03:50 경매 끝' },
+          h4: { name: '특작동', item: '버섯 · 고추', state: 'wait', start: '05:00', progress: 0, note: '반입 확인 중' },
         },
         updatedAt: at,
       },
