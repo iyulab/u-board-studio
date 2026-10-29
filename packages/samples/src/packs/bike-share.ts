@@ -17,10 +17,11 @@ const board: Board = {
   },
   "elements": {
     "station": {
-      "template": "<section class=\"st {{s.state}}\"><header><b>{{s.name}}</b><span>{{s.word}}</span></header><p><i class=\"bk\" style=\"--n: {{s.bikes}}\"></i><i class=\"em\" style=\"--n: {{s.empty}}\"></i></p><small><b>{{s.bikes}}</b>대 · 빈 거치대 {{s.empty}}</small></section>",
+      "template": "<section class=\"st {{s.state}}\"><header><b>{{s.name}}</b><span>{{#s.scarce}}{{s.scarce}}대 남음{{/s.scarce}}{{^s.scarce}}{{#s.broken}}거치대 {{s.broken}}칸 점검{{/s.broken}}{{^s.broken}}{{word}}{{/s.broken}}{{/s.scarce}}</span></header><p><i class=\"bk\" style=\"--n: {{s.bikes}}\"></i><i class=\"em\" style=\"--n: {{s.empty}}\"></i></p><small><b>{{s.bikes}}</b>대 · 빈 거치대 {{s.empty}}</small></section>",
       "style": ".st{height:100%;box-sizing:border-box;display:grid;grid-template-rows:auto 1fr auto;gap:4px;padding:8px 12px;background:#f3eee2;border-top:6px solid #1c1b19;font-family:\"Jost\", \"Futura\", \"Century Gothic\", \"Noto Sans KR\", \"Malgun Gothic\", sans-serif;color:#1c1b19}\nheader{display:flex;justify-content:space-between;align-items:center;gap:6px}\nb{font-size:16px;font-weight:700}\nspan{font-size:12px;font-weight:600;padding:1px 8px;color:#f3eee2;background:#1c1b19}\np{margin:0;display:flex;align-items:center}\ni{display:block;height:16px;width:calc(var(--n) * 20px);background-repeat:repeat-x;background-size:20px 16px}\n.bk{background-image:url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2216%22%20viewBox%3D%220%200%2020%2016%22%3E%0A%3Cg%20fill%3D%22%231c1b19%22%20stroke%3D%22%231c1b19%22%20stroke-width%3D%220%22%3E%0A%3Ccircle%20cx%3D%224.5%22%20cy%3D%2211%22%20r%3D%224.2%22%2F%3E%3Ccircle%20cx%3D%2215.5%22%20cy%3D%2211%22%20r%3D%224.2%22%2F%3E%0A%3C%2Fg%3E%0A%3Cpath%20d%3D%22M%204.5%2011%20L%208%204.5%20L%2014%204.5%20L%2015.5%2011%20M%208%204.5%20L%2010%2011%20L%2014%204.5%20M%206.5%203%20H%209.5%20M%2013%202.5%20H%2015.5%22%20fill%3D%22none%22%20stroke%3D%22%231c1b19%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-opacity%3D%221%22%2F%3E%0A%3C%2Fsvg%3E\")}\n.em{background-image:url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2216%22%20viewBox%3D%220%200%2020%2016%22%3E%0A%3Cg%20fill%3D%22none%22%20stroke%3D%22%23b5afa3%22%20stroke-width%3D%221.4%22%3E%0A%3Ccircle%20cx%3D%224.5%22%20cy%3D%2211%22%20r%3D%223.6%22%2F%3E%3Ccircle%20cx%3D%2215.5%22%20cy%3D%2211%22%20r%3D%223.6%22%2F%3E%0A%3C%2Fg%3E%0A%3Cpath%20d%3D%22M%204.5%2011%20L%208%204.5%20L%2014%204.5%20L%2015.5%2011%20M%208%204.5%20L%2010%2011%20L%2014%204.5%20M%206.5%203%20H%209.5%20M%2013%202.5%20H%2015.5%22%20fill%3D%22none%22%20stroke%3D%22%23b5afa3%22%20stroke-width%3D%221.4%22%20stroke-linecap%3D%22round%22%20%2F%3E%0A%3C%2Fsvg%3E\")}\nsmall{font-size:12px}\nsmall b{font-size:14px}\n.low{border-top-color:#d23c2a}\n.low span{background:#d23c2a}\n.low .bk{background-image:url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2216%22%20viewBox%3D%220%200%2020%2016%22%3E%0A%3Cg%20fill%3D%22%23d23c2a%22%20stroke%3D%22%23d23c2a%22%20stroke-width%3D%220%22%3E%0A%3Ccircle%20cx%3D%224.5%22%20cy%3D%2211%22%20r%3D%224.2%22%2F%3E%3Ccircle%20cx%3D%2215.5%22%20cy%3D%2211%22%20r%3D%224.2%22%2F%3E%0A%3C%2Fg%3E%0A%3Cpath%20d%3D%22M%204.5%2011%20L%208%204.5%20L%2014%204.5%20L%2015.5%2011%20M%208%204.5%20L%2010%2011%20L%2014%204.5%20M%206.5%203%20H%209.5%20M%2013%202.5%20H%2015.5%22%20fill%3D%22none%22%20stroke%3D%22%23d23c2a%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-opacity%3D%221%22%2F%3E%0A%3C%2Fsvg%3E\")}\n.full{border-top-color:#2a5aa8}\n.full span{background:#2a5aa8}\n.off{border-top-color:#b5afa3;background:repeating-linear-gradient(45deg,#f3eee2 0 8px,#e2dccd 8px 10px)}\n.off span{background:#b5afa3;color:#1c1b19}",
       "props": {
-        "s": "object"
+        "s": "object",
+        "word": "string"
       }
     },
     "legend": {
@@ -95,6 +96,96 @@ const board: Board = {
         },
         "s10": {
           "at": "/value/s10"
+        },
+        "s1-word": {
+          "at": "/value/s1/state",
+          "names": {
+            "ok": "넉넉",
+            "low": "자전거 없음",
+            "full": "반납 불가",
+            "off": "점검 중"
+          }
+        },
+        "s2-word": {
+          "at": "/value/s2/state",
+          "names": {
+            "ok": "넉넉",
+            "low": "자전거 없음",
+            "full": "반납 불가",
+            "off": "점검 중"
+          }
+        },
+        "s3-word": {
+          "at": "/value/s3/state",
+          "names": {
+            "ok": "넉넉",
+            "low": "자전거 없음",
+            "full": "반납 불가",
+            "off": "점검 중"
+          }
+        },
+        "s4-word": {
+          "at": "/value/s4/state",
+          "names": {
+            "ok": "넉넉",
+            "low": "자전거 없음",
+            "full": "반납 불가",
+            "off": "점검 중"
+          }
+        },
+        "s5-word": {
+          "at": "/value/s5/state",
+          "names": {
+            "ok": "넉넉",
+            "low": "자전거 없음",
+            "full": "반납 불가",
+            "off": "점검 중"
+          }
+        },
+        "s6-word": {
+          "at": "/value/s6/state",
+          "names": {
+            "ok": "넉넉",
+            "low": "자전거 없음",
+            "full": "반납 불가",
+            "off": "점검 중"
+          }
+        },
+        "s7-word": {
+          "at": "/value/s7/state",
+          "names": {
+            "ok": "넉넉",
+            "low": "자전거 없음",
+            "full": "반납 불가",
+            "off": "점검 중"
+          }
+        },
+        "s8-word": {
+          "at": "/value/s8/state",
+          "names": {
+            "ok": "넉넉",
+            "low": "자전거 없음",
+            "full": "반납 불가",
+            "off": "점검 중"
+          }
+        },
+        "s9-word": {
+          "at": "/value/s9/state",
+          "names": {
+            "ok": "넉넉",
+            "low": "자전거 없음",
+            "full": "반납 불가",
+            "off": "점검 중"
+          }
+        },
+        "s10-word": {
+          "at": "/value/s10/state",
+          "names": {
+            "ok": "넉넉",
+            "low": "자전거 없음",
+            "full": "반납 불가",
+            "off": "점검 중"
+          }
         }
       }
     },
@@ -158,7 +249,8 @@ const board: Board = {
       "element": "station",
       "of": "stations",
       "bind": {
-        "s": "s1"
+        "s": "s1",
+        "word": "s1-word"
       }
     },
     "station-s2": {
@@ -166,7 +258,8 @@ const board: Board = {
       "element": "station",
       "of": "stations",
       "bind": {
-        "s": "s2"
+        "s": "s2",
+        "word": "s2-word"
       }
     },
     "station-s3": {
@@ -174,7 +267,8 @@ const board: Board = {
       "element": "station",
       "of": "stations",
       "bind": {
-        "s": "s3"
+        "s": "s3",
+        "word": "s3-word"
       }
     },
     "station-s4": {
@@ -182,7 +276,8 @@ const board: Board = {
       "element": "station",
       "of": "stations",
       "bind": {
-        "s": "s4"
+        "s": "s4",
+        "word": "s4-word"
       }
     },
     "station-s5": {
@@ -190,7 +285,8 @@ const board: Board = {
       "element": "station",
       "of": "stations",
       "bind": {
-        "s": "s5"
+        "s": "s5",
+        "word": "s5-word"
       }
     },
     "station-s6": {
@@ -198,7 +294,8 @@ const board: Board = {
       "element": "station",
       "of": "stations",
       "bind": {
-        "s": "s6"
+        "s": "s6",
+        "word": "s6-word"
       }
     },
     "station-s7": {
@@ -206,7 +303,8 @@ const board: Board = {
       "element": "station",
       "of": "stations",
       "bind": {
-        "s": "s7"
+        "s": "s7",
+        "word": "s7-word"
       }
     },
     "station-s8": {
@@ -214,7 +312,8 @@ const board: Board = {
       "element": "station",
       "of": "stations",
       "bind": {
-        "s": "s8"
+        "s": "s8",
+        "word": "s8-word"
       }
     },
     "station-s9": {
@@ -222,7 +321,8 @@ const board: Board = {
       "element": "station",
       "of": "stations",
       "bind": {
-        "s": "s9"
+        "s": "s9",
+        "word": "s9-word"
       }
     },
     "station-s10": {
@@ -230,7 +330,8 @@ const board: Board = {
       "element": "station",
       "of": "stations",
       "bind": {
-        "s": "s10"
+        "s": "s10",
+        "word": "s10-word"
       }
     },
     "legend": {

@@ -16,10 +16,11 @@ const board: Board = {
   },
   "elements": {
     "stall": {
-      "template": "<section class=\"sl {{s.state}}\"><span>{{s.word}}</span><b>{{s.name}}</b><strong>{{s.item}}</strong>{{#s.note}}<small>{{s.note}}</small>{{/s.note}}</section>",
+      "template": "<section class=\"sl {{s.state}}\"><span>{{#s.queue}}대기 {{s.queue}}분{{/s.queue}}{{^s.queue}}{{#s.left}}{{s.left}}{{s.unit}} 남음{{/s.left}}{{^s.left}}{{word}}{{/s.left}}{{/s.queue}}</span><b>{{s.name}}</b><strong>{{s.item}}</strong>{{#s.note}}<small>{{s.note}}</small>{{/s.note}}</section>",
       "style": ".sl{position:relative;height:100%;box-sizing:border-box;display:grid;align-content:end;gap:1px;padding:8px 10px;background:#f4efe3;border:3px solid #0078bf;font-family:\"Space Grotesk\", \"Noto Sans KR\", \"Malgun Gothic\", sans-serif;color:#5a3f9e}\nspan{position:absolute;top:-12px;right:8px;padding:2px 8px;font:13px \"Archivo Black\", \"Arial Black\", \"Noto Sans KR\", \"Malgun Gothic\", sans-serif;color:#f4efe3;background:#0078bf}\nb{font:14px \"Archivo Black\", \"Arial Black\", \"Noto Sans KR\", \"Malgun Gothic\", sans-serif;color:#0078bf}\nstrong{font-size:18px;font-weight:800;line-height:1.15}\nsmall{font-size:12px}\n.few{border-color:#ff48b0;background:radial-gradient(rgba(255,72,176,.4) 40%,transparent 43%) 0 0/6px 6px,#f4efe3}\n.few span{background:#f4efe3;color:#ff48b0;outline:2px solid #ff48b0}\n.sold{background:#ff48b0;border-color:#ff48b0;color:#f4efe3}\n.sold span{background:#5a3f9e}\n.sold b{color:#f4efe3}\n.sold strong{text-decoration:line-through;text-decoration-thickness:3px}",
       "props": {
-        "s": "object"
+        "s": "object",
+        "word": "string"
       }
     },
     "legend": {
@@ -102,6 +103,126 @@ const board: Board = {
         },
         "t3": {
           "at": "/value/t3"
+        },
+        "a1-word": {
+          "at": "/value/a1/state",
+          "names": {
+            "open": "판매 중",
+            "few": "조금 남음",
+            "sold": "완판"
+          }
+        },
+        "a2-word": {
+          "at": "/value/a2/state",
+          "names": {
+            "open": "판매 중",
+            "few": "조금 남음",
+            "sold": "완판"
+          }
+        },
+        "a3-word": {
+          "at": "/value/a3/state",
+          "names": {
+            "open": "판매 중",
+            "few": "조금 남음",
+            "sold": "완판"
+          }
+        },
+        "a4-word": {
+          "at": "/value/a4/state",
+          "names": {
+            "open": "판매 중",
+            "few": "조금 남음",
+            "sold": "완판"
+          }
+        },
+        "a5-word": {
+          "at": "/value/a5/state",
+          "names": {
+            "open": "판매 중",
+            "few": "조금 남음",
+            "sold": "완판"
+          }
+        },
+        "a6-word": {
+          "at": "/value/a6/state",
+          "names": {
+            "open": "판매 중",
+            "few": "조금 남음",
+            "sold": "완판"
+          }
+        },
+        "b1-word": {
+          "at": "/value/b1/state",
+          "names": {
+            "open": "판매 중",
+            "few": "조금 남음",
+            "sold": "완판"
+          }
+        },
+        "b2-word": {
+          "at": "/value/b2/state",
+          "names": {
+            "open": "판매 중",
+            "few": "조금 남음",
+            "sold": "완판"
+          }
+        },
+        "b3-word": {
+          "at": "/value/b3/state",
+          "names": {
+            "open": "판매 중",
+            "few": "조금 남음",
+            "sold": "완판"
+          }
+        },
+        "b4-word": {
+          "at": "/value/b4/state",
+          "names": {
+            "open": "판매 중",
+            "few": "조금 남음",
+            "sold": "완판"
+          }
+        },
+        "b5-word": {
+          "at": "/value/b5/state",
+          "names": {
+            "open": "판매 중",
+            "few": "조금 남음",
+            "sold": "완판"
+          }
+        },
+        "b6-word": {
+          "at": "/value/b6/state",
+          "names": {
+            "open": "판매 중",
+            "few": "조금 남음",
+            "sold": "완판"
+          }
+        },
+        "t1-word": {
+          "at": "/value/t1/state",
+          "names": {
+            "open": "판매 중",
+            "few": "조금 남음",
+            "sold": "완판"
+          }
+        },
+        "t2-word": {
+          "at": "/value/t2/state",
+          "names": {
+            "open": "판매 중",
+            "few": "조금 남음",
+            "sold": "완판"
+          }
+        },
+        "t3-word": {
+          "at": "/value/t3/state",
+          "names": {
+            "open": "판매 중",
+            "few": "조금 남음",
+            "sold": "완판"
+          }
         }
       }
     },
@@ -149,7 +270,8 @@ const board: Board = {
       "element": "stall",
       "of": "stalls",
       "bind": {
-        "s": "a1"
+        "s": "a1",
+        "word": "a1-word"
       }
     },
     "stall-a2": {
@@ -157,7 +279,8 @@ const board: Board = {
       "element": "stall",
       "of": "stalls",
       "bind": {
-        "s": "a2"
+        "s": "a2",
+        "word": "a2-word"
       }
     },
     "stall-a3": {
@@ -165,7 +288,8 @@ const board: Board = {
       "element": "stall",
       "of": "stalls",
       "bind": {
-        "s": "a3"
+        "s": "a3",
+        "word": "a3-word"
       }
     },
     "stall-a4": {
@@ -173,7 +297,8 @@ const board: Board = {
       "element": "stall",
       "of": "stalls",
       "bind": {
-        "s": "a4"
+        "s": "a4",
+        "word": "a4-word"
       }
     },
     "stall-a5": {
@@ -181,7 +306,8 @@ const board: Board = {
       "element": "stall",
       "of": "stalls",
       "bind": {
-        "s": "a5"
+        "s": "a5",
+        "word": "a5-word"
       }
     },
     "stall-a6": {
@@ -189,7 +315,8 @@ const board: Board = {
       "element": "stall",
       "of": "stalls",
       "bind": {
-        "s": "a6"
+        "s": "a6",
+        "word": "a6-word"
       }
     },
     "stall-b1": {
@@ -197,7 +324,8 @@ const board: Board = {
       "element": "stall",
       "of": "stalls",
       "bind": {
-        "s": "b1"
+        "s": "b1",
+        "word": "b1-word"
       }
     },
     "stall-b2": {
@@ -205,7 +333,8 @@ const board: Board = {
       "element": "stall",
       "of": "stalls",
       "bind": {
-        "s": "b2"
+        "s": "b2",
+        "word": "b2-word"
       }
     },
     "stall-b3": {
@@ -213,7 +342,8 @@ const board: Board = {
       "element": "stall",
       "of": "stalls",
       "bind": {
-        "s": "b3"
+        "s": "b3",
+        "word": "b3-word"
       }
     },
     "stall-b4": {
@@ -221,7 +351,8 @@ const board: Board = {
       "element": "stall",
       "of": "stalls",
       "bind": {
-        "s": "b4"
+        "s": "b4",
+        "word": "b4-word"
       }
     },
     "stall-b5": {
@@ -229,7 +360,8 @@ const board: Board = {
       "element": "stall",
       "of": "stalls",
       "bind": {
-        "s": "b5"
+        "s": "b5",
+        "word": "b5-word"
       }
     },
     "stall-b6": {
@@ -237,7 +369,8 @@ const board: Board = {
       "element": "stall",
       "of": "stalls",
       "bind": {
-        "s": "b6"
+        "s": "b6",
+        "word": "b6-word"
       }
     },
     "stall-t1": {
@@ -245,7 +378,8 @@ const board: Board = {
       "element": "stall",
       "of": "stalls",
       "bind": {
-        "s": "t1"
+        "s": "t1",
+        "word": "t1-word"
       }
     },
     "stall-t2": {
@@ -253,7 +387,8 @@ const board: Board = {
       "element": "stall",
       "of": "stalls",
       "bind": {
-        "s": "t2"
+        "s": "t2",
+        "word": "t2-word"
       }
     },
     "stall-t3": {
@@ -261,7 +396,8 @@ const board: Board = {
       "element": "stall",
       "of": "stalls",
       "bind": {
-        "s": "t3"
+        "s": "t3",
+        "word": "t3-word"
       }
     },
     "legend": {
