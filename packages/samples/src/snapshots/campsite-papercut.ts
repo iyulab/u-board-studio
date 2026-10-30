@@ -39,12 +39,12 @@ export const snapshot: SampleSnapshot = {
       },
       '/camp/moves': {
         value: [
-          { time: '11:00', what: '퇴실 — 2팀', pitch: 'B-1·B-3', state: 'done', word: '마침' },
-          { time: '14:00', what: '입실 — 2인', pitch: 'A-2', state: 'done', word: '마침' },
-          { time: '15:10', what: '입실 — 3인', pitch: 'A-4', state: 'done', word: '마침' },
-          { time: '16:40', what: '입실 — 4인 가족', pitch: 'B-1', state: 'now', word: '도착 중' },
-          { time: '17:30', what: '입실 — 2인', pitch: 'B-3', state: 'next', word: '예정' },
-          { time: '18:00', what: '입실 — 3인', pitch: 'B-5', state: 'next', word: '예정' },
+          { time: '11:00', what: '퇴실 — 2팀', pitch: 'B-1·B-3', state: 'done' },
+          { time: '14:00', what: '입실 — 2인', pitch: 'A-2', state: 'done' },
+          { time: '15:10', what: '입실 — 3인', pitch: 'A-4', state: 'done' },
+          { time: '16:40', what: '입실 — 4인 가족', pitch: 'B-1', state: 'now' },
+          { time: '17:30', what: '입실 — 2인', pitch: 'B-3', state: 'next' },
+          { time: '18:00', what: '입실 — 3인', pitch: 'B-5', state: 'next' },
         ],
         updatedAt: at,
       },

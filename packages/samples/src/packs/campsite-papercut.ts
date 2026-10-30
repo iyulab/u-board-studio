@@ -202,7 +202,18 @@ const board: Board = {
       "time": "updatedAt",
       "fresh": 3600,
       "fields": {
-        "value": {}
+        "value": {
+          "items": {
+            "word": {
+              "at": "/state",
+              "names": {
+                "done": "마침",
+                "now": "도착 중",
+                "next": "예정"
+              }
+            }
+          }
+        }
       }
     },
     "weather": {
