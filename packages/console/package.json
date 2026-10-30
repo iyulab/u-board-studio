@@ -21,7 +21,7 @@
     "node": ">=22.22.0"
   },
   "dependencies": {
-    "@iyulab/u-board": "^0.36.0",
+    "@iyulab/u-board": "^0.37.0",
     "@iyulab/u-board-designer": "*",
     "@iyulab/u-board-mcp": "*",
     "@iyulab/u-board-samples": "*",

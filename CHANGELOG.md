@@ -12,6 +12,16 @@ do when upgrading. Each release's notes carry its section.
 
 ## [Unreleased]
 
+## [0.32.0] - 2026-10-30
+
+### Added
+
+- **The board language takes what the library 0.37.0 added** (see [its changelog](https://github.com/iyulab/U-Board/blob/main/packages/core/CHANGELOG.md)): a field the read
+  computes from the items of its list (`derive` — a count, sum, smallest, largest or mean, so «the number of products out of
+  stock» can raise a status), the meaning of the fields of a list's items (`items`), a part inside a group made per item of a
+  list inside the group's item (`"each": "/assets"`), and `anchor` for items placed by their fields. The assistant's rulebook
+  teaches the first and the second; the editor says when a board's background picture is left out.
+
 ### Changed
 
 - **Breaking: the media of a board is closed to the page's own origin.** An `image`, `gallery` or `video` widget, a card's
