@@ -46,7 +46,7 @@ const board: Board = {
       }
     },
     "stock": {
-      "template": "<section class=\"sk\"><h3>백신 재고</h3><ul>{{#items}}<li class=\"{{level}}\"><b>{{name}}</b><i style=\"--n: {{leaves}}\"></i><span>{{word}}</span></li>{{/items}}</ul></section>",
+      "template": "<section class=\"sk\"><h3>백신 재고</h3><ul>{{#items}}<li class=\"{{level}}\"><b>{{name}}</b><i style=\"--n: {{leaves}}\"></i><span>{{word}} · {{doses}}회분</span></li>{{/items}}</ul></section>",
       "style": ".sk{height:100%;box-sizing:border-box;display:grid;grid-template-rows:auto 1fr;gap:6px;font-family:\"Cormorant Garamond\", \"Noto Serif KR\", \"Nanum Myeongjo\", \"Batang\", serif;color:#2e2a22}\nh3{margin:0;text-align:center;font-size:24px;font-weight:700;color:#7a2a34;letter-spacing:.2em;border-bottom:2px solid #b38b2d;padding-bottom:4px}\nul{margin:0;padding:0;list-style:none;display:grid;align-content:space-evenly}\nli{display:grid;grid-template-columns:1fr 72px 120px;align-items:center;gap:8px;font-size:17px}\nb{font-weight:700}\ni{height:22px;width:calc(var(--n) * 22px);background:url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2222%22%20height%3D%2222%22%20viewBox%3D%220%200%2022%2022%22%3E%3Cpath%20d%3D%22M%203%2019%20C%203%209%2C%2010%203%2C%2019%203%20C%2019%2012%2C%2013%2019%2C%203%2019%20Z%22%20fill%3D%22%235f6b34%22%2F%3E%3Cpath%20d%3D%22M%204%2018%20C%209%2013%2C%2013%209%2C%2017%205%22%20fill%3D%22none%22%20stroke%3D%22%23f4ecd8%22%20stroke-width%3D%221.2%22%2F%3E%3C%2Fsvg%3E\") repeat-x 0 0/22px 22px}\nspan{font-size:14px;text-align:right}\n.low span{color:#7a2a34;font-weight:700}\n.low b{color:#7a2a34}",
       "props": {
         "items": "list"
@@ -113,7 +113,26 @@ const board: Board = {
       "time": "updatedAt",
       "fresh": 600,
       "fields": {
-        "value": {}
+        "value": {
+          "items": {
+            "word": {
+              "at": "/level",
+              "names": {
+                "high": "충분",
+                "mid": "보통",
+                "low": "부족"
+              }
+            },
+            "leaves": {
+              "at": "/level",
+              "names": {
+                "high": "3",
+                "mid": "2",
+                "low": "1"
+              }
+            }
+          }
+        }
       }
     },
     "figures": {

@@ -24,9 +24,9 @@ export const snapshot: SampleSnapshot = {
       '/clinic/serving': { value: { now: '153', next: '155' }, updatedAt: at },
       '/clinic/stock': {
         value: [
-          { name: '인플루엔자 4가', level: 'high', leaves: 3, word: '충분 · 180회분' },
-          { name: '코로나19 (26–27)', level: 'mid', leaves: 2, word: '보통 · 64회분' },
-          { name: '폐렴구균 23가', level: 'low', leaves: 1, word: '부족 · 7회분' },
+          { name: '인플루엔자 4가', level: 'high', doses: 180 },
+          { name: '코로나19 (26–27)', level: 'mid', doses: 64 },
+          { name: '폐렴구균 23가', level: 'low', doses: 7 },
         ],
         updatedAt: at,
       },
