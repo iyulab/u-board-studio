@@ -19,8 +19,8 @@ function svgOf(src: string): string | undefined {
 }
 
 const drawn = SAMPLE_PACKS.flatMap(pack =>
-  // Backgrounds do not depend on the items a list has.
-  canvasesOf(toViewDocument(pack.board, { keysOf: () => [] })).flatMap(canvas => {
+  // Backgrounds do not depend on the items a list has — nor on the items a part is placed by the fields of.
+  canvasesOf(toViewDocument(pack.board, { keysOf: () => [], rowsOf: () => [] })).flatMap(canvas => {
     const svg = canvas.background.image && svgOf(canvas.background.image.src);
     return svg === undefined ? [] : [[pack.id, svg] as const];
   }),

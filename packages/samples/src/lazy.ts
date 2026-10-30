@@ -67,6 +67,7 @@ const LOADERS: Record<string, () => Promise<SamplePack>> = {
   'bowling-googie': () => import('./packs/bowling-googie.js').then(m => m.bowlingGoogie),
   'elevator-tui': () => import('./packs/elevator-tui.js').then(m => m.elevatorTui),
   'drone-routes': () => import('./packs/drone-routes.js').then(m => m.droneRoutes),
+  'orchard-quilt': () => import('./packs/orchard-quilt.js').then(m => m.orchardQuilt),
   'lost-found-dossier': () => import('./packs/lost-found-dossier.js').then(m => m.lostFoundDossier),
   'night-market-neon': () => import('./packs/night-market-neon.js').then(m => m.nightMarketNeon),
   'site-noise-score': () => import('./packs/site-noise-score.js').then(m => m.siteNoiseScore),
