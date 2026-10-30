@@ -56,7 +56,7 @@ A data read asks an HTTP connector a \`path\` — the usual read. Only an adapte
 \`ref\` instead (one item, its \`fields\` only, never with \`path\`).
 Parts name a read (\`"pumps"\`, the whole list) or one item of it (\`"pumps[P1]"\`, by its \`key\`). Data stays raw —
 names, units, places and statuses live in \`fields\`, never in the data. A field's \`at\` points into one item, so with a \`list\` what sits beside it (a count, a total) is out of reach: read that
-with a read of its own and no \`list\` — \`{ from: 'plant', path: '/plant/pumps?limit=1', fields: { total: { at: '/total' } } }\`.
+with a read of its own and no \`list\` — \`{ from: 'plant', path: '/plant/pumps?limit=1', fields: { total: { at: '/total' } } }\`. With a \`list\`, \`time\` is a field of each item (an item lacking it has no value); the answer's own is \`answerTime\`.
 
 ${keys('query')}
 
@@ -74,7 +74,7 @@ label, glyph. Never write colours for statuses.`,
     `## parts — what, of what, which fields
 
 \`{ "as": <kind>, "of": "<data>" | "<data>[<key>]", "show": "<field>" | ["<field>", …], "title"?, …options }\`. \`{{field}}\`
-in a title or a label reads a field of \`of\`; \`{{key}}\` is the item's key. \`presets\` hold shared settings a part takes
+in a title or a label reads a field of \`of\` (a status card's \`subtitle\` · \`note\` too; header \`kicker\` · \`subtitle\` are fixed text, \`clock\` is \`true\`); \`{{key}}\` is the item's key. \`presets\` hold shared settings a part takes
 with \`use\`; \`each: "<data>"\` makes one part per item (ids \`<part>/<key>\`) — it takes no \`of\`, and is placed once. A \`group\` is several parts on a small
 canvas of their own — its parts and links read the group's \`of\` unless they name their own.
 
