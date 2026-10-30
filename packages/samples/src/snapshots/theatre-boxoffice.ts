@@ -39,12 +39,12 @@ export const snapshot: SampleSnapshot = {
       },
       '/theatre/performances': {
         value: [
-          { day: '10.21 수', time: '14:00', note: '마티네 · 종료', word: '매진', level: 'sold' },
-          { day: '10.21 수', time: '19:30', note: '오늘 저녁', word: '91%', level: 'few' },
-          { day: '10.22 목', time: '19:30', note: '', word: '64%', level: 'open' },
-          { day: '10.23 금', time: '19:30', note: '', word: '매진', level: 'sold' },
-          { day: '10.24 토', time: '15:00', note: '', word: '매진', level: 'sold' },
-          { day: '10.24 토', time: '19:30', note: '마지막 공연', word: '88%', level: 'few' },
+          { day: '10.21 수', time: '14:00', note: '마티네 · 종료', level: 'sold' },
+          { day: '10.21 수', time: '19:30', note: '오늘 저녁', level: 'few', fill: 91 },
+          { day: '10.22 목', time: '19:30', note: '', level: 'open', fill: 64 },
+          { day: '10.23 금', time: '19:30', note: '', level: 'sold' },
+          { day: '10.24 토', time: '15:00', note: '', level: 'sold' },
+          { day: '10.24 토', time: '19:30', note: '마지막 공연', level: 'few', fill: 88 },
         ],
         updatedAt: at,
       },

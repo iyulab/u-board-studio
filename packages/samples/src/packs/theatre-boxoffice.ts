@@ -44,7 +44,7 @@ const board: Board = {
       }
     },
     "performances": {
-      "template": "<section class=\"pf\"><h3>이번 주 공연</h3><ol>{{#items}}<li class=\"{{level}}\"><span>{{day}}</span><b>{{time}}</b><small>{{note}}</small><em>{{word}}</em></li>{{/items}}</ol></section>",
+      "template": "<section class=\"pf\"><h3>이번 주 공연</h3><ol>{{#items}}<li class=\"{{level}}\"><span>{{day}}</span><b>{{time}}</b><small>{{note}}</small><em>{{#fill}}{{fill}}%{{/fill}}{{^fill}}{{word}}{{/fill}}</em></li>{{/items}}</ol></section>",
       "style": ".open{--c:#2e9c7c}.few{--c:#d9814a}.sold{--c:#a12a40}\n.pf{height:100%;box-sizing:border-box;display:grid;grid-template-rows:auto 1fr;gap:8px;font-family:\"Josefin Sans\", \"Futura\", \"Century Gothic\", \"Noto Sans KR\", \"Malgun Gothic\", sans-serif;color:#efe6d0}\nh3{margin:0;font-size:16px;font-weight:700;letter-spacing:.3em;color:#c9a14a;text-align:center}\nol{margin:0;padding:0;list-style:none;display:grid;align-content:start}\nli{display:grid;grid-template-columns:76px 60px 1fr 64px;gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid rgba(201,161,74,.25);font-size:15px}\nspan{color:#9b917c}\nb{font-size:18px;font-variant-numeric:tabular-nums}\nsmall{font-size:13px;color:#9b917c}\nem{font-style:normal;font-weight:700;text-align:center;padding:2px 0;background:var(--c);color:#fff}",
       "props": {
         "items": "list"
@@ -88,7 +88,16 @@ const board: Board = {
       "time": "updatedAt",
       "fresh": 900,
       "fields": {
-        "value": {}
+        "value": {
+          "items": {
+            "word": {
+              "at": "/level",
+              "names": {
+                "sold": "매진"
+              }
+            }
+          }
+        }
       }
     },
     "sales": {
