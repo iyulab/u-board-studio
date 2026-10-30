@@ -7,7 +7,7 @@ import { createRoot } from 'react-dom/client';
 import { BoardView, KO_LABELS } from '@iyulab/u-board/viewer';
 import '@iyulab/u-board/styles.css';
 import { SnapshotAdapter } from '@iyulab/u-board-samples/lazy';
-import { readPlayground, type Problem } from './json-playground-model';
+import { countUnread, playgroundStatus, readPlayground, type Problem } from './json-playground-model';
 
 interface Text {
   definition: string;
@@ -17,6 +17,7 @@ interface Text {
   opensBoard: string;
   ok: string;
   problems: string;
+  unread: string;
 }
 
 const root = document.querySelector<HTMLElement>('[data-json-playground]');
@@ -28,8 +29,22 @@ if (root) {
   const picker = root.querySelector<HTMLSelectElement>('[data-board-picker]')!;
   const status = root.querySelector<HTMLElement>('[data-status]')!;
   const list = root.querySelector<HTMLUListElement>('[data-problems]')!;
-  const view = createRoot(root.querySelector<HTMLElement>('[data-view]')!);
+  const viewElement = root.querySelector<HTMLElement>('[data-view]')!;
+  const view = createRoot(viewElement);
   let revision = 0;
+  let problemCount = 0;
+  // The viewer reads the data after it draws, so the parts that got no value are known a moment later — and again when
+  // the text changes. The line says them once the board is drawn, never over a text that has problems.
+  // What the status line said last for the text and the drawing — a message of the page's own (loading, a board it cannot open)
+  // is not ours to replace.
+  let shown = '';
+  let marking: ReturnType<typeof setTimeout> | undefined;
+  new MutationObserver(() => {
+    clearTimeout(marking);
+    marking = setTimeout(() => {
+      if (problemCount === 0 && viewElement.childElementCount > 0 && status.textContent === shown) status.textContent = shown = playgroundStatus(0, countUnread(viewElement), text);
+    }, 150);
+  }).observe(viewElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['data-quality'] });
 
   const showProblems = (problems: Problem[]) => {
     list.replaceChildren(
@@ -39,7 +54,8 @@ if (root) {
         return item;
       })
     );
-    status.textContent = problems.length === 0 ? text.ok : text.problems.replace('{n}', String(problems.length));
+    problemCount = problems.length;
+    status.textContent = shown = playgroundStatus(problemCount, countUnread(viewElement), text);
   };
 
   // A trigger that asks for another board: the page holds the gallery's boards, so that board opens when it is one of

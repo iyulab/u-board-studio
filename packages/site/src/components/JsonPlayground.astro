@@ -11,7 +11,7 @@ interface Props {
 const { locale } = Astro.props;
 const c = COPY[locale];
 const t = c.playground;
-const text = JSON.stringify({ definition: t.definition, data: t.data, loading: t.loading, loadFailed: t.loadFailed, opensBoard: t.opensBoard, ok: t.ok, problems: t.problems });
+const text = JSON.stringify({ definition: t.definition, data: t.data, loading: t.loading, loadFailed: t.loadFailed, opensBoard: t.opensBoard, ok: t.ok, problems: t.problems, unread: t.unread });
 // The first board offered: a small one on live open data, quick to read.
 const first = 'seoul-air';
 ---

@@ -86,6 +86,8 @@ export interface Copy {
     /** In `problems`: `{n}` — how many. */
     ok: string;
     problems: string;
+    /** Said over a drawn board when some parts got no value: `{n}` — how many. */
+    unread: string;
     loading: string;
     loadFailed: string;
     /** Said when the board asks to open another board that is not one of the gallery's: `{board}` — its name. */
@@ -258,6 +260,7 @@ export const COPY: Record<Locale, Copy> = {
       view: '보드',
       ok: '문제 없음 — 보드를 그렸습니다.',
       problems: '문제 {n}개 — 고치면 다시 그립니다.',
+      unread: '보드를 그렸습니다 — 값을 받지 못한 부품 {n}개. 부품에 올려 보면 이유가 나옵니다.',
       loading: '불러오는 중…',
       loadFailed: '보드를 불러오지 못했습니다.',
       opensBoard: '이 보드는 보드 «{board}»를 열려 합니다 — 여기서는 갤러리의 보드만 열 수 있습니다.',
@@ -419,6 +422,7 @@ export const COPY: Record<Locale, Copy> = {
       view: 'Board',
       ok: 'No problems — the board is drawn.',
       problems: '{n} problems — fix them and it is drawn again.',
+      unread: 'The board is drawn — {n} parts got no value. Hover a part to see why.',
       loading: 'Loading…',
       loadFailed: 'The board could not be loaded.',
       opensBoard: 'This board asks to open the board “{board}” — only the gallery’s boards open here.',

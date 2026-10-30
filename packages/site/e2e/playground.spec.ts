@@ -24,6 +24,25 @@ test('the playground draws a board from its JSON and points at what is wrong', a
   expect(errors).toEqual([]);
 });
 
+// A board that checks clean can still draw parts that got no value — the status line says how many instead of "no problems".
+test('the playground says how many parts got no value once the board is drawn', async ({ page }) => {
+  const errors: string[] = [];
+  page.on('pageerror', e => errors.push(e.message));
+  await page.goto('/playground/?board=heating-nixie');
+  const status = page.locator('[data-status]');
+  await expect(status).toHaveText(/문제 없음/);
+
+  const data = page.locator('[data-field="data"]');
+  const text = await data.inputValue();
+  await data.fill(text.replace('"/net/now"', '"/net/gone"'));
+  await expect(status).toHaveText(/보드를 그렸습니다 — 값을 받지 못한 부품 [1-9]\d*개/);
+  await expect(page.locator('[data-view] [data-quality="disconnected"]').first()).toBeAttached();
+
+  await data.fill(text);
+  await expect(status).toHaveText(/문제 없음/);
+  expect(errors).toEqual([]);
+});
+
 // A board whose trigger asks for another board: one of the gallery's opens in the playground, any other is said so.
 test('the playground opens the gallery board a trigger asks for, and says so for one it does not have', async ({ page }) => {
   const errors: string[] = [];

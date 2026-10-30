@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { SAMPLE_PACKS } from '@iyulab/u-board-samples';
-import { readPlayground } from '../src/live/json-playground-model';
+import { countUnread, playgroundStatus, readPlayground } from '../src/live/json-playground-model';
 import { dataOf } from '../src/gallery';
 
 const pack = SAMPLE_PACKS.find(p => p.id === 'seoul-air')!;
@@ -33,5 +33,20 @@ describe('JSON playground', () => {
     const reading = readPlayground(definition, JSON.stringify({ connectors: [{ key: '' }], responses: {} }));
     expect(reading.data).toBeUndefined();
     expect(reading.problems.map(p => p.path)).toEqual(['/connectors/0/key', '/capturedAt']);
+  });
+});
+
+describe('JSON playground status line', () => {
+  const text = { ok: 'ok', problems: '{n} problems', unread: '{n} unread' };
+
+  it('says the problems of the text first, then the parts with no value, then ok', () => {
+    expect(playgroundStatus(2, 3, text)).toBe('2 problems');
+    expect(playgroundStatus(0, 3, text)).toBe('3 unread');
+    expect(playgroundStatus(0, 0, text)).toBe('ok');
+  });
+
+  it('counts the parts the viewer marks disconnected, and nothing else', () => {
+    const marks = (selector: string) => (selector === '[data-quality="disconnected"]' ? { length: 2 } : { length: 99 });
+    expect(countUnread({ querySelectorAll: marks } as unknown as ParentNode)).toBe(2);
   });
 });

@@ -69,3 +69,25 @@ export function readPlayground(definitionText: string, dataText: string): Readin
   const data = raw === undefined ? undefined : checkData(raw, problems);
   return { board, data, problems };
 }
+
+/** The words the status line is made of (`copy.ts` `playground.*`). */
+export interface StatusText {
+  ok: string;
+  problems: string;
+  unread: string;
+}
+
+/**
+ * The status line: what is wrong with the text, else — once the board is drawn — how many parts got no value. A board
+ * that checks clean can still draw parts with nothing in them (a path the data does not have, a list read that finds no
+ * time); saying «no problems» over them hides what the viewer shows on those parts.
+ */
+export function playgroundStatus(problems: number, unread: number, text: StatusText): string {
+  if (problems > 0) return text.problems.replace('{n}', String(problems));
+  return unread > 0 ? text.unread.replace('{n}', String(unread)) : text.ok;
+}
+
+/** How many drawn parts have no value to show — the viewer marks such a part `data-quality="disconnected"`. */
+export function countUnread(view: ParentNode): number {
+  return view.querySelectorAll('[data-quality="disconnected"]').length;
+}
