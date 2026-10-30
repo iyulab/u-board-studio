@@ -18,10 +18,11 @@ const board: Board = {
   },
   "elements": {
     "room": {
-      "template": "<section class=\"rm {{r.state}}\"><header><b>{{r.name}}</b><i></i></header><p>{{r.word}}</p><small>{{r.note}}</small></section>",
-      "style": ".rm{height:100%;box-sizing:border-box;display:grid;grid-template-rows:auto 1fr auto;gap:2px;padding:8px 12px;border:3px solid rgba(238,240,230,.85);border-radius:4px 10px 6px 12px;font-family:\"Gaegu\", \"Nanum Pen Script\", \"Comic Sans MS\", \"Noto Sans KR\", cursive;color:#eef0e6}\nheader{display:flex;align-items:center;justify-content:space-between}\nb{font-size:24px;font-weight:700}\ni{width:22px;height:22px;display:grid;place-items:center;font:700 18px \"Gaegu\", \"Nanum Pen Script\", \"Comic Sans MS\", \"Noto Sans KR\", cursive;font-style:normal}\np{margin:0;align-self:center;font-size:22px}\nsmall{font-size:16px;opacity:.85}\n.lesson i::after{content:\"\";width:14px;height:14px;border-radius:50%;background:#eef0e6}\n.moved{border-style:dashed}\n.moved i::after{content:\"→\";color:#a9d3ef}\n.moved p{color:#a9d3ef}\n.test i::after{content:\"✎\";color:#f2dc7a}\n.test p{color:#f2dc7a}\n.test{border-color:#f2dc7a}\n.free{border-style:dashed;border-color:rgba(238,240,230,.4)}\n.free i{border:2px solid rgba(238,240,230,.6);border-radius:50%;width:16px;height:16px;box-sizing:border-box}\n.free p,.free b{opacity:.6}\n.care i::after{content:\"+\";color:#f2a7b8}\n.care p{color:#f2a7b8}\n.care{border-color:#f2a7b8}",
+      "template": "<section class=\"rm {{r.state}}\"><header><b>{{r.name}}</b><i></i></header><p>{{r.by}} {{word}}</p><small>{{r.note}}</small></section>",
+      "style": ".rm{height:100%;box-sizing:border-box;display:grid;grid-template-rows:auto 1fr auto;gap:2px;padding:8px 12px;border:3px solid rgba(238,240,230,.85);border-radius:4px 10px 6px 12px;font-family:\"Gaegu\", \"Nanum Pen Script\", \"Comic Sans MS\", \"Noto Sans KR\", cursive;color:#eef0e6}\nheader{display:flex;align-items:center;justify-content:space-between}\nb{font-size:24px;font-weight:700}\ni{width:22px;height:22px;display:grid;place-items:center;font:700 18px \"Gaegu\", \"Nanum Pen Script\", \"Comic Sans MS\", \"Noto Sans KR\", cursive;font-style:normal}\np{margin:0;align-self:center;font-size:22px}\nsmall{font-size:16px;opacity:.85}\n.lesson i::after{content:\"\";width:14px;height:14px;border-radius:50%;background:#eef0e6}\n.moved{border-style:dashed}\n.moved i::after{content:\"→\";color:#a9d3ef}\n.moved p{color:#a9d3ef}\n.moved p::after{content:\"로\"}\n.test i::after{content:\"✎\";color:#f2dc7a}\n.test p{color:#f2dc7a}\n.test{border-color:#f2dc7a}\n.free{border-style:dashed;border-color:rgba(238,240,230,.4)}\n.free i{border:2px solid rgba(238,240,230,.6);border-radius:50%;width:16px;height:16px;box-sizing:border-box}\n.free p,.free b{opacity:.6}\n.care i::after{content:\"+\";color:#f2a7b8}\n.care p{color:#f2a7b8}\n.care p::after{content:\"명 휴식\"}\n.care{border-color:#f2a7b8}",
       "props": {
-        "r": "object"
+        "r": "object",
+        "word": "string"
       }
     },
     "lunch": {
@@ -102,6 +103,48 @@ const board: Board = {
         },
         "nurse": {
           "at": "/value/nurse"
+        },
+        "c1-1-word": {
+          "at": "/value/c1-1/subject"
+        },
+        "c1-2-word": {
+          "at": "/value/c1-2/to"
+        },
+        "c1-3-word": {
+          "at": "/value/c1-3/subject"
+        },
+        "c1-4-word": {
+          "at": "/value/c1-4/subject"
+        },
+        "science-word": {
+          "at": "/value/science/subject"
+        },
+        "music-word": {
+          "at": "/value/music/subject"
+        },
+        "c2-1-word": {
+          "at": "/value/c2-1/state",
+          "names": {
+            "test": "단원평가"
+          }
+        },
+        "c2-2-word": {
+          "at": "/value/c2-2/subject"
+        },
+        "c2-3-word": {
+          "at": "/value/c2-3/to"
+        },
+        "c2-4-word": {
+          "at": "/value/c2-4/subject"
+        },
+        "library-word": {
+          "at": "/value/library/state",
+          "names": {
+            "free": "비어 있음"
+          }
+        },
+        "nurse-word": {
+          "at": "/value/nurse/count"
         }
       }
     },
@@ -158,7 +201,8 @@ const board: Board = {
       "element": "room",
       "of": "rooms",
       "bind": {
-        "r": "c1-1"
+        "r": "c1-1",
+        "word": "c1-1-word"
       }
     },
     "room-c1-2": {
@@ -166,7 +210,8 @@ const board: Board = {
       "element": "room",
       "of": "rooms",
       "bind": {
-        "r": "c1-2"
+        "r": "c1-2",
+        "word": "c1-2-word"
       }
     },
     "room-c1-3": {
@@ -174,7 +219,8 @@ const board: Board = {
       "element": "room",
       "of": "rooms",
       "bind": {
-        "r": "c1-3"
+        "r": "c1-3",
+        "word": "c1-3-word"
       }
     },
     "room-c1-4": {
@@ -182,7 +228,8 @@ const board: Board = {
       "element": "room",
       "of": "rooms",
       "bind": {
-        "r": "c1-4"
+        "r": "c1-4",
+        "word": "c1-4-word"
       }
     },
     "room-science": {
@@ -190,7 +237,8 @@ const board: Board = {
       "element": "room",
       "of": "rooms",
       "bind": {
-        "r": "science"
+        "r": "science",
+        "word": "science-word"
       }
     },
     "room-music": {
@@ -198,7 +246,8 @@ const board: Board = {
       "element": "room",
       "of": "rooms",
       "bind": {
-        "r": "music"
+        "r": "music",
+        "word": "music-word"
       }
     },
     "room-c2-1": {
@@ -206,7 +255,8 @@ const board: Board = {
       "element": "room",
       "of": "rooms",
       "bind": {
-        "r": "c2-1"
+        "r": "c2-1",
+        "word": "c2-1-word"
       }
     },
     "room-c2-2": {
@@ -214,7 +264,8 @@ const board: Board = {
       "element": "room",
       "of": "rooms",
       "bind": {
-        "r": "c2-2"
+        "r": "c2-2",
+        "word": "c2-2-word"
       }
     },
     "room-c2-3": {
@@ -222,7 +273,8 @@ const board: Board = {
       "element": "room",
       "of": "rooms",
       "bind": {
-        "r": "c2-3"
+        "r": "c2-3",
+        "word": "c2-3-word"
       }
     },
     "room-c2-4": {
@@ -230,7 +282,8 @@ const board: Board = {
       "element": "room",
       "of": "rooms",
       "bind": {
-        "r": "c2-4"
+        "r": "c2-4",
+        "word": "c2-4-word"
       }
     },
     "room-library": {
@@ -238,7 +291,8 @@ const board: Board = {
       "element": "room",
       "of": "rooms",
       "bind": {
-        "r": "library"
+        "r": "library",
+        "word": "library-word"
       }
     },
     "room-nurse": {
@@ -246,7 +300,8 @@ const board: Board = {
       "element": "room",
       "of": "rooms",
       "bind": {
-        "r": "nurse"
+        "r": "nurse",
+        "word": "nurse-word"
       }
     },
     "lunch": {
