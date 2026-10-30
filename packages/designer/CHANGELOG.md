@@ -8,6 +8,7 @@ All notable changes to this package are documented here. The format follows
 
 ### Changed
 
+- The rules say that in a grid layout the items of an `each` part are cells of their own — `["pumps", 2]` flows them six to a row — so a list of tiles needs no per-item layout. (Two wordier phrases in the canvas notes were shortened to stay inside the rules' length budget.)
 - The rules say where a `{{field}}` is read — a title, a status card's subtitle and note — that a header's kicker and subtitle are
   fixed text and its `clock` is `true`, and that with a `list` a read's `time` is a field of each item (an item without it has no value;
   the answer's own time is `answerTime`).
