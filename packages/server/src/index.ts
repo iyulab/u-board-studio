@@ -13,6 +13,7 @@ import { workspaceCreationFromEnv } from './workspace-creation.js';
 import { auditRetentionDaysFromEnv, scheduleAuditPurge } from './audit-retention.js';
 import { connectorAddressesFromEnv, createConnectorFetch } from './connector-network.js';
 import { elementFrameOriginFromEnv, elementOriginsFromEnv } from './element-frame.js';
+import { mediaOriginsFromEnv } from './media-origins.js';
 import { exitOnStopSignal } from './shutdown.js';
 import { secretBox, SecretUnreadableError } from './secret-box.js';
 import { sealStoredConnectorSecrets } from './db/connectors.js';
@@ -76,6 +77,9 @@ const connectorFetch = createConnectorFetch(connectorAddressesFromEnv(process.en
 // The origins a board's elements may load from (when they list them too): none unless the operator opens some.
 const elementOrigins = elementOriginsFromEnv(process.env.UBOARD_ELEMENT_ORIGINS);
 
+// The origins the widgets and the background of a board may load media from: the page's own unless the operator lists more.
+const mediaOrigins = mediaOriginsFromEnv(process.env.UBOARD_MEDIA_ORIGINS);
+
 // Where each script element definition's frames are served from an origin of its own: unset, the server's own.
 const elementFrameOrigin = elementFrameOriginFromEnv(process.env.UBOARD_ELEMENT_FRAME_ORIGIN);
 if (elementFrameOrigin && !publicUrl) {
@@ -128,6 +132,7 @@ const app = createApp({
   secrets,
   webApps,
   elementOrigins,
+  mediaOrigins,
   elementFrameOrigin,
 });
 

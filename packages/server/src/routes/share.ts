@@ -14,6 +14,7 @@ import { DISCONNECTED, upstreamReader as readerFor, type UpstreamReader } from '
 import type { ResolvedBinding } from '@iyulab/u-board/domain';
 import type { Connector } from '../db/connectors.js';
 import { elementFramesAddress } from '../element-frame.js';
+import { mediaOriginsOf } from '../media-origins.js';
 import { pictureOf } from '@iyulab/u-board/domain';
 
 /** Upper bound on one batch resolve request. A board's own bindings are the only entries that
@@ -137,6 +138,7 @@ export function createShareRouter(config: AppConfig, resolveState: ResolveState)
       picture,
       revision: board.revision,
       elementOrigins: config.elementOrigins ?? [],
+      mediaOrigins: mediaOriginsOf(config),
       ...(config.elementFrameOrigin && { elementFrames: elementFramesAddress(config.elementFrameOrigin, boardId) }),
       ...(await connectorsForViewer(db, token.workspaceId, picture)),
     });

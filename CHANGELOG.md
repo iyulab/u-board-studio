@@ -12,6 +12,17 @@ do when upgrading. Each release's notes carry its section.
 
 ## [Unreleased]
 
+### Changed
+
+- **Breaking: the media of a board is closed to the page's own origin.** An `image`, `gallery` or `video` widget, a card's
+  picture, a list's avatar and the picture a board is drawn on used to load from any address the board gave; a board an
+  assistant wrote could put what it had read in that address. Now only the page's own origin is allowed, and the new
+  `UBOARD_MEDIA_ORIGINS` lists more (`https://cdn.example.com self`; `none` allows nothing; there is no value that allows
+  everything). A widget outside the list shows its `alt` text, and a board background outside it is left out with a note beside
+  the view controls. The console, the editor and the share viewer read the list from each board's answer (`mediaOrigins`).
+  **When upgrading:** if your boards show pictures from another origin, set `UBOARD_MEDIA_ORIGINS` to those origins
+  (`self` included) before the upgrade. An inline image (`data:image/…`) is always drawn.
+
 ## [0.31.0] - 2026-10-27
 
 ### Added

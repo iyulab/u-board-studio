@@ -198,7 +198,7 @@ export function createBoard(workspaceId: string, name: string, kind?: ViewKind) 
 
 /** A board as stored, and the picture its viewers draw it from. */
 export function getBoard(workspaceId: string, boardId: string) {
-  return request<{ id: string; name: string; document: Board; picture: ViewDocument; updatedAt: string; revision: number; elementOrigins?: string[]; elementFrames?: string }>(
+  return request<{ id: string; name: string; document: Board; picture: ViewDocument; updatedAt: string; revision: number; elementOrigins?: string[]; elementFrames?: string; mediaOrigins?: string[] }>(
     `/workspaces/${workspaceId}/boards/${boardId}`
   );
 }

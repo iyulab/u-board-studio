@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router';
-import { KO_LABELS, ViewerPage, type Adapter, type ViewDocument } from '@iyulab/u-board';
+import { KO_LABELS, ViewerPage, setMediaOrigins, type Adapter, type ViewDocument } from '@iyulab/u-board';
 import { getBoard, listConnectors, apiClock, type ConnectorSummary } from '../api-client.js';
 import { HttpConnectorAdapter } from '../http-connector-adapter.js';
 import './BoardEditorPage.css';
@@ -38,6 +38,8 @@ export function BoardViewPage({ workspaceId }: { workspaceId: string }) {
     getBoard(workspaceId, boardId!)
       .then(board => {
         if (cancelled) return;
+        // Before the first widget of the board is drawn: the page reads the list each time a widget draws.
+        setMediaOrigins(board.mediaOrigins ?? ['self']);
         setShown({
           name: board.name,
           picture: board.picture,

@@ -61,6 +61,8 @@ export interface AppConfig {
   webApps?: WebApps;
   /** The origins a board's elements may load from when they also list them (`UBOARD_ELEMENT_ORIGINS`). Unset: none. */
   elementOrigins?: string[];
+  /** The origins the widgets and the background of a board may load media from (`UBOARD_MEDIA_ORIGINS`). Unset: the page's own. */
+  mediaOrigins?: string[];
   /** Where each script element definition's frames are served from an origin of its own — `https://*.frames.example.com`
    *  (`UBOARD_ELEMENT_FRAME_ORIGIN`); needs `publicUrl`. Unset: from the server's own origin. */
   elementFrameOrigin?: string;

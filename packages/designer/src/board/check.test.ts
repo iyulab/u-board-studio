@@ -18,13 +18,22 @@ describe('checkBoard', () => {
   });
 
   it('refuses a board the language takes but the renderer cannot draw, where it cannot', () => {
+    const many = {
+      data: { pumps: { from: 'plant', path: '/plant/rows', list: '/value', key: 'id', where: { kind: 'pump' }, fields: { state: { at: '/state' } } } },
+      parts: { t: { as: 'stat', of: 'pumps', show: 'state' } },
+      layout: { kind: 'grid', items: ['t'] },
+    };
+    expect(validateBoard(many).filter(i => !i.hint)).toEqual([]);
+    expect(checkBoard(many).issues).toEqual([{ path: '/parts/t', message: expect.stringContaining('is not one value') }]);
+  });
+
+  it('takes a field that lives deeper in an item, in a list and in a text alike', () => {
     const deep = {
       data: { deep: { from: 'plant', path: '/plant/rows', list: '/value', fields: { x: { at: '/a/b' } } } },
       parts: { t: { as: 'list', of: 'deep', primary: 'x' } },
       layout: { kind: 'grid', items: ['t'] },
     };
-    expect(validateBoard(deep).filter(i => !i.hint)).toEqual([]);
-    expect(checkBoard(deep).issues).toEqual([{ path: '/parts/t', message: `"x" lives deeper in an item (/a/b) — a list's rows and a text read a field at the top of it` }]);
+    expect(checkBoard(deep).issues).toEqual([]);
   });
 
   it('advises on a board that is right but could be written better', () => {

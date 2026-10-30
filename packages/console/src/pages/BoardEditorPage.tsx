@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type MouseEvent, type ReactNode } from 'react';
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router';
 import { BoardAuthoring, KO_DESIGNER_LABELS, type AuthoringMode } from '@iyulab/u-board-designer';
-import type { Adapter, Board } from '@iyulab/u-board';
+import { setMediaOrigins, type Adapter, type Board } from '@iyulab/u-board';
 import {
   getBoard, updateBoard, listConnectors, type ConnectorSummary,
   listMembers, apiClock, ApiError,
@@ -74,6 +74,8 @@ export function BoardEditorPage({ workspaceId, userId }: { workspaceId: string; 
     getBoard(workspaceId, boardId!)
       .then(board => {
         if (cancelled) return;
+        // Before the first widget of the board is drawn: the page reads the list each time a widget draws.
+        setMediaOrigins(board.mediaOrigins ?? ['self']);
         setDocument(board.document);
         setElementOrigins(board.elementOrigins ?? []);
         setElementFrames(board.elementFrames);

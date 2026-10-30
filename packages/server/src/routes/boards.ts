@@ -12,6 +12,7 @@ import { documentAdvice, documentIssues, documentKind } from '../board-document.
 import { drawBoard, type Board } from '@iyulab/u-board/domain';
 import type { ResolveState } from '../resolve-connector.js';
 import { upstreamReader } from '../upstream-reader.js';
+import { mediaOriginsOf } from '../media-origins.js';
 
 /** How many document issues a 400 names at most. */
 const MAX_REPORTED_ISSUES = 20;
@@ -82,6 +83,7 @@ export function createBoardsRouter(config: AppConfig, resolveState: ResolveState
         updatedAt: board.updatedAt,
         revision: board.revision,
         elementOrigins: config.elementOrigins ?? [],
+        mediaOrigins: mediaOriginsOf(config),
         ...(config.elementFrameOrigin && { elementFrames: elementFramesAddress(config.elementFrameOrigin, board.id) }),
       });
   });

@@ -1,6 +1,6 @@
 import { Scene } from '@canvas-kit/core';
 import type { CanvasView, Shape } from '@iyulab/u-board/picture';
-import { sizedNodes } from '@iyulab/u-board/toolkit';
+import { mayLoadBackground, sizedNodes } from '@iyulab/u-board/toolkit';
 import { decorationObjects } from '@iyulab/u-board/toolkit';
 import { captionObjects, connectorObjects } from '@iyulab/u-board/toolkit';
 
@@ -46,7 +46,8 @@ export function documentToScene(doc: CanvasView, movable?: (id: string) => boole
   // A part not edited here, and every piece of it: drawn, never selected or moved.
   const add = (object: Parameters<Scene['add']>[0]) => scene.add(object.id && !own.has(partOf(object.id)) ? { ...object, locked: true } : object);
 
-  if (doc.background.image) {
+  // A picture outside the origins the host allowed is not requested here either: the board is drawn on an empty background.
+  if (doc.background.image && mayLoadBackground(doc.background.image.src)) {
     add({
       type: 'image',
       x: 0,

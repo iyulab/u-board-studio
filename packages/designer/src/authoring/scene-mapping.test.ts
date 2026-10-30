@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest';
+import { setMediaOrigins } from '@iyulab/u-board';
 import { documentToScene, applySceneToDocument, partOf } from './scene-mapping';
 import { removeParts } from '../editing/part-removal';
 import type { CanvasView } from '@iyulab/u-board/picture';
@@ -44,6 +45,18 @@ describe('documentToScene', () => {
   it('adds an image DrawingObject for the background when one is set', () => {
     const scene = documentToScene(doc({ background: { image: { src: 'plan.png', width: 800, height: 600 } } }));
     expect(scene.getObjects()[0]).toMatchObject({ type: 'image', src: 'plan.png', width: 800, height: 600 });
+  });
+
+  it('leaves the background out when its address is outside the origins the host allowed', () => {
+    setMediaOrigins(['self']);
+    try {
+      const scene = documentToScene(doc({ background: { image: { src: 'https://elsewhere.example/plan.png', width: 800, height: 600 } } }));
+      expect(scene.getObjects().some(o => o.type === 'image')).toBe(false);
+      const own = documentToScene(doc({ background: { image: { src: '/plans/plan.png', width: 800, height: 600 } } }));
+      expect(own.getObjects().some(o => o.type === 'image')).toBe(true);
+    } finally {
+      setMediaOrigins(null);
+    }
   });
 
   // An author grabbing the drawing would move only the editor's picture of it, not the document.

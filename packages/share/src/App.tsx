@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { ViewerPage, KO_LABELS, type ViewDocument, type Adapter, type Attribution, type BoardEvent } from '@iyulab/u-board/viewer';
+import { ViewerPage, KO_LABELS, setMediaOrigins, type ViewDocument, type Adapter, type Attribution, type BoardEvent } from '@iyulab/u-board/viewer';
 import { ShareConnectorAdapter, ShareResolveBatcher } from './share-connector-adapter.js';
 import { API_BASE, fetchWithRetry, apiClock } from './api-base.js';
 import './App.css';
@@ -15,6 +15,8 @@ type BoardBody = {
   revision?: number;
   /** The origins this installation lets the board's elements load from. */
   elementOrigins?: string[];
+  /** The origins the media of the board's widgets and its background may load from. */
+  mediaOrigins?: string[];
   /** Where the board's script elements' frames are served, when each definition has an origin of its own. */
   elementFrames?: string;
   connectorIds: string[];
@@ -128,6 +130,8 @@ export function App() {
       });
       const adapters: Adapter[] = body.connectorIds.map(id => new ShareConnectorAdapter(batcher, id, body.attributions?.[id], body.samples?.includes(id)));
       shown.current.revision = body.revision;
+      // Before the first widget of the board is drawn: the page reads the list each time a widget draws.
+      setMediaOrigins(body.mediaOrigins ?? ['self']);
       setState({ name: body.name, document: body.picture, adapters, revision: body.revision, elementOrigins: body.elementOrigins ?? [], elementFrames: body.elementFrames ?? `${API_BASE}/element-frames/${encodeURIComponent(boardId)}` });
     };
     read()
