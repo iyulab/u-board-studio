@@ -34,7 +34,7 @@ const board: Board = {
     },
     "trucks": {
       "template": "<section class=\"tr\"><h2>오늘 나가는 트럭</h2><ol>{{#items}}<li class=\"{{state}}\"><time>{{time}}</time><b>{{what}}</b><span>{{to}}</span><em>{{word}}</em></li>{{/items}}</ol></section>",
-      "style": ".tr{height:100%;box-sizing:border-box;padding:14px 18px 0 72px;font-family:\"Nanum Pen Script\", \"Nanum Brush Script\", cursive;color:#2a2f3a}\nh2{margin:0 0 10px;font:36px/1 \"Nanum Pen Script\", \"Nanum Brush Script\", cursive}\nol{margin:0;padding:0;list-style:none}\nli{display:grid;grid-template-columns:52px minmax(0,1fr) 116px 62px;gap:8px;align-items:baseline;height:34px;font:21px/34px \"Nanum Pen Script\", \"Nanum Brush Script\", cursive;white-space:nowrap}\nli>*{overflow:hidden;text-overflow:ellipsis}\ntime{font:14px \"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;font-variant-numeric:tabular-nums;color:#5b6270}\nspan{color:#5b6270}\nem{font-style:normal;text-align:center}\n.done{color:#8a8f99}.done em{text-decoration:line-through}\n.loading em{border-bottom:2px solid #2a2f3a}\n.waiting em{color:#d23a2f}",
+      "style": ".tr{height:100%;box-sizing:border-box;padding:14px 18px 0 72px;font-family:\"Nanum Pen Script\", \"Nanum Brush Script\", cursive;color:#2a2f3a}\nh2{margin:0 0 10px;font:36px/1 \"Nanum Pen Script\", \"Nanum Brush Script\", cursive}\nol{margin:0;padding:0;list-style:none}\nli{display:grid;grid-template-columns:52px minmax(0,1fr) 116px 62px;gap:8px;align-items:baseline;height:34px;font:21px/34px \"Nanum Pen Script\", \"Nanum Brush Script\", cursive;white-space:nowrap}\nli>*{overflow:hidden;text-overflow:ellipsis}\ntime{font:14px \"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;font-variant-numeric:tabular-nums;color:#5b6270}\nspan{color:#5b6270}\nem{font-style:normal;text-align:center}\n.done{color:#8a8f99}.done em{text-decoration:line-through}\n.loading em,.later em{border-bottom:2px solid #2a2f3a}\n.waiting em{color:#d23a2f}",
       "props": {
         "items": "list"
       }
@@ -143,7 +143,19 @@ const board: Board = {
       "time": "updatedAt",
       "fresh": 900,
       "fields": {
-        "value": {}
+        "value": {
+          "items": {
+            "word": {
+              "at": "/state",
+              "names": {
+                "done": "출발",
+                "waiting": "대기",
+                "loading": "상차",
+                "later": "예정"
+              }
+            }
+          }
+        }
       }
     }
   },

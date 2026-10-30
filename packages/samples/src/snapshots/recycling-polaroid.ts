@@ -38,12 +38,12 @@ export const snapshot: SampleSnapshot = {
       },
       '/centre/trucks': {
         value: [
-          { time: '09:20', what: '페트 베일 12', to: '재생 공장', state: 'done', word: '출발' },
-          { time: '11:05', what: '유리 파쇄 8 t', to: '유리 재생', state: 'done', word: '출발' },
-          { time: '13:30', what: '플라스틱 베일 10', to: '펠릿 공장', state: 'done', word: '출발' },
-          { time: '15:00', what: '캔 베일 14', to: '비철 제련', state: 'waiting', word: '대기' },
-          { time: '16:00', what: '페트 베일 9', to: '재생 공장', state: 'loading', word: '상차' },
-          { time: '17:30', what: '잔재물 6 t', to: '소각 시설', state: 'loading', word: '예정' },
+          { time: '09:20', what: '페트 베일 12', to: '재생 공장', state: 'done' },
+          { time: '11:05', what: '유리 파쇄 8 t', to: '유리 재생', state: 'done' },
+          { time: '13:30', what: '플라스틱 베일 10', to: '펠릿 공장', state: 'done' },
+          { time: '15:00', what: '캔 베일 14', to: '비철 제련', state: 'waiting' },
+          { time: '16:00', what: '페트 베일 9', to: '재생 공장', state: 'loading' },
+          { time: '17:30', what: '잔재물 6 t', to: '소각 시설', state: 'later' },
         ],
         updatedAt: at,
       },
