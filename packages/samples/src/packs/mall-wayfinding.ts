@@ -236,7 +236,18 @@ const board: Board = {
       "time": "updatedAt",
       "fresh": 300,
       "fields": {
-        "value": {}
+        "value": {
+          "items": {
+            "arrow": {
+              "at": "/way",
+              "names": {
+                "up": "▲ 상행",
+                "down": "▼ 하행",
+                "idle": "대기"
+              }
+            }
+          }
+        }
       }
     },
     "floors": {
@@ -245,7 +256,18 @@ const board: Board = {
       "time": "updatedAt",
       "fresh": 300,
       "fields": {
-        "value": {}
+        "value": {
+          "items": {
+            "word": {
+              "at": "/crowd",
+              "names": {
+                "busy": "보통",
+                "calm": "여유",
+                "packed": "혼잡"
+              }
+            }
+          }
+        }
       }
     },
     "parking": {
