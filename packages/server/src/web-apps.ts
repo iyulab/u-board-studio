@@ -1,5 +1,6 @@
 import path from 'node:path';
 import express, { type Express, type Request, type Response, type NextFunction } from 'express';
+import { DEFAULT_MEDIA_ORIGINS } from './media-origins.js';
 
 /** The built console and share viewer the server hosts next to its API. */
 export interface WebApps {
@@ -15,10 +16,12 @@ export interface WebApps {
 const SHARE_PREFIX = '/share';
 
 // `script-src 'self'` keeps an injected script from running in either app — the share viewer shows
-// boards other people authored, on the console's origin. Images, styles and data are left open:
-// a board's background is any image URL or a `data:` URI.
-function contentSecurityPolicy(frameAncestors: string): string {
-  return `script-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors ${frameAncestors}`;
+// boards other people authored, on the console's origin. `img-src` is the browser's own check of the same
+// list the viewer applies to a board's media (`UBOARD_MEDIA_ORIGINS`): the page's own origin and the ones the
+// operator listed, plus inline pictures (`data:`, `blob:`), which make no request. Styles are left open.
+function contentSecurityPolicy(frameAncestors: string, mediaOrigins: readonly string[]): string {
+  const images = ['data:', 'blob:', ...mediaOrigins.map(origin => (origin === 'self' ? "'self'" : origin))];
+  return `script-src 'self'; img-src ${images.join(' ')}; object-src 'none'; base-uri 'none'; frame-ancestors ${frameAncestors}`;
 }
 
 function staticApp(dir: string, csp: string, extraHeaders: Record<string, string> = {}) {
@@ -42,10 +45,10 @@ function staticApp(dir: string, csp: string, extraHeaders: Record<string, string
  * (`/api`) and `/health` have had their turn. The console is a single-page app: a page load of one
  * of its routes (`/boards/…`) gets its `index.html`.
  */
-export function serveWebApps(app: Express, webApps: WebApps): void {
+export function serveWebApps(app: Express, webApps: WebApps, mediaOrigins: readonly string[] = DEFAULT_MEDIA_ORIGINS): void {
   const consoleDir = path.resolve(webApps.consoleDir);
   const shareDir = path.resolve(webApps.shareDir);
-  const consoleCsp = contentSecurityPolicy("'none'");
+  const consoleCsp = contentSecurityPolicy("'none'", mediaOrigins);
 
   // The share viewer loads its files relative to its own URL, so it must be addressed as a
   // directory: `/share?board=…` would resolve them against `/`.
@@ -58,7 +61,7 @@ export function serveWebApps(app: Express, webApps: WebApps): void {
   // request the viewer makes to other origins (a board's background image, say).
   app.use(
     SHARE_PREFIX,
-    staticApp(shareDir, contentSecurityPolicy(webApps.shareFrameAncestors ?? 'https:'), { 'Referrer-Policy': 'no-referrer' })
+    staticApp(shareDir, contentSecurityPolicy(webApps.shareFrameAncestors ?? 'https:', mediaOrigins), { 'Referrer-Policy': 'no-referrer' })
   );
   app.use(staticApp(consoleDir, consoleCsp));
 

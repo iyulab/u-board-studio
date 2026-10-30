@@ -12,6 +12,10 @@ do when upgrading. Each release's notes carry its section.
 
 ## [Unreleased]
 
+### Security
+
+- The console and the share viewer now send the list of `UBOARD_MEDIA_ORIGINS` to the browser as the page's `img-src` (with `data:` and `blob:`), so a picture outside it is refused by the browser itself and not only by the viewer's own check. Nothing to do when upgrading unless a page loads pictures from an origin that is not listed — list it.
+
 ## [0.32.0] - 2026-10-30
 
 ### Added

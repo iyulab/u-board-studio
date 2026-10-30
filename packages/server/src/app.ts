@@ -17,6 +17,7 @@ import { createApiTokensRouter, createTokenInfoRouter } from './routes/api-token
 import { ClientCredentialsTokens } from './oauth-client-credentials.js';
 import { DEFAULT_UPSTREAM_REUSE_MS, type ResolveState } from './resolve-connector.js';
 import { serveWebApps, type WebApps } from './web-apps.js';
+import { mediaOriginsOf } from './media-origins.js';
 import { frameHostLabel } from './element-frame.js';
 import type { WorkspaceCreation } from './workspace-creation.js';
 
@@ -182,7 +183,7 @@ export function createApp(config: AppConfig): express.Express {
     res.status(404).json({ code: 'NOT_FOUND' });
   });
   app.use('/api', api);
-  if (config.webApps) serveWebApps(app, config.webApps);
+  if (config.webApps) serveWebApps(app, config.webApps, mediaOriginsOf(config));
   // Must stay last: Express only reaches an error handler registered AFTER the layer that
   // failed, so anything mounted below this line would bypass it.
   app.use(errorHandler);
