@@ -83,7 +83,18 @@ const board: Board = {
       "time": "updatedAt",
       "fresh": 900,
       "fields": {
-        "value": {}
+        "value": {
+          "items": {
+            "word": {
+              "at": "/state",
+              "names": {
+                "checking": "본인 확인",
+                "waiting": "대기",
+                "ready": "인계 준비"
+              }
+            }
+          }
+        }
       }
     },
     "today": {

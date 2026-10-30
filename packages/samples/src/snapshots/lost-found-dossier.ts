@@ -40,12 +40,12 @@ export const snapshot: SampleSnapshot = {
       },
       '/desk/queue': {
         value: [
-          { time: '14:12', who: '김○○', item: '검정 백팩', state: 'checking', word: '본인 확인' },
-          { time: '14:21', who: '박○○', item: '무선 이어폰', state: 'waiting', word: '대기' },
-          { time: '14:26', who: '이○○', item: '장우산', state: 'waiting', word: '대기' },
-          { time: '14:28', who: '최○○', item: '어린이 운동화', state: 'ready', word: '인계 준비' },
-          { time: '14:29', who: '정○○', item: '갈색 가죽 지갑', state: 'checking', word: '본인 확인' },
-          { time: '14:30', who: '한○○', item: '접이식 자전거', state: 'waiting', word: '대기' },
+          { time: '14:12', who: '김○○', item: '검정 백팩', state: 'checking' },
+          { time: '14:21', who: '박○○', item: '무선 이어폰', state: 'waiting' },
+          { time: '14:26', who: '이○○', item: '장우산', state: 'waiting' },
+          { time: '14:28', who: '최○○', item: '어린이 운동화', state: 'ready' },
+          { time: '14:29', who: '정○○', item: '갈색 가죽 지갑', state: 'checking' },
+          { time: '14:30', who: '한○○', item: '접이식 자전거', state: 'waiting' },
         ],
         updatedAt: at,
       },
