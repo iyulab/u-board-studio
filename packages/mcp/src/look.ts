@@ -50,6 +50,10 @@ export interface Looker {
 
 /** Waits after the page settles so charts finish their drawing animation before the picture is taken. */
 const SETTLE_MS = 1200;
+/** How long a part that shows no value gets to finish its first read before it is reported — a source asked for the first time
+ *  answers a moment after the page settles on a loaded machine, and a part still reading is not a part that is disconnected. */
+const READ_GRACE_MS = 3000;
+const READ_POLL_MS = 250;
 const MAX_CONSOLE_LINES = 5;
 
 /**
@@ -85,6 +89,7 @@ export class BrowserLooker implements Looker {
       await page.waitForSelector('.ub-viewer__surface', { timeout: 20_000 });
       await page.waitForLoadState('networkidle', { timeout: 20_000 }).catch(() => {});
       await page.waitForTimeout(SETTLE_MS);
+      await untilReadsAnswer(page);
 
       const scale = await sceneScale(page, document);
       const clip = request.focus ? await focusClip(page, document, request.focus, scale) : undefined;
@@ -182,8 +187,17 @@ async function problems(page: Page, doc: ViewDocument): Promise<LookReport['prob
   return page.evaluate(findProblems, placedParts(doc));
 }
 
-async function quality(page: Page): Promise<Record<string, number>> {
+async function quality(page: Pick<Page, 'evaluate'>): Promise<Record<string, number>> {
   return page.evaluate(countQualityMarks);
+}
+
+/** Gives the parts that show no value a moment to get one: returns as soon as none is marked, else after the grace (a part
+ *  that is really disconnected stays marked, and is reported). */
+export async function untilReadsAnswer(page: Pick<Page, 'evaluate' | 'waitForTimeout'>): Promise<void> {
+  for (let waited = 0; waited < READ_GRACE_MS; waited += READ_POLL_MS) {
+    if (Object.keys(await quality(page)).length === 0) return;
+    await page.waitForTimeout(READ_POLL_MS);
+  }
 }
 
 function cssString(value: string): string {
