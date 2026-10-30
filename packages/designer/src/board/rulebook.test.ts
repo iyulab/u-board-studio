@@ -29,8 +29,9 @@ describe('the v2 rulebook', () => {
     for (const word of [...TONES, ...EMPHASES, ...FRAMES]) expect(rulebook).toContain(`\`${word}\``);
   });
 
-  // Read whole by a model on every board it writes: a budget, raised on purpose, not by drift.
+  // Read whole by a model on every board it writes: a budget, raised on purpose, not by drift (16 000 → 16 500 for the
+  // fields computed from a list and the fields of a list's items).
   it('stays short enough to read whole', () => {
-    expect(rulebook.length).toBeLessThan(16_000);
+    expect(rulebook.length).toBeLessThan(16_500);
   });
 });
