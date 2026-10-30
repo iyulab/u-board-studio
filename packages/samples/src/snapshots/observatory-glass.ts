@@ -35,12 +35,12 @@ export const snapshot: SampleSnapshot = {
       },
       '/observatory/programme': {
         value: [
-          { time: '19:20', dome: '전체', what: '플랫 보정 촬영', state: 'done', word: '마침' },
-          { time: '20:00', dome: 'A', what: 'M31 장노출 — 새벽까지', state: 'now', word: '진행' },
-          { time: '21:30', dome: 'B', what: '목성 행성 영상', state: 'now', word: '진행' },
-          { time: '22:40', dome: 'C', what: '냉각기 경보 — 돔 닫음', state: 'alarm', word: '정비' },
-          { time: '02:00', dome: 'D', what: 'M42 오리온성운', state: 'next', word: '다음' },
-          { time: '05:10', dome: '전체', what: '박명 전 돔 닫기', state: 'next', word: '예정' },
+          { time: '19:20', dome: '전체', what: '플랫 보정 촬영', state: 'done' },
+          { time: '20:00', dome: 'A', what: 'M31 장노출 — 새벽까지', state: 'now' },
+          { time: '21:30', dome: 'B', what: '목성 행성 영상', state: 'now' },
+          { time: '22:40', dome: 'C', what: '냉각기 경보 — 돔 닫음', state: 'alarm' },
+          { time: '02:00', dome: 'D', what: 'M42 오리온성운', state: 'next' },
+          { time: '05:10', dome: '전체', what: '박명 전 돔 닫기', state: 'later' },
         ],
         updatedAt: at,
       },

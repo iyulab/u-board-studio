@@ -34,7 +34,7 @@ const board: Board = {
     },
     "programme": {
       "template": "<section class=\"pg\"><h2>오늘 밤 관측 계획</h2><ol>{{#items}}<li class=\"{{state}}\"><b>{{time}}</b><span>{{dome}}</span><em>{{what}}</em><small>{{word}}</small></li>{{/items}}</ol></section>",
-      "style": ".pg{height:100%;box-sizing:border-box;background:linear-gradient(160deg,#fbf3da,#f1e6c8);border:4px solid #0b0a10;color:#1d1a24;border-width:8px;border-radius:8px;padding:16px 20px;font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;box-shadow:inset 0 0 0 4px #f0c04a}\nh2{margin:0 0 10px;font:700 21px \"Noto Serif KR\", \"Batang\", \"Georgia\", serif;border-bottom:3px solid #0b0a10;padding-bottom:6px}\nol{margin:0;padding:0;list-style:none;display:grid;gap:6px}\nli{display:grid;grid-template-columns:56px 48px 1fr 82px;align-items:center;gap:8px;padding:13px 8px;border-bottom:1px solid rgba(11,10,16,.25);font-size:15px}\nb{font:700 15px \"Noto Serif KR\", \"Batang\", \"Georgia\", serif}\nspan{font-weight:800}\nem{font-style:normal}\nsmall{text-align:right;font-weight:800;font-size:13px}\n.done{opacity:.6}\n.done small::before{content:\"✓ \"}\n.now{background:rgba(240,192,74,.35)}\n.now small::before{content:\"✦ \"}\n.next small::before{content:\"○ \"}\n.alarm{background:#c0392b;color:#ffffff}\n.alarm small::before{content:\"✕ \"}",
+      "style": ".pg{height:100%;box-sizing:border-box;background:linear-gradient(160deg,#fbf3da,#f1e6c8);border:4px solid #0b0a10;color:#1d1a24;border-width:8px;border-radius:8px;padding:16px 20px;font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;box-shadow:inset 0 0 0 4px #f0c04a}\nh2{margin:0 0 10px;font:700 21px \"Noto Serif KR\", \"Batang\", \"Georgia\", serif;border-bottom:3px solid #0b0a10;padding-bottom:6px}\nol{margin:0;padding:0;list-style:none;display:grid;gap:6px}\nli{display:grid;grid-template-columns:56px 48px 1fr 82px;align-items:center;gap:8px;padding:13px 8px;border-bottom:1px solid rgba(11,10,16,.25);font-size:15px}\nb{font:700 15px \"Noto Serif KR\", \"Batang\", \"Georgia\", serif}\nspan{font-weight:800}\nem{font-style:normal}\nsmall{text-align:right;font-weight:800;font-size:13px}\n.done{opacity:.6}\n.done small::before{content:\"✓ \"}\n.now{background:rgba(240,192,74,.35)}\n.now small::before{content:\"✦ \"}\n.next small::before,.later small::before{content:\"○ \"}\n.alarm{background:#c0392b;color:#ffffff}\n.alarm small::before{content:\"✕ \"}",
       "props": {
         "items": "list"
       }
@@ -132,7 +132,20 @@ const board: Board = {
       "time": "updatedAt",
       "fresh": 600,
       "fields": {
-        "value": {}
+        "value": {
+          "items": {
+            "word": {
+              "at": "/state",
+              "names": {
+                "done": "마침",
+                "now": "진행",
+                "alarm": "정비",
+                "next": "다음",
+                "later": "예정"
+              }
+            }
+          }
+        }
       }
     },
     "now": {
