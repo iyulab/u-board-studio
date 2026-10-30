@@ -32,7 +32,7 @@ const board: Board = {
     },
     "log": {
       "template": "<section class=\"lg\"><h2>오늘의 수장고 일지</h2><ol>{{#items}}<li class=\"{{state}}\"><time>{{time}}</time><b>{{room}}</b><span>{{what}}</span><em>{{word}}</em></li>{{/items}}</ol></section>",
-      "style": ".lg{height:100%;box-sizing:border-box;padding:6px 10px;font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#efe7d6}\nh2{margin:0 0 12px;font:700 24px \"Nanum Myeongjo\", \"Batang\", \"AppleMyungjo\", serif;letter-spacing:.06em}\nol{margin:0;padding:0;list-style:none;display:grid;gap:6px}\nli{display:grid;grid-template-columns:48px 52px 1fr 70px;gap:8px;align-items:baseline;font-size:13px;line-height:34px;border-bottom:1px solid #3a2e28}\ntime{color:#a99f8c;font-variant-numeric:tabular-nums}\nem{font-style:normal;font-weight:800;text-align:center;border:1.5px solid #efe7d6;border-radius:3px;line-height:22px}\nli.alarm em{background:#b8352a;border-color:#b8352a;color:#fff}\nli.doing em{border-style:dashed}\nli.done{color:#a99f8c}li.done em{border-color:#a99f8c}\nli.todo em{border-style:dotted}",
+      "style": ".lg{height:100%;box-sizing:border-box;padding:6px 10px;font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#efe7d6}\nh2{margin:0 0 12px;font:700 24px \"Nanum Myeongjo\", \"Batang\", \"AppleMyungjo\", serif;letter-spacing:.06em}\nol{margin:0;padding:0;list-style:none;display:grid;gap:6px}\nli{display:grid;grid-template-columns:48px 52px 1fr 70px;gap:8px;align-items:baseline;font-size:13px;line-height:34px;border-bottom:1px solid #3a2e28}\ntime{color:#a99f8c;font-variant-numeric:tabular-nums}\nem{font-style:normal;font-weight:800;text-align:center;border:1.5px solid #efe7d6;border-radius:3px;line-height:22px}\nli.alarm em{background:#b8352a;border-color:#b8352a;color:#fff}\nli.doing em,li.asked em{border-style:dashed}\nli.done{color:#a99f8c}li.done em{border-color:#a99f8c}\nli.todo em{border-style:dotted}",
       "props": {
         "items": "list"
       }
@@ -141,7 +141,20 @@ const board: Board = {
       "time": "updatedAt",
       "fresh": 1200,
       "fields": {
-        "value": {}
+        "value": {
+          "items": {
+            "word": {
+              "at": "/state",
+              "names": {
+                "done": "완료",
+                "doing": "진행",
+                "asked": "요청",
+                "alarm": "조치 중",
+                "todo": "예정"
+              }
+            }
+          }
+        }
       }
     }
   },

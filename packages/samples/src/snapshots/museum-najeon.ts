@@ -31,12 +31,12 @@ export const snapshot: SampleSnapshot = {
       },
       '/museum/log': {
         value: [
-          { time: '08:30', room: '직물', what: '정기 순회 점검', state: 'done', word: '완료' },
-          { time: '09:10', room: '고고', what: '발굴 출토 철기 12점 반입', state: 'doing', word: '진행' },
-          { time: '09:52', room: '목칠', what: '제습기 B 정지 경보', state: 'alarm', word: '조치 중' },
-          { time: '10:05', room: '서화', what: '공조 2호기 점검 요청', state: 'doing', word: '요청' },
-          { time: '14:00', room: '금속', what: '흡습제 교체 상태 확인', state: 'todo', word: '예정' },
-          { time: '16:00', room: '도자', what: '특별전 반출 12점 상태 조사', state: 'todo', word: '예정' },
+          { time: '08:30', room: '직물', what: '정기 순회 점검', state: 'done' },
+          { time: '09:10', room: '고고', what: '발굴 출토 철기 12점 반입', state: 'doing' },
+          { time: '09:52', room: '목칠', what: '제습기 B 정지 경보', state: 'alarm' },
+          { time: '10:05', room: '서화', what: '공조 2호기 점검 요청', state: 'asked' },
+          { time: '14:00', room: '금속', what: '흡습제 교체 상태 확인', state: 'todo' },
+          { time: '16:00', room: '도자', what: '특별전 반출 12점 상태 조사', state: 'todo' },
         ],
         updatedAt: at,
       },
