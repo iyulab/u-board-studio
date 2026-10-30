@@ -31,12 +31,12 @@ export const snapshot: SampleSnapshot = {
       },
       '/warehouse/docks': {
         value: [
-          { dock: 'D1', truck: '냉동탑차 5톤', what: '아이스크림 18 팔레트 · 대형마트', time: '13:20', state: 'loading', word: '상차 중' },
-          { dock: 'D2', truck: '냉동탑차 11톤', what: '냉동 수산 24 팔레트 · 급식센터', time: '13:00', state: 'held', word: '보류' },
-          { dock: 'D3', truck: '정온 윙바디', what: '음료·과자 30 팔레트', time: '13:05', state: 'loading', word: '상차 중' },
-          { dock: 'D4', truck: '냉장탑차 3.5톤', what: '유제품 12 팔레트 · 편의점', time: '13:40', state: 'waiting', word: '접안 대기' },
-          { dock: 'D5', truck: '초저온 특장차', what: '백신 4 상자 · 병원', time: '14:30', state: 'waiting', word: '예약' },
-          { dock: 'D6', truck: '냉장탑차 5톤', what: '신선 채소 16 팔레트 입고', time: '12:30', state: 'done', word: '완료' },
+          { dock: 'D1', truck: '냉동탑차 5톤', what: '아이스크림 18 팔레트 · 대형마트', time: '13:20', state: 'loading' },
+          { dock: 'D2', truck: '냉동탑차 11톤', what: '냉동 수산 24 팔레트 · 급식센터', time: '13:00', state: 'held' },
+          { dock: 'D3', truck: '정온 윙바디', what: '음료·과자 30 팔레트', time: '13:05', state: 'loading' },
+          { dock: 'D4', truck: '냉장탑차 3.5톤', what: '유제품 12 팔레트 · 편의점', time: '13:40', state: 'waiting' },
+          { dock: 'D5', truck: '초저온 특장차', what: '백신 4 상자 · 병원', time: '14:30', state: 'booked' },
+          { dock: 'D6', truck: '냉장탑차 5톤', what: '신선 채소 16 팔레트 입고', time: '12:30', state: 'done' },
         ],
         updatedAt: at,
       },

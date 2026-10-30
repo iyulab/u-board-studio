@@ -32,7 +32,7 @@ const board: Board = {
     },
     "docks": {
       "template": "<section class=\"dk\"><h2>DOCKS · 도크 입출고</h2><ol>{{#items}}<li class=\"{{state}}\"><b>{{dock}}</b><span><strong>{{truck}}</strong><small>{{what}}</small></span><time>{{time}}</time><em>{{word}}</em></li>{{/items}}</ol></section>",
-      "style": ".dk{height:100%;box-sizing:border-box;padding:4px 6px;font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#fff}\nh2{margin:0 0 12px;font:italic 900 22px \"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;letter-spacing:.1em;color:#b967ff}\nol{margin:0;padding:0;list-style:none;display:grid;gap:8px}\nli{display:grid;grid-template-columns:64px minmax(0,1fr) 56px 88px;gap:10px;align-items:center;padding:6px 10px;border-radius:8px;background:rgba(255,255,255,.06)}\nb{font:italic 900 20px \"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#01cdfe}\nspan{display:grid;min-width:0}strong{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}small{font-size:12px;color:#d9c7f5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\ntime{font-size:13px;color:#d9c7f5;font-variant-numeric:tabular-nums}\nem{font-style:normal;font-size:13px;font-weight:800;text-align:center;border:2px solid #fff;border-radius:999px;padding:1px 0}\n.loading em{border-color:#05ffa1;color:#05ffa1}\n.waiting em{border-color:#fffb96;border-style:dashed;color:#fffb96}\n.held em{background:#ff71ce;border-color:#ff71ce;color:#1a0b2e}\n.done{opacity:.55}",
+      "style": ".dk{height:100%;box-sizing:border-box;padding:4px 6px;font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#fff}\nh2{margin:0 0 12px;font:italic 900 22px \"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;letter-spacing:.1em;color:#b967ff}\nol{margin:0;padding:0;list-style:none;display:grid;gap:8px}\nli{display:grid;grid-template-columns:64px minmax(0,1fr) 56px 88px;gap:10px;align-items:center;padding:6px 10px;border-radius:8px;background:rgba(255,255,255,.06)}\nb{font:italic 900 20px \"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#01cdfe}\nspan{display:grid;min-width:0}strong{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}small{font-size:12px;color:#d9c7f5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\ntime{font-size:13px;color:#d9c7f5;font-variant-numeric:tabular-nums}\nem{font-style:normal;font-size:13px;font-weight:800;text-align:center;border:2px solid #fff;border-radius:999px;padding:1px 0}\n.loading em{border-color:#05ffa1;color:#05ffa1}\n.waiting em,.booked em{border-color:#fffb96;border-style:dashed;color:#fffb96}\n.held em{background:#ff71ce;border-color:#ff71ce;color:#1a0b2e}\n.done{opacity:.55}",
       "props": {
         "items": "list"
       }
@@ -141,7 +141,20 @@ const board: Board = {
       "time": "updatedAt",
       "fresh": 600,
       "fields": {
-        "value": {}
+        "value": {
+          "items": {
+            "word": {
+              "at": "/state",
+              "names": {
+                "loading": "상차 중",
+                "held": "보류",
+                "waiting": "접안 대기",
+                "booked": "예약",
+                "done": "완료"
+              }
+            }
+          }
+        }
       }
     }
   },
