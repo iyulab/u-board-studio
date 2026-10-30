@@ -175,7 +175,17 @@ const board: Board = {
       "time": "updatedAt",
       "fresh": 1800,
       "fields": {
-        "value": {}
+        "value": {
+          "items": {
+            "word": {
+              "at": "/state",
+              "names": {
+                "ready": "탑승 준비",
+                "later": "예정"
+              }
+            }
+          }
+        }
       }
     },
     "notice": {

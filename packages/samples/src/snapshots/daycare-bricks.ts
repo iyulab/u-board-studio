@@ -32,8 +32,8 @@ export const snapshot: SampleSnapshot = {
       },
       '/care/buses': {
         value: [
-          { bus: '1호차', time: '16:10', route: '느티마을 · 시장 앞', kids: '9명', state: 'ready', word: '탑승 준비' },
-          { bus: '2호차', time: '16:40', route: '강변 아파트 · 도서관', kids: '11명', state: 'later', word: '예정' },
+          { bus: '1호차', time: '16:10', route: '느티마을 · 시장 앞', kids: '9명', state: 'ready' },
+          { bus: '2호차', time: '16:40', route: '강변 아파트 · 도서관', kids: '11명', state: 'later' },
         ],
         updatedAt: at,
       },
