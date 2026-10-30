@@ -25,14 +25,14 @@ const board: Board = {
     },
     "harvest": {
       "template": "<section class=\"sm\"><h2>올해 채밀과 남은 일</h2><ol>{{#items}}<li class=\"{{state}}\"><b>{{when}}</b><span>{{what}}</span><strong>{{amount}}</strong><small>{{word}}</small></li>{{/items}}</ol></section>",
-      "style": ".sm{height:100%;box-sizing:border-box;padding:18px 26px;background:#fbf6e8;border:2px solid #3b3226;box-shadow:inset 0 0 0 7px #fbf6e8,inset 0 0 0 9px #d99a1e;font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#3b3226}\nh2{margin:0 0 8px;font:700 21px \"Noto Serif KR\", \"Batang\", \"Georgia\", serif;text-align:center;border-bottom:2px dashed #5f7d3a;padding-bottom:6px}\nol{margin:0;padding:0;list-style:none;display:grid;gap:3px}\nli{display:grid;grid-template-columns:64px 1fr 90px 100px;align-items:center;gap:12px;font-size:17px;padding:8px 6px;border-bottom:1px dotted #e3d7b9}\nb{font:700 15px \"Noto Serif KR\", \"Batang\", \"Georgia\", serif}\nstrong{text-align:right;font:700 17px \"Noto Serif KR\", \"Batang\", \"Georgia\", serif}\nsmall{text-align:right;font-size:14px;font-weight:700}\n.done small{color:#5f7d3a}\n.done small::before{content:\"✕ \"}\n.next{background:repeating-linear-gradient(45deg,transparent 0 2px,#f1d48c 2px 3.6px,transparent 3.6px 6px),repeating-linear-gradient(-45deg,transparent 0 2px,#f1d48c 2px 3.6px,transparent 3.6px 6px),#fbf6e8}\n.next small{color:#8a5a00}\n.next small::before{content:\"▸ \"}\n.plan small{color:#7a6e5c;font-weight:400}\n.plan small::before{content:\"○ \"}",
+      "style": ".sm{height:100%;box-sizing:border-box;padding:18px 26px;background:#fbf6e8;border:2px solid #3b3226;box-shadow:inset 0 0 0 7px #fbf6e8,inset 0 0 0 9px #d99a1e;font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#3b3226}\nh2{margin:0 0 8px;font:700 21px \"Noto Serif KR\", \"Batang\", \"Georgia\", serif;text-align:center;border-bottom:2px dashed #5f7d3a;padding-bottom:6px}\nol{margin:0;padding:0;list-style:none;display:grid;gap:3px}\nli{display:grid;grid-template-columns:64px 1fr 90px 100px;align-items:center;gap:12px;font-size:17px;padding:8px 6px;border-bottom:1px dotted #e3d7b9}\nb{font:700 15px \"Noto Serif KR\", \"Batang\", \"Georgia\", serif}\nstrong{text-align:right;font:700 17px \"Noto Serif KR\", \"Batang\", \"Georgia\", serif}\nsmall{text-align:right;font-size:14px;font-weight:700}\n.done small{color:#5f7d3a}\n.done small::before{content:\"✕ \"}\n.next{background:repeating-linear-gradient(45deg,transparent 0 2px,#f1d48c 2px 3.6px,transparent 3.6px 6px),repeating-linear-gradient(-45deg,transparent 0 2px,#f1d48c 2px 3.6px,transparent 3.6px 6px),#fbf6e8}\n.next small{color:#8a5a00}\n.next small::before{content:\"▸ \"}\n.plan small,.later small{color:#7a6e5c;font-weight:400}\n.plan small::before,.later small::before{content:\"○ \"}",
       "props": {
         "items": "list"
       }
     },
     "flowers": {
-      "template": "<section class=\"fl\"><h2>꿀이 나는 꽃</h2><ul>{{#items}}<li class=\"{{state}}\"><i>✿</i><b>{{name}}</b><span>{{word}}</span><small>{{distance}}</small></li>{{/items}}</ul></section>",
-      "style": ".fl{height:100%;box-sizing:border-box;padding:18px 20px;background:#fbf6e8;border:2px solid #3b3226;box-shadow:inset 0 0 0 7px #fbf6e8,inset 0 0 0 9px #5f7d3a;font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#3b3226}\nh2{margin:0 0 10px;font:700 21px \"Noto Serif KR\", \"Batang\", \"Georgia\", serif;text-align:center;border-bottom:2px dashed #d99a1e;padding-bottom:6px}\nul{margin:0;padding:0;list-style:none;display:grid;gap:10px}\nli{display:grid;grid-template-columns:34px 1fr auto;grid-template-rows:auto auto;column-gap:8px;align-items:center}\ni{grid-row:span 2;font-style:normal;font-size:30px;line-height:1;text-align:center}\nb{font:700 17px \"Noto Serif KR\", \"Batang\", \"Georgia\", serif}\nspan{grid-column:3;grid-row:1;font-size:13px;font-weight:700}\nsmall{grid-column:2 / span 2;font-size:12px}\n.bloom i{color:#d99a1e;text-shadow:0 0 0 #3b3226}\n.bloom span{color:#5f7d3a}\n.fade i{color:transparent;-webkit-text-stroke:1px #8f8270}\n.fade span{color:#8f8270}\n.bud i{color:#5f7d3a;font-size:14px}\n.bud span{color:#8f8270;font-weight:400}",
+      "template": "<section class=\"fl\"><h2>꿀이 나는 꽃</h2><ul>{{#items}}<li class=\"{{state}}\"><i>✿</i><b>{{name}}</b><span>{{bloomsIn}}{{^bloomsIn}}{{word}}{{/bloomsIn}}</span><small>{{distance}}</small></li>{{/items}}</ul></section>",
+      "style": ".fl{height:100%;box-sizing:border-box;padding:18px 20px;background:#fbf6e8;border:2px solid #3b3226;box-shadow:inset 0 0 0 7px #fbf6e8,inset 0 0 0 9px #5f7d3a;font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#3b3226}\nh2{margin:0 0 10px;font:700 21px \"Noto Serif KR\", \"Batang\", \"Georgia\", serif;text-align:center;border-bottom:2px dashed #d99a1e;padding-bottom:6px}\nul{margin:0;padding:0;list-style:none;display:grid;gap:10px}\nli{display:grid;grid-template-columns:34px 1fr auto;grid-template-rows:auto auto;column-gap:8px;align-items:center}\ni{grid-row:span 2;font-style:normal;font-size:30px;line-height:1;text-align:center}\nb{font:700 17px \"Noto Serif KR\", \"Batang\", \"Georgia\", serif}\nspan{grid-column:3;grid-row:1;font-size:13px;font-weight:700}\nsmall{grid-column:2 / span 2;font-size:12px}\n.bloom i,.opening i{color:#d99a1e;text-shadow:0 0 0 #3b3226}\n.bloom span,.opening span{color:#5f7d3a}\n.fade i,.gone i{color:transparent;-webkit-text-stroke:1px #8f8270}\n.fade span,.gone span{color:#8f8270}\n.bud i{color:#5f7d3a;font-size:14px}\n.bud span{color:#8f8270;font-weight:400}",
       "props": {
         "items": "list"
       }
@@ -95,7 +95,19 @@ const board: Board = {
       "time": "updatedAt",
       "fresh": 7200,
       "fields": {
-        "value": {}
+        "value": {
+          "items": {
+            "word": {
+              "at": "/state",
+              "names": {
+                "done": "채밀",
+                "next": "진행 중",
+                "plan": "이번 주",
+                "later": "예정"
+              }
+            }
+          }
+        }
       }
     },
     "flowers": {
@@ -104,7 +116,20 @@ const board: Board = {
       "time": "updatedAt",
       "fresh": 7200,
       "fields": {
-        "value": {}
+        "value": {
+          "items": {
+            "word": {
+              "at": "/state",
+              "names": {
+                "bloom": "한창",
+                "opening": "피는 중",
+                "fade": "거의 짐",
+                "gone": "짐",
+                "bud": "봉오리"
+              }
+            }
+          }
+        }
       }
     },
     "now": {
