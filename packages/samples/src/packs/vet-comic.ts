@@ -32,7 +32,7 @@ const board: Board = {
       }
     },
     "queue": {
-      "template": "<section class=\"qu\"><header><b>대기실</b><span>접수 순서 — 응급은 먼저</span></header><ol>{{#items}}<li class=\"{{state}}\"><b>{{no}}</b><strong>{{name}}</strong><span>{{kind}}</span><em>{{why}}</em><small>{{wait}}</small><i>{{word}}</i></li>{{/items}}</ol></section>",
+      "template": "<section class=\"qu\"><header><b>대기실</b><span>접수 순서 — 응급은 먼저</span></header><ol>{{#items}}<li class=\"{{state}}\"><b>{{no}}</b><strong>{{name}}</strong><span>{{kind}}</span><em>{{why}}</em><small>{{wait}}</small><i>{{room}}{{^room}}{{word}}{{/room}}</i></li>{{/items}}</ol></section>",
       "style": ".qu{height:100%;box-sizing:border-box;border:5px solid #141414;box-shadow:5px 5px 0 #141414;background:radial-gradient(circle,#cfe6f2 1.3px,transparent 1.6px) 0 0/7px 7px,#fff8ea;background:radial-gradient(circle,#f3e2a6 1.3px,transparent 1.6px) 0 0/7px 7px,#fff8ea;padding:12px 18px;font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#141414;overflow:hidden}\nheader{display:flex;align-items:center;gap:14px;margin-bottom:8px}\nheader b{display:inline-block;padding:3px 10px;background:#ffd23f;border:3px solid #141414;font:900 17px \"Black Han Sans\", \"Jua\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#141414;transform:rotate(-2deg)}\nheader span{font-size:14px;font-style:italic}\nol{margin:0;padding:0;list-style:none;display:grid;gap:3px}\nli{display:grid;grid-template-columns:52px 110px 130px 1fr 70px 96px;align-items:center;gap:10px;font-size:14px;background:#ffffff;border:2px solid #141414;padding:1px 10px}\nli b{font:900 15px \"Black Han Sans\", \"Jua\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif}\nstrong{font:900 16px \"Black Han Sans\", \"Jua\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif}\nem{font-style:normal}\nsmall{text-align:right;font-weight:700}\ni{font-style:normal;font-weight:800;text-align:center;border-radius:999px;border:2px solid #141414;padding:1px 0}\n.wait i::before{content:\"○ \"}\n.called i{background:#ffd23f}\n.called i::before{content:\"▶ \"}\n.urgent{background:#e23b2e;color:#ffffff}\n.urgent i{background:#141414;color:#ffd23f;border-color:#141414}\n.urgent i::before{content:\"✱ \"}",
       "props": {
         "items": "list"
@@ -98,7 +98,18 @@ const board: Board = {
       "time": "updatedAt",
       "fresh": 900,
       "fields": {
-        "value": {}
+        "value": {
+          "items": {
+            "word": {
+              "at": "/state",
+              "names": {
+                "urgent": "응급 먼저",
+                "called": "호출",
+                "wait": "대기"
+              }
+            }
+          }
+        }
       }
     },
     "now": {
