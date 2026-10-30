@@ -36,11 +36,11 @@ export const snapshot: SampleSnapshot = {
       },
       '/harbor/lots': {
         value: [
-          { fish: '붉은대게', boxes: '600상자', price: '4.2만 원', state: 'done', word: '낙찰' },
-          { fish: '가자미', boxes: '206상자', price: '3.1만 원', state: 'now', word: '경매 중' },
-          { fish: '오징어', boxes: '210상자', price: '—', state: 'wait', word: '06:00 예정' },
-          { fish: '방어', boxes: '64상자', price: '—', state: 'wait', word: '06:20 예정' },
-          { fish: '문어', boxes: '48상자', price: '—', state: 'wait', word: '06:40 예정' },
+          { fish: '붉은대게', boxes: '600상자', price: '4.2만 원', state: 'done' },
+          { fish: '가자미', boxes: '206상자', price: '3.1만 원', state: 'now' },
+          { fish: '오징어', boxes: '210상자', price: '—', state: 'wait', at: '06:00' },
+          { fish: '방어', boxes: '64상자', price: '—', state: 'wait', at: '06:20' },
+          { fish: '문어', boxes: '48상자', price: '—', state: 'wait', at: '06:40' },
         ],
         updatedAt: at,
       },

@@ -58,7 +58,7 @@ const board: Board = {
       }
     },
     "lots": {
-      "template": "<section class=\"lt\"><h3>경매 순서</h3><ol>{{#items}}<li class=\"{{state}}\"><b>{{fish}}</b><span>{{boxes}}</span><span>{{price}}</span><em>{{word}}</em></li>{{/items}}</ol></section>",
+      "template": "<section class=\"lt\"><h3>경매 순서</h3><ol>{{#items}}<li class=\"{{state}}\"><b>{{fish}}</b><span>{{boxes}}</span><span>{{price}}</span><em>{{#at}}{{at}} {{/at}}{{word}}</em></li>{{/items}}</ol></section>",
       "style": ".lt{height:100%;box-sizing:border-box;display:grid;grid-template-rows:auto 1fr;gap:8px;font-family:\"Noto Serif KR\", \"Nanum Myeongjo\", \"Batang\", serif;color:#14254a}\nh3{margin:0;justify-self:start;padding:2px 12px;font-size:18px;font-weight:800;color:#f2e8d0;background:#1b1a18}\nol{margin:0;padding:0;list-style:none;display:grid;align-content:start;gap:4px}\nli{display:grid;grid-template-columns:90px 80px 1fr 96px;align-items:center;gap:8px;padding:6px 8px;border-bottom:2px solid #1b1a18;font-size:15px}\nb{font-size:17px;font-weight:800}\nem{justify-self:end;font-style:normal;font-size:13px;font-weight:700;padding:1px 8px}\n.done em{color:#f2e8d0;background:#c9442c;border-radius:3px}\n.done{color:#6b5a3a}\n.now{background:#14254a;color:#f2e8d0;border-left:8px solid #c9442c}\n.now em{color:#1b1a18;background:#f2e8d0}\n.wait{color:#7d7a72}\n.wait em{border:1.5px dashed #7d7a72}",
       "props": {
         "items": "list"
@@ -189,9 +189,25 @@ const board: Board = {
       "fresh": 900,
       "fields": {
         "word": {
-          "at": "/value/1/word"
+          "at": "/value/1/state",
+          "names": {
+            "done": "낙찰",
+            "now": "경매 중",
+            "wait": "예정"
+          }
         },
-        "value": {}
+        "value": {
+          "items": {
+            "word": {
+              "at": "/state",
+              "names": {
+                "done": "낙찰",
+                "now": "경매 중",
+                "wait": "예정"
+              }
+            }
+          }
+        }
       }
     },
     "now": {
