@@ -38,11 +38,11 @@ export const snapshot: SampleSnapshot = {
       },
       '/studio/batches': {
         value: [
-          { kiln: '장작가마', what: '달항아리 3 · 찻사발 24', glaze: '재유 · 자연유', state: 'firing', word: '소성 중' },
-          { kiln: '가스가마', what: '청자 접시 40', glaze: '청자유', state: 'firing', word: '소성 중' },
-          { kiln: '전기가마 一', what: '머그 60 · 화병 12', glaze: '분청 · 백유', state: 'done', word: '식힘' },
-          { kiln: '전기가마 二', what: '수업 작품 초벌 80', glaze: '— (초벌)', state: 'loading', word: '재임 대기' },
-          { kiln: '전기가마 二', what: '타일 견본 30', glaze: '천목 · 진사', state: 'loading', word: '내일' },
+          { kiln: '장작가마', what: '달항아리 3 · 찻사발 24', glaze: '재유 · 자연유', state: 'firing' },
+          { kiln: '가스가마', what: '청자 접시 40', glaze: '청자유', state: 'firing' },
+          { kiln: '전기가마 一', what: '머그 60 · 화병 12', glaze: '분청 · 백유', state: 'done' },
+          { kiln: '전기가마 二', what: '수업 작품 초벌 80', glaze: '— (초벌)', state: 'loading' },
+          { kiln: '전기가마 二', what: '타일 견본 30', glaze: '천목 · 진사', state: 'tomorrow' },
         ],
         updatedAt: at,
       },

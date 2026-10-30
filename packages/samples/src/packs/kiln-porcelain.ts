@@ -31,7 +31,7 @@ const board: Board = {
     },
     "batches": {
       "template": "<section class=\"bt\"><h2>오늘 굽는 것</h2><ol>{{#items}}<li class=\"{{state}}\"><b>{{kiln}}</b><span>{{what}}</span><small>{{glaze}}</small><em>{{word}}</em></li>{{/items}}</ol></section>",
-      "style": ".bt{height:100%;box-sizing:border-box;padding:14px 20px;background:#fbf7ee;border-top:3px solid #1f3f8f;border-bottom:3px solid #1f3f8f;font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#1f3f8f}\nh2{margin:0 0 8px;font:700 24px \"Nanum Brush Script\", \"Nanum Pen Script\", \"Gungsuh\", serif}\nol{margin:0;padding:0;list-style:none;display:grid;gap:4px}\nli{display:grid;grid-template-columns:70px 1fr 110px 74px;gap:8px;align-items:baseline;font-size:13px;line-height:28px;border-bottom:1px dashed #6f8ccc}\nsmall{color:#6f8ccc}\nem{font-style:normal;font-weight:800;text-align:center;border:1.5px solid currentColor;border-radius:4px;line-height:20px}\n.done em{color:#6f8ccc}.firing em{background:#1f3f8f;color:#f6f8fb;border-color:#1f3f8f}.loading em{border-style:dashed}",
+      "style": ".bt{height:100%;box-sizing:border-box;padding:14px 20px;background:#fbf7ee;border-top:3px solid #1f3f8f;border-bottom:3px solid #1f3f8f;font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;color:#1f3f8f}\nh2{margin:0 0 8px;font:700 24px \"Nanum Brush Script\", \"Nanum Pen Script\", \"Gungsuh\", serif}\nol{margin:0;padding:0;list-style:none;display:grid;gap:4px}\nli{display:grid;grid-template-columns:70px 1fr 110px 74px;gap:8px;align-items:baseline;font-size:13px;line-height:28px;border-bottom:1px dashed #6f8ccc}\nsmall{color:#6f8ccc}\nem{font-style:normal;font-weight:800;text-align:center;border:1.5px solid currentColor;border-radius:4px;line-height:20px}\n.done em{color:#6f8ccc}.firing em{background:#1f3f8f;color:#f6f8fb;border-color:#1f3f8f}.loading em,.tomorrow em{border-style:dashed}",
       "props": {
         "items": "list"
       }
@@ -116,7 +116,19 @@ const board: Board = {
       "time": "updatedAt",
       "fresh": 600,
       "fields": {
-        "value": {}
+        "value": {
+          "items": {
+            "word": {
+              "at": "/state",
+              "names": {
+                "firing": "소성 중",
+                "done": "식힘",
+                "loading": "재임 대기",
+                "tomorrow": "내일"
+              }
+            }
+          }
+        }
       }
     }
   },
