@@ -58,8 +58,8 @@ const board: Board = {
       }
     },
     "departures": {
-      "template": "<section class=\"dp\"><h3>출항 예정</h3><ol>{{#items}}<li class=\"{{status}}\"><b>{{time}}</b><span>{{route}} <small>· {{ship}}</small></span><em><i class=\"mk\"></i>{{word}}</em></li>{{/items}}</ol></section>",
-      "style": ".ok{--c:#1d4fa0}.delay{--c:#e8a800}.cancel{--c:#d7261e}\n.mk{display:inline-block;flex:none;width:var(--m,16px);height:var(--m,16px);background:var(--c)}\n.ok .mk,.mk.ok{border-radius:50%}\n.cancel .mk,.mk.cancel{clip-path:polygon(50% 0,100% 100%,0 100%)}\n.dp{height:100%;box-sizing:border-box;display:grid;grid-template-rows:auto 1fr;gap:6px;font-family:\"Futura\", \"Jost\", \"Century Gothic\", \"Noto Sans KR\", \"Malgun Gothic\", sans-serif;color:#161513}\nh3{margin:0;font-size:18px;font-weight:800;letter-spacing:.08em;padding-bottom:6px;border-bottom:6px solid #161513}\nol{margin:0;padding:0;list-style:none;display:grid;align-content:start}\nli{display:grid;grid-template-columns:64px 1fr auto;gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid #cfc6b2;font-size:15px}\nb{font-size:20px;font-weight:800;font-variant-numeric:tabular-nums}\nspan{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\nsmall{font-size:12px;color:#6d675d}\nem{font-style:normal;font-weight:800;font-size:14px;display:flex;align-items:center;gap:6px;--m:14px}\n.cancel b{text-decoration:line-through;color:#6d675d}",
+      "template": "<section class=\"dp\"><h3>출항 예정</h3><ol>{{#items}}<li class=\"{{status}}\"><b>{{time}}</b><span>{{route}} <small>· {{ship}}</small></span><em><i class=\"mk\"></i>{{#minutes}}{{minutes}}분 {{/minutes}}{{word}}</em></li>{{/items}}</ol></section>",
+      "style": ".ok{--c:#1d4fa0}.delay,.hold{--c:#e8a800}.cancel{--c:#d7261e}\n.mk{display:inline-block;flex:none;width:var(--m,16px);height:var(--m,16px);background:var(--c)}\n.ok .mk,.mk.ok{border-radius:50%}\n.cancel .mk,.mk.cancel{clip-path:polygon(50% 0,100% 100%,0 100%)}\n.dp{height:100%;box-sizing:border-box;display:grid;grid-template-rows:auto 1fr;gap:6px;font-family:\"Futura\", \"Jost\", \"Century Gothic\", \"Noto Sans KR\", \"Malgun Gothic\", sans-serif;color:#161513}\nh3{margin:0;font-size:18px;font-weight:800;letter-spacing:.08em;padding-bottom:6px;border-bottom:6px solid #161513}\nol{margin:0;padding:0;list-style:none;display:grid;align-content:start}\nli{display:grid;grid-template-columns:64px 1fr auto;gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid #cfc6b2;font-size:15px}\nb{font-size:20px;font-weight:800;font-variant-numeric:tabular-nums}\nspan{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\nsmall{font-size:12px;color:#6d675d}\nem{font-style:normal;font-weight:800;font-size:14px;display:flex;align-items:center;gap:6px;--m:14px}\n.cancel b{text-decoration:line-through;color:#6d675d}",
       "props": {
         "items": "list"
       }
@@ -242,7 +242,19 @@ const board: Board = {
       "time": "updatedAt",
       "fresh": 900,
       "fields": {
-        "value": {}
+        "value": {
+          "items": {
+            "word": {
+              "at": "/status",
+              "names": {
+                "ok": "운항",
+                "delay": "지연",
+                "hold": "너울 대기",
+                "cancel": "결항"
+              }
+            }
+          }
+        }
       }
     },
     "boarded": {

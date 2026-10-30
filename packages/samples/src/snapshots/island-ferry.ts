@@ -41,12 +41,12 @@ export const snapshot: SampleSnapshot = {
       },
       '/ferry/departures': {
         value: [
-          { time: '15:00', route: '해솔항 → 솔섬', ship: '해솔1호', word: '운항', status: 'ok' },
-          { time: '15:10', route: '큰바위섬 → 해솔항', ship: '새벽별호', word: '운항', status: 'ok' },
-          { time: '15:20', route: '모래섬 → 해솔항', ship: '모래섬호', word: '운항', status: 'ok' },
-          { time: '16:00', route: '등대섬 → 솔섬', ship: '솔바람호', word: '20분 지연', status: 'delay' },
-          { time: '16:30', route: '큰바위섬 → 갈매기섬', ship: '갈매기호', word: '너울 대기', status: 'delay' },
-          { time: '16:40', route: '등대섬 → 먼섬', ship: '솔바람호', word: '결항', status: 'cancel' },
+          { time: '15:00', route: '해솔항 → 솔섬', ship: '해솔1호', status: 'ok' },
+          { time: '15:10', route: '큰바위섬 → 해솔항', ship: '새벽별호', status: 'ok' },
+          { time: '15:20', route: '모래섬 → 해솔항', ship: '모래섬호', status: 'ok' },
+          { time: '16:00', route: '등대섬 → 솔섬', ship: '솔바람호', status: 'delay', minutes: 20 },
+          { time: '16:30', route: '큰바위섬 → 갈매기섬', ship: '갈매기호', status: 'hold' },
+          { time: '16:40', route: '등대섬 → 먼섬', ship: '솔바람호', status: 'cancel' },
         ],
         updatedAt: at,
       },
