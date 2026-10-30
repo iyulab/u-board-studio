@@ -37,12 +37,12 @@ export const snapshot: SampleSnapshot = {
       },
       '/pool/classes': {
         value: [
-          { time: '18:00', name: '어린이 초급반', lane: '5·6 레인', state: 'done', word: '마침' },
-          { time: '19:00', name: '성인 접영반', lane: '5 레인', state: 'now', word: '진행' },
-          { time: '19:00', name: '성인 자유형반', lane: '6 레인', state: 'now', word: '진행' },
-          { time: '19:00', name: '아쿠아로빅', lane: '7 레인', state: 'now', word: '진행' },
-          { time: '20:00', name: '성인 평영반', lane: '5 레인', state: 'next', word: '다음' },
-          { time: '21:00', name: '마감 · 바닥 청소', lane: '전체', state: 'next', word: '예정' },
+          { time: '18:00', name: '어린이 초급반', lane: '5·6 레인', state: 'done' },
+          { time: '19:00', name: '성인 접영반', lane: '5 레인', state: 'now' },
+          { time: '19:00', name: '성인 자유형반', lane: '6 레인', state: 'now' },
+          { time: '19:00', name: '아쿠아로빅', lane: '7 레인', state: 'now' },
+          { time: '20:00', name: '성인 평영반', lane: '5 레인', state: 'next' },
+          { time: '21:00', name: '마감 · 바닥 청소', lane: '전체', state: 'later' },
         ],
         updatedAt: at,
       },

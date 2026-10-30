@@ -33,7 +33,7 @@ const board: Board = {
     },
     "classes": {
       "template": "<section class=\"cl\"><h2>저녁 강습</h2><ol>{{#items}}<li class=\"{{state}}\"><b>{{time}}</b><span>{{name}}</span><small>{{lane}}</small><i>{{word}}</i></li>{{/items}}</ol></section>",
-      "style": ".cl{height:100%;box-sizing:border-box;background:linear-gradient(#c9d3da 1px,transparent 1px) 0 0/14px 14px,linear-gradient(90deg,#c9d3da 1px,transparent 1px) 0 0/14px 14px,#fbfcfd;border:6px solid #1f73b7;border-image:repeating-linear-gradient(90deg,#1f73b7 0 10px,#5cc3d6 10px 12px,#123f6b 12px 22px,#5cc3d6 22px 24px) 6;color:#14283a;padding:14px 18px;font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif}\nh2{margin:0 0 8px;font-size:19px;font-weight:800}\nol{margin:0;padding:0;list-style:none;display:grid;gap:4px}\nli{display:grid;grid-template-columns:54px 1fr 62px 76px;align-items:center;gap:8px;padding:4px 10px;background:#ffffff;border:2px solid #c9d3da;font-size:15px}\nb{font-weight:800}\nsmall{font-size:13px}\ni{font-style:normal;font-weight:800;font-size:13px;text-align:right}\n.done{opacity:.6}\n.done i::before{content:\"✓ \"}\n.now{border-color:#f2b632;background:#fff7df}\n.now i::before{content:\"◆ \"}\n.next i::before{content:\"○ \"}",
+      "style": ".cl{height:100%;box-sizing:border-box;background:linear-gradient(#c9d3da 1px,transparent 1px) 0 0/14px 14px,linear-gradient(90deg,#c9d3da 1px,transparent 1px) 0 0/14px 14px,#fbfcfd;border:6px solid #1f73b7;border-image:repeating-linear-gradient(90deg,#1f73b7 0 10px,#5cc3d6 10px 12px,#123f6b 12px 22px,#5cc3d6 22px 24px) 6;color:#14283a;padding:14px 18px;font-family:\"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif}\nh2{margin:0 0 8px;font-size:19px;font-weight:800}\nol{margin:0;padding:0;list-style:none;display:grid;gap:4px}\nli{display:grid;grid-template-columns:54px 1fr 62px 76px;align-items:center;gap:8px;padding:4px 10px;background:#ffffff;border:2px solid #c9d3da;font-size:15px}\nb{font-weight:800}\nsmall{font-size:13px}\ni{font-style:normal;font-weight:800;font-size:13px;text-align:right}\n.done{opacity:.6}\n.done i::before{content:\"✓ \"}\n.now{border-color:#f2b632;background:#fff7df}\n.now i::before{content:\"◆ \"}\n.next i::before,.later i::before{content:\"○ \"}",
       "props": {
         "items": "list"
       }
@@ -177,7 +177,19 @@ const board: Board = {
       "time": "updatedAt",
       "fresh": 600,
       "fields": {
-        "value": {}
+        "value": {
+          "items": {
+            "word": {
+              "at": "/state",
+              "names": {
+                "done": "마침",
+                "now": "진행",
+                "next": "다음",
+                "later": "예정"
+              }
+            }
+          }
+        }
       }
     },
     "now": {
