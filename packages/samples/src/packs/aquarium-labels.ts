@@ -24,7 +24,7 @@ const board: Board = {
       }
     },
     "feeding": {
-      "template": "<section class=\"fd\"><h2>먹이 주기 — 오늘</h2><ol>{{#items}}<li class=\"{{state}}\"><b>{{time}}</b><span>{{tank}}</span><em>{{what}}</em><small>{{word}}</small></li>{{/items}}</ol></section>",
+      "template": "<section class=\"fd\"><h2>먹이 주기 — 오늘</h2><ol>{{#items}}<li class=\"{{state}}\"><b>{{time}}</b><span>{{tank}}</span><em>{{what}}</em><small>{{word}}{{#reason}} — {{reason}}{{/reason}}</small></li>{{/items}}</ol></section>",
       "style": ".fd{height:100%;box-sizing:border-box;padding:16px 24px;background:#f6f0dc;box-shadow:inset 0 0 0 5px #f6f0dc,inset 0 0 0 6px #2a2622,inset 0 0 0 8px #f6f0dc,inset 0 0 0 9px #2a2622,2px 4px 0 rgba(0,0,0,.35);font-family:\"Noto Serif KR\", \"Batang\", \"Georgia\", serif;color:#2a2622}\nh2{margin:0 0 4px;font-size:19px;font-weight:700;border-bottom:1px solid #2a2622;padding-bottom:4px}\nol{margin:0;padding:0;list-style:none;display:grid;gap:2px}\nli{display:grid;grid-template-columns:70px 170px 1fr 110px;align-items:baseline;gap:12px;font-size:16px;padding:3px 0;border-bottom:1px dotted #2a2622}\nb{font:700 16px \"Courier New\", \"Nanum Gothic Coding\", monospace}\nem{font-size:15px}\nsmall{font-size:14px;text-align:right}\n.done{opacity:.65}\n.done small::before{content:\"✓ \"}\n.next small{font-weight:700}\n.next small::before{content:\"○ \"}\n.held small{color:#b3261e;font-weight:700}\n.held small::before{content:\"✕ \"}",
       "props": {
         "items": "list"
@@ -91,7 +91,18 @@ const board: Board = {
       "time": "updatedAt",
       "fresh": 900,
       "fields": {
-        "value": {}
+        "value": {
+          "items": {
+            "word": {
+              "at": "/state",
+              "names": {
+                "done": "마침",
+                "next": "다음",
+                "held": "보류"
+              }
+            }
+          }
+        }
       }
     },
     "now": {

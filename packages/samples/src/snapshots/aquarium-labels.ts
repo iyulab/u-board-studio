@@ -28,11 +28,11 @@ export const snapshot: SampleSnapshot = {
       },
       '/aquarium/feeding': {
         value: [
-          { time: '10:00', tank: '펭귄 마을', what: '전갱이 3 kg', state: 'done', word: '마침' },
-          { time: '11:30', tank: '상어 터널', what: '오징어 · 고등어', state: 'done', word: '마침' },
-          { time: '14:00', tank: '해달 바위', what: '조개 · 설명회', state: 'done', word: '마침' },
-          { time: '16:00', tank: '산호초', what: '플랑크톤', state: 'next', word: '다음' },
-          { time: '16:30', tank: '아마존 강', what: '빙어', state: 'held', word: '보류 — 수온' },
+          { time: '10:00', tank: '펭귄 마을', what: '전갱이 3 kg', state: 'done' },
+          { time: '11:30', tank: '상어 터널', what: '오징어 · 고등어', state: 'done' },
+          { time: '14:00', tank: '해달 바위', what: '조개 · 설명회', state: 'done' },
+          { time: '16:00', tank: '산호초', what: '플랑크톤', state: 'next' },
+          { time: '16:30', tank: '아마존 강', what: '빙어', state: 'held', reason: '수온' },
         ],
         updatedAt: at,
       },
