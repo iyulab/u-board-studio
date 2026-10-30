@@ -17,7 +17,7 @@ const board: Board = {
   "elements": {
     "machines": {
       "template": "<section class=\"w\"><div class=\"bar\"><span>{{title}}</span><s></s><u></u></div><ol class=\"ms\" style=\"--c: {{columns}}\">{{#items}}<li class=\"{{state}}\" style=\"--p: {{p}}\"><header><b>{{no}}</b><i></i></header><em></em><p>{{word}}</p><div class=\"pg\"><span></span></div><small>{{left}}</small></li>{{/items}}</ol></section>",
-      "style": ".w{height:100%;box-sizing:border-box;display:grid;grid-template-rows:auto 1fr;padding:3px;background:#c0c0c0;box-shadow:inset -1px -1px 0 #000000,inset 1px 1px 0 #ffffff,inset -2px -2px 0 #808080,inset 2px 2px 0 #dfdfdf;font-family:\"Tahoma\", \"Dotum\", \"Gulim\", \"Malgun Gothic\", sans-serif;color:#000000}\n.bar{display:flex;align-items:center;gap:6px;height:26px;padding:0 4px 0 6px;background:linear-gradient(90deg,#000080,#1084d0);color:#ffffff;font-size:15px;font-weight:700}\n.bar span{flex:1}\n.bar u{width:20px;height:18px;background:#c0c0c0;box-shadow:inset -1px -1px 0 #000000,inset 1px 1px 0 #ffffff,inset -2px -2px 0 #808080,inset 2px 2px 0 #dfdfdf;text-decoration:none;color:#000000;display:grid;place-items:center;font-size:12px;font-weight:900}\n.bar u::after{content:\"✕\"}\n.bar s{width:20px;height:18px;background:#c0c0c0;box-shadow:inset -1px -1px 0 #000000,inset 1px 1px 0 #ffffff,inset -2px -2px 0 #808080,inset 2px 2px 0 #dfdfdf;text-decoration:none;display:grid;place-items:end center;color:#000000;font-size:11px;font-weight:900;line-height:12px}\n.bar s::after{content:\"_\"}\n.ms{margin:6px 0 0;padding:12px;list-style:none;display:grid;grid-template-columns:repeat(var(--c),1fr);gap:12px;background:#c0c0c0;box-shadow:inset 1px 1px 0 #808080,inset 2px 2px 0 #000000,inset -1px -1px 0 #ffffff,inset -2px -2px 0 #dfdfdf;overflow:hidden}\nli{display:grid;grid-template-rows:auto 1fr auto auto auto;justify-items:center;gap:4px;padding:8px;background:#c0c0c0;box-shadow:inset -1px -1px 0 #000000,inset 1px 1px 0 #ffffff,inset -2px -2px 0 #808080,inset 2px 2px 0 #dfdfdf}\nheader{justify-self:stretch;display:flex;align-items:center;justify-content:space-between}\nb{font-size:17px}\ni{width:20px;height:20px;display:grid;place-items:center;font:900 14px \"Tahoma\", \"Dotum\", \"Gulim\", \"Malgun Gothic\", sans-serif;font-style:normal;color:#ffffff}\nem{width:62px;height:62px;border-radius:50%;background:#d8e8f0;box-shadow:inset 0 0 0 5px #808080,inset 0 0 0 7px #000000;align-self:center}\np{margin:0;font-size:15px;font-weight:700}\n.pg{justify-self:stretch;height:16px;padding:2px;background:#ffffff;box-shadow:inset 1px 1px 0 #808080,inset 2px 2px 0 #000000,inset -1px -1px 0 #ffffff,inset -2px -2px 0 #dfdfdf}\n.pg span{display:block;height:100%;width:calc(var(--p) * 1%);background:repeating-linear-gradient(90deg,#000080 0 9px,transparent 9px 11px)}\nsmall{font-size:13px}\n.run i{background:#000080}\n.run i::after{content:\"▶\"}\n.run em{background:radial-gradient(circle,#7fb8e0 0 40%,#4a8fc4 41% 60%,#d8e8f0 61%)}\n.done i{background:#008000}\n.done i::after{content:\"✓\"}\n.done p{color:#008000}\n.done em{background:radial-gradient(circle,#e8e2d0 0 55%,#d8e8f0 56%)}\n.free i{background:#ffffff;box-shadow:inset 0 0 0 2px #808080}\n.free p{color:#808080}\n.out{background:repeating-linear-gradient(45deg,#c0c0c0 0 8px,#b0b0b0 8px 10px)}\n.out i{background:#c00000}\n.out i::after{content:\"✕\"}\n.out p{color:#c00000}\n.out em{opacity:.45}",
+      "style": ".w{height:100%;box-sizing:border-box;display:grid;grid-template-rows:auto 1fr;padding:3px;background:#c0c0c0;box-shadow:inset -1px -1px 0 #000000,inset 1px 1px 0 #ffffff,inset -2px -2px 0 #808080,inset 2px 2px 0 #dfdfdf;font-family:\"Tahoma\", \"Dotum\", \"Gulim\", \"Malgun Gothic\", sans-serif;color:#000000}\n.bar{display:flex;align-items:center;gap:6px;height:26px;padding:0 4px 0 6px;background:linear-gradient(90deg,#000080,#1084d0);color:#ffffff;font-size:15px;font-weight:700}\n.bar span{flex:1}\n.bar u{width:20px;height:18px;background:#c0c0c0;box-shadow:inset -1px -1px 0 #000000,inset 1px 1px 0 #ffffff,inset -2px -2px 0 #808080,inset 2px 2px 0 #dfdfdf;text-decoration:none;color:#000000;display:grid;place-items:center;font-size:12px;font-weight:900}\n.bar u::after{content:\"✕\"}\n.bar s{width:20px;height:18px;background:#c0c0c0;box-shadow:inset -1px -1px 0 #000000,inset 1px 1px 0 #ffffff,inset -2px -2px 0 #808080,inset 2px 2px 0 #dfdfdf;text-decoration:none;display:grid;place-items:end center;color:#000000;font-size:11px;font-weight:900;line-height:12px}\n.bar s::after{content:\"_\"}\n.ms{margin:6px 0 0;padding:12px;list-style:none;display:grid;grid-template-columns:repeat(var(--c),1fr);gap:12px;background:#c0c0c0;box-shadow:inset 1px 1px 0 #808080,inset 2px 2px 0 #000000,inset -1px -1px 0 #ffffff,inset -2px -2px 0 #dfdfdf;overflow:hidden}\nli{display:grid;grid-template-rows:auto 1fr auto auto auto;justify-items:center;gap:4px;padding:8px;background:#c0c0c0;box-shadow:inset -1px -1px 0 #000000,inset 1px 1px 0 #ffffff,inset -2px -2px 0 #808080,inset 2px 2px 0 #dfdfdf}\nheader{justify-self:stretch;display:flex;align-items:center;justify-content:space-between}\nb{font-size:17px}\ni{width:20px;height:20px;display:grid;place-items:center;font:900 14px \"Tahoma\", \"Dotum\", \"Gulim\", \"Malgun Gothic\", sans-serif;font-style:normal;color:#ffffff}\nem{width:62px;height:62px;border-radius:50%;background:#d8e8f0;box-shadow:inset 0 0 0 5px #808080,inset 0 0 0 7px #000000;align-self:center}\np{margin:0;font-size:15px;font-weight:700}\n.pg{justify-self:stretch;height:16px;padding:2px;background:#ffffff;box-shadow:inset 1px 1px 0 #808080,inset 2px 2px 0 #000000,inset -1px -1px 0 #ffffff,inset -2px -2px 0 #dfdfdf}\n.pg span{display:block;height:100%;width:calc(var(--p) * 1%);background:repeating-linear-gradient(90deg,#000080 0 9px,transparent 9px 11px)}\nsmall{font-size:13px}\n.run i,.wash i,.rinse i,.spin i,.dry i,.cool i{background:#000080}\n.run i::after,.wash i::after,.rinse i::after,.spin i::after,.dry i::after,.cool i::after{content:\"▶\"}\n.run em,.wash em,.rinse em,.spin em,.dry em,.cool em{background:radial-gradient(circle,#7fb8e0 0 40%,#4a8fc4 41% 60%,#d8e8f0 61%)}\n.done i{background:#008000}\n.done i::after{content:\"✓\"}\n.done p{color:#008000}\n.done em{background:radial-gradient(circle,#e8e2d0 0 55%,#d8e8f0 56%)}\n.free i{background:#ffffff;box-shadow:inset 0 0 0 2px #808080}\n.free p{color:#808080}\n.out{background:repeating-linear-gradient(45deg,#c0c0c0 0 8px,#b0b0b0 8px 10px)}\n.out i{background:#c00000}\n.out i::after{content:\"✕\"}\n.out p{color:#c00000}\n.out em{opacity:.45}",
       "props": {
         "title": "string",
         "columns": "number",
@@ -63,7 +63,21 @@ const board: Board = {
       "time": "updatedAt",
       "fresh": 600,
       "fields": {
-        "value": {}
+        "value": {
+          "items": {
+            "word": {
+              "at": "/state",
+              "names": {
+                "wash": "세탁",
+                "rinse": "헹굼",
+                "spin": "탈수",
+                "done": "끝남",
+                "free": "사용 가능",
+                "out": "고장"
+              }
+            }
+          }
+        }
       }
     },
     "dryers": {
@@ -72,7 +86,20 @@ const board: Board = {
       "time": "updatedAt",
       "fresh": 600,
       "fields": {
-        "value": {}
+        "value": {
+          "items": {
+            "word": {
+              "at": "/state",
+              "names": {
+                "dry": "건조",
+                "cool": "식힘",
+                "done": "끝남",
+                "free": "사용 가능",
+                "out": "고장"
+              }
+            }
+          }
+        }
       }
     },
     "figures": {
