@@ -63,7 +63,7 @@ ${keys('query')}
 A field is \`{ at?, label?, unit?, digits?, format?, names?, state? }\`; it reads \`/<its name>\` of the item unless \`at\`
 says where. \`state\` says how the value is doing, as a status: \`"raw"\` (the value is a status name), a map
 (\`{ "trip": "down", "*": "off" }\`, \`*\` for the rest) or bands (\`["ok", 1, "warn", 5, "alarm"]\` — the status below the
-first number, then from each number up). \`names\` takes the same two forms for the words a value is shown as. A field can also be computed from the items of the list: \`derive: { op: count | sum | min | max | avg, field?, where? }\` — a part that reads the list (no item) shows it, a \`state\` on it can raise a status. A field that holds a list of objects says what its items' fields mean with \`items\`.`,
+first number, then from each number up). \`names\` takes the same two forms for what a value is shown as (a word, a count of marks). A field can also be computed from the items of the list: \`derive: { op: count | sum | min | max | avg, field?, where? }\` — a part that reads the list (no item) shows it, a \`state\` on it can raise a status. A field that holds a list of objects says what its items' fields mean with \`items\`.`,
 
     `## statuses — how each status looks
 
