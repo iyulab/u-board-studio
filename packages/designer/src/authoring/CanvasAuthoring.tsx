@@ -14,9 +14,18 @@ import { sizedNodes } from '@iyulab/u-board/toolkit';
 import { useFittedView } from '@iyulab/u-board/toolkit';
 import { ViewControls } from '@iyulab/u-board/toolkit';
 import type { CanvasView } from '@iyulab/u-board/picture';
-import { TOOLBAR_STYLE, GROUP_STYLE } from '@iyulab/u-board/toolkit';
+import { TOOLBAR_STYLE, GROUP_STYLE, mayLoadBackground } from '@iyulab/u-board/toolkit';
 import { ModeSwitch, type KindEditorProps } from './editor-parts.js';
 import { AttributionLine, boardAttributions, showsExampleData } from '@iyulab/u-board/toolkit';
+
+/** The note that a background picture is left out — in the warning colours, with or without the stylesheet. */
+const BACKGROUND_BLOCKED_STYLE = {
+  padding: '2px 8px',
+  borderRadius: 4,
+  background: 'var(--_ub-warning-bg, var(--ub-warning-bg, #fef3c7))',
+  color: 'var(--_ub-warning, var(--ub-warning, #92400e))',
+  fontWeight: 600,
+} as const;
 
 /**
  * The canvas of a board being edited, drawn from its picture: in Edit, a canvas-kit `KonvaDesigner` moves, sizes,
@@ -183,6 +192,10 @@ export function CanvasAuthoring({
         <div className="ub-authoring__group" style={GROUP_STYLE}>
           <ViewControls view={view} onFit={extent ? () => fitTo(extent) : undefined} labels={labels} />
         </div>
+        {/* A picture outside the origins the host allowed is left out here as the viewer leaves it out: say so. */}
+        {doc.background.image && !mayLoadBackground(doc.background.image.src) && (
+          <span role="status" style={BACKGROUND_BLOCKED_STYLE}>{labels.backgroundBlocked}</span>
+        )}
       </div>
       <div className="ub-authoring__panes" style={{ display: 'flex', gap: 'var(--ub-space-4, 16px)', flex: 1, minHeight: 0 }}>
         <div className="ub-authoring__pane" style={paneStyle}>

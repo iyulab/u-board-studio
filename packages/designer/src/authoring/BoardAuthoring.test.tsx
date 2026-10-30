@@ -1,9 +1,10 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { BoardAuthoring } from './BoardAuthoring';
 import { PartPanel } from './PartPanel';
 import { StatusesPanel } from './StatusesPanel';
+import { setMediaOrigins } from '@iyulab/u-board';
 import type { Board } from '@iyulab/u-board/toolkit';
 
 vi.mock('@canvas-kit/designer', () => ({ KonvaDesigner: () => <div data-testid="konva-designer" /> }));
@@ -44,6 +45,23 @@ describe('PartPanel', () => {
     expect(screen.getByText('One part per item of pumps.')).toBeInTheDocument();
     expect(screen.queryByLabelText('Reads')).not.toBeInTheDocument();
     expect(screen.getByRole('alert')).toHaveTextContent('no field "x"');
+  });
+});
+
+describe('BoardAuthoring with a background outside the allowed origins', () => {
+  afterEach(() => setMediaOrigins(null));
+
+  it('says beside the controls that the picture is left out, in Edit as in View', () => {
+    setMediaOrigins(['self']);
+    const outside: Board = { parts: {}, layout: { kind: 'canvas', size: [800, 400], background: 'https://elsewhere.example/plan.png', place: {} } };
+    render(<BoardAuthoring initialBoard={outside} adapters={[]} onSave={vi.fn()} />);
+    expect(screen.getByText(/Background image not shown/)).toBeInTheDocument();
+  });
+
+  it('says nothing when the picture may be loaded', () => {
+    const inside: Board = { parts: {}, layout: { kind: 'canvas', size: [800, 400], background: 'https://elsewhere.example/plan.png', place: {} } };
+    render(<BoardAuthoring initialBoard={inside} adapters={[]} onSave={vi.fn()} />);
+    expect(screen.queryByText(/Background image not shown/)).toBeNull();
   });
 });
 
