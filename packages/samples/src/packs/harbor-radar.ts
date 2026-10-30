@@ -31,7 +31,7 @@ const board: Board = {
     },
     "roster": {
       "template": "<section class=\"rs\"><h2>출어 선박 · 7척</h2><ol>{{#items}}<li class=\"{{state}}\"><i></i><b>{{call}}</b><span>{{kind}}</span><em>{{word}}</em><small>{{note}}</small></li>{{/items}}</ol><p class=\"key\">● 조업 · ▶ 항해 · ▲ 경보 · ✕ 위치 끊김</p></section>",
-      "style": ".rs{height:100%;box-sizing:border-box;padding:4px 6px;font-family:\"D2Coding\", \"Consolas\", \"Menlo\", monospace;color:#39ff7a}\nh2{margin:0 0 10px;font:700 20px \"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;letter-spacing:.06em}\nol{margin:0;padding:0;list-style:none;display:grid;gap:6px}\nli{display:grid;grid-template-columns:22px 104px minmax(0,1fr) 74px;grid-template-rows:auto auto;column-gap:6px;align-items:baseline;padding:4px 0;border-bottom:1px solid #1d3a26}\ni{font-style:normal;grid-row:1}\nb{font-size:14px;white-space:nowrap}\nspan{font-size:12px;color:#1d8a44;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\nem{font-style:normal;font-size:12px;text-align:center;border:1px solid currentColor;padding:0 2px;white-space:nowrap}\nsmall{grid-column:2 / span 3;font-size:12px;color:#8fd8a8}\n.fishing i::before{content:\"●\"}.underway i::before{content:\"▶\"}\n.alarm{color:#ffb627}.alarm i::before{content:\"▲\"}.alarm em{background:#ffb627;color:#021006}\n.lost{opacity:.6}.lost i::before{content:\"✕\"}.lost em{border-style:dashed}\n.key{margin:10px 0 0;font-size:12px;color:#1d8a44}",
+      "style": ".rs{height:100%;box-sizing:border-box;padding:4px 6px;font-family:\"D2Coding\", \"Consolas\", \"Menlo\", monospace;color:#39ff7a}\nh2{margin:0 0 10px;font:700 20px \"Pretendard\", \"Malgun Gothic\", \"Apple SD Gothic Neo\", sans-serif;letter-spacing:.06em}\nol{margin:0;padding:0;list-style:none;display:grid;gap:6px}\nli{display:grid;grid-template-columns:22px 104px minmax(0,1fr) 74px;grid-template-rows:auto auto;column-gap:6px;align-items:baseline;padding:4px 0;border-bottom:1px solid #1d3a26}\ni{font-style:normal;grid-row:1}\nb{font-size:14px;white-space:nowrap}\nspan{font-size:12px;color:#1d8a44;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}\nem{font-style:normal;font-size:12px;text-align:center;border:1px solid currentColor;padding:0 2px;white-space:nowrap}\nsmall{grid-column:2 / span 3;font-size:12px;color:#8fd8a8}\n.fishing i::before{content:\"●\"}.underway i::before,.returning i::before,.departing i::before{content:\"▶\"}\n.alarm{color:#ffb627}.alarm i::before{content:\"▲\"}.alarm em{background:#ffb627;color:#021006}\n.lost{opacity:.6}.lost i::before{content:\"✕\"}.lost em{border-style:dashed}\n.key{margin:10px 0 0;font-size:12px;color:#1d8a44}",
       "props": {
         "items": "list"
       }
@@ -124,7 +124,20 @@ const board: Board = {
       "time": "updatedAt",
       "fresh": 900,
       "fields": {
-        "value": {}
+        "value": {
+          "items": {
+            "word": {
+              "at": "/state",
+              "names": {
+                "alarm": "경보",
+                "lost": "끊김",
+                "returning": "귀항",
+                "departing": "출항",
+                "fishing": "조업"
+              }
+            }
+          }
+        }
       }
     },
     "waves": {
