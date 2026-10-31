@@ -56,6 +56,7 @@ export function findProblems(
     for (const part of root.querySelectorAll('*')) {
       if (part instanceof HTMLStyleElement) continue;
       if (getComputedStyle(part).textOverflow === 'ellipsis' && part.scrollWidth > part.clientWidth + 1) cut += 1;
+      if (part.shadowRoot) cut += cutShortIn(part.shadowRoot);
     }
     return cut;
   }
@@ -135,6 +136,8 @@ export function findProblems(
         if (cut > 0) out.push({ path, message: `its content is cut off inside the widget — up to ${Math.round(cut)} px of it sits past a box that clips it; give it more room` });
       }
     }
+    const shortened = widget?.shadowRoot ? cutShortIn(widget.shadowRoot) : 0;
+    if (shortened > 0) out.push({ path, message: `its widget cuts ${shortened === 1 ? 'a text' : `${shortened} texts`} short with "…" — the box is too narrow for ${shortened === 1 ? 'it' : 'them'}; give the part more width` });
     const text = widget?.shadowRoot?.textContent ?? '';
     if (/Invalid widget spec|잘못된 위젯 명세/i.test(text)) out.push({ path, message: 'the widget draws its "invalid spec" card — validate the board and read its advice' });
   }

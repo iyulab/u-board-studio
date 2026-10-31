@@ -150,6 +150,20 @@ describe('findProblems', () => {
     ]);
   });
 
+  it('reports a text a widget cuts short with an ellipsis, in a shadow root within its own too — and none that fits', async () => {
+    // A grid of chips keeps its columns at any width: on a narrow screen the reader sees "API 게이…" and nothing spills.
+    await show(`
+      <div data-node-id="a"><u-widget style="display:block;width:60px">
+        <template shadowrootmode="open"><uw-grid style="display:block"><template shadowrootmode="open"><b style="display:block;width:40px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Excavator A</b><i style="display:block;width:30px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Pump B</i></template></uw-grid></template>
+      </u-widget></div>
+      <div data-node-id="b"><u-widget style="display:block;width:200px">
+        <template shadowrootmode="open"><uw-grid style="display:block"><template shadowrootmode="open"><b style="display:block;width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Excavator A</b></template></uw-grid></template>
+      </u-widget></div>`);
+    expect(await page.evaluate(findProblems, [node('a'), node('b')])).toEqual([
+      { path: '/nodes/a', message: 'its widget cuts 2 texts short with "…" — the box is too narrow for them; give the part more width' },
+    ]);
+  });
+
   it('measures a widget in a canvas drawn larger than its size in the widget’s own px — the scale is not overflow', async () => {
     await show(`
       <div style="transform:scale(2.6);transform-origin:0 0">

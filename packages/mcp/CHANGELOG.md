@@ -20,6 +20,9 @@ All notable changes to this package are documented here. The format follows
   and `look` said nothing, because the widget's own box still held what was left and only the reach of the content was measured. A box inside the widget
   that clips (`overflow: hidden`) and loses at least two px and a seventh of a part is reported now, as "its content is cut off inside the widget — up to N px
   of it sits past a box that clips it"; a box that scrolls is not, and none of the boards of the site's gallery is reported newly.
+- **`look` reports a text a widget cuts short with an ellipsis.** A grid of chips keeps its number of columns at any width, so on a narrow screen a name read "API 게이…" and
+  nothing spilled for `look` to see; the texts a widget cuts short with "…", in the shadow roots within it too, are reported as an element's are (drawn at 390 px,
+  one board of the site's gallery shows it, the one with the chips).
 - The rulebook writes the rule that places the items of a part as a part's `place` value (`"<part>": { "flow": … }`), with the shapes of `gap` and `at`;
   it called the value `"tile"`, a key the language does not have.
 
