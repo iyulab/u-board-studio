@@ -1,4 +1,6 @@
 {
   "about": "Breaking releases not yet adopted — a new major, or below 1.0 a new minor (give `minor` too) — each with why and until when. Read by scripts/check-dependency-drift.mjs: an entry past its reviewBy date, or one matching nothing outdated, fails the check. Remove an entry in the commit that adopts the major.",
-  "deferrals": []
+  "deferrals": [
+    {"package": "@iyulab/u-widgets", "major": 0, "minor": 45, "reason": "the published @iyulab/u-board 0.37 depends on @iyulab/u-widgets ^0.44.0; taking 0.45 here first would put two copies of the widget element in one console. Adopt it together with the library release that takes 0.45.", "reviewBy": "2026-11-07"}
+  ]
 }
