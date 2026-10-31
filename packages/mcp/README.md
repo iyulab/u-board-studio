@@ -54,6 +54,16 @@ In a client's JSON configuration:
 Reads take a JSON Pointer so only the part needed travels, and a change is a patch answered with the new
 revision — the document is never sent back. Every answer is compact JSON.
 
+### A board as files (optional)
+
+Start with `--bundle` (or `UBOARD_BUNDLE=1`) and two more tools read and write the same board as files — for an assistant that edits an
+element's markup, style and script more than it moves parts. The board is still one stored document; the files are a way to read and write it.
+
+| Tool | What it does |
+|---|---|
+| `get_bundle` | The board as files: `board.json` (parts, layout, states, skin — where an element's code or the background picture moved out it holds `{ "$file": path }`), `elements/<name>.html`, `.css`, `.js` (a name that is not word characters and dashes is percent-encoded) and `background.svg`. Without `files`: the list with sizes and `board.json`; with `files`: the text of those. |
+| `put_bundle` | Saves the board from files: the ones you give replace the files of the same path, the rest stay, and the board is saved whole and checked as any change is. An issue names the file it is in. |
+
 ## License
 
 AGPL-3.0-or-later, with a commercial license available — see the repository.

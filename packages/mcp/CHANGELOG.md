@@ -6,6 +6,13 @@ All notable changes to this package are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- **A board as files, on request.** Started with `--bundle` (or `UBOARD_BUNDLE=1`), the server also offers `get_bundle` and `put_bundle`: the
+  board read and written as `board.json` plus the markup, style and script of its elements and its inline SVG background as files of their
+  own. `put_bundle` takes only the files that changed, saves the board whole through the same check as any change, and names the file each
+  issue is in. The stored board is the same single document either way; the projection is lossless.
+
 ### Fixed
 
 - **`describe` rules name only the tools the assistant has.** On a board in a file (`--board`) the rules told of `list_boards`,

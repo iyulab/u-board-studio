@@ -15,7 +15,7 @@ if (start.mode === 'refused') {
 }
 
 if (start.mode === 'server') {
-  await createServer(new UBoardClient(start.url, start.token), new BrowserLooker(start.url, start.token)).connect(new StdioServerTransport());
+  await createServer(new UBoardClient(start.url, start.token), new BrowserLooker(start.url, start.token), { bundle: start.bundle === true }).connect(new StdioServerTransport());
 } else {
   let store: DocumentStore;
   try {
@@ -25,5 +25,5 @@ if (start.mode === 'server') {
     process.exit(1);
   }
   // No picture of the board is drawn: there is no server page to draw it on, so `look` is not offered.
-  await createServer(store).connect(new StdioServerTransport());
+  await createServer(store, undefined, { bundle: start.bundle === true }).connect(new StdioServerTransport());
 }

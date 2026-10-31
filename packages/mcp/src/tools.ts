@@ -7,6 +7,7 @@ import { UBoardApiError, type ResolveRef } from './client.js';
 import { isWorkspaceStore, type BoardStore, type WorkspaceStore } from './store.js';
 import { describeTopic, TOPICS } from './describe.js';
 import { shapeOf } from './shape.js';
+import { BundleError, fromBundle, toBundle, whereIs, BOARD_FILE } from './bundle.js';
 import type { Looker } from './look.js';
 
 /** What a tool answers: compact JSON text, and for `look` a picture with it — the shape an MCP tool result takes. */
@@ -32,6 +33,7 @@ function failed(error: unknown): ToolResult {
       undefined;
     return { content: [{ type: 'text', text: JSON.stringify({ status: error.status, ...error.body, ...(hint && { hint }) }) }], isError: true };
   }
+  if (error instanceof BundleError) return { content: [{ type: 'text', text: JSON.stringify({ code: 'INVALID_BUNDLE', message: error.message, hint: 'get_bundle lists the files; board.json marks each moved file with { "$file": path }.' }) }], isError: true };
   if (error instanceof JsonPatchError) return { content: [{ type: 'text', text: JSON.stringify({ code: 'INVALID_PATCH', operation: error.index, message: error.message }) }], isError: true };
   return { content: [{ type: 'text', text: JSON.stringify({ error: error instanceof Error ? error.message : String(error) }) }], isError: true };
 }
@@ -194,6 +196,9 @@ export interface BoardToolsOptions {
   /** Whether `board_state` is offered — it reads through the share route, which takes an API token, not a console
    *  session. True when left out. */
   boardState?: boolean;
+  /** Whether `get_bundle` and `put_bundle` are offered: a board read and written as files. Off when left out — they are a
+   *  second way to the same document, for an assistant that edits code and markup more than it moves parts. */
+  bundle?: boolean;
 }
 
 /**
@@ -202,7 +207,7 @@ export interface BoardToolsOptions {
  * and advice — never the document again. Nothing here needs Node: the MCP server registers them, and a browser can
  * hand them to a model as they are.
  */
-export function boardTools(store: BoardStore | WorkspaceStore, { looker, boardState = true }: BoardToolsOptions = {}): BoardTool[] {
+export function boardTools(store: BoardStore | WorkspaceStore, { looker, boardState = true, bundle = false }: BoardToolsOptions = {}): BoardTool[] {
   // The tools in WORKSPACE_TOOLS are offered only with a store that is a whole workspace on a server (the filter at the
   // end) — so in them `client` is one.
   const client = store as WorkspaceStore;
@@ -261,6 +266,61 @@ export function boardTools(store: BoardStore | WorkspaceStore, { looker, boardSt
         };
       })
   );
+
+  if (bundle) {
+    define(
+      'get_bundle',
+      {
+        description:
+          `A board as files: ${BOARD_FILE} (parts, layout, states, skin — where an element's code or the background picture moved out it holds { "$file": path }), elements/<name>.html|.css|.js (an element's template, style, script; a name that is not word characters and dashes is percent-encoded), background.svg. Without files: the list with sizes and ${BOARD_FILE}; with files: the text of those.`,
+        inputSchema: z.strictObject({
+          board: boardId,
+          files: z.array(z.string().max(200)).min(1).max(50).optional().describe('Paths to read, from the list. Omit for the list and board.json.'),
+        }),
+      },
+      async ({ board, files }) =>
+        tool(async () => {
+          const found = await store.getBoard(which(board));
+          const all = toBundle(found.document);
+          const wanted = files ?? [BOARD_FILE];
+          const unknown = wanted.filter(path => !(path in all));
+          if (unknown.length > 0) throw new Error(`no such file in this board's bundle: ${unknown.join(', ')} — the files are ${Object.keys(all).join(', ')}`);
+          return {
+            id: found.id,
+            name: found.name,
+            revision: found.revision,
+            files: Object.entries(all).map(([path, text]) => ({ path, bytes: new TextEncoder().encode(text).length })),
+            contents: Object.fromEntries(wanted.map(path => [path, all[path]])),
+          };
+        })
+    );
+
+    define(
+      'put_bundle',
+      {
+        description:
+          'Saves a board from files: those you give replace the files of the same path in the board as it is saved (get_bundle lists them) — the rest stay as they are — and the board is saved whole, checked as any change is. A new element is its entry in board.json with a { "$file": path } mark and its files. Answers the new revision and advice; an issue names the file it is in.',
+        inputSchema: z.strictObject({
+          board: boardId,
+          revision,
+          files: z.record(z.string().max(200), z.string()).refine(files => Object.keys(files).length > 0, { error: 'give at least one file' }).describe('{ path: text } — the whole text of each file.'),
+        }),
+      },
+      async ({ board, revision, files }) =>
+        tool(async () => {
+          const id = which(board);
+          const found = await store.getBoard(id);
+          const next = fromBundle({ ...toBundle(found.document), ...files });
+          try {
+            // on the revision the files were read at, unless the caller names one: the merge is of what was there
+            return await store.putDocument(id, next, revision ?? found.revision);
+          } catch (error) {
+            if (error instanceof UBoardApiError && error.body.issues) error.body.issues = error.body.issues.map(issue => ({ ...issue, file: whereIs(next, issue.path).file }));
+            throw error;
+          }
+        })
+    );
+  }
 
   if (boardState) {
     define(
