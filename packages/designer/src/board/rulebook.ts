@@ -85,7 +85,9 @@ it, a \`stat\`'s \`trend\` a field holding its recent values, a \`list\`'s \`pri
 
 | kind | shows | reads data | options |
 |---|---|---|---|
-${PART_KINDS.map(kindRow).join('\n')}`,
+${PART_KINDS.map(kindRow).join('\n')}
+
+Every \`chart.*\` also takes ${code(sharedChartOptions())}.`,
 
     `## layout — where, per view kind
 
@@ -142,9 +144,18 @@ ${JSON.stringify(RULEBOOK_EXAMPLE, null, 1)}
   ].join('\n\n');
 }
 
+const optionsOf = (k: PartKind) => [...k.own, ...k.options];
+
+/** The options every `chart.*` kind takes — the data columns and the like — said once under the table, not on each chart's row. */
+export function sharedChartOptions(): string[] {
+  const charts = PART_KINDS.filter(k => k.kind.startsWith('chart.'));
+  return charts.length === 0 ? [] : optionsOf(charts[0]!).filter(option => charts.every(k => optionsOf(k).includes(option)));
+}
+
 /** A kind's row: its name, what it shows, whether it reads data, and its options — the board's own, then the widget's. */
 function kindRow(k: PartKind): string {
   const reads = { needs: 'yes', may: 'may', no: 'no' }[k.of];
-  const options = [...k.own, ...k.options];
+  const shared = k.kind.startsWith('chart.') ? sharedChartOptions() : [];
+  const options = optionsOf(k).filter(option => !shared.includes(option));
   return `| \`${k.kind}\` | ${k.shows.replace(/\|/g, '/')} | ${reads} | ${options.length > 0 ? options.map(o => `\`${o}\``).join(' ') : '—'} |`;
 }

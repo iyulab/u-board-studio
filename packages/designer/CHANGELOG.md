@@ -8,6 +8,9 @@ All notable changes to this package are documented here. The format follows
 
 ### Changed
 
+- The rules (`boardRulebook`) say the options every `chart.*` takes once, under the kinds table, instead of on each chart's row — the
+  rulebook is about 1.1k characters shorter and a model writing a board with it authors no worse (first-attempt check pass 3 of 18 either
+  way, same day, same tasks).
 - The rules say that in a grid layout the items of an `each` part are cells of their own — `["pumps", 2]` flows them six to a row — so a list of tiles needs no per-item layout. (Two wordier phrases in the canvas notes were shortened to stay inside the rules' length budget.)
 - The rules say where a `{{field}}` is read — a title, a status card's subtitle and note — that a header's kicker and subtitle are
   fixed text and its `clock` is `true`, and that with a `list` a read's `time` is a field of each item (an item without it has no value;
