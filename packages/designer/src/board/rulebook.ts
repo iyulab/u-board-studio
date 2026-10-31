@@ -114,8 +114,10 @@ Use a built-in whenever one shows the thing — a title, a status and a few valu
 — every \`{{hole}}\` is a declared prop (\`number\` · \`string\` · \`boolean\` · \`list\` · \`object\`). A part places it with
 \`"as": "element", "element": "tank"\`, fixed \`props\` and \`bind\` (\`{ "level": "<field>", "tone": "<field>.tone" }\`). What markup cannot draw runs as a
 \`"script"\` in place of the template — in a sandboxed frame with no network, its props through \`ub.onProps\`, \`"resources"\` the
-https:// origins it loads from. The look is \`board.skin\` — fonts, a
-palette and a frame (${code(FRAMES)}) — once for the board; parts never set fonts or colours.`,
+https:// origins it loads from. The look is \`board.skin\`, once for the board; parts never set fonts or colours:
+\`{ "palette"?: { "paper", "ink", "muted", "rule" }, "font"? · "display"? · "mono"? (font stacks), "frame"?, "radius"? (px), "shadow"?: "none" | "soft" | "hard" }\`
+— a frame is ${code(FRAMES)}; paper is the ground the widgets sit on, ink their text, muted the quieter text, rule their lines; an element's CSS reads them as
+\`var(--u-widget-bg)\` · \`var(--u-widget-text)\` · \`var(--u-widget-text-secondary)\` · \`var(--u-widget-border)\`.`,
 
     `## triggers — what the board does
 
