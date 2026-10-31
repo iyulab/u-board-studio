@@ -124,6 +124,32 @@ describe('findProblems', () => {
     ]);
   });
 
+  it('reports content a widget cuts off inside itself — past an inner box that clips it, though still inside the widget’s own box — and not what fits or only scrolls', async () => {
+    // A card shrinks the box its readings sit in when it is short of height, and that box clips: the bar is there and cut
+    // off, the widget's own box holds what is left, so the content's reach says nothing of it.
+    await show(`
+      <div data-node-id="a"><u-widget style="display:block;width:200px;height:100px">
+        <template shadowrootmode="open"><div style="width:200px;height:100px"><div style="height:20px;overflow:hidden"><div style="height:40px">bar</div></div></div></template>
+      </u-widget></div>
+      <div data-node-id="b"><u-widget style="display:block;width:200px;height:100px">
+        <template shadowrootmode="open"><div style="width:200px;height:100px"><div style="height:40px;overflow:hidden"><div style="height:40px">bar</div></div></div></template>
+      </u-widget></div>
+      <div data-node-id="c"><u-widget style="display:block;width:200px;height:100px">
+        <template shadowrootmode="open"><div style="width:200px;height:100px"><div style="height:20px;overflow:auto"><div style="height:40px">rows</div></div></div></template>
+      </u-widget></div>
+      <div data-node-id="d"><u-widget style="display:block;width:200px;height:100px">
+        <template shadowrootmode="open"><uw-card style="display:block;height:100px"><template shadowrootmode="open"><div style="height:30px;overflow:hidden"><div style="height:10px"></div><div style="height:30px">meter</div></div></template></uw-card></template>
+      </u-widget></div>
+      <div data-node-id="e"><u-widget style="display:block;width:200px;height:100px">
+        <template shadowrootmode="open"><div style="width:200px;height:100px"><div style="width:100px;height:40px;overflow:hidden"><div style="margin-left:150px;height:30px">aside</div></div></div></template>
+      </u-widget></div>`);
+    // `e` is a box pushed out of its clip sideways: it keeps its height, nothing of it is cut off downward.
+    expect(await page.evaluate(findProblems, [node('a'), node('b'), node('c'), node('d'), node('e')])).toEqual([
+      { path: '/nodes/a', message: 'its content is cut off inside the widget — up to 20 px of it sits past a box that clips it; give it more room' },
+      { path: '/nodes/d', message: 'its content is cut off inside the widget — up to 10 px of it sits past a box that clips it; give it more room' },
+    ]);
+  });
+
   it('measures a widget in a canvas drawn larger than its size in the widget’s own px — the scale is not overflow', async () => {
     await show(`
       <div style="transform:scale(2.6);transform-origin:0 0">

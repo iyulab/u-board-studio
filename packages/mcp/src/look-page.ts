@@ -13,8 +13,9 @@ export function findProblems(
   // Everything this function uses is inside it: the page runs it from its source alone.
   /** The part of `part`'s box that is drawn: its box cut by every box inside the element that clips it — an ancestor
    *  whose `overflow` is not `visible`, on that axis. An absolutely positioned box is clipped only from its containing
-   *  block up (a static ancestor's overflow does not cut it), a fixed one by none. Undefined when nothing is left. */
-  function drawnRect(part: Element): { left: number; right: number; top: number; bottom: number } | undefined {
+   *  block up (a static ancestor's overflow does not cut it), a fixed one by none. Undefined when nothing is left —
+   *  `verticalOnly` reads only how far down it is cut: a box wholly clipped sideways still has the height it would have. */
+  function drawnRect(part: Element, verticalOnly = false): { left: number; right: number; top: number; bottom: number } | undefined {
     let { left, right, top, bottom } = part.getBoundingClientRect();
     let positioning = getComputedStyle(part).position;
     for (let a = part.parentElement; a; a = a.parentElement) {
@@ -22,13 +23,13 @@ export function findProblems(
       const clips = positioning === 'fixed' ? false : positioning === 'absolute' ? style.position !== 'static' : true;
       if (clips) {
         const b = a.getBoundingClientRect();
-        if (style.overflowX !== 'visible') [left, right] = [Math.max(left, b.left), Math.min(right, b.right)];
+        if (style.overflowX !== 'visible' && !verticalOnly) [left, right] = [Math.max(left, b.left), Math.min(right, b.right)];
         if (style.overflowY !== 'visible') [top, bottom] = [Math.max(top, b.top), Math.min(bottom, b.bottom)];
         // Past its containing block, the box goes where that block goes.
         if (positioning !== 'fixed') positioning = style.position;
       }
     }
-    return right > left && bottom > top ? { left, right, top, bottom } : undefined;
+    return (verticalOnly || right > left) && bottom > top ? { left, right, top, bottom } : undefined;
   }
 
   /** How far anything drawn inside `root` reaches past `host`'s box, in px (0 when it stays inside) — what is cut off
@@ -73,6 +74,36 @@ export function findProblems(
     return bottom;
   }
 
+  /** How far, in the widget's own px, the most cut-off box inside `root` (shadow roots within it included) loses to a
+   *  box that clips it — 0 when nothing is cut. A card short of height shrinks the box its readings sit in and that box
+   *  clips (`overflow: hidden`): the bar is there and cut, and the widget's own box holds what is left, so the reach of
+   *  the content (`contentBottom`) says nothing of it. A box that scrolls (`auto` · `scroll`) is not cut — it is read; a
+   *  few px, or a sliver of a box, is a line's own overhang, not a part gone. */
+  function cutInside(root: ShadowRoot | Element, scale: number): number {
+    let cut = 0;
+    for (const part of root.querySelectorAll('*')) {
+      if (part instanceof HTMLStyleElement) continue;
+      const own = part.getBoundingClientRect();
+      if (own.height > 0) {
+        const drawn = drawnRect(part, true);
+        const lost = own.height - (drawn ? drawn.bottom - drawn.top : 0);
+        if (lost / scale >= 2 && lost >= own.height * 0.15 && clippedByHidden(part)) cut = Math.max(cut, lost / scale);
+      }
+      if (part.shadowRoot) cut = Math.max(cut, cutInside(part.shadowRoot, scale));
+    }
+    return cut;
+  }
+
+  /** Whether the nearest ancestor that cuts `part` on the vertical axis only clips (`hidden` · `clip`) — one that scrolls does not lose it. */
+  function clippedByHidden(part: Element): boolean {
+    for (let a = part.parentElement; a; a = a.parentElement) {
+      const overflow = getComputedStyle(a).overflowY;
+      if (overflow === 'hidden' || overflow === 'clip') return true;
+      if (overflow === 'auto' || overflow === 'scroll') return false;
+    }
+    return false;
+  }
+
   const out: Array<{ path?: string; message: string }> = [];
   for (const { id, path, attr } of placed) {
     const frame = root.querySelector(`[${attr}="${CSS.escape(id)}"]`);
@@ -98,6 +129,10 @@ export function findProblems(
       const height = Math.max(inner.clientHeight, Math.round((contentBottom(inner.shadowRoot ?? inner) - box.top) / scale));
       if (inner.scrollWidth > inner.clientWidth + 1 || height > inner.clientHeight + 1) {
         out.push({ path, message: `its content runs past its box (${inner.scrollWidth}×${height} in ${inner.clientWidth}×${inner.clientHeight}) — it scrolls or is cut off; give it more room` });
+      } else {
+        // What the widget cuts off inside itself, within a box that holds what is left.
+        const cut = cutInside(inner.shadowRoot ?? inner, scale);
+        if (cut > 0) out.push({ path, message: `its content is cut off inside the widget — up to ${Math.round(cut)} px of it sits past a box that clips it; give it more room` });
       }
     }
     const text = widget?.shadowRoot?.textContent ?? '';

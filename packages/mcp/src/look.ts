@@ -182,7 +182,7 @@ async function focusClip(page: Page, document: ViewDocument, focus: string, scal
   return clip;
 }
 
-/** Elements that failed or were held back, and widgets whose content runs past their box. */
+/** Elements that failed or were held back, and widgets whose content runs past their box or is cut off inside it. */
 async function problems(page: Page, doc: ViewDocument): Promise<LookReport['problems']> {
   return page.evaluate(findProblems, placedParts(doc));
 }

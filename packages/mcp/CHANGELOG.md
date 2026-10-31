@@ -16,6 +16,10 @@ All notable changes to this package are documented here. The format follows
 
 ### Fixed
 
+- **`look` reports content a widget cuts off inside itself.** A card short of height shrinks the box its readings sit in, and that box clips: a bar under a state chip went missing
+  and `look` said nothing, because the widget's own box still held what was left and only the reach of the content was measured. A box inside the widget
+  that clips (`overflow: hidden`) and loses at least two px and a seventh of a part is reported now, as "its content is cut off inside the widget — up to N px
+  of it sits past a box that clips it"; a box that scrolls is not, and none of the boards of the site's gallery is reported newly.
 - The rulebook writes the rule that places the items of a part as a part's `place` value (`"<part>": { "flow": … }`), with the shapes of `gap` and `at`;
   it called the value `"tile"`, a key the language does not have.
 
