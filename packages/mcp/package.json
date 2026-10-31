@@ -50,7 +50,7 @@
     "node": ">=22.22.0"
   },
   "dependencies": {
-    "@iyulab/u-board": "^0.38.0",
+    "@iyulab/u-board": "^0.39.0",
     "@iyulab/u-board-designer": "^0.1.0",
     "@iyulab/u-widgets": "^0.45.0",
     "@modelcontextprotocol/sdk": "^1.32.1",
