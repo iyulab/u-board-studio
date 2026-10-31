@@ -1,6 +1,6 @@
 {
   "name": "@iyulab/u-board-designer",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "The authoring tool for U-Board boards, and the check and rulebook an assistant writes by",
   "type": "module",
   "license": "AGPL-3.0-or-later",

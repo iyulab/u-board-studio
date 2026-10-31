@@ -6,6 +6,8 @@ All notable changes to this package are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-10-31
+
 ### Changed
 
 - The rules (`boardRulebook`) say the options every `chart.*` takes once, under the kinds table, instead of on each chart's row — the

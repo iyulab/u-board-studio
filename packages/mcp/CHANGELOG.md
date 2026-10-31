@@ -6,6 +6,8 @@ All notable changes to this package are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.26.0] - 2026-10-31
+
 ### Added
 
 - **A board as files, on request.** Started with `--bundle` (or `UBOARD_BUNDLE=1`), the server also offers `get_bundle` and `put_bundle`: the
