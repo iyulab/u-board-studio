@@ -189,6 +189,8 @@ export interface AuthoringLabels {
   dataFieldRemove: string;
   /** A field's status — how its value is doing — and the words it is shown as, as the data panel sets them. */
   dataFieldState: string;
+  /** A status that follows the clock (`{ relative: bands }`) — shown as it is; it is written in the board's JSON. */
+  dataFieldStateRelative: string;
   dataFieldNames: string;
   mappingNone: string;
   mappingRaw: string;
@@ -505,6 +507,7 @@ export const DEFAULT_AUTHORING_LABELS: AuthoringLabels = {
   dataFieldFormat: 'Format',
   dataFieldRemove: 'Remove field {name}',
   dataFieldState: 'Status',
+  dataFieldStateRelative: 'Status follows the clock (bands over the seconds from now) — written in the board’s JSON',
   dataFieldNames: 'Words',
   mappingNone: '(none)',
   mappingRaw: 'The value is a status name',

@@ -1,7 +1,7 @@
 import { FIELD_STYLE } from './field-style.js';
 import { DEFAULT_DESIGNER_LABELS, type DesignerLabels } from '../labels.js';
 import { useState } from 'react';
-import { ERROR_STYLE, GROUP_STYLE } from '@iyulab/u-board/toolkit';
+import { ERROR_STYLE, GROUP_STYLE, isRelativeRule } from '@iyulab/u-board/toolkit';
 import type { Field, Query } from '@iyulab/u-board/toolkit';
 import { MappingEditor } from './MappingEditor.js';
 
@@ -226,14 +226,20 @@ function DataRead({ name, query, sources, look, statuses, labels, set, setField,
               <input type="number" min={0} step={1} value={f.digits ?? ''} onChange={e => setField(fieldName, { digits: e.target.value === '' ? undefined : Number(e.target.value) })} />
             </label>
             {text(labels.dataFieldFormat, f.format, format => setField(fieldName, { format }))}
-            <MappingEditor
-              legend={labels.dataFieldState}
-              value={f.state}
-              raw
-              names={statuses}
-              onChange={state => setField(fieldName, { state })}
-              labels={labels}
-            />
+            {isRelativeRule(f.state) ? (
+              <p className="ub-panel__hint">
+                {labels.dataFieldStateRelative}: <code>{JSON.stringify(f.state.relative)}</code>
+              </p>
+            ) : (
+              <MappingEditor
+                legend={labels.dataFieldState}
+                value={f.state}
+                raw
+                names={statuses}
+                onChange={state => setField(fieldName, { state })}
+                labels={labels}
+              />
+            )}
             <MappingEditor
               legend={labels.dataFieldNames}
               value={f.names}

@@ -53,6 +53,13 @@ describe('withPictureLayout', () => {
     expect([placesItself(board, 'count'), placesItself(board, 'pump/P1'), placesItself(board, 'pump'), placesItself(board, 'unit/a')]).toEqual([true, true, false, false]);
   });
 
+  it('does not drag items the board places by a rule or by their fields', () => {
+    const place = (board.layout as { place: Record<string, unknown> }).place;
+    const rule = { ...board, layout: { ...board.layout, place: { ...place, pump: { flow: { cell: [200, 100], columns: 2 } } } } } as typeof board;
+    const fields = { ...board, layout: { ...board.layout, place: { ...place, pump: { at: ['x', 'y'] } } } } as typeof board;
+    expect([placesItself(rule, 'pump/P1'), placesItself(fields, 'pump/P1'), placesItself(board, 'pump/P1')]).toEqual([false, false, true]);
+  });
+
   it('leaves the board as it is when nothing moved', () => {
     expect(withPictureLayout(board, picture(board), picture(board))).toBe(board);
   });

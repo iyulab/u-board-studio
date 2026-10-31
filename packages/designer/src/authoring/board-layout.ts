@@ -5,7 +5,7 @@
 
 import { DEFAULT_NODE_HEIGHT, DEFAULT_NODE_WIDTH } from '@iyulab/u-board/toolkit';
 import { GRID_DEFAULT_SPAN, type GridView, type Node, type ViewDocument } from '@iyulab/u-board/picture';
-import { isDataPlace } from '@iyulab/u-board/toolkit';
+import { isDataPlace, isFlowPlace } from '@iyulab/u-board/toolkit';
 import type { Board, CanvasLayout, GridItem, Place, Shape, Trigger } from '@iyulab/u-board/toolkit';
 
 /**
@@ -153,8 +153,8 @@ export function placesItself(board: Board, id: string): boolean {
   }
   const placed = board.layout.place[part!];
   if (placed === undefined || rest.length > 0) return false;
-  // Items placed by their own fields are not dragged: their fields say where they are.
-  return key === undefined ? Array.isArray(placed) : board.parts[part!]?.each !== undefined && !Array.isArray(placed) && !isDataPlace(placed);
+  // Items placed by their own fields, or by a rule, are not dragged: the fields and the rule say where they are.
+  return key === undefined ? Array.isArray(placed) : board.parts[part!]?.each !== undefined && !Array.isArray(placed) && !isDataPlace(placed) && !isFlowPlace(placed);
 }
 
 /**

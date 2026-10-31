@@ -63,7 +63,7 @@ ${keys('query')}
 A field is \`{ at?, label?, unit?, digits?, format?, names?, state? }\`; it reads \`/<its name>\` of the item unless \`at\`
 says where. \`state\` says how the value is doing, as a status: \`"raw"\` (the value is a status name), a map
 (\`{ "trip": "down", "*": "off" }\`, \`*\` for the rest) or bands (\`["ok", 1, "warn", 5, "alarm"]\` — the status below the
-first number, then from each number up). \`names\` takes the same two forms for what a value is shown as (a word, a count of marks). A field can also be computed from the items of the list: \`derive: { op: count | sum | min | max | avg, field?, where? }\` — a part that reads the list (no item) shows it, a \`state\` on it can raise a status. A field that holds a list of objects says what its items' fields mean with \`items\`.`,
+first number, then from each number up); a time's \`state\` can follow the clock: \`{ "relative": ["past", -2700, "now", 1, "next", 2700, "later"] }\` — bands over the seconds from now to it (negative: gone by). \`names\` takes the same two forms for what a value is shown as (a word, a count of marks). A field can also be computed from the items of the list: \`derive: { op: count | sum | min | max | avg, field?, where? }\` — a part that reads the list (no item) shows it, a \`state\` on it can raise a status. A field that holds a list of objects says what its items' fields mean with \`items\`.`,
 
     `## statuses — how each status looks
 
@@ -79,9 +79,9 @@ with \`use\`; \`each: "<data>"\` makes one part per item (ids \`<part>/<key>\`) 
 canvas of their own — its parts and links read the group's \`of\` unless they name their own.
 
 The board's own options take fields of what the part reads: a \`status-card\`'s \`meter\` is \`"<field>"\` or
-\`{ "field", "min"?, "max"?, "form"?: "bar" | "ring" }\`, its \`state\` (and a \`stat-list\`'s) the field whose status colours
+\`{ "field", "min"?, "max"? (a number, or a field of the item), "form"?: "bar" | "ring" }\`, its \`state\` (and a \`stat-list\`'s) the field whose status colours
 it, a \`stat\`'s \`trend\` a field holding its recent values, a \`list\`'s \`primary\` · \`secondary\` · \`trailing\` ·
-\`badge\` · \`time\` fields of each row. Any other option is the widget's own — only those listed.
+\`badge\` · \`time\` fields of each row. A part that reads one item takes \`highlight: "<boolean field>"\`: a ring while it is true, apart from the status. Any other option is the widget's own — only those listed.
 
 | kind | shows | reads data | options |
 |---|---|---|---|
@@ -97,7 +97,7 @@ Every \`chart.*\` also takes ${code(sharedChartOptions())}.`,
   at the point its two fields say; \`frame\` is the values at the canvas's left, top, right and bottom edges (the canvas's own
   coordinates when left out), \`size\` the box centred on the point (give one for a marker: a dot alone is [14, 14]; one with a name or note draws
   it right of the dot — about [150, 40] — and it is the box, not the dot, that is centred). An item with no number in a field, or
-  outside the frame, is not drawn — \`look\` counts them. The data needs a \`key\`; the projection is linear (right for a plan or a flat map). A part is placed one way, not both. A shape is a \`box\` (with \`label\`), a \`text\` at a point,
+  outside the frame, is not drawn — \`look\` counts them. The data needs a \`key\`; the projection is linear (right for a plan or a flat map). A part is placed one way, not both. Or by a rule: \`"tile": { "flow": { "cell": [w, h], "columns": n, "gap"?, "at"? }, "by"?: "<field>", "boxes"?: { "columns": n, "label"?: "{{key}}" } }\` — items flow in columns, or with \`by\` are grouped into labelled boxes (\`flow.pad\` [sides, top] kept clear inside). A shape is a \`box\` (with \`label\`), a \`text\` at a point,
   a \`line\` through points or a \`path\` (absolute M · L · C · Q · Z).
 - grid: \`{ "kind": "grid", "items": ["<part>", ["<part>", span], { "grid": [ … ], "span": n }, { "canvas": { … }, "span": n }] }\` —
   12 columns; an \`each\` part's items are cells (\`["pumps", 2]\`: six to a row); a grid in an item stacks what it holds.
@@ -117,7 +117,7 @@ Use a built-in whenever one shows the thing — a title, a status and a few valu
 https:// origins it loads from. The look is \`board.skin\`, once for the board; parts never set fonts or colours:
 \`{ "palette"?: { "paper", "ink", "muted", "rule" }, "font"? · "display"? · "mono"? (font stacks), "frame"?, "radius"? (px), "shadow"?: "none" | "soft" | "hard" }\`
 — a frame is ${code(FRAMES)}; paper is the ground the widgets sit on, ink their text, muted the quieter text, rule their lines; an element's CSS reads them as
-\`var(--u-widget-bg)\` · \`var(--u-widget-text)\` · \`var(--u-widget-text-secondary)\` · \`var(--u-widget-border)\`.`,
+\`var(--u-widget-bg)\` · \`var(--u-widget-text)\` · \`var(--u-widget-text-secondary)\` · \`var(--u-widget-border)\`; a background picture follows the skin when it writes a colour as \`var(--u-widget-bg, #f6f4ef)\` (its own colour is the fallback).`,
 
     `## triggers — what the board does
 

@@ -135,6 +135,7 @@ export const KO_AUTHORING_LABELS: AuthoringLabels = {
   dataFieldFormat: '서식',
   dataFieldRemove: '필드 {name} 지우기',
   dataFieldState: '상태',
+  dataFieldStateRelative: '상태가 시계를 따름(지금부터 그 시각까지의 초에 대한 구간) — 보드 JSON에서 고친다',
   dataFieldNames: '낱말',
   mappingNone: '(없음)',
   mappingRaw: '값이 곧 상태 이름',
