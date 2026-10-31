@@ -147,7 +147,7 @@ describe('u-board-mcp', () => {
   it('offers few tools, each with a strict input', async () => {
     const { tools } = await client.listTools();
     expect(tools.map(t => t.name).sort()).toEqual([
-      'board_state', 'create_board', 'create_source', 'delete_board', 'describe', 'describe_source', 'get_board', 'list_boards', 'list_sources', 'patch_board', 'rename_board', 'sample_source', 'validate',
+      'board_state', 'create_board', 'create_source', 'delete_board', 'describe', 'describe_source', 'edit_text', 'get_board', 'list_boards', 'list_sources', 'patch_board', 'rename_board', 'sample_source', 'validate',
     ]);
     for (const tool of tools) expect(tool.inputSchema.additionalProperties, tool.name).toBe(false);
   });

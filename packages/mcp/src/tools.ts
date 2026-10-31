@@ -199,6 +199,9 @@ export interface BoardToolsOptions {
   /** Whether `get_bundle` and `put_bundle` are offered: a board read and written as files. Off when left out — they are a
    *  second way to the same document, for an assistant that edits code and markup more than it moves parts. */
   bundle?: boolean;
+  /** Whether `edit_text` is offered: a change inside one string of the board (an element's CSS, a template, a title) by the
+   *  words around it, without sending the whole string. On when left out. */
+  editText?: boolean;
 }
 
 /**
@@ -207,7 +210,7 @@ export interface BoardToolsOptions {
  * and advice — never the document again. Nothing here needs Node: the MCP server registers them, and a browser can
  * hand them to a model as they are.
  */
-export function boardTools(store: BoardStore | WorkspaceStore, { looker, boardState = true, bundle = false }: BoardToolsOptions = {}): BoardTool[] {
+export function boardTools(store: BoardStore | WorkspaceStore, { looker, boardState = true, bundle = false, editText = true }: BoardToolsOptions = {}): BoardTool[] {
   // The tools in WORKSPACE_TOOLS are offered only with a store that is a whole workspace on a server (the filter at the
   // end) — so in them `client` is one.
   const client = store as WorkspaceStore;
@@ -399,6 +402,47 @@ export function boardTools(store: BoardStore | WorkspaceStore, { looker, boardSt
         return { id: saved.id, name: saved.name, revision: saved.revision };
       })
   );
+
+  if (editText) {
+    define(
+      'edit_text',
+      {
+        description:
+          'Changes text inside strings of a board and saves it, as patch_board does: each of `edits` names the string by `pointer` (an element’s "/elements/<name>/style" or "/template", a title …), `old` is text that stands exactly once in it by then, `new` replaces it. All are made or none; nothing else in a string is sent or changed. Answers the new revision and advice.',
+        inputSchema: z.strictObject({
+          board: boardId,
+          revision,
+          edits: z
+            .array(
+              z.strictObject({
+                pointer: z.string().max(200).describe('A JSON Pointer to a string of the board.'),
+                old: z.string().min(1).describe('Text that stands exactly once in that string — copy it exactly as get_board gives it.'),
+                new: z.string().describe('What replaces it.'),
+              })
+            )
+            .min(1)
+            .max(50),
+        }),
+      },
+      async ({ board, revision, edits }) =>
+        tool(async () => {
+          const id = which(board);
+          const found = await store.getBoard(id);
+          // the strings as they are after each edit, so two edits in one string find their words in what the first left
+          const changed = new Map<string, string>();
+          edits.forEach(({ pointer, old, new: replacement }, i) => {
+            const text = changed.get(pointer) ?? getByPointer(found.document, pointer);
+            if (typeof text !== 'string') throw new Error(`edits[${i}]: ${pointer} is not a string — edit_text changes text inside a string; patch_board changes the rest`);
+            const first = text.indexOf(old);
+            if (first < 0) throw new Error(`edits[${i}]: the text to replace is not in ${pointer} — copy it exactly, as get_board gives it`);
+            if (text.indexOf(old, first + 1) >= 0) throw new Error(`edits[${i}]: the text to replace stands more than once in ${pointer} — add the words around it that make it one place`);
+            changed.set(pointer, text.slice(0, first) + replacement + text.slice(first + old.length));
+          });
+          const patch = [...changed].map(([path, value]) => ({ op: 'replace' as const, path, value }));
+          return store.patchDocument(id, patch, revision ?? found.revision);
+        })
+    );
+  }
 
   define(
     'patch_board',

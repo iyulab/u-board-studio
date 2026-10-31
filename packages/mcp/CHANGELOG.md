@@ -6,6 +6,19 @@ All notable changes to this package are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- **`edit_text`: a change inside a string of the board, by the words around it.** `edits` is a list of `{ pointer, old, new }`: each names a string of the
+  board (an element's `/elements/<name>/style` or `/template`, a title …) and text that stands once in it, and the text replaces it; the edits are made
+  together or not at all and saved on one revision, through the same check as any change. A JSON Patch can only replace a whole string, so an assistant
+  changing two numbers in a long stylesheet had to send the stylesheet again — and could change it by a character it did not mean to. It is offered
+  with the other tools; `UBOARD_EDIT_TEXT=0` leaves it out.
+
+### Fixed
+
+- The rulebook writes the rule that places the items of a part as a part's `place` value (`"<part>": { "flow": … }`), with the shapes of `gap` and `at`;
+  it called the value `"tile"`, a key the language does not have.
+
 ## [0.26.0] - 2026-10-31
 
 ### Added

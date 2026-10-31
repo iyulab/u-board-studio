@@ -21,13 +21,13 @@ describe('the board tools on a store', () => {
     const client = new UBoardClient('https://board.example.com', 'ubt_test');
     expect(isWorkspaceStore(client)).toBe(true);
     expect(boardTools(client).map(t => t.name).sort()).toEqual([
-      'board_state', 'create_board', 'create_source', 'delete_board', 'describe', 'describe_source', 'get_board', 'list_boards', 'list_sources',
+      'board_state', 'create_board', 'create_source', 'delete_board', 'describe', 'describe_source', 'edit_text', 'get_board', 'list_boards', 'list_sources',
       'patch_board', 'rename_board', 'sample_source', 'validate',
     ]);
   });
 
   it('offer, with boards alone, only what needs no list of boards and no data source', () => {
     expect(isWorkspaceStore(documentOnly)).toBe(false);
-    expect(boardTools(documentOnly).map(t => t.name).sort()).toEqual(['describe', 'get_board', 'patch_board', 'validate']);
+    expect(boardTools(documentOnly).map(t => t.name).sort()).toEqual(['describe', 'edit_text', 'get_board', 'patch_board', 'validate']);
   });
 });

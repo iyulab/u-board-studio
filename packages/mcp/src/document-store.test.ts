@@ -113,7 +113,7 @@ describe('the board tools over a board in a file', () => {
 
   it('offers only the tools that need neither a list of boards nor a data source', async () => {
     const { tools } = await client.listTools();
-    expect(tools.map(t => t.name).sort()).toEqual(['describe', 'get_board', 'patch_board', 'validate']);
+    expect(tools.map(t => t.name).sort()).toEqual(['describe', 'edit_text', 'get_board', 'patch_board', 'validate']);
   });
 
   it('needs no board named: there is one', async () => {
