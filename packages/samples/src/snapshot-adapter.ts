@@ -34,3 +34,15 @@ export class SnapshotAdapter implements Adapter {
 export function snapshotAdapters(pack: SamplePack): SnapshotAdapter[] {
   return pack.connectors.map(c => new SnapshotAdapter(c, pack.snapshot.responses[c.key] ?? {}, pack.snapshot.capturedAt));
 }
+
+/**
+ * The clock of a recording: the moment it was recorded, moving on as the page stays open — what a board drawn from it
+ * reads «now» by. A recording read a day later would otherwise place every session of a timetable in the past; read by
+ * its own clock it says what it said when it was recorded. A `capturedAt` that is no time leaves the machine's clock.
+ */
+export function snapshotClock(capturedAt: string): () => number {
+  const at = Date.parse(capturedAt);
+  if (Number.isNaN(at)) return Date.now;
+  const opened = Date.now();
+  return () => at + (Date.now() - opened);
+}

@@ -6,7 +6,7 @@ import { createElement } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BoardView, KO_LABELS } from '@iyulab/u-board/viewer';
 import '@iyulab/u-board/styles.css';
-import { SnapshotAdapter } from '@iyulab/u-board-samples/lazy';
+import { SnapshotAdapter, snapshotClock } from '@iyulab/u-board-samples/lazy';
 import { countUnread, playgroundStatus, readPlayground, type Problem } from './json-playground-model';
 
 interface Text {
@@ -80,6 +80,7 @@ if (root) {
         key: revision,
         board,
         adapters: answers.connectors.map(c => new SnapshotAdapter(c, answers.responses[c.key] ?? {}, answers.capturedAt)),
+        clock: snapshotClock(answers.capturedAt),
         labels: korean ? KO_LABELS : undefined,
         onNavigate: opens,
       })

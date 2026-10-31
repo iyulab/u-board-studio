@@ -10,7 +10,7 @@ import { createElement } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BoardView, KO_LABELS } from '@iyulab/u-board/viewer';
 import '@iyulab/u-board/styles.css';
-import { loadSamplePack, snapshotAdapters } from '@iyulab/u-board-samples/lazy';
+import { loadSamplePack, snapshotAdapters, snapshotClock } from '@iyulab/u-board-samples/lazy';
 
 const korean = document.documentElement.lang === 'ko';
 
@@ -23,6 +23,7 @@ async function draw(host: HTMLElement) {
     createElement(BoardView, {
       board: pack.board,
       adapters: snapshotAdapters(pack),
+      clock: snapshotClock(pack.snapshot.capturedAt),
       ariaLabel: host.dataset.label,
       labels: korean ? KO_LABELS : undefined,
     })

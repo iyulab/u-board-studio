@@ -1,6 +1,6 @@
 export type { ExampleSampleConnector, LiveSampleConnector, Localized, OwnKey, SampleConnector, SamplePack, SampleSnapshot } from './sample-pack.js';
 export { isInstallable, isLiveConnector, ownKeyConnectors } from './sample-pack.js';
-export { SnapshotAdapter, snapshotAdapters } from './snapshot-adapter.js';
+export { SnapshotAdapter, snapshotAdapters, snapshotClock } from './snapshot-adapter.js';
 export { ALL_TAGS, DOMAINS, STYLES, TRAITS, tagsOf, traitsOf, type Domain, type SampleTag, type Style, type TagGroup, type Trait } from './tags.js';
 export { gwanghwamun } from './packs/gwanghwamun.js';
 export { seoulAir } from './packs/seoul-air.js';
