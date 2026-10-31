@@ -62,7 +62,7 @@ element's markup, style and script more than it moves parts. The board is still 
 | Tool | What it does |
 |---|---|
 | `get_bundle` | The board as files: `board.json` (parts, layout, states, skin — where an element's code or the background picture moved out it holds `{ "$file": path }`), `elements/<name>.html`, `.css`, `.js` (a name that is not word characters and dashes is percent-encoded) and `background.svg`. Without `files`: the list with sizes and `board.json`; with `files`: the text of those. |
-| `put_bundle` | Saves the board from files: the ones you give replace the files of the same path, the rest stay, and the board is saved whole and checked as any change is. An issue names the file it is in. |
+| `put_bundle` | Saves the board from files, checked as any change is: `files` replace the files of the same path, `edits` (`{ file, old, new }`) change a file in place — `old` stands exactly once in it — so a long style is not sent again for a small change; the rest stays. An issue names the file it is in. |
 
 ## License
 

@@ -126,3 +126,17 @@ export function whereIs(board: Board, pointer: string): { file: string; pointer:
   if (parts[0] === 'layout' && parts[1] === 'background' && typeof background === 'string' && isMovable(background)) return { file: BACKGROUND_FILE, pointer: '' };
   return { file: BOARD_FILE, pointer };
 }
+
+/** The files with each edit made in the order given: `old` must stand exactly once in the file as it is by then. A file that is not there, or an `old` that is not found or stands more than once, is a `BundleError` that says which. */
+export function withEdits(files: Bundle, edits: ReadonlyArray<{ file: string; old: string; new: string }>): Bundle {
+  const out: Bundle = { ...files };
+  edits.forEach((edit, i) => {
+    const text = out[edit.file];
+    if (text === undefined) throw new BundleError(`edits[${i}]: ${edit.file} is not a file of the bundle — the files are ${Object.keys(out).join(', ')}`);
+    const first = text.indexOf(edit.old);
+    if (first < 0) throw new BundleError(`edits[${i}]: the text to replace is not in ${edit.file} — copy it exactly, as get_bundle gives it`);
+    if (text.indexOf(edit.old, first + 1) >= 0) throw new BundleError(`edits[${i}]: the text to replace stands more than once in ${edit.file} — add the words around it that make it one place`);
+    out[edit.file] = text.slice(0, first) + edit.new + text.slice(first + edit.old.length);
+  });
+  return out;
+}

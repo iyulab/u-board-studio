@@ -63,6 +63,23 @@ describe('a board as files, over MCP', () => {
     expect(JSON.parse(await readFile(file, 'utf8')).elements.badge).toEqual({ template: '<b>{{n}}</b>', style: 'b{color:blue}', props: { n: 'string' } });
   });
 
+  it('changes a file in place with edits, without sending it again', async () => {
+    const { client, call } = await connect({ bundle: true });
+    await call('put_bundle', { files: first, revision: 1 });
+    expect((await call('put_bundle', { edits: [{ file: 'elements/badge.css', old: 'color:red', new: 'color:#036' }] })).value).toMatchObject({ revision: 3 });
+    expect(JSON.parse(await readFile(file, 'utf8')).elements.badge.style).toBe('b{color:#036}');
+    const missed = await call('put_bundle', { edits: [{ file: 'elements/badge.css', old: 'color:red', new: 'x' }] });
+    expect(missed).toMatchObject({ isError: true, value: { code: 'INVALID_BUNDLE', message: expect.stringContaining('is not in elements/badge.css') } });
+    // files and edits together: the files first, then the edits
+    const both = await call('put_bundle', { files: { 'elements/badge.css': 'b{color:red;margin:0}' }, edits: [{ file: 'elements/badge.css', old: 'margin:0', new: 'margin:2px' }] });
+    expect(both.value).toMatchObject({ revision: 4 });
+    expect(JSON.parse(await readFile(file, 'utf8')).elements.badge.style).toBe('b{color:red;margin:2px}');
+    // neither: refused by the tool's own input check, before anything is read
+    const none = await client.callTool({ name: 'put_bundle', arguments: {} });
+    expect(none.isError).toBe(true);
+    expect((none.content as { text: string }[])[0]!.text).toContain('give files, edits, or both');
+  });
+
   it('answers a refused board with the file each issue is in, and saves nothing', async () => {
     const { call } = await connect({ bundle: true });
     await call('put_bundle', { files: first, revision: 1 });

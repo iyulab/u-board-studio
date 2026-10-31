@@ -7,7 +7,7 @@ import { UBoardApiError, type ResolveRef } from './client.js';
 import { isWorkspaceStore, type BoardStore, type WorkspaceStore } from './store.js';
 import { describeTopic, TOPICS } from './describe.js';
 import { shapeOf } from './shape.js';
-import { BundleError, fromBundle, toBundle, whereIs, BOARD_FILE } from './bundle.js';
+import { BundleError, fromBundle, toBundle, whereIs, withEdits, BOARD_FILE } from './bundle.js';
 import type { Looker } from './look.js';
 
 /** What a tool answers: compact JSON text, and for `look` a picture with it — the shape an MCP tool result takes. */
@@ -299,18 +299,24 @@ export function boardTools(store: BoardStore | WorkspaceStore, { looker, boardSt
       'put_bundle',
       {
         description:
-          'Saves a board from files: those you give replace the files of the same path in the board as it is saved (get_bundle lists them) — the rest stay as they are — and the board is saved whole, checked as any change is. A new element is its entry in board.json with a { "$file": path } mark and its files. Answers the new revision and advice; an issue names the file it is in.',
+          'Saves a board from files, checked as any change is. `files` ({ path: whole text }) replace the files of the same path in the board as it is saved (get_bundle lists them); `edits` ([{ file, old, new }]) change a file in place — `old` is text that stands exactly once in it, `new` takes its place — so a long style or markup is not sent again for a small change. Files first, then edits; the rest stays as it is. A new element is its entry in board.json with a { "$file": path } mark and its files. Answers the new revision and advice; an issue names the file it is in.',
         inputSchema: z.strictObject({
           board: boardId,
           revision,
-          files: z.record(z.string().max(200), z.string()).refine(files => Object.keys(files).length > 0, { error: 'give at least one file' }).describe('{ path: text } — the whole text of each file.'),
-        }),
+          files: z.record(z.string().max(200), z.string()).optional().describe('{ path: text } — the whole text of each file.'),
+          edits: z
+            .array(z.strictObject({ file: z.string().max(200), old: z.string().min(1), new: z.string() }))
+            .min(1)
+            .max(50)
+            .optional()
+            .describe('Changes made inside a file: `old` stands exactly once in it, `new` replaces it.'),
+        }).refine(({ files, edits }) => (files !== undefined && Object.keys(files).length > 0) || edits !== undefined, { error: 'give files, edits, or both' }),
       },
-      async ({ board, revision, files }) =>
+      async ({ board, revision, files, edits }) =>
         tool(async () => {
           const id = which(board);
           const found = await store.getBoard(id);
-          const next = fromBundle({ ...toBundle(found.document), ...files });
+          const next = fromBundle(withEdits({ ...toBundle(found.document), ...files }, edits ?? []));
           try {
             // on the revision the files were read at, unless the caller names one: the merge is of what was there
             return await store.putDocument(id, next, revision ?? found.revision);

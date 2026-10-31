@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { Board } from '@iyulab/u-board/domain';
-import { BundleError, elementFile, fromBundle, toBundle, whereIs } from './bundle.js';
+import { BundleError, elementFile, fromBundle, toBundle, whereIs, withEdits } from './bundle.js';
 
 const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><rect fill="#fff"/></svg>';
 const board = {
@@ -80,5 +80,24 @@ describe('a board as files', () => {
   it('packs a board with no elements and no picture to board.json alone', () => {
     const plain = { parts: {}, layout: { kind: 'grid', items: [] } } as unknown as Board;
     expect(Object.keys(toBundle(plain))).toEqual(['board.json']);
+  });
+});
+
+describe('edits inside a file', () => {
+  const files = { 'board.json': '{}', 'elements/x.css': 'a{color:red}\nb{color:red;margin:0}' };
+
+  it('replaces text that stands once, in order, and leaves the other files alone', () => {
+    const out = withEdits(files, [{ file: 'elements/x.css', old: 'a{color:red}', new: 'a{color:blue}' }, { file: 'elements/x.css', old: 'margin:0', new: 'margin:4px' }]);
+    expect(out['elements/x.css']).toBe('a{color:blue}\nb{color:red;margin:4px}');
+    expect(out['board.json']).toBe('{}');
+    expect(files['elements/x.css']).toBe('a{color:red}\nb{color:red;margin:0}');
+  });
+
+  it('says which edit is wrong and why', () => {
+    expect(() => withEdits(files, [{ file: 'nope.css', old: 'a', new: 'b' }])).toThrow('edits[0]: nope.css is not a file of the bundle');
+    expect(() => withEdits(files, [{ file: 'elements/x.css', old: 'zzz', new: 'b' }])).toThrow('edits[0]: the text to replace is not in elements/x.css');
+    expect(() => withEdits(files, [{ file: 'elements/x.css', old: 'color:red', new: 'color:blue' }])).toThrow('edits[0]: the text to replace stands more than once');
+    // an edit sees the file as the edits before it left it
+    expect(() => withEdits(files, [{ file: 'elements/x.css', old: 'margin:0', new: 'margin:1px' }, { file: 'elements/x.css', old: 'margin:0', new: 'margin:2px' }])).toThrow('edits[1]: the text to replace is not in');
   });
 });
