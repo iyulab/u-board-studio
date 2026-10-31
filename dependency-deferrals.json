@@ -1,4 +1,12 @@
 {
   "about": "Breaking releases not yet adopted — a new major, or below 1.0 a new minor (give `minor` too) — each with why and until when. Read by scripts/check-dependency-drift.mjs: an entry past its reviewBy date, or one matching nothing outdated, fails the check. Remove an entry in the commit that adopts the major.",
-  "deferrals": []
+  "deferrals": [
+    {
+      "package": "@canvas-kit/viewer",
+      "major": 0,
+      "minor": 7,
+      "reason": "The designer draws through @iyulab/u-board, which pins the viewer at ^0.6.1 until its next release; raising only the designer puts two copies of the viewer in the app and a test's mock of the package reaches only one of them. Adopt in the commit that moves @iyulab/u-board to a release that pins ^0.7.0.",
+      "reviewBy": "2026-11-15"
+    }
+  ]
 }
