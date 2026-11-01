@@ -235,6 +235,27 @@ describe('BoardAuthoring — triggers', () => {
   });
 });
 
+describe('BoardAuthoring — a trigger on open in View', () => {
+  const scrolled: Element[] = [];
+  const original = Element.prototype.scrollIntoView;
+  afterEach(() => {
+    Element.prototype.scrollIntoView = original;
+    scrolled.length = 0;
+  });
+
+  it('brings the part it points at into view as the board is first shown, and again each time View is entered', async () => {
+    Element.prototype.scrollIntoView = function (this: Element) {
+      scrolled.push(this);
+    };
+    const opening: Board = { ...board, triggers: [{ on: { event: 'open' }, do: [{ action: 'focus', part: 'count' }] }] };
+    render(<BoardAuthoring initialBoard={opening} adapters={[]} initialMode="view" />);
+    await waitFor(() => expect(scrolled.map(el => el.getAttribute('data-item-id'))).toEqual(['count']));
+    fireEvent.click(screen.getByRole('button', { name: 'Edit' }));
+    fireEvent.click(screen.getByRole('button', { name: 'View' }));
+    await waitFor(() => expect(scrolled).toHaveLength(2));
+  });
+});
+
 describe('StatusesPanel', () => {
   it('adds a status by name, sets its tone, words, mark and emphasis, and removes it — none left, none written', () => {
     const onChange = vi.fn();
