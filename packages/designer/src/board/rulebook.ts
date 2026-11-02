@@ -9,15 +9,20 @@ import { EMPHASES, FRAMES, TONES, type Board } from '@iyulab/u-board/domain';
 
 type Schema = { properties?: Record<string, { description?: string }>; $defs?: Record<string, Schema> } & Record<string, unknown>;
 
+/** A `where` value that reads a variable. The `Board` type holds a where's values as they are once the variables are written out, so a reference is
+ *  said to be one here; `validateBoard` takes it as the reference it is. */
+const variable = (name: string) => ({ variable: name }) as unknown as string;
+
 /** A worked board: one read of a list, statuses, a status card per item, a chart and a link — valid as written. */
 export const RULEBOOK_EXAMPLE: Board = {
+  variables: { line: { options: ['L1', 'L2'], default: 'L1' } },
   statuses: { running: { tone: 'ok', label: '가동' }, down: { tone: 'alarm', label: '정지', emphasis: 'blink' } },
   data: {
     pumps: {
       from: 'plant', path: '/plant/pumps', list: '/value', key: 'id', time: 'updatedAt', fresh: 60,
       fields: { state: { state: { run: 'running', trip: 'down', '*': 'off' } }, flow: { label: '유량', unit: 'm³/h', digits: 1 } },
     },
-    hourly: { from: 'plant', path: '/plant/flow/hourly', list: '/value' },
+    hourly: { from: 'plant', path: '/plant/flow/hourly', list: '/value', where: { line: variable('line') } },
   },
   parts: {
     P1: { as: 'status-card', of: 'pumps[P1]', title: '펌프 1', show: ['state', 'flow'] },
@@ -55,7 +60,7 @@ ${['board', 'statuses', 'symbols', 'elements', 'data', 'presets', 'parts', 'layo
 A data read asks an HTTP connector a \`path\` — the usual read. Only an adapter the host names itself is given its own
 \`ref\` instead (one item, its \`fields\` only, never with \`path\`).
 Parts name a read (\`"pumps"\`, the whole list) or one item of it (\`"pumps[P1]"\`, by its \`key\`). Data stays raw —
-names, units, places and statuses live in \`fields\`, never in the data. A field's \`at\` points into one item, so with a \`list\` what sits beside it (a count, a total) is out of reach: read that
+names, units, places and statuses live in \`fields\`, never in the data. A board takes values from outside with \`variables\` (see the example): \`{ "variable": "line" }\` in a \`where\`, \`[$line]\` in an \`of\`, \`{{$line}}\` in a text; a viewer asks for one in its address (\`?v.line=L2\`). A field's \`at\` points into one item, so with a \`list\` what sits beside it (a count, a total) is out of reach: read that
 with a read of its own and no \`list\` — \`{ from: 'plant', path: '/plant/pumps?limit=1', fields: { total: { at: '/total' } } }\`. With a \`list\`, \`time\` is a field of each item (an item lacking it has no value); the answer's own is \`answerTime\`.
 
 ${keys('query')}

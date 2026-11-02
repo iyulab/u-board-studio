@@ -194,7 +194,7 @@ describe('u-board-mcp', () => {
     expect(several.gauge).toEqual(gauge);
     expect(several.stat).toMatchObject({ kind: 'stat', own: ['trend'] });
     expect(several.nope.error).toMatch(/no kind "nope" — the kinds are/);
-    expect((await call('describe', { topic: 'kind:marker' })).value).toEqual({ kind: 'marker', shows: expect.any(String), reads: 'may', own: ['shape', 'symbol', 'note'] });
+    expect((await call('describe', { topic: 'kind:marker' })).value).toEqual({ kind: 'marker', shows: expect.any(String), reads: 'may', own: ['shape', 'symbol', 'note', 'labelAt'] });
     const many = Array.from({ length: 9 }, (_, i) => `k${i}`).join(',');
     expect((await call('describe', { topic: `kind:${many}` })).isError).toBe(true);
   });
