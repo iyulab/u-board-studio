@@ -351,6 +351,16 @@ describe('u-board-mcp', () => {
     expect(again.value).toMatchObject({ code: 'NOT_FOUND' });
   });
 
+  it('lists the hints of each tool, so a client can run a read without asking', async () => {
+    const { tools } = await client.listTools();
+    const hints = Object.fromEntries(tools.map(t => [t.name, t.annotations]));
+    expect(hints.get_board).toMatchObject({ readOnlyHint: true, openWorldHint: true });
+    expect(hints.list_boards).toMatchObject({ readOnlyHint: true, openWorldHint: false });
+    expect(hints.patch_board).toMatchObject({ destructiveHint: true });
+    expect(hints.create_board).toMatchObject({ destructiveHint: false });
+    for (const { name, annotations } of tools) expect(annotations, name).toBeDefined();
+  });
+
   it('renames a board in place — the same id, the board untouched', async () => {
     const before = server.boards.get('b1')!.document;
     expect((await call('rename_board', { board: 'b1', name: '  Line 1, no inspection ' })).value).toEqual({ id: 'b1', name: 'Line 1, no inspection', revision: 5 });

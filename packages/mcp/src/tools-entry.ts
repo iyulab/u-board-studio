@@ -3,7 +3,7 @@
 import { z } from 'zod';
 import type { BoardTool } from './tools.js';
 
-export { boardTools, type BoardTool, type BoardToolsOptions, type ToolResult } from './tools.js';
+export { boardTools, type BoardTool, type BoardToolsOptions, type ToolHints, type ToolResult } from './tools.js';
 export { UBoardClient, UBoardApiError, type SessionAuth } from './client.js';
 export { isWorkspaceStore, type BoardStore, type WorkspaceStore } from './store.js';
 export { TOPICS } from './describe.js';

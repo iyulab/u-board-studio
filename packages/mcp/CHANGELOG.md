@@ -14,6 +14,13 @@ All notable changes to this package are documented here. The format follows
   changing two numbers in a long stylesheet had to send the stylesheet again — and could change it by a character it did not mean to. It is offered
   with the other tools; `UBOARD_EDIT_TEXT=0` leaves it out.
 
+- **Every tool states its MCP tool annotations.** Only `delete_board` and `rename_board` did, so a client that decides what to run without asking from
+  `readOnlyHint` had to ask before even `list_boards` or `get_board` (an unstated hint reads as its protocol default: not read-only, destructive, open to the
+  world). The ten tools that only read now say `readOnlyHint`; `patch_board`, `edit_text` and `put_bundle` (which may overwrite or remove what stands
+  there) say `destructiveHint`; `create_board`, `create_source` and `rename_board` say they are not destructive; `openWorldHint` is `false` for the tools
+  that touch only the workspace's own records and `true` where the answer comes from a data source or from drawing a board from its data. The hints are also
+  exported as `ToolHints` on `BoardTool.annotations` for hosts that hand the tools to a model themselves.
+
 ### Fixed
 
 - **`look` reports content a widget cuts off inside itself.** A card short of height shrinks the box its readings sit in, and that box clips: a bar under a state chip went missing

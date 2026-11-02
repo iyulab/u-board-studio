@@ -22,6 +22,31 @@ describe('the board tools outside the MCP server', () => {
     }
   });
 
+  it('state every tool\'s hints — a client asks before a tool that does not say it only reads', () => {
+    const api = new UBoardClient('https://board.example.com', 'ubt_test');
+    const all = boardTools(api, { looker: { look: async () => ({}) } as never, bundle: true });
+    // every tool the package can offer: the 14 of a workspace plus the bundle pair
+    expect(all.map(t => t.name).sort()).toEqual([
+      'board_state', 'create_board', 'create_source', 'delete_board', 'describe', 'describe_source', 'edit_text', 'get_board', 'get_bundle',
+      'list_boards', 'list_sources', 'look', 'patch_board', 'put_bundle', 'rename_board', 'sample_source', 'validate',
+    ]);
+    for (const { name, annotations } of all) {
+      expect(annotations, name).toBeDefined();
+      // a tool either only reads, or says whether it may overwrite or remove (the protocol's default is that it may)
+      if (annotations!.readOnlyHint === true) expect(annotations!.destructiveHint, `${name}: a read states no destructiveHint`).toBeUndefined();
+      else expect(typeof annotations!.destructiveHint, `${name} must say whether it is destructive`).toBe('boolean');
+    }
+    const only = (pick: (a: NonNullable<(typeof all)[number]['annotations']>) => boolean) => all.filter(t => pick(t.annotations!)).map(t => t.name).sort();
+    expect(only(a => a.readOnlyHint === true)).toEqual([
+      'board_state', 'describe', 'describe_source', 'get_board', 'get_bundle', 'list_boards', 'list_sources', 'look', 'sample_source', 'validate',
+    ]);
+    // the tools that change a board and may overwrite or remove what stands there, and the ones that only add
+    expect(only(a => a.destructiveHint === true)).toEqual(['delete_board', 'edit_text', 'patch_board', 'put_bundle']);
+    expect(only(a => a.readOnlyHint !== true && a.destructiveHint === false)).toEqual(['create_board', 'create_source', 'rename_board']);
+    // only a tool that reads the workspace's own records is closed to the world
+    expect(only(a => a.openWorldHint === false)).toEqual(['create_board', 'delete_board', 'describe', 'list_boards', 'list_sources', 'rename_board']);
+  });
+
   it('leave board_state out when asked — a console session cannot read the share route it uses', () => {
     const api = new UBoardClient('https://board.example.com', 'ubt_test');
     expect(boardTools(api, { boardState: false }).map(t => t.name)).not.toContain('board_state');

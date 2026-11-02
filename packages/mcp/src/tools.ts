@@ -163,9 +163,30 @@ export interface BoardTool {
   name: string;
   description: string;
   inputSchema: z.ZodObject;
-  annotations?: { destructiveHint?: boolean; idempotentHint?: boolean };
+  /** What a client may assume without asking (MCP tool annotations). Every tool states them: an unstated hint reads as its
+   *  protocol default — not read-only, destructive, open to the world — which makes a client ask before even a read. */
+  annotations?: ToolHints;
   run(args: never): Promise<ToolResult>;
 }
+
+/** The MCP tool annotations a tool states. `readOnlyHint`: changes nothing. `destructiveHint`: for a tool that changes things,
+ *  whether it may overwrite or remove what is there (false: it only adds). `idempotentHint`: calling it again with the same
+ *  arguments changes nothing more. `openWorldHint`: its answer may depend on something outside the workspace's own records. */
+export interface ToolHints {
+  readOnlyHint?: boolean;
+  destructiveHint?: boolean;
+  idempotentHint?: boolean;
+  openWorldHint?: boolean;
+}
+
+/** A tool that only reads the workspace's own records — boards, the source list, the rules. */
+const READS_RECORDS: ToolHints = { readOnlyHint: true, openWorldHint: false };
+/** A tool that only reads, and whose answer may come from beyond the workspace's records: the server draws a board from its
+ *  data sources, and a source's description or a request to it is read from where the source lives. */
+const READS_BEYOND: ToolHints = { readOnlyHint: true, openWorldHint: true };
+/** A tool that changes a board by what it names, and may overwrite or remove what stands there (a board keeps its revisions,
+ *  but no tool here restores one). */
+const CHANGES_BOARD: ToolHints = { destructiveHint: true };
 
 /** The tools that need a store that is a whole workspace: the boards' list and lifecycle, what a board shows now, and the
  *  data sources. A document on its own has one board and no sources, so it offers the rest. */
@@ -237,13 +258,14 @@ export function boardTools(store: BoardStore | WorkspaceStore, { looker, boardSt
         topic: z.string().max(200).optional().describe(`One of: ${Object.keys(TOPICS).join(', ')}.`),
         pointer: z.string().max(200).optional().describe('With topic "schema": the JSON Pointer of one part, e.g. "/$defs/query".'),
       }),
+      annotations: READS_RECORDS,
     },
     async ({ topic, pointer }) => tool(() => describeTopic(topic, pointer, offered))
   );
 
   define(
     'list_boards',
-    { description: "The workspace's boards: id, name, kind (canvas or grid), when last saved.", inputSchema: z.strictObject({}) },
+    { description: "The workspace's boards: id, name, kind (canvas or grid), when last saved.", inputSchema: z.strictObject({}), annotations: READS_RECORDS },
     async () => tool(async () => ({ workspace: (await client.tokenInfo()).workspace, boards: await client.listBoards() }))
   );
 
@@ -255,6 +277,7 @@ export function boardTools(store: BoardStore | WorkspaceStore, { looker, boardSt
         board: boardId,
         pointer: z.string().max(200).optional().describe('A JSON Pointer into the board. Omit for the whole board.'),
       }),
+      annotations: READS_BEYOND,
     },
     async ({ board, pointer }) =>
       tool(async () => {
@@ -280,6 +303,7 @@ export function boardTools(store: BoardStore | WorkspaceStore, { looker, boardSt
           board: boardId,
           files: z.array(z.string().max(200)).min(1).max(50).optional().describe('Paths to read, from the list. Omit for the list and board.json.'),
         }),
+        annotations: READS_BEYOND,
       },
       async ({ board, files }) =>
         tool(async () => {
@@ -314,6 +338,7 @@ export function boardTools(store: BoardStore | WorkspaceStore, { looker, boardSt
             .optional()
             .describe('Changes made inside a file: `old` stands exactly once in it, `new` replaces it.'),
         }).refine(({ files, edits }) => (files !== undefined && Object.keys(files).length > 0) || edits !== undefined, { error: 'give files, edits, or both' }),
+        annotations: CHANGES_BOARD,
       },
       async ({ board, revision, files, edits }) =>
         tool(async () => {
@@ -338,6 +363,7 @@ export function boardTools(store: BoardStore | WorkspaceStore, { looker, boardSt
         description:
           'What a saved board shows now, part by part: the state each part is in (its states rule), its connection quality and why, how old its data is — no values, a few hundred bytes. Ask it before look to check what a change does to the states; look shows how it is drawn.',
         inputSchema: z.strictObject({ board: boardId }),
+        annotations: READS_BEYOND,
       },
       async ({ board }) => tool(async () => withReasonHints(await client.getBoardState(board)))
     );
@@ -352,6 +378,8 @@ export function boardTools(store: BoardStore | WorkspaceStore, { looker, boardSt
         kind: z.enum(['grid', 'canvas']),
         document: document.optional(),
       }),
+      // adds a board of its own — nothing that stands is overwritten or removed
+      annotations: { destructiveHint: false, openWorldHint: false },
     },
     async ({ name, kind, document }) =>
       tool(async () => {
@@ -379,7 +407,7 @@ export function boardTools(store: BoardStore | WorkspaceStore, { looker, boardSt
       description:
         'Deletes a board for good — one you made and no longer need, or one the user asked you to remove. A data source is removed by a person in the console.',
       inputSchema: z.strictObject({ board: boardId }),
-      annotations: { destructiveHint: true, idempotentHint: true },
+      annotations: { destructiveHint: true, idempotentHint: true, openWorldHint: false },
     },
     async ({ board }) =>
       tool(async () => {
@@ -394,7 +422,8 @@ export function boardTools(store: BoardStore | WorkspaceStore, { looker, boardSt
       description:
         'Renames a board. Its id stays, and with it the links it is shared by and its history — rename it rather than making a new board and deleting the old one. The name is not part of the document.',
       inputSchema: z.strictObject({ board: boardId, name: z.string().trim().min(1).max(200) }),
-      annotations: { idempotentHint: true },
+      // only the name changes: the id, the links it is shared by and its history stay, and renaming back undoes it
+      annotations: { destructiveHint: false, idempotentHint: true, openWorldHint: false },
     },
     async ({ board, name }) =>
       tool(async () => {
@@ -423,6 +452,7 @@ export function boardTools(store: BoardStore | WorkspaceStore, { looker, boardSt
             .min(1)
             .max(50),
         }),
+        annotations: CHANGES_BOARD,
       },
       async ({ board, revision, edits }) =>
         tool(async () => {
@@ -449,6 +479,7 @@ export function boardTools(store: BoardStore | WorkspaceStore, { looker, boardSt
     {
       description: 'Changes part of a board with a JSON Patch, applied entirely or not at all, and saves it. Answers the new revision and advice.',
       inputSchema: z.strictObject({ board: boardId, revision, patch }),
+      annotations: CHANGES_BOARD,
     },
     async ({ board, revision, patch }) =>
       tool(async () => {
@@ -461,6 +492,7 @@ export function boardTools(store: BoardStore | WorkspaceStore, { looker, boardSt
     {
       description: 'Checks without saving: a whole board, what a board would become with a patch, or — with neither — the board as it is saved. Answers issues (each with its path) and advice.',
       inputSchema: z.strictObject({ document: document.optional(), board: boardId.optional(), patch: patch.optional() }),
+      annotations: READS_BEYOND,
     },
     async ({ document, board, patch }) =>
       tool(async () => {
@@ -498,6 +530,7 @@ export function boardTools(store: BoardStore | WorkspaceStore, { looker, boardSt
           width: z.number().int().min(320).max(2560).optional().describe('The screen width, px (1600).'),
           height: z.number().int().min(240).max(1600).optional().describe('The screen height, px (900).'),
         }),
+        annotations: READS_BEYOND,
       },
       async ({ board, focus, appearance, width = 1600, height = 900 }) => {
         try {
@@ -537,6 +570,7 @@ export function boardTools(store: BoardStore | WorkspaceStore, { looker, boardSt
       description:
         "The workspace's data sources: id (a data read's `from`), name, the description its owner wrote — the paths it answers and what each holds — and, for one called over HTTP, its base URL and how it authenticates; for one that answers what is stored (`static`), the paths it has answers at and whether they are example data (`sample`). Never a credential.",
       inputSchema: z.strictObject({}),
+      annotations: READS_RECORDS,
     },
     async () =>
       tool(async () => ({
@@ -556,6 +590,7 @@ export function boardTools(store: BoardStore | WorkspaceStore, { looker, boardSt
         offset: z.number().int().min(0).optional().describe('Without `entry`: how many entries to skip. Default 0.'),
         limit: z.number().int().min(1).max(200).optional().describe('Without `entry`: how many entries a page holds. Default 50.'),
       }),
+      annotations: READS_BEYOND,
     },
     async ({ source, entry, offset, limit }) =>
       tool(async () => {
@@ -600,6 +635,8 @@ export function boardTools(store: BoardStore | WorkspaceStore, { looker, boardSt
           .optional()
           .describe('For a path with time places: the binding’s requestTime, so the request asks for the time the binding will.'),
       }),
+      // a request to the source, which answers from beyond the workspace; it changes nothing there
+      annotations: READS_BEYOND,
     },
     async ({ source, path, timeZone, requestTime }) =>
       tool(async () => {
@@ -657,6 +694,8 @@ export function boardTools(store: BoardStore | WorkspaceStore, { looker, boardSt
           .optional()
           .describe('For a source that answers an error with success (HTTP 200) and a status in the body — where it says so, so a read fails with its words instead of a missing value.'),
       }),
+      // adds a source of its own; no tool here overwrites or removes one
+      annotations: { destructiveHint: false },
     },
     async ({ name, baseUrl, answers, sample, attribution, description, sourceError }) =>
       tool(async () => {

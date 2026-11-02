@@ -55,6 +55,13 @@ In a client's JSON configuration:
 Reads take a JSON Pointer so only the part needed travels, and a change is a patch answered with the new
 revision — the document is never sent back. Every answer is compact JSON.
 
+Every tool states its [MCP tool annotations](https://modelcontextprotocol.io/specification/2025-06-18/server/tools#tool), so a client can run a read without asking
+and ask before a change: the tools that only read (`describe`, `list_boards`, `get_board`, `get_bundle`, `board_state`, `validate`, `look`,
+`list_sources`, `describe_source`, `sample_source`) are `readOnlyHint`; the ones that may overwrite or remove what stands there (`patch_board`,
+`edit_text`, `put_bundle`, `delete_board`) are `destructiveHint`; the ones that only add (`create_board`, `create_source`) or only rename (`rename_board`)
+say `destructiveHint: false`. `openWorldHint` is `false` for the tools that read or write only the workspace's own records, and `true` where the
+answer comes from a data source or from drawing a board from its data.
+
 ### A board as files (optional)
 
 Start with `--bundle` (or `UBOARD_BUNDLE=1`) and two more tools read and write the same board as files — for an assistant that edits an
