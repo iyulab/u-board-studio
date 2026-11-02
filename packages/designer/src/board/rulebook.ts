@@ -9,10 +9,6 @@ import { EMPHASES, FRAMES, TONES, type Board } from '@iyulab/u-board/domain';
 
 type Schema = { properties?: Record<string, { description?: string }>; $defs?: Record<string, Schema> } & Record<string, unknown>;
 
-/** A `where` value that reads a variable. The `Board` type holds a where's values as they are once the variables are written out, so a reference is
- *  said to be one here; `validateBoard` takes it as the reference it is. */
-const variable = (name: string) => ({ variable: name }) as unknown as string;
-
 /** A worked board: one read of a list, statuses, a status card per item, a chart and a link — valid as written. */
 export const RULEBOOK_EXAMPLE: Board = {
   variables: { line: { options: ['L1', 'L2'], default: 'L1' } },
@@ -22,16 +18,17 @@ export const RULEBOOK_EXAMPLE: Board = {
       from: 'plant', path: '/plant/pumps', list: '/value', key: 'id', time: 'updatedAt', fresh: 60,
       fields: { state: { state: { run: 'running', trip: 'down', '*': 'off' } }, flow: { label: '유량', unit: 'm³/h', digits: 1 } },
     },
-    hourly: { from: 'plant', path: '/plant/flow/hourly', list: '/value', where: { line: variable('line') } },
+    hourly: { from: 'plant', path: '/plant/flow/hourly', list: '/value', where: { line: { variable: 'line' } } },
   },
   parts: {
-    P1: { as: 'status-card', of: 'pumps[P1]', title: '펌프 1', show: ['state', 'flow'] },
+    P1: { as: 'status-card', of: 'pumps[P1]', title: '펌프 1', show: ['state', 'flow'], numerals: { scale: 'large', weight: 300 } },
     P2: { as: 'status-card', of: 'pumps[P2]', title: '펌프 2', show: ['state', 'flow'] },
     flow: { as: 'chart.line', of: 'hourly', title: '시간대별 유량', x: 'hour', y: 'flow' },
+    note: { as: 'label', title: '예시 데이터', size: 'small', ink: 'muted' },
   },
   layout: {
     kind: 'canvas', size: [720, 360],
-    place: { P1: [40, 40, 200, 120], P2: [440, 40, 200, 120], flow: [40, 200, 640, 140] },
+    place: { P1: [40, 40, 200, 120], P2: [440, 40, 200, 120], flow: [40, 200, 640, 140], note: [40, 342, 300, 16] },
     shapes: { title: { text: '펌프장', at: [40, 24] } },
     links: { line: { from: 'P1', to: 'P2', of: 'pumps[P1]', show: 'state', label: '{{flow}}', arrow: 'end' } },
   },
@@ -79,14 +76,14 @@ label, glyph. Never write colours for statuses.`,
     `## parts — what, of what, which fields
 
 \`{ "as": <kind>, "of": "<data>" | "<data>[<key>]", "show": "<field>" | ["<field>", …], "title"?, …options }\`. \`{{field}}\`
-in a title or a label reads a field of \`of\` (a status card's \`subtitle\` · \`note\` too; header \`kicker\` · \`subtitle\` are fixed text, \`clock\` is \`true\`); \`{{key}}\` is the item's key. \`presets\` hold shared settings a part takes
+in a title or a label reads a field of \`of\` (a status card's \`subtitle\` · \`note\` and a header's \`kicker\` · \`subtitle\` too; a header's \`clock\` is \`true\`); \`{{key}}\` is the item's key. \`presets\` hold shared settings a part takes
 with \`use\`; \`each: "<data>"\` makes one part per item (ids \`<part>/<key>\`) — it takes no \`of\`, and is placed once. A \`group\` is several parts on a small
 canvas of their own — its parts and links read the group's \`of\` unless they name their own.
 
 The board's own options take fields of what the part reads: a \`status-card\`'s \`meter\` is \`"<field>"\` or
 \`{ "field", "min"?, "max"? (a number, or a field of the item), "form"?: "bar" | "ring" }\`, its \`state\` (and a \`stat-list\`'s) the field whose status colours
 it, a \`stat\`'s \`trend\` a field holding its recent values, a \`list\`'s \`primary\` · \`secondary\` · \`trailing\` ·
-\`badge\` · \`time\` fields of each row. A part that reads one item takes \`highlight: "<boolean field>"\`: a ring while it is true, apart from the status. Any other option is the widget's own — only those listed.
+\`badge\` · \`time\` fields of each row. A part that reads one item takes \`highlight: "<boolean field>"\`: a ring while it is true, apart from the status. A part's look is said in words (\`size\`: \`small\` … \`xxlarge\`): a \`label\`'s \`size\` · \`ink\` (\`text\` · \`muted\` · \`accent\`) · \`face\` (\`pill\`), a header's \`size\` · \`kickerInk\`, and \`numerals: { scale?, weight? }\` for the figures of a \`stat\`, \`status-card\`, \`list\` (a skin's: only a \`stat\`). Any other option is the widget's own — only those listed.
 
 | kind | shows | reads data | options |
 |---|---|---|---|

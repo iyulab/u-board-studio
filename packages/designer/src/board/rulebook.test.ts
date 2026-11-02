@@ -44,8 +44,9 @@ describe('the v2 rulebook', () => {
 
   // Read whole by a model on every board it writes: a budget, raised on purpose, not by drift (16 000 → 16 500 for the
   // fields computed from a list and the fields of a list's items; 16 500 → 17 000 for the options the widget library
-  // grew and the board's variables — a line in the example and one sentence).
+  // grew and the board's variables — a line in the example and one sentence; 17 000 → 17 500 for the words a part's look is said
+  // in — a sentence and two options in the example).
   it('stays short enough to read whole', () => {
-    expect(rulebook.length).toBeLessThan(17_000);
+    expect(rulebook.length).toBeLessThan(17_500);
   });
 });

@@ -192,7 +192,7 @@ describe('u-board-mcp', () => {
     const { value: several } = await call('describe', { topic: 'kind:gauge, stat,gauge,nope' });
     expect(Object.keys(several)).toEqual(['gauge', 'stat', 'nope']);
     expect(several.gauge).toEqual(gauge);
-    expect(several.stat).toMatchObject({ kind: 'stat', own: ['trend'] });
+    expect(several.stat).toMatchObject({ kind: 'stat', own: ['trend', 'numerals'] });
     expect(several.nope.error).toMatch(/no kind "nope" — the kinds are/);
     expect((await call('describe', { topic: 'kind:marker' })).value).toEqual({ kind: 'marker', shows: expect.any(String), reads: 'may', own: ['shape', 'symbol', 'note', 'labelAt'] });
     const many = Array.from({ length: 9 }, (_, i) => `k${i}`).join(',');
