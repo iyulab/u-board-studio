@@ -6,6 +6,19 @@ All notable changes to this package are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-11-02
+
+### Changed
+
+- **Breaking: `@iyulab/u-board-designer/check` is gone.** The board check and the rulebook (`checkBoard`, `emptyBoard`, `sourceAdvice`,
+  `boardRulebook`, `RULEBOOK_EXAMPLE`) moved to the library, under the MIT licence with the board language: import them from
+  `@iyulab/u-board/check` — the same names, the same answers. The authoring tool itself reads the check from there.
+- The authoring tool follows the library to `@canvas-kit/viewer` `^0.7.0`.
+
+### Added
+
+- A status widget's `face` is offered as a choice beside its other options.
+
 ## [0.2.0] - 2026-10-31
 
 ### Changed
