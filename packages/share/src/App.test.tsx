@@ -328,4 +328,44 @@ describe('App', () => {
     const viewer = await screen.findByTestId('viewer-page');
     expect(viewer.dataset.adapterIds).toBe('');
   });
+
+  describe('a board whose variables the address asks values of', () => {
+    const board = (revision: number, etag: string, nodeId = 'n') => ({
+      ok: true,
+      status: 200,
+      headers: new Headers({ ETag: etag }),
+      json: async () => ({ name: 'A', revision, document: BOARD, picture: { ...DOC, nodes: [{ id: nodeId }] }, connectorIds: ['c1'], variables: { values: { line: 'L2' }, unknown: [] } }),
+    });
+
+    it('asks for the board at those values, and sends the same values with every value batch', async () => {
+      setLocation('?board=b1&token=tok&v.line=L2');
+      (fetch as any).mockResolvedValueOnce(board(1, '"1.ab12"')).mockResolvedValueOnce({ ok: true, status: 200, headers: new Headers(), json: async () => ({ revision: 1, results: [{ value: 1, quality: 'live' }] }) });
+      render(<App />);
+      await screen.findByTestId('viewer-page');
+      expect(fetch).toHaveBeenCalledWith('/api/share/boards/b1?v.line=L2', expect.objectContaining({ headers: { Authorization: 'Bearer tok' } }));
+      fireEvent.click(screen.getByText('resolve'));
+      await vi.waitFor(() => expect(fetch).toHaveBeenCalledTimes(2));
+      expect(JSON.parse((fetch as any).mock.calls[1][1].body).variables).toEqual({ line: 'L2' });
+    });
+
+    it('asks again with the tag the server gave that picture, not one it makes up from the revision', async () => {
+      setLocation('?board=b1&token=tok&v.line=L2');
+      (fetch as any).mockResolvedValueOnce(board(1, '"1.ab12"'))
+        .mockResolvedValueOnce({ ok: true, status: 200, headers: new Headers(), json: async () => ({ revision: 2, results: [{ value: 1, quality: 'live' }] }) })
+        .mockResolvedValueOnce(board(2, '"2.ab12"', 'after'));
+      render(<App />);
+      await screen.findByTestId('viewer-page');
+      fireEvent.click(screen.getByText('resolve'));
+      await vi.waitFor(() => expect(screen.getByTestId('node-ids').textContent).toBe('after'));
+      expect(fetch).toHaveBeenLastCalledWith('/api/share/boards/b1?v.line=L2', expect.objectContaining({ headers: { Authorization: 'Bearer tok', 'If-None-Match': '"1.ab12"' } }));
+    });
+
+    it('reads the board at the address it always had when no value is asked', async () => {
+      setLocation('?board=b1&token=tok');
+      (fetch as any).mockResolvedValueOnce(board(1, '"1"'));
+      render(<App />);
+      await screen.findByTestId('viewer-page');
+      expect(fetch).toHaveBeenCalledWith('/api/share/boards/b1', expect.anything());
+    });
+  });
 });

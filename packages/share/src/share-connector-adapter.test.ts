@@ -118,3 +118,13 @@ describe('ShareConnectorAdapter', () => {
     expect(expired).toBe(1);
   });
 });
+
+describe('ShareResolveBatcher with values asked of the board’s variables', () => {
+  it('sends them with the batch — the one set the board was drawn at — and sends none when none were asked', async () => {
+    (fetch as any).mockResolvedValue(batchResponse([{ value: 1, quality: 'live' }]));
+    await new ShareConnectorAdapter(new ShareResolveBatcher('b1', 'tok', {}, { line: 'L2' }), 'c1').resolve({ path: '/pump' });
+    expect(JSON.parse((fetch as any).mock.calls[0][1].body)).toEqual({ bindings: [{ connectorId: 'c1', ref: { path: '/pump' } }], variables: { line: 'L2' } });
+    await new ShareConnectorAdapter(new ShareResolveBatcher('b1', 'tok'), 'c1').resolve({ path: '/pump' });
+    expect(JSON.parse((fetch as any).mock.calls[1][1].body)).toEqual({ bindings: [{ connectorId: 'c1', ref: { path: '/pump' } }] });
+  });
+});
