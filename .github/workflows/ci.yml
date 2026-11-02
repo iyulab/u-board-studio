@@ -88,12 +88,11 @@ jobs:
       - name: Server tests
         run: npm test --workspace=packages/server
 
-  # Publishes the npm packages — the authoring tool and board check
-  # (packages/designer, @iyulab/u-board-designer) and the MCP server (packages/mcp, @iyulab/u-board-mcp) — once `verify` and `node-floor` have passed on a push to main,
+  # Publishes the npm package — the authoring tool
+  # (packages/designer, @iyulab/u-board-designer) — once `verify` and `node-floor` have passed on a push to main,
   # each only if its version isn't on the registry yet. Kept in this workflow rather than a separate
   # one so the commit that gets published is exactly the commit that was verified — and so provenance
-  # records that commit. The library goes first: the MCP server depends on it, and is never on the
-  # registry before the library version it needs. The server, console, share, site and samples
+  # records that commit. The server, console, share, site and samples
   # workspaces are applications and stay private.
   publish:
     name: publish

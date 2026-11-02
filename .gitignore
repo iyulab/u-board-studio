@@ -26,4 +26,3 @@ packages/*/.env
 
 # Copied in from the repository root by packages/designer/scripts/prepack.mjs at pack time.
 packages/designer/LICENSE
-packages/mcp/LICENSE
