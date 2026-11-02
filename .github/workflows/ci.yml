@@ -119,7 +119,7 @@ jobs:
         id: check
         run: |
           pending=""
-          for dir in packages/designer packages/mcp; do
+          for dir in packages/designer; do
             NAME=$(node -p "require('./${dir}/package.json').name")
             VERSION=$(node -p "require('./${dir}/package.json').version")
             # Only npm's 404 means "not published yet"; any other failure (registry down, rate limit)

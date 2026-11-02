@@ -1,5 +1,5 @@
 import { type Board } from '@iyulab/u-board/domain';
-import { checkBoard, sourceAdvice, type BoardFinding, type KnownSource } from '@iyulab/u-board-designer/check';
+import { checkBoard, sourceAdvice, type BoardFinding, type KnownSource } from '@iyulab/u-board/check';
 import type { ViewKind } from '@iyulab/u-board/picture';
 
 /** Every problem in a board about to be stored, each at a JSON Pointer into it: its language checked, and that it

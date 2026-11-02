@@ -2,7 +2,7 @@
 // definition and its data — parsed and checked, and every problem named by where it is.
 
 import { type Board } from '@iyulab/u-board/domain';
-import { checkBoard } from '@iyulab/u-board-designer/check';
+import { checkBoard } from '@iyulab/u-board/check';
 import type { SampleConnector, SampleSnapshot } from '@iyulab/u-board-samples';
 
 /** A board's data as the gallery publishes it (`data.json`): the sources it reads and what they answered. */

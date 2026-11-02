@@ -17,7 +17,6 @@ npm install @iyulab/u-board-designer @iyulab/u-board react react-dom
 | Import | Contents | Depends on React / canvas |
 |---|---|---|
 | `@iyulab/u-board-designer` | `BoardAuthoring`, `DesignerLabels`, `KO_DESIGNER_LABELS` | Yes |
-| `@iyulab/u-board-designer/check` | `checkBoard`, `emptyBoard`, `sourceAdvice`, `boardRulebook`, `RULEBOOK_EXAMPLE` | No |
 
 ## Authoring a board
 
@@ -62,11 +61,11 @@ import { BoardAuthoring, KO_DESIGNER_LABELS } from '@iyulab/u-board-designer';
 ## Checking a board
 
 `checkBoard` is what a board meets before it is stored: the language, and then that it draws. `sourceAdvice` and the
-rulebook (`boardRulebook`) are what an assistant reads to write a board well. They load without React, so a server or an
-MCP process imports them from the `check` entry point:
+rulebook (`boardRulebook`) are what an assistant reads to write a board well. They come with the board language, in
+`@iyulab/u-board/check` (MIT), and load without React, so a server or an MCP process imports them from there:
 
 ```ts
-import { checkBoard, emptyBoard } from '@iyulab/u-board-designer/check';
+import { checkBoard, emptyBoard } from '@iyulab/u-board/check';
 
 const { issues } = checkBoard(emptyBoard());
 ```

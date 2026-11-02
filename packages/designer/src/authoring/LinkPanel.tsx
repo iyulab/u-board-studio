@@ -1,7 +1,7 @@
 import { FIELD_STYLE } from './field-style.js';
 import { DEFAULT_DESIGNER_LABELS, type DesignerLabels } from '../labels.js';
 import { TONES, type ArrowEnds, type Board, type Link, type Tone } from '@iyulab/u-board/toolkit';
-import type { BoardFinding } from '../board/check.js';
+import type { BoardFinding } from '@iyulab/u-board/check';
 
 export interface LinkPanelProps {
   id: string;

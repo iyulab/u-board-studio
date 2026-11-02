@@ -1,7 +1,7 @@
 {
   "name": "@iyulab/u-board-designer",
   "version": "0.2.0",
-  "description": "The authoring tool for U-Board boards, and the check and rulebook an assistant writes by",
+  "description": "The authoring tool for U-Board boards",
   "type": "module",
   "license": "AGPL-3.0-or-later",
   "repository": {
@@ -23,10 +23,6 @@
       "types": "./dist/lib/index.d.ts",
       "import": "./dist/lib/index.js"
     },
-    "./check": {
-      "types": "./dist/lib/check-entry.d.ts",
-      "import": "./dist/lib/check-entry.js"
-    },
     "./styles.css": "./styles.css"
   },
   "scripts": {
@@ -47,8 +43,8 @@
     "@canvas-kit/core": "^0.8.0",
     "@canvas-kit/designer": "^0.10.0",
     "@canvas-kit/viewer": "^0.6.1",
-    "@iyulab/u-board": "^0.39.0",
-    "@iyulab/u-widgets": "^0.45.0"
+    "@iyulab/u-board": "^0.40.0",
+    "@iyulab/u-widgets": "^0.46.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.62.1",

@@ -2,7 +2,7 @@
 
 U-Board runs no model. It is the engine an assistant draws with: an assistant that speaks the
 [Model Context Protocol](https://modelcontextprotocol.io) reads and changes a workspace's boards and
-data sources through [`@iyulab/u-board-mcp`](../packages/mcp/README.md) on npm, a small MCP server that talks to a
+data sources through [`@iyulab/u-board-mcp`](https://github.com/iyulab/U-Board/tree/main/packages/mcp#readme) on npm, a small MCP server that talks to a
 U-Board server with a workspace API token.
 
 ## Set it up

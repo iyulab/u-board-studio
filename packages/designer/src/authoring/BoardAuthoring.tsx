@@ -9,7 +9,7 @@ import { ElementHost } from '@iyulab/u-board/toolkit';
 import { ViewerPage, type ViewerPageProps } from '@iyulab/u-board/toolkit';
 import { PictureError, dataReadOf, keyReadsOf, keysIn, toViewDocument, type PictureOptions } from '@iyulab/u-board/toolkit';
 import { readLists, readerOf } from '@iyulab/u-board/toolkit';
-import { checkBoard } from '../board/check.js';
+import { checkBoard } from '@iyulab/u-board/check';
 import type { Board } from '@iyulab/u-board/toolkit';
 import { CanvasAuthoring } from './CanvasAuthoring.js';
 import { PartPanel } from './PartPanel.js';

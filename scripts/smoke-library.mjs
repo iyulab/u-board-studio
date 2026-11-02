@@ -12,7 +12,7 @@
 import assert from 'node:assert/strict';
 import { describeQuality, pictureOf, readerOf, validateBoard } from '@iyulab/u-board/domain';
 import { resolveDocument } from '@iyulab/u-board/picture';
-import { checkBoard } from '@iyulab/u-board-designer/check';
+import { checkBoard } from '@iyulab/u-board/check';
 
 const board = {
   data: {
