@@ -3,7 +3,7 @@ import { DEFAULT_DESIGNER_LABELS, type DesignerLabels } from '../labels.js';
 import { useState } from 'react';
 import { ERROR_STYLE } from '@iyulab/u-board/toolkit';
 import { TONES, type Board, type Shape, type Tone } from '@iyulab/u-board/toolkit';
-import type { BoardFinding } from '../board/check.js';
+import type { BoardFinding } from '@iyulab/u-board/check';
 
 export interface ShapePanelProps {
   id: string;

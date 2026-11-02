@@ -12,6 +12,10 @@ do when upgrading. Each release's notes carry its section.
 
 ## [Unreleased]
 
+### Changed
+
+- The MCP server, `@iyulab/u-board-mcp`, moved to the library's repository and is under the MIT licence from 0.27.0; the console and the site take it from npm. The board check and the rulebook it reads moved there too (`@iyulab/u-board/check`), so the authoring tool's `check` entry point is gone. Nothing changes for an installation: the container image carries the same tools.
+
 ### Security
 
 - The console and the share viewer now send the list of `UBOARD_MEDIA_ORIGINS` to the browser as the page's `img-src` (with `data:` and `blob:`), so a picture outside it is refused by the browser itself and not only by the viewer's own check. Nothing to do when upgrading unless a page loads pictures from an origin that is not listed — list it.

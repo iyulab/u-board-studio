@@ -32,7 +32,9 @@ export class ShareResolveBatcher {
   constructor(
     private boardId: string,
     private token: string,
-    private handlers: { onExpired?: () => void; onRevision?: (revision: number) => void } = {}
+    private handlers: { onExpired?: () => void; onRevision?: (revision: number) => void } = {},
+    /** The values the board's variables are asked to take — the one set every read of this board carries, the one the picture was drawn at. */
+    private variables: Readonly<Record<string, string>> = {}
   ) {}
 
   resolve(connectorId: string, ref: unknown): Promise<ResolvedBinding> {
@@ -70,7 +72,7 @@ export class ShareResolveBatcher {
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${this.token}` },
-        body: JSON.stringify({ bindings }),
+        body: JSON.stringify(Object.keys(this.variables).length > 0 ? { bindings, variables: this.variables } : { bindings }),
       }
     );
     if (res.status === 410) this.handlers.onExpired?.();

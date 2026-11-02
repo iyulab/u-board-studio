@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { pictureOf, readerOf } from '@iyulab/u-board/domain';
-import { checkBoard } from '@iyulab/u-board-designer/check';
+import { checkBoard } from '@iyulab/u-board/check';
 import { resolveDocument } from '@iyulab/u-board/picture';
 import { COPY } from '../src/copy';
 import { sampleBoard, SampleAdapter } from '../src/live/sample-board';

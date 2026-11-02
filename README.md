@@ -9,8 +9,7 @@ this repository is what lets people and AI assistants write boards, store them a
 
 | Package | What it is |
 |---|---|
-| `packages/designer` — [`@iyulab/u-board-designer`](https://www.npmjs.com/package/@iyulab/u-board-designer) | The authoring component (`BoardAuthoring`) and the board check an author or an assistant reads. |
-| `packages/mcp` — [`@iyulab/u-board-mcp`](https://www.npmjs.com/package/@iyulab/u-board-mcp) | An MCP server through which an AI assistant reads and draws boards. |
+| `packages/designer` — [`@iyulab/u-board-designer`](https://www.npmjs.com/package/@iyulab/u-board-designer) | The authoring component (`BoardAuthoring`). |
 | `packages/server` | The HTTP API: workspaces, members, boards, data connectors and share links, stored in PostgreSQL. |
 | `packages/console` | The web console for the API. |
 | `packages/share` | A read-only viewer that opens a board from a share link. |
@@ -45,7 +44,7 @@ import { BoardAuthoring } from '@iyulab/u-board-designer';
 </div>;
 ```
 
-To let an assistant draw boards, run `npx -y @iyulab/u-board-mcp` — see [docs/mcp.md](docs/mcp.md).
+To let an assistant draw boards, run `npx -y @iyulab/u-board-mcp` (an MIT-licensed package from the [U-Board](https://github.com/iyulab/U-Board) repository) — see [docs/mcp.md](docs/mcp.md).
 
 ## Develop
 

@@ -103,7 +103,7 @@ test("the product's version has a section in CHANGELOG.md", () => {
 
 // The npm packages publish from CI the same way (the `publish` job, on a version npm does not have yet),
 // so each version needs its own section in that package's CHANGELOG.md just as much.
-for (const pkg of ['designer', 'mcp']) {
+for (const pkg of ['designer']) {
   test(`the ${pkg} package's version has a section in its CHANGELOG.md`, () => {
     const { version } = JSON.parse(readFileSync(new URL(`../packages/${pkg}/package.json`, import.meta.url), 'utf8'));
     const changelog = readFileSync(new URL(`../packages/${pkg}/CHANGELOG.md`, import.meta.url), 'utf8');

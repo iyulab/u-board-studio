@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { ViewerPage, KO_LABELS, setMediaOrigins, type ViewDocument, type Adapter, type Attribution, type BoardEvent } from '@iyulab/u-board/viewer';
 import { ShareConnectorAdapter, ShareResolveBatcher } from './share-connector-adapter.js';
 import { API_BASE, fetchWithRetry, apiClock } from './api-base.js';
+import { variablesInAddress, variablesQuery } from './share-variables.js';
 import './App.css';
 
 type LoadedState = { name: string; document: ViewDocument; adapters: readonly Adapter[]; revision?: number; elementOrigins: readonly string[]; elementFrames: string };
@@ -66,6 +67,8 @@ export function App() {
   const params = new URLSearchParams(window.location.search);
   const boardId = params.get('board');
   const token = params.get('token');
+  // The values the address asks the board's variables for: one set for the board, the value reads and every read after.
+  const askedKey = JSON.stringify(variablesInAddress(window.location.search));
   const [state, setState] = useState<NotShown | LoadedState>(
     boardId && token ? { kind: 'loading' } : { kind: 'malformed' }
   );
@@ -73,10 +76,13 @@ export function App() {
   const retryNow = useCallback(() => setAttempt(a => a + 1), []);
   // The revision of the document on screen, whether a newer one is being read, and whether the server has
   // said which revision is current since the last check.
-  const shown = useRef<{ revision?: number; reading: boolean; heard: boolean }>({ reading: false, heard: false });
+  // `etag` is the tag the server gave the picture on screen — it tells that picture from one at other values, so the board
+  // is asked again with it, never with one the viewer makes up from the revision.
+  const shown = useRef<{ revision?: number; etag?: string; reading: boolean; heard: boolean }>({ reading: false, heard: false });
 
   useEffect(() => {
     if (!boardId || !token) return;
+    const asked = JSON.parse(askedKey) as Record<string, string>;
     let cancelled = false;
     let timer: ReturnType<typeof setTimeout> | undefined;
     let check: ReturnType<typeof setInterval> | undefined;
@@ -88,7 +94,7 @@ export function App() {
     };
     // The token travels in a header from here on: the page URL is the only place it appears.
     const read = (ifNoneMatch?: string) =>
-      fetchWithRetry(`${API_BASE}/share/boards/${boardId}`, {
+      fetchWithRetry(`${API_BASE}/share/boards/${boardId}${variablesQuery(asked)}`, {
         headers: { Authorization: `Bearer ${token}`, ...(ifNoneMatch ? { 'If-None-Match': ifNoneMatch } : {}) },
       });
     // Reads the board again in place — the document on screen stays if this fails, to be tried at the
@@ -102,7 +108,7 @@ export function App() {
     const refresh = () => {
       if (cancelled || shown.current.reading || shown.current.revision === undefined) return;
       shown.current.reading = true;
-      read(`"${shown.current.revision}"`)
+      read(shown.current.etag ?? `"${shown.current.revision}"`)
         .then(async res => {
           if (cancelled) return;
           if (res.status === 410) return close({ kind: 'expired' });
@@ -110,14 +116,14 @@ export function App() {
           if (!res.ok) return;
           const body = (await res.json()) as BoardBody;
           // An answer that ignored the revision asked with (a proxy dropping the tag) is the same board.
-          if (!cancelled && body.revision !== shown.current.revision) show(body);
+          if (!cancelled && body.revision !== shown.current.revision) show(body, res.headers?.get?.('ETag') ?? undefined);
         })
         .catch(() => {})
         .finally(() => {
           shown.current.reading = false;
         });
     };
-    const show = (body: BoardBody) => {
+    const show = (body: BoardBody, etag?: string) => {
       // A link that expires while the board is open says so, rather than leaving every value
       // to turn "disconnected" with no explanation. Each value batch also says which revision of the
       // board it was resolved for: a newer one means the board was saved again since it was read.
@@ -127,9 +133,10 @@ export function App() {
           shown.current.heard = true;
           if (shown.current.revision !== undefined && revision > shown.current.revision) refresh();
         },
-      });
+      }, asked);
       const adapters: Adapter[] = body.connectorIds.map(id => new ShareConnectorAdapter(batcher, id, body.attributions?.[id], body.samples?.includes(id)));
       shown.current.revision = body.revision;
+      shown.current.etag = etag;
       // Before the first widget of the board is drawn: the page reads the list each time a widget draws.
       setMediaOrigins(body.mediaOrigins ?? ['self']);
       setState({ name: body.name, document: body.picture, adapters, revision: body.revision, elementOrigins: body.elementOrigins ?? [], elementFrames: body.elementFrames ?? `${API_BASE}/element-frames/${encodeURIComponent(boardId)}` });
@@ -142,7 +149,7 @@ export function App() {
         if (!res.ok) return unavailable();
         const body = (await res.json()) as BoardBody;
         if (cancelled) return;
-        show(body);
+        show(body, res.headers?.get?.('ETag') ?? undefined);
         // A board with no bindings sends no value batch to carry the revision: when a whole poll went
         // by without one, ask for the board itself — one request a poll either way.
         check = setInterval(() => {
@@ -156,7 +163,7 @@ export function App() {
       clearTimeout(timer);
       clearInterval(check);
     };
-  }, [boardId, token, attempt]);
+  }, [boardId, token, attempt, askedKey]);
 
   // A trigger asking for another board: a shared link opens the one board it was made for, so the viewer is told that
   // rather than left to wonder why nothing happened. It fades by itself.

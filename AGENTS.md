@@ -19,8 +19,8 @@ The [README](README.md) is the single description of what is here; keep it curre
 ## Releasing
 
 Three things are released, each under its own version. The authoring tool, `packages/designer`, is published as
-`@iyulab/u-board-designer` on npm, and the MCP server, `packages/mcp`, as `@iyulab/u-board-mcp`. The board language and
-the viewer, `@iyulab/u-board`, are released from their own repository. The product — the
+`@iyulab/u-board-designer` on npm. The board language and the viewer, `@iyulab/u-board`, and the MCP server,
+`@iyulab/u-board-mcp`, are MIT and released from their own repository. The product — the
 `server`, `console` and `share` applications in one container image — is released at the version in
 `packages/server/package.json`. The other workspaces (`site` is the introduction site, `samples` its sample
 boards) stay `private` on npm.
@@ -39,18 +39,16 @@ pushing anything.
 
 To release the authoring tool, change `version` in `packages/designer/package.json` (semver; while the version is 0.x, a
 minor bump may break the public API), rename `## [Unreleased]` in `packages/designer/CHANGELOG.md` to that
-version and date (a tooling test fails on a version without its section), and push the change to `main`. The MCP
-server is released the same way from `packages/mcp`; when either needs a new version of the library, raise its
-`@iyulab/u-board` range to that version in the same commit. The `publish` job in
+version and date (a tooling test fails on a version without its section), and push the change to `main`. When it
+needs a new version of the library, raise its `@iyulab/u-board` range to that version in the same commit. The `publish` job in
 [`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs after `verify` (`npm run check`) passes and publishes
 with provenance if that version is not on the registry yet — a prerelease version under the `next`
 dist-tag; on any other push it publishes nothing. Do not run
 `npm publish` by hand — a hand-published tarball has no provenance and skips the checks.
 
 Each package's `scripts/prepack.mjs` rebuilds its build output from clean and copies the repository
-`LICENSE` into the package on every pack. The `publish` job publishes the authoring tool before the MCP server,
-which depends on it. Before a release that changes the entry points or dependencies, check the tarball with
-`npm pack --dry-run --workspace=packages/designer` (or `packages/mcp`).
+`LICENSE` into the package on every pack. Before a release that changes the entry points or dependencies, check the tarball with
+`npm pack --dry-run --workspace=packages/designer`.
 
 ## Open, not yet decided
 

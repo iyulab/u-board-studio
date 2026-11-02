@@ -4,7 +4,7 @@ import { useId, useMemo, type ReactNode } from 'react';
 import { PART_KINDS, partKind } from '@iyulab/u-board/toolkit';
 import { widgetFields } from './widget-fields.js';
 import { FieldControl } from './WidgetPropsForm.js';
-import type { BoardFinding } from '../board/check.js';
+import type { BoardFinding } from '@iyulab/u-board/check';
 import type { Board, Part } from '@iyulab/u-board/toolkit';
 
 export interface PartPanelProps {

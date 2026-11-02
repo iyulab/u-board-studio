@@ -103,7 +103,7 @@ jest-dom's matchers) from the instance the tests use.
 Changelogs, one per thing released, in the
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) format:
 
-- `packages/designer/CHANGELOG.md` (and `packages/mcp/CHANGELOG.md`) record what consumers of the package can notice.
+- `packages/designer/CHANGELOG.md` records what consumers of the package can notice.
   A change to its behaviour or API adds an entry under `## [Unreleased]` in the same commit —
   breaking changes say how to migrate.
 - `CHANGELOG.md` at the root records what an installation of the product — the container image with
