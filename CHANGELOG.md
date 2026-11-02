@@ -12,6 +12,10 @@ do when upgrading. Each release's notes carry its section.
 
 ## [Unreleased]
 
+### Security
+
+- A share link's answers carry no `meta`: what an adapter writes beside a value (`ResolvedBinding.meta`, in a library that offers it) is for a host's own screens, and the one place the server reads through for the public leaves it out, as it already does `message`. The server's own data sources never give one.
+
 ### Changed
 
 - The MCP server, `@iyulab/u-board-mcp`, moved to the library's repository and is under the MIT licence from 0.27.0; the console and the site take it from npm. The board check and the rulebook it reads moved there too (`@iyulab/u-board/check`), so the authoring tool's `check` entry point is gone. Nothing changes for an installation: the container image carries the same tools.

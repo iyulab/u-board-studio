@@ -9,7 +9,9 @@ export const DISCONNECTED: ResolvedBinding = { value: undefined, quality: 'disco
  *  exists, else `disconnected` without calling an upstream. Each connector is looked up once per reader, and upstream
  *  reads go through the shared reuse window (`resolveState`). Not gated: what reads a board's values for a share link
  *  checks the board declares them first; the server reads through this alone what a board itself needs to be drawn —
- *  the items a grid lays out (`pictureOf`). What went wrong is left out: it is for whoever can fix the data source. */
+ *  the items a grid lays out (`pictureOf`). What went wrong (`message`) is left out: it is for whoever can fix the data source. So is
+ *  what a reading says about its value (`meta`): a host's note beside a value is for the host's own screens, and a source of
+ *  this server's never gives one — whatever a source one day does, a public answer carries none. */
 export function upstreamReader(config: Pick<AppConfig, 'db' | 'secrets'>, resolveState: ResolveState, workspaceId: string) {
   const { db, secrets } = config;
   const connectors = new Map<string, Promise<Connector | undefined>>();
@@ -21,7 +23,9 @@ export function upstreamReader(config: Pick<AppConfig, 'db' | 'secrets'>, resolv
     const connector = await connectorOf(connectorId);
     const read = connector && readSource(connector, ref, resolveState);
     if (!read) return DISCONNECTED;
-    const { message: _message, ...served } = await read;
+    const { message: _message, ...rest } = await read;
+    // `meta` is a field of newer cores' readings; leaving it out here does not depend on the core being new.
+    const { meta: _meta, ...served } = rest as typeof rest & { meta?: unknown };
     return served;
   };
 }
