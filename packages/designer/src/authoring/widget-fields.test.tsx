@@ -15,7 +15,7 @@ const summary = (widget: Widget) => widgetFields(widget).fields.map(f => `${f.se
 describe('widgetFields', () => {
   it("offers a status widget's data fields, its tone and emphasis as choices, and its own mark as text", () => {
     const { fields, otherOptions } = widgetFields(STATUS);
-    expect(fields.map(f => `${f.section}.${f.key}:${f.kind}`)).toEqual(['data.label:text', 'data.value:text', 'data.tone:choice', 'data.glyph:text', 'data.emphasis:choice']);
+    expect(fields.map(f => `${f.section}.${f.key}:${f.kind}`)).toEqual(['data.label:text', 'data.value:text', 'data.tone:choice', 'data.glyph:text', 'data.emphasis:choice', 'options.face:choice']);
     expect(fields[2].choices).toContain('warn');
     expect(otherOptions).toBe(0);
   });
