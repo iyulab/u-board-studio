@@ -107,6 +107,8 @@ const LOADERS: Record<string, () => Promise<SamplePack>> = {
   'sales-bi': () => import('./packs/sales-bi.js').then(m => m.salesBi),
   'library-signage': () => import('./packs/library-signage.js').then(m => m.librarySignage),
   'status-console': () => import('./packs/status-console.js').then(m => m.statusConsole),
+  'metro-diagram': () => import('./packs/metro-diagram.js').then(m => m.metroDiagram),
+  'stadium-gates': () => import('./packs/stadium-gates.js').then(m => m.stadiumGates),
 };
 
 /** The ids of the packs that can be loaded, in the gallery's order. */

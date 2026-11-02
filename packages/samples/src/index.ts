@@ -102,6 +102,8 @@ export { labLogger } from './packs/lab-logger.js';
 export { salesBi } from './packs/sales-bi.js';
 export { librarySignage } from './packs/library-signage.js';
 export { statusConsole } from './packs/status-console.js';
+export { metroDiagram } from './packs/metro-diagram.js';
+export { stadiumGates } from './packs/stadium-gates.js';
 
 import { gwanghwamun } from './packs/gwanghwamun.js';
 import { seoulAir } from './packs/seoul-air.js';
@@ -203,7 +205,9 @@ import { labLogger } from './packs/lab-logger.js';
 import { salesBi } from './packs/sales-bi.js';
 import { librarySignage } from './packs/library-signage.js';
 import { statusConsole } from './packs/status-console.js';
+import { metroDiagram } from './packs/metro-diagram.js';
+import { stadiumGates } from './packs/stadium-gates.js';
 import type { SamplePack } from './sample-pack.js';
 
 /** Every sample, in the gallery's order. A pack added here is added to `./lazy.ts` too, which loads each on its own. */
-export const SAMPLE_PACKS: readonly SamplePack[] = [portTerminal, commerceLive, bloodJourney, telecomNoc, railNetwork, airportDepartures, smartFarm, festivalOps, hotelGlass, clinicKiosk, libraryReport, breweryScada, homeEink, tunnelTbm, worldSupply, bakerySketch, waferMaps, groundStation, mallWayfinding, warehouseRacks, wardBeds, busTerminal, racePitwall, skiResort, palaceVisit, islandFerry, theatreBoxoffice, parkTrails, themePark, countHall, farmersMarket, harborAuction, bankBranch, bikeShare, pcCafe, fireDispatch, produceMarket, clinicVaccines, parcelHub, schoolChalkboard, parkingSigns, laundromatDesktop, kitchenTickets, offshoreWindChart, aquariumLabels, vetComic, apiaryStitch, damSteampunk, poolMosaic, callcenterCork, observatoryGlass, campsitePapercut, chargingPcb, daycareBricks, makerspaceShadowboard, quakeHelicorder, wineryEngraving, bowlingGoogie, elevatorTui, droneRoutes, orchardQuilt, lostFoundDossier, nightMarketNeon, siteNoiseScore, kilnPorcelain, museumNajeon, recyclingPolaroid, coldchainVapor, deliveryBoardgame, harborRadar, heatingNixie, wildlifeChaekgado, wildfireTopo, lighthouseStamps, gwanghwamun, seoulAir, seoulDistrictsAir, koreaWeatherGrid, seoulSubway, factoryFloor, lineSpc, waterPumps, powerSld, lineOee, lineFlow, pumpStation, utilityRegions, serverRoom, buildingFloor, microgrid, bodyGap, itTopology, assemblyWip, apronControl, bakeryDay, cityBudget, labLogger, salesBi, librarySignage, statusConsole];
+export const SAMPLE_PACKS: readonly SamplePack[] = [portTerminal, commerceLive, bloodJourney, telecomNoc, railNetwork, airportDepartures, smartFarm, festivalOps, hotelGlass, clinicKiosk, libraryReport, breweryScada, homeEink, tunnelTbm, worldSupply, bakerySketch, waferMaps, groundStation, mallWayfinding, warehouseRacks, wardBeds, busTerminal, racePitwall, skiResort, palaceVisit, islandFerry, theatreBoxoffice, parkTrails, themePark, countHall, farmersMarket, harborAuction, bankBranch, bikeShare, pcCafe, fireDispatch, produceMarket, clinicVaccines, parcelHub, schoolChalkboard, parkingSigns, laundromatDesktop, kitchenTickets, offshoreWindChart, aquariumLabels, vetComic, apiaryStitch, damSteampunk, poolMosaic, callcenterCork, observatoryGlass, campsitePapercut, chargingPcb, daycareBricks, makerspaceShadowboard, quakeHelicorder, wineryEngraving, bowlingGoogie, elevatorTui, droneRoutes, orchardQuilt, lostFoundDossier, nightMarketNeon, siteNoiseScore, kilnPorcelain, museumNajeon, recyclingPolaroid, coldchainVapor, deliveryBoardgame, harborRadar, heatingNixie, wildlifeChaekgado, wildfireTopo, lighthouseStamps, gwanghwamun, seoulAir, seoulDistrictsAir, koreaWeatherGrid, seoulSubway, factoryFloor, lineSpc, waterPumps, powerSld, lineOee, lineFlow, pumpStation, utilityRegions, serverRoom, buildingFloor, microgrid, bodyGap, itTopology, assemblyWip, apronControl, bakeryDay, cityBudget, labLogger, salesBi, librarySignage, statusConsole, metroDiagram, stadiumGates];

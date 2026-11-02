@@ -279,6 +279,11 @@
     "height": 693,
     "hash": "61913ef454509c8e"
   },
+  "metro-diagram": {
+    "width": 800,
+    "height": 496,
+    "hash": "64ab2854cc4e6644"
+  },
   "microgrid": {
     "width": 800,
     "height": 453,
@@ -423,6 +428,11 @@
     "width": 800,
     "height": 432,
     "hash": "cea438f2e01fb702"
+  },
+  "stadium-gates": {
+    "width": 800,
+    "height": 496,
+    "hash": "f381e68826168dd7"
   },
   "status-console": {
     "width": 800,
