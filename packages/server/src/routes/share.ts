@@ -15,11 +15,47 @@ import type { ResolvedBinding } from '@iyulab/u-board/domain';
 import type { Connector } from '../db/connectors.js';
 import { elementFramesAddress } from '../element-frame.js';
 import { mediaOriginsOf } from '../media-origins.js';
-import { pictureOf } from '@iyulab/u-board/domain';
+import { drawBoard, pictureOf, variablesOf } from '@iyulab/u-board/domain';
+import { createHash } from 'node:crypto';
 
 /** Upper bound on one batch resolve request. A board's own bindings are the only entries that
  * resolve, so this only bounds the work a malformed or hostile request can make the server do. */
 const MAX_BATCH_BINDINGS = 500;
+
+/** Bounds on the variable values one request may carry. A value is only ever compared with the board's own options, but
+ * the request is hostile input like any other: a count and a length keep a malformed one from making the server work. */
+const MAX_VARIABLES = 32;
+const MAX_VARIABLE_VALUE = 200;
+
+/** The values a request asks the board's variables to take — a plain record of words, bounded. Anything that is not a word
+ * is left out; a name the board does not declare is left out too, and a value that is not one of the variable's options
+ * is the board's to turn down (it takes its default). One set of values per request: every route below reads it once. */
+function askedVariables(source: unknown, declared: ReadonlySet<string>): Record<string, string> {
+  const asked: Record<string, string> = {};
+  if (typeof source !== 'object' || source === null || Array.isArray(source)) return asked;
+  for (const [name, value] of Object.entries(source as Record<string, unknown>)) {
+    if (Object.keys(asked).length >= MAX_VARIABLES) break;
+    if (declared.has(name) && typeof value === 'string' && value.length <= MAX_VARIABLE_VALUE) asked[name] = value;
+  }
+  return asked;
+}
+
+/** The values asked in an address: `?v.line=L2` — a query key that starts with `v.` names a variable. */
+function variablesInQuery(query: Request['query'], declared: ReadonlySet<string>): Record<string, string> {
+  const named: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(query)) if (key.startsWith('v.')) named[key.slice(2)] = value;
+  return askedVariables(named, declared);
+}
+
+/** An ETag that tells one picture of a board from another: the revision, and — when the request asks the board's
+ * variables for values — those values, so a viewer that has the board at one set of values is not told that it
+ * has it unchanged at another. A request that asks for none is tagged as it always was. */
+function etagOf(revision: number, asked: Record<string, string>): string {
+  const names = Object.keys(asked).sort();
+  if (names.length === 0) return `"${revision}"`;
+  const canonical = JSON.stringify(names.map(name => [name, asked[name]]));
+  return `"${revision}.${createHash('sha256').update(canonical).digest('hex').slice(0, 12)}"`;
+}
 
 /** Every `(connectorId, ref)` pair a document declares via its bindings — widgets' and connectors' (`bindingsIn`) —
  * the single traversal `referencedConnectors` and `isDeclaredBinding` below both build on. */
@@ -122,20 +158,24 @@ export function createShareRouter(config: AppConfig, resolveState: ResolveState)
       return;
     }
     await token.used();
+    const asked = variablesInQuery(req.query, new Set(Object.keys(variablesOf(board.document))));
     // An open viewer whose board has no bindings has no value batch to learn the revision from, so it
     // asks here with the revision it shows (If-None-Match): unchanged, the answer is a bodiless 304.
-    res.set('ETag', `"${board.revision}"`);
+    res.set('ETag', etagOf(board.revision, asked));
     // Express compares If-None-Match with the ETag as HTTP has it (weak comparison, lists, `*`).
     if (req.fresh) {
       res.status(304).end();
       return;
     }
     // The board travels as it is stored, with the picture the viewer draws it from.
-    const picture = await pictureOf(board.document, upstreamReader(token.workspaceId));
+    const { picture, variables } = await drawBoard(board.document, upstreamReader(token.workspaceId), { variables: asked });
     res.status(200).json({
       name: board.name,
       document: board.document,
       picture,
+      // What the board's variables took at this request, and which asked values were not their options (they took
+      // their defaults) — said only for a board that declares variables.
+      ...(Object.keys(variables.values).length > 0 && { variables }),
       revision: board.revision,
       elementOrigins: config.elementOrigins ?? [],
       mediaOrigins: mediaOriginsOf(config),
@@ -179,7 +219,8 @@ export function createShareRouter(config: AppConfig, resolveState: ResolveState)
     await token.used();
 
     const upstream = upstreamReader(token.workspaceId);
-    const read = bindingReader(upstream, await pictureOf(board.document, upstream));
+    const asked = askedVariables(req.body?.variables, new Set(Object.keys(variablesOf(board.document))));
+    const read = bindingReader(upstream, await pictureOf(board.document, upstream, { variables: asked }));
     const results = await Promise.all(
       (bindings as { connectorId: string; ref?: unknown }[]).map(({ connectorId, ref }) => read(connectorId, ref))
     );
@@ -204,7 +245,8 @@ export function createShareRouter(config: AppConfig, resolveState: ResolveState)
     await token.used();
 
     const upstream = upstreamReader(token.workspaceId);
-    const picture = await pictureOf(board.document, upstream);
+    const asked = variablesInQuery(req.query, new Set(Object.keys(variablesOf(board.document))));
+    const picture = await pictureOf(board.document, upstream, { variables: asked });
     const read = bindingReader(upstream, picture);
     const ids = new Set<string>();
     for (const { connectorId } of declaredBindings(picture)) ids.add(connectorId);

@@ -446,3 +446,105 @@ describe('public share routes', () => {
     expect(state.body.parts).toEqual({ 'pump/P1': { quality: 'live', observedAt: expect.any(String) }, 'pump/P2': { quality: 'live', observedAt: expect.any(String) } });
   });
 });
+
+describe('a board that reads variables, asked for values by the request', () => {
+  /** Line L1 or L2 is in the path the plant is asked: a listed variable may be in a path, and the plant's own answer is the reading. */
+  const lineBoard = (plantId: string): Board => ({
+    variables: { line: { label: 'Line', options: ['L1', 'L2'], default: 'L1' } },
+    statuses: { fault: { tone: 'alarm' }, running: { tone: 'ok' } },
+    data: { pump: { from: plantId, path: '/line/{{$line}}/pump', fields: { state: { state: { Fault: 'fault', '*': 'running' } } } } },
+    parts: { pump: { as: 'stat', of: 'pump', show: 'state' }, title: { as: 'label', title: 'Line {{$line}}' } },
+    layout: { kind: 'canvas', size: [400, 300], place: { pump: [0, 0], title: [0, 200] } },
+  });
+  let auth: string;
+  const urlsAsked = () => (fetch as any).mock.calls.map((call: unknown[]) => String(call[0]));
+
+  beforeEach(async () => {
+    const plant = await createConnector(db, {
+      actorUserId: 'test-actor', workspaceId, name: 'Plant', baseUrl: 'https://plant.example.com', authType: 'none' });
+    await updateBoard(db, workspaceId, boardId, { document: lineBoard(plant.id) });
+    (fetch as any).mockImplementation(async () => jsonResponse({ state: 'Fault' }));
+    auth = `Bearer ${await createShareToken()}`;
+  });
+
+  const readBoard = (query = '') => request(app).get(`/api/share/boards/${boardId}${query}`).set('Authorization', auth);
+  const pathOf = (picture: ViewDocument) => [...new Set([...bindingsIn(picture)].map(({ binding }) => (binding.ref as { path: string }).path))];
+
+  it('draws the board at the values the address asks for, and says what each variable took', async () => {
+    const asked = await readBoard('?v.line=L2');
+    expect(pathOf(asked.body.picture)).toEqual(['/line/L2/pump']);
+    expect(JSON.stringify(asked.body.picture)).toContain('Line L2');
+    expect(asked.body.variables).toEqual({ values: { line: 'L2' }, unknown: [] });
+
+    const none = await readBoard();
+    expect(pathOf(none.body.picture)).toEqual(['/line/L1/pump']);
+    expect(none.body.variables).toEqual({ values: { line: 'L1' }, unknown: [] });
+  });
+
+  it('turns down a value that is not one of the options — the default is drawn, the variable named, nothing of the value is read', async () => {
+    const asked = await readBoard('?v.line=L9&v.stray=x');
+    expect(pathOf(asked.body.picture)).toEqual(['/line/L1/pump']);
+    expect(asked.body.variables).toEqual({ values: { line: 'L1' }, unknown: ['line'] });
+    expect(JSON.stringify(asked.body)).not.toContain('L9');
+
+    const resolve = await request(app).post(`/api/share/boards/${boardId}/resolve`).set('Authorization', auth)
+      .send({ variables: { line: 'L9' }, bindings: [{ connectorId: [...bindingsIn(asked.body.picture)][0]!.binding.adapter, ref: { path: '/line/L9/pump' } }] });
+    expect(resolve.body.results.map((r: { quality: string }) => r.quality)).toEqual(['disconnected']);
+    expect(urlsAsked().some((url: string) => url.includes('L9'))).toBe(false);
+  });
+
+  it('reads, on all three routes, the one picture the one set of values draws', async () => {
+    const asked = await readBoard('?v.line=L2');
+    const [binding] = [...bindingsIn(asked.body.picture as ViewDocument)].map(({ binding }) => ({ connectorId: binding.adapter, ref: binding.ref }));
+
+    // the state: the value the address asks for is the value read — and a value that is not an option reads the default
+    (fetch as any).mockClear();
+    const state = await request(app).get(`/api/share/boards/${boardId}/state?v.line=L2`).set('Authorization', auth);
+    expect(state.status).toBe(200);
+    expect(urlsAsked()).toEqual(['https://plant.example.com/line/L2/pump']);
+    (fetch as any).mockClear();
+    await request(app).get(`/api/share/boards/${boardId}/state?v.line=L9`).set('Authorization', auth);
+    expect(urlsAsked()).toEqual(['https://plant.example.com/line/L1/pump']);
+
+    // the batch read: that read is declared at L2 and at no other value
+    (fetch as any).mockClear();
+    const at = (variables?: Record<string, string>) =>
+      request(app).post(`/api/share/boards/${boardId}/resolve`).set('Authorization', auth).send({ ...(variables && { variables }), bindings: [binding] });
+    expect((await at({ line: 'L2' })).body.results[0].quality).toBe('live');
+    (fetch as any).mockClear();
+    expect((await at()).body.results[0].quality).toBe('disconnected');
+    expect((await at({ line: 'L9' })).body.results[0].quality).toBe('disconnected');
+    expect(fetch).not.toHaveBeenCalled();
+  });
+
+  it('tells one set of values from another in its ETag, so a viewer is never told it has at one value what it has at another', async () => {
+    const plain = await readBoard();
+    const tagOf = (r: { headers: Record<string, string> }) => r.headers.etag;
+    const atL2 = await readBoard('?v.line=L2');
+    expect(tagOf(plain)).toBe(`"${plain.body.revision}"`);
+    expect(tagOf(atL2)).not.toBe(tagOf(plain));
+    // the tag of L2 is the same each time it is asked, and holds only for the values it was made at
+    expect(tagOf(await readBoard('?v.line=L2'))).toBe(tagOf(atL2));
+    expect((await readBoard('?v.line=L2').set('If-None-Match', tagOf(atL2))).status).toBe(304);
+    expect((await readBoard('?v.line=L2').set('If-None-Match', tagOf(plain))).status).toBe(200);
+    expect((await readBoard().set('If-None-Match', tagOf(atL2))).status).toBe(200);
+    // a name the board does not declare changes nothing
+    expect(tagOf(await readBoard('?v.stray=x'))).toBe(tagOf(plain));
+  });
+
+  it('bounds what a request may carry: a long value, and too many names, ask for nothing', async () => {
+    const long = await readBoard(`?v.line=${'L'.repeat(500)}`);
+    expect(long.status).toBe(200);
+    expect(long.body.variables).toEqual({ values: { line: 'L1' }, unknown: [] });
+    const nonWord = await readBoard('?v.line[]=L2&v.line[]=L1');
+    expect(nonWord.body.variables).toEqual({ values: { line: 'L1' }, unknown: [] });
+  });
+
+  it('answers a board that declares no variable as it did — no variables in the answer, the tag the revision alone', async () => {
+    await updateBoard(db, workspaceId, boardId, { document: { parts: { title: { as: 'label', title: 'Plain' } }, layout: { kind: 'canvas', size: [100, 50], place: { title: [0, 0] } } } as Board });
+    const asked = await readBoard('?v.line=L2');
+    expect(asked.status).toBe(200);
+    expect(asked.body).not.toHaveProperty('variables');
+    expect(asked.headers.etag).toBe(`"${asked.body.revision}"`);
+  });
+});
