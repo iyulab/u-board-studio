@@ -100,6 +100,13 @@ const LOADERS: Record<string, () => Promise<SamplePack>> = {
   'body-gap': () => import('./packs/body-gap.js').then(m => m.bodyGap),
   'it-topology': () => import('./packs/it-topology.js').then(m => m.itTopology),
   'assembly-wip': () => import('./packs/assembly-wip.js').then(m => m.assemblyWip),
+  'apron-control': () => import('./packs/apron-control.js').then(m => m.apronControl),
+  'bakery-day': () => import('./packs/bakery-day.js').then(m => m.bakeryDay),
+  'city-budget': () => import('./packs/city-budget.js').then(m => m.cityBudget),
+  'lab-logger': () => import('./packs/lab-logger.js').then(m => m.labLogger),
+  'sales-bi': () => import('./packs/sales-bi.js').then(m => m.salesBi),
+  'library-signage': () => import('./packs/library-signage.js').then(m => m.librarySignage),
+  'status-console': () => import('./packs/status-console.js').then(m => m.statusConsole),
 };
 
 /** The ids of the packs that can be loaded, in the gallery's order. */

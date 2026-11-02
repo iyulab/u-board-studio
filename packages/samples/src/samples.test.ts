@@ -6,8 +6,14 @@ import { isCanvasItem, isSourceErrorField, placedIn, resolveDocument, sizedNodes
 import { SAMPLE_PACKS, isInstallable, isLiveConnector, snapshotAdapters } from './index.js';
 import { keepPointers } from './prune.js';
 
-const overlaps = (a: Node, b: Node) =>
+const touches = (a: Node, b: Node) =>
   a.x < b.x + (b.width ?? 0) && b.x < a.x + (a.width ?? 0) && a.y < b.y + (b.height ?? 0) && b.y < a.y + (a.height ?? 0);
+const within = (a: Node, b: Node) =>
+  a.x >= b.x && a.y >= b.y && a.x + (a.width ?? 0) <= b.x + (b.width ?? 0) && a.y + (a.height ?? 0) <= b.y + (b.height ?? 0);
+// Two parts must not cover each other. A decoration (`shape.*`, drawn under the parts by design) is not a part, and a part
+// that sits wholly inside another — a card on its panel, an item on its region — is layering the board asked for.
+const overlaps = (a: Node, b: Node) =>
+  touches(a, b) && !a.id.startsWith('shape.') && !b.id.startsWith('shape.') && !within(a, b) && !within(b, a);
 
 // Each sample's board as the renderer draws it — with the items its recording lists.
 const pictures = new Map<string, ViewDocument>(

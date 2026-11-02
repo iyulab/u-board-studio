@@ -9,6 +9,11 @@
     "height": 496,
     "hash": "a4b0cfff6355e306"
   },
+  "apron-control": {
+    "width": 800,
+    "height": 496,
+    "hash": "eb522022555e4412"
+  },
   "aquarium-labels": {
     "width": 800,
     "height": 496,
@@ -18,6 +23,11 @@
     "width": 800,
     "height": 479,
     "hash": "ad582f7f4e07101e"
+  },
+  "bakery-day": {
+    "width": 800,
+    "height": 496,
+    "hash": "5bdc80d4ac1de650"
   },
   "bakery-sketch": {
     "width": 800,
@@ -78,6 +88,11 @@
     "width": 800,
     "height": 496,
     "hash": "3634f44a95ca7ce3"
+  },
+  "city-budget": {
+    "width": 800,
+    "height": 496,
+    "hash": "f30db792a7a9bf4f"
   },
   "clinic-kiosk": {
     "width": 386,
@@ -209,6 +224,11 @@
     "height": 496,
     "hash": "6c835b4dec894f3c"
   },
+  "lab-logger": {
+    "width": 800,
+    "height": 496,
+    "hash": "ca48f7c4a0caefa3"
+  },
   "laundromat-desktop": {
     "width": 800,
     "height": 496,
@@ -218,6 +238,11 @@
     "width": 484,
     "height": 693,
     "hash": "24cae3bd90450c97"
+  },
+  "library-signage": {
+    "width": 800,
+    "height": 496,
+    "hash": "3bc46215ffa85dc8"
   },
   "lighthouse-stamps": {
     "width": 800,
@@ -354,6 +379,11 @@
     "height": 496,
     "hash": "6c70062378b505c9"
   },
+  "sales-bi": {
+    "width": 800,
+    "height": 496,
+    "hash": "84d9eb49bc646a41"
+  },
   "school-chalkboard": {
     "width": 800,
     "height": 496,
@@ -393,6 +423,11 @@
     "width": 800,
     "height": 432,
     "hash": "cea438f2e01fb702"
+  },
+  "status-console": {
+    "width": 800,
+    "height": 496,
+    "hash": "b50b2d31be371f75"
   },
   "telecom-noc": {
     "width": 800,

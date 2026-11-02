@@ -95,6 +95,13 @@ export { bowlingGoogie } from './packs/bowling-googie.js';
 export { elevatorTui } from './packs/elevator-tui.js';
 export { droneRoutes } from './packs/drone-routes.js';
 export { orchardQuilt } from './packs/orchard-quilt.js';
+export { apronControl } from './packs/apron-control.js';
+export { bakeryDay } from './packs/bakery-day.js';
+export { cityBudget } from './packs/city-budget.js';
+export { labLogger } from './packs/lab-logger.js';
+export { salesBi } from './packs/sales-bi.js';
+export { librarySignage } from './packs/library-signage.js';
+export { statusConsole } from './packs/status-console.js';
 
 import { gwanghwamun } from './packs/gwanghwamun.js';
 import { seoulAir } from './packs/seoul-air.js';
@@ -189,7 +196,14 @@ import { bowlingGoogie } from './packs/bowling-googie.js';
 import { elevatorTui } from './packs/elevator-tui.js';
 import { droneRoutes } from './packs/drone-routes.js';
 import { orchardQuilt } from './packs/orchard-quilt.js';
+import { apronControl } from './packs/apron-control.js';
+import { bakeryDay } from './packs/bakery-day.js';
+import { cityBudget } from './packs/city-budget.js';
+import { labLogger } from './packs/lab-logger.js';
+import { salesBi } from './packs/sales-bi.js';
+import { librarySignage } from './packs/library-signage.js';
+import { statusConsole } from './packs/status-console.js';
 import type { SamplePack } from './sample-pack.js';
 
 /** Every sample, in the gallery's order. A pack added here is added to `./lazy.ts` too, which loads each on its own. */
-export const SAMPLE_PACKS: readonly SamplePack[] = [portTerminal, commerceLive, bloodJourney, telecomNoc, railNetwork, airportDepartures, smartFarm, festivalOps, hotelGlass, clinicKiosk, libraryReport, breweryScada, homeEink, tunnelTbm, worldSupply, bakerySketch, waferMaps, groundStation, mallWayfinding, warehouseRacks, wardBeds, busTerminal, racePitwall, skiResort, palaceVisit, islandFerry, theatreBoxoffice, parkTrails, themePark, countHall, farmersMarket, harborAuction, bankBranch, bikeShare, pcCafe, fireDispatch, produceMarket, clinicVaccines, parcelHub, schoolChalkboard, parkingSigns, laundromatDesktop, kitchenTickets, offshoreWindChart, aquariumLabels, vetComic, apiaryStitch, damSteampunk, poolMosaic, callcenterCork, observatoryGlass, campsitePapercut, chargingPcb, daycareBricks, makerspaceShadowboard, quakeHelicorder, wineryEngraving, bowlingGoogie, elevatorTui, droneRoutes, orchardQuilt, lostFoundDossier, nightMarketNeon, siteNoiseScore, kilnPorcelain, museumNajeon, recyclingPolaroid, coldchainVapor, deliveryBoardgame, harborRadar, heatingNixie, wildlifeChaekgado, wildfireTopo, lighthouseStamps, gwanghwamun, seoulAir, seoulDistrictsAir, koreaWeatherGrid, seoulSubway, factoryFloor, lineSpc, waterPumps, powerSld, lineOee, lineFlow, pumpStation, utilityRegions, serverRoom, buildingFloor, microgrid, bodyGap, itTopology, assemblyWip];
+export const SAMPLE_PACKS: readonly SamplePack[] = [portTerminal, commerceLive, bloodJourney, telecomNoc, railNetwork, airportDepartures, smartFarm, festivalOps, hotelGlass, clinicKiosk, libraryReport, breweryScada, homeEink, tunnelTbm, worldSupply, bakerySketch, waferMaps, groundStation, mallWayfinding, warehouseRacks, wardBeds, busTerminal, racePitwall, skiResort, palaceVisit, islandFerry, theatreBoxoffice, parkTrails, themePark, countHall, farmersMarket, harborAuction, bankBranch, bikeShare, pcCafe, fireDispatch, produceMarket, clinicVaccines, parcelHub, schoolChalkboard, parkingSigns, laundromatDesktop, kitchenTickets, offshoreWindChart, aquariumLabels, vetComic, apiaryStitch, damSteampunk, poolMosaic, callcenterCork, observatoryGlass, campsitePapercut, chargingPcb, daycareBricks, makerspaceShadowboard, quakeHelicorder, wineryEngraving, bowlingGoogie, elevatorTui, droneRoutes, orchardQuilt, lostFoundDossier, nightMarketNeon, siteNoiseScore, kilnPorcelain, museumNajeon, recyclingPolaroid, coldchainVapor, deliveryBoardgame, harborRadar, heatingNixie, wildlifeChaekgado, wildfireTopo, lighthouseStamps, gwanghwamun, seoulAir, seoulDistrictsAir, koreaWeatherGrid, seoulSubway, factoryFloor, lineSpc, waterPumps, powerSld, lineOee, lineFlow, pumpStation, utilityRegions, serverRoom, buildingFloor, microgrid, bodyGap, itTopology, assemblyWip, apronControl, bakeryDay, cityBudget, labLogger, salesBi, librarySignage, statusConsole];
