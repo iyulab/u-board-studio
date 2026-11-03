@@ -12,6 +12,10 @@ do when upgrading. Each release's notes carry its section.
 
 ## [Unreleased]
 
+### Changed
+
+- Built on `@iyulab/u-board` 0.41.0, `@iyulab/u-board-mcp` 0.27.1 and `@canvas-kit/viewer` 0.8.0. A board of more than 500 parts leaves out those well outside the view; a share link's board gets it with no setting.
+
 ### Security
 
 - A share link's answers carry no `meta`: what an adapter writes beside a value (`ResolvedBinding.meta`, in a library that offers it) is for a host's own screens, and the one place the server reads through for the public leaves it out, as it already does `message`. The server's own data sources never give one.

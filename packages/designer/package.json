@@ -42,8 +42,8 @@
   "dependencies": {
     "@canvas-kit/core": "^0.8.0",
     "@canvas-kit/designer": "^0.10.0",
-    "@canvas-kit/viewer": "^0.7.0",
-    "@iyulab/u-board": "^0.40.0",
+    "@canvas-kit/viewer": "^0.8.0",
+    "@iyulab/u-board": "^0.41.0",
     "@iyulab/u-widgets": "^0.46.0"
   },
   "devDependencies": {
