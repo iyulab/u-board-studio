@@ -149,4 +149,20 @@ describe('a static data source', () => {
     expect(read.body.picture.nodes.map((n: { id: string }) => n.id)).toEqual(['quake/q1', 'quake/q2']);
     expect(read.body.unplaced).toEqual({ quake: 2 });
   });
+
+  it('says a data whose answer is an object keyed by names, and not a list, has no items', async () => {
+    const { body: source } = await create({ answers: { '/wells': { w1: { level: 3 }, w2: { level: 5 } } }, sample: true });
+    const { body: board } = await request(app).post(`/api/workspaces/${workspaceId}/boards`).set('Cookie', ownerCookie).send({ name: 'Wells', kind: 'grid' });
+    const at = `/api/workspaces/${workspaceId}/boards/${board.id}`;
+    const document = {
+      data: { wells: { from: source.id, path: '/wells', list: '', key: 'id' } },
+      parts: { well: { as: 'stat', each: 'wells', show: 'level' } },
+      layout: { kind: 'grid', items: ['well'] },
+    };
+    const saved = await request(app).put(at).set('Cookie', ownerCookie).send({ document });
+    expect(saved.status, JSON.stringify(saved.body)).toBe(200);
+    const read = await request(app).get(at).set('Cookie', ownerCookie);
+    expect(read.body.notLists).toEqual(['wells']);
+    expect(read.body.picture.items).toEqual([]);
+  });
 });

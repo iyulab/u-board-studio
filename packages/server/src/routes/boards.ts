@@ -69,8 +69,9 @@ export function createBoardsRouter(config: AppConfig, resolveState: ResolveState
       return;
     }
     // With the picture its viewers draw it from — the one the share route answers, made here so every page shows a
-    // board the same way — and, for the parts a canvas places by their items' fields, how many items were left out.
-    const { picture, unplaced } = await drawBoard(board.document, upstreamReader(config, resolveState, workspaceId));
+    // board the same way — and, for the parts a canvas places by their items' fields, how many items were left out, and the
+    // data a part is made per item of whose answer was an object keyed by names and not a list.
+    const { picture, unplaced, notLists } = await drawBoard(board.document, upstreamReader(config, resolveState, workspaceId));
     res
       .status(200)
       .set('ETag', etagOf(board.revision))
@@ -80,6 +81,7 @@ export function createBoardsRouter(config: AppConfig, resolveState: ResolveState
         document: board.document,
         picture,
         ...(Object.keys(unplaced).length > 0 && { unplaced }),
+        ...(notLists.length > 0 && { notLists }),
         updatedAt: board.updatedAt,
         revision: board.revision,
         elementOrigins: config.elementOrigins ?? [],
