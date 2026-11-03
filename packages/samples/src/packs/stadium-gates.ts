@@ -176,7 +176,7 @@ const board: Board = {
       "title": "{{venue}}",
       "kicker": "GATE FLOW · 경기 전 입장 현황",
       "subtitle": "{{date}} · {{home}} vs {{away}} · 킥오프 {{kickoff}}",
-      "size": "xlarge",
+      "scale": "xlarge",
       "kickerInk": "accent"
     },
     "seated": {
@@ -211,7 +211,7 @@ const board: Board = {
     "legend": {
       "as": "label",
       "title": "▨ 좌석 점유 — 성김 <60% · 중간 60–75% · 촘촘 75–90% · 거의 참 ≥90%  |  선 길이 = 대기열 · 굵고 붉은 선 = 지연(예상 25분 이상)",
-      "size": "small",
+      "scale": "small",
       "ink": "muted"
     },
     "queueAll": {
@@ -227,7 +227,7 @@ const board: Board = {
     "foot": {
       "as": "label",
       "title": "예시 데이터 — 실제 경기장이 아닙니다 · 게이트 계수기는 1분마다 갱신 · 예상 대기 = 대기 인원 ÷ (열린 레인 × 레인당 분당 처리)",
-      "size": "small",
+      "scale": "small",
       "ink": "muted"
     },
     "stand-s1": {

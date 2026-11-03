@@ -281,7 +281,7 @@ const board: Board = {
       "title": "{{room}} · {{class}}",
       "kicker": "WATER LOGGER · 수질 실습 로거 · CH 1–5",
       "subtitle": "{{topic}} · 예시 데이터",
-      "size": "xlarge",
+      "scale": "xlarge",
       "kickerInk": "accent"
     },
     "temp": {
@@ -446,7 +446,7 @@ const board: Board = {
     "foot": {
       "as": "label",
       "title": "예시 데이터 — 실제 학교의 측정값이 아닙니다 · 색은 허용 범위에 견준 상태",
-      "size": "small",
+      "scale": "small",
       "ink": "muted"
     }
   },

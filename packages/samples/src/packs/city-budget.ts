@@ -145,7 +145,7 @@ const board: Board = {
       "title": "{{city}}는 올해 예산의 {{rate}}%를 썼다",
       "kicker": "시민 예산 보고",
       "subtitle": "{{asOf}} 기준 · 여섯 부서의 사업별 예산과 집행 · 예시 데이터",
-      "size": "xlarge",
+      "scale": "xlarge",
       "kickerInk": "accent"
     },
     "whole": {
@@ -239,7 +239,7 @@ const board: Board = {
     "foot": {
       "as": "label",
       "title": "예시 데이터 — 실제 도시의 예산이 아닙니다 · 단위 억 원 · 집행률은 부서별 예산에 대한 쓴 돈의 비율",
-      "size": "small",
+      "scale": "small",
       "ink": "muted"
     }
   },

@@ -156,7 +156,7 @@ const board: Board = {
       "title": "{{library}}",
       "kicker": "TODAY · 열람실 안내",
       "subtitle": "{{date}} · 개관 {{hours}}",
-      "size": "xxlarge",
+      "scale": "xxlarge",
       "kickerInk": "accent"
     },
     "total": {
@@ -167,7 +167,7 @@ const board: Board = {
     "tag": {
       "as": "label",
       "title": "예시 데이터",
-      "size": "small",
+      "scale": "small",
       "ink": "muted",
       "face": "pill"
     },
@@ -243,7 +243,7 @@ const board: Board = {
     "foot": {
       "as": "label",
       "title": "예시 데이터 — 실제 도서관이 아닙니다 · 자리는 열람실 입구 계수기에서 센 값 · 5분마다 갱신",
-      "size": "small",
+      "scale": "small",
       "ink": "muted"
     }
   },

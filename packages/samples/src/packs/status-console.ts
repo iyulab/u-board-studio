@@ -210,7 +210,7 @@ const board: Board = {
       "title": "{{name}}",
       "kicker": "서비스 상태 · 실시간",
       "subtitle": "{{date}} · 예시 데이터",
-      "size": "xlarge",
+      "scale": "xlarge",
       "kickerInk": "accent"
     },
     "healthy": {
@@ -333,7 +333,7 @@ const board: Board = {
     "foot": {
       "as": "label",
       "title": "예시 데이터 — 실제 서비스가 아닙니다 · 숫자는 서비스 목록과 장애 기록에서 센 값",
-      "size": "small",
+      "scale": "small",
       "ink": "muted"
     },
     "banner": {

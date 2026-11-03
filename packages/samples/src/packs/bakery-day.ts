@@ -188,7 +188,7 @@ const board: Board = {
       "title": "{{shop}}",
       "kicker": "오늘의 주문 · 카운터 현황",
       "subtitle": "{{date}} · 예시 데이터",
-      "size": "xlarge",
+      "scale": "xlarge",
       "kickerInk": "accent"
     },
     "waiting": {
@@ -289,7 +289,7 @@ const board: Board = {
     "foot": {
       "as": "label",
       "title": "예시 데이터 — 실제 가게가 아닙니다 · 숫자는 주문장과 재고표의 목록에서 센 값",
-      "size": "small",
+      "scale": "small",
       "ink": "muted"
     }
   },
