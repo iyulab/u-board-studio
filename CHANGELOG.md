@@ -14,7 +14,7 @@ do when upgrading. Each release's notes carry its section.
 
 ### Changed
 
-- Built on `@iyulab/u-board` 0.41.0, `@iyulab/u-board-mcp` 0.27.1 and `@canvas-kit/viewer` 0.8.0. A board of more than 500 parts leaves out those well outside the view; a share link's board gets it with no setting.
+- Built on `@iyulab/u-board` 0.42.0, `@iyulab/u-board-mcp` 0.28.0, `@canvas-kit/viewer` 0.9.0 and `@iyulab/u-widgets` 0.47.0. A board of more than 500 parts leaves out those well outside the view; a share link's board gets it with no setting. The gallery's boards write how large a heading or a text is with `scale`, as the library now asks.
 
 ### Security
 
