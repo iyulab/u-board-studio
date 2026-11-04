@@ -141,7 +141,7 @@ export const COPY: Record<Locale, Copy> = {
       claim: 'lede',
       text: '사람은 편집기에서, AI는 MCP로 같은 JSON 문서를 쓰고, 어디서나 같은 뷰어가 그 문서만 읽어 그립니다. 문서에는 어디서 무엇을 읽는지, 무엇을 보이는지, 어디에 놓는지를 적습니다 — 도면이나 지도 위에도, 화면 폭에 맞춰 줄을 바꾸는 격자 위에도 같은 부품이 놓입니다. 값은 화면을 열어 둔 동안 그 값을 가진 시스템에서 계속 읽어 옵니다.',
     },
-    install: '직접 설치',
+    install: '문서로 시작하기',
     tryIt: '브라우저에서 만들어 보기',
     readSource: '소스 보기',
     signIn: '초대받은 계정으로 데모 인스턴스에 로그인',
@@ -188,14 +188,14 @@ export const COPY: Record<Locale, Copy> = {
       heading: '쓰는 방식',
       items: [
         {
-          claim: 'delivery-container',
-          heading: '컨테이너 하나로 사내에 설치',
-          body: '서버·콘솔·공유 뷰어가 한 컨테이너 이미지에 들어 있고, 버전마다 이미지와 사내망 반입용 파일을 출처 증명과 함께 공개합니다. 인터넷이 닿지 않는 사내망에서도 돌아가고, PostgreSQL 하나(작은 설치는 내장 DB)만 있으면 됩니다.',
-        },
-        {
           claim: 'delivery-library',
           heading: '라이브러리로 자기 앱 안에',
-          body: '보드 언어와 뷰어는 npm 패키지 @iyulab/u-board(MIT)로, 저작 화면은 @iyulab/u-board-designer(AGPL-3.0, 상용 라이선스 가능)로 가져다 자기 웹 앱 안에 넣을 수 있습니다.',
+          body: '보드 언어와 뷰어는 npm 패키지 @iyulab/u-board(MIT)로, AI가 보드를 쓰는 MCP 서버는 @iyulab/u-board-mcp(MIT)로, 저작 화면은 @iyulab/u-board-designer(AGPL-3.0, 상용 라이선스 가능)로 가져다 자기 웹 앱 안에 넣을 수 있습니다.',
+        },
+        {
+          claim: 'delivery-container',
+          heading: '서버가 필요하면 컨테이너 하나로 사내에 설치',
+          body: '서버·콘솔·공유 뷰어가 한 컨테이너 이미지에 들어 있고, 버전마다 이미지와 사내망 반입용 파일을 출처 증명과 함께 공개합니다. 인터넷이 닿지 않는 사내망에서도 돌아가고, PostgreSQL 하나(작은 설치는 내장 DB)만 있으면 됩니다.',
         },
         {
           claim: 'delivery-demo',
@@ -303,7 +303,7 @@ export const COPY: Record<Locale, Copy> = {
       claim: 'lede',
       text: 'People write it in an editor and AI writes it through MCP — the same JSON document — and the same viewer draws it anywhere, reading only that document. The document says where values are read from, what is shown and where it sits: the same parts go over a floor plan or a map, or on a grid that rewraps to the screen’s width. Each value is read from the system that owns it for as long as the view is open.',
     },
-    install: 'Install it',
+    install: 'Start with the docs',
     tryIt: 'Build one in your browser',
     readSource: 'Read the source',
     signIn: 'Sign in to the demo instance with an invited account',
@@ -350,14 +350,14 @@ export const COPY: Record<Locale, Copy> = {
       heading: 'Ways to run it',
       items: [
         {
-          claim: 'delivery-container',
-          heading: 'One container, on your network',
-          body: 'The server, console and share viewer ship in one container image, released by version with an archive to carry onto a closed network, both attested to their build. Run it on your own network — no internet access needed — with a PostgreSQL database, or the embedded one for a small installation.',
-        },
-        {
           claim: 'delivery-library',
           heading: 'A library inside your app',
-          body: 'Bring the board language and the viewer into your own web application with the npm package @iyulab/u-board (MIT), and the authoring view with @iyulab/u-board-designer (AGPL-3.0, a commercial license is available).',
+          body: 'Bring the board language and the viewer into your own web application with the npm package @iyulab/u-board (MIT), the MCP server that lets an AI write boards with @iyulab/u-board-mcp (MIT), and the authoring view with @iyulab/u-board-designer (AGPL-3.0, a commercial license is available).',
+        },
+        {
+          claim: 'delivery-container',
+          heading: 'Need a server? One container, on your network',
+          body: 'The server, console and share viewer ship in one container image, released by version with an archive to carry onto a closed network, both attested to their build. Run it on your own network — no internet access needed — with a PostgreSQL database, or the embedded one for a small installation.',
         },
         {
           claim: 'delivery-demo',
