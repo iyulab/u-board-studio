@@ -16,8 +16,8 @@ export type PageId = keyof typeof PATHS;
 
 export const SITE_URL = 'https://board.u-platform.kr';
 export const APP_URL = 'https://board-app.u-platform.kr/';
-// Two repositories, two licenses: the board language and the viewer are the library (MIT); the authoring view, the
-// server, the console and the MCP server are the product (AGPL-3.0 and a commercial license).
+// Two repositories, two licenses: the board language, the viewer, the board check and the MCP server are the library (MIT);
+// the authoring view, the server and the console are the product (AGPL-3.0 and a commercial license).
 export const SOURCE_URL = 'https://github.com/iyulab/u-board-studio';
 export const LIBRARY_URL = 'https://github.com/iyulab/U-Board';
 export const DOCS_URL = 'https://github.com/iyulab/U-Board/tree/main/docs';
@@ -225,7 +225,7 @@ export const COPY: Record<Locale, Copy> = {
     license: {
       claim: 'license',
       heading: '열린 소스',
-      body: '보드 언어와 뷰어(라이브러리)는 MIT 라이선스로, 저작 화면·서버·콘솔·MCP 서버(제품)는 AGPL-3.0으로 공개되어 있습니다. AGPL 조건을 따르기 어려운 조직에는 제품의 상용 라이선스를 드립니다.',
+      body: '보드 언어·뷰어·보드 검사·MCP 서버(라이브러리)는 MIT 라이선스로, 저작 화면·서버·콘솔(제품)은 AGPL-3.0으로 공개되어 있습니다. AGPL 조건을 따르기 어려운 조직에는 제품의 상용 라이선스를 드립니다.',
     },
     footer: {
       product: '제품 (AGPL-3.0)',
@@ -387,7 +387,7 @@ export const COPY: Record<Locale, Copy> = {
     license: {
       claim: 'license',
       heading: 'Open source',
-      body: 'The board language and the viewer (the library) are published under the MIT license; the authoring view, the server, the console and the MCP server (the product) under AGPL-3.0. A commercial license for the product is available for organizations that cannot adopt AGPL-3.0 terms.',
+      body: 'The board language, the viewer, the board check and the MCP server (the library) are published under the MIT license; the authoring view, the server and the console (the product) under AGPL-3.0. A commercial license for the product is available for organizations that cannot adopt AGPL-3.0 terms.',
     },
     footer: {
       product: 'Product (AGPL-3.0)',

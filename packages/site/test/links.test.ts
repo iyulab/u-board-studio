@@ -64,6 +64,18 @@ describe('what the site says about packages and licenses', () => {
     }
   });
 
+  // The MCP server moved to the library's repository and became MIT (0.27.0); a sentence that kept it among the product's
+  // AGPL-3.0 packages stayed on the site for two days.
+  it('puts the MCP server with the MIT library, as its package is licensed', () => {
+    const mcpInstalled = ['node_modules', '../../node_modules'].map(d => path.join(siteDir, d, '@iyulab/u-board-mcp/package.json')).find(existsSync);
+    expect(readJson(mcpInstalled!).license).toBe('MIT');
+    for (const locale of ['ko', 'en'] as const) {
+      const text = COPY[locale].license.body;
+      expect(text.indexOf('MCP'), locale).toBeGreaterThanOrEqual(0);
+      expect(text.indexOf('MCP'), locale).toBeLessThan(text.indexOf('AGPL-3.0'));
+    }
+  });
+
   it('names the library and the authoring package as they are published', () => {
     const delivery = COPY.en.delivery.items.find(i => i.claim === 'delivery-library')!.body;
     expect(delivery).toContain(library.name);
