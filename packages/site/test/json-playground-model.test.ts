@@ -7,6 +7,20 @@ const pack = SAMPLE_PACKS.find(p => p.id === 'seoul-air')!;
 const definition = JSON.stringify(pack.board);
 const data = JSON.stringify(dataOf(pack));
 
+// The playground says a board is two texts: its definition and its data. Every board the gallery publishes must be said by those two
+// alone — read back with no problem, and the same board and data as the pack it came from — so what the playground cannot express
+// is found the day a pack or the board language changes, not by a visitor.
+describe('JSON playground, over every gallery board', () => {
+  for (const each of SAMPLE_PACKS) {
+    it(`says ${each.id} in its two texts`, () => {
+      const reading = readPlayground(JSON.stringify(each.board), JSON.stringify(dataOf(each)));
+      expect(reading.problems, each.id).toEqual([]);
+      expect(reading.board, each.id).toEqual(each.board);
+      expect(reading.data, each.id).toEqual(JSON.parse(JSON.stringify(dataOf(each))));
+    });
+  }
+});
+
 describe('JSON playground', () => {
   it('reads a gallery board as published', () => {
     const reading = readPlayground(definition, data);
