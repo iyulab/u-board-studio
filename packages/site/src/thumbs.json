@@ -27,7 +27,7 @@
   "bakery-day": {
     "width": 800,
     "height": 496,
-    "hash": "5bdc80d4ac1de650"
+    "hash": "64ba1fc078c7b60a"
   },
   "bakery-sketch": {
     "width": 800,
@@ -92,7 +92,7 @@
   "city-budget": {
     "width": 800,
     "height": 496,
-    "hash": "f30db792a7a9bf4f"
+    "hash": "b8d579cfff779536"
   },
   "clinic-kiosk": {
     "width": 386,
@@ -227,7 +227,7 @@
   "lab-logger": {
     "width": 800,
     "height": 496,
-    "hash": "ca48f7c4a0caefa3"
+    "hash": "24a76a62726266c7"
   },
   "laundromat-desktop": {
     "width": 800,
@@ -242,7 +242,7 @@
   "library-signage": {
     "width": 800,
     "height": 496,
-    "hash": "3bc46215ffa85dc8"
+    "hash": "3245b06c6da100ed"
   },
   "lighthouse-stamps": {
     "width": 800,
@@ -432,12 +432,12 @@
   "stadium-gates": {
     "width": 800,
     "height": 496,
-    "hash": "f381e68826168dd7"
+    "hash": "519bf9a8d43be614"
   },
   "status-console": {
     "width": 800,
     "height": 496,
-    "hash": "b50b2d31be371f75"
+    "hash": "e05aa6dc1e9b9948"
   },
   "telecom-noc": {
     "width": 800,
