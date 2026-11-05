@@ -10,8 +10,7 @@ import { snapshot } from '../snapshots/seoul-districts-air.js';
 const board: Board = {
   "statuses": {
     "very-bad": {
-      "tone": "alarm",
-      "emphasis": "blink"
+      "tone": "alarm"
     }
   },
   "data": {
