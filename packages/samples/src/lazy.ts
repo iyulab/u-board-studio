@@ -109,6 +109,11 @@ const LOADERS: Record<string, () => Promise<SamplePack>> = {
   'status-console': () => import('./packs/status-console.js').then(m => m.statusConsole),
   'metro-diagram': () => import('./packs/metro-diagram.js').then(m => m.metroDiagram),
   'stadium-gates': () => import('./packs/stadium-gates.js').then(m => m.stadiumGates),
+  'site-zones': () => import('./packs/site-zones.js').then(m => m.siteZones),
+  'solar-kiosk': () => import('./packs/solar-kiosk.js').then(m => m.solarKiosk),
+  'marathon-day': () => import('./packs/marathon-day.js').then(m => m.marathonDay),
+  'park-guide': () => import('./packs/park-guide.js').then(m => m.parkGuide),
+  'ward-shifts': () => import('./packs/ward-shifts.js').then(m => m.wardShifts),
 };
 
 /** The ids of the packs that can be loaded, in the gallery's order. */

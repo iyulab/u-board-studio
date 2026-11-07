@@ -104,6 +104,11 @@ export { librarySignage } from './packs/library-signage.js';
 export { statusConsole } from './packs/status-console.js';
 export { metroDiagram } from './packs/metro-diagram.js';
 export { stadiumGates } from './packs/stadium-gates.js';
+export { siteZones } from './packs/site-zones.js';
+export { solarKiosk } from './packs/solar-kiosk.js';
+export { marathonDay } from './packs/marathon-day.js';
+export { parkGuide } from './packs/park-guide.js';
+export { wardShifts } from './packs/ward-shifts.js';
 
 import { gwanghwamun } from './packs/gwanghwamun.js';
 import { seoulAir } from './packs/seoul-air.js';
@@ -207,7 +212,12 @@ import { librarySignage } from './packs/library-signage.js';
 import { statusConsole } from './packs/status-console.js';
 import { metroDiagram } from './packs/metro-diagram.js';
 import { stadiumGates } from './packs/stadium-gates.js';
+import { siteZones } from './packs/site-zones.js';
+import { solarKiosk } from './packs/solar-kiosk.js';
+import { marathonDay } from './packs/marathon-day.js';
+import { parkGuide } from './packs/park-guide.js';
+import { wardShifts } from './packs/ward-shifts.js';
 import type { SamplePack } from './sample-pack.js';
 
 /** Every sample, in the gallery's order. A pack added here is added to `./lazy.ts` too, which loads each on its own. */
-export const SAMPLE_PACKS: readonly SamplePack[] = [portTerminal, commerceLive, bloodJourney, telecomNoc, railNetwork, airportDepartures, smartFarm, festivalOps, hotelGlass, clinicKiosk, libraryReport, breweryScada, homeEink, tunnelTbm, worldSupply, bakerySketch, waferMaps, groundStation, mallWayfinding, warehouseRacks, wardBeds, busTerminal, racePitwall, skiResort, palaceVisit, islandFerry, theatreBoxoffice, parkTrails, themePark, countHall, farmersMarket, harborAuction, bankBranch, bikeShare, pcCafe, fireDispatch, produceMarket, clinicVaccines, parcelHub, schoolChalkboard, parkingSigns, laundromatDesktop, kitchenTickets, offshoreWindChart, aquariumLabels, vetComic, apiaryStitch, damSteampunk, poolMosaic, callcenterCork, observatoryGlass, campsitePapercut, chargingPcb, daycareBricks, makerspaceShadowboard, quakeHelicorder, wineryEngraving, bowlingGoogie, elevatorTui, droneRoutes, orchardQuilt, lostFoundDossier, nightMarketNeon, siteNoiseScore, kilnPorcelain, museumNajeon, recyclingPolaroid, coldchainVapor, deliveryBoardgame, harborRadar, heatingNixie, wildlifeChaekgado, wildfireTopo, lighthouseStamps, gwanghwamun, seoulAir, seoulDistrictsAir, koreaWeatherGrid, seoulSubway, factoryFloor, lineSpc, waterPumps, powerSld, lineOee, lineFlow, pumpStation, utilityRegions, serverRoom, buildingFloor, microgrid, bodyGap, itTopology, assemblyWip, apronControl, bakeryDay, cityBudget, labLogger, salesBi, librarySignage, statusConsole, metroDiagram, stadiumGates];
+export const SAMPLE_PACKS: readonly SamplePack[] = [portTerminal, commerceLive, bloodJourney, telecomNoc, railNetwork, airportDepartures, smartFarm, festivalOps, hotelGlass, clinicKiosk, libraryReport, breweryScada, homeEink, tunnelTbm, worldSupply, bakerySketch, waferMaps, groundStation, mallWayfinding, warehouseRacks, wardBeds, busTerminal, racePitwall, skiResort, palaceVisit, islandFerry, theatreBoxoffice, parkTrails, themePark, countHall, farmersMarket, harborAuction, bankBranch, bikeShare, pcCafe, fireDispatch, produceMarket, clinicVaccines, parcelHub, schoolChalkboard, parkingSigns, laundromatDesktop, kitchenTickets, offshoreWindChart, aquariumLabels, vetComic, apiaryStitch, damSteampunk, poolMosaic, callcenterCork, observatoryGlass, campsitePapercut, chargingPcb, daycareBricks, makerspaceShadowboard, quakeHelicorder, wineryEngraving, bowlingGoogie, elevatorTui, droneRoutes, orchardQuilt, lostFoundDossier, nightMarketNeon, siteNoiseScore, kilnPorcelain, museumNajeon, recyclingPolaroid, coldchainVapor, deliveryBoardgame, harborRadar, heatingNixie, wildlifeChaekgado, wildfireTopo, lighthouseStamps, gwanghwamun, seoulAir, seoulDistrictsAir, koreaWeatherGrid, seoulSubway, factoryFloor, lineSpc, waterPumps, powerSld, lineOee, lineFlow, pumpStation, utilityRegions, serverRoom, buildingFloor, microgrid, bodyGap, itTopology, assemblyWip, apronControl, bakeryDay, cityBudget, labLogger, salesBi, librarySignage, statusConsole, metroDiagram, stadiumGates, siteZones, solarKiosk, marathonDay, parkGuide, wardShifts];
