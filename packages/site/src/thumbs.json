@@ -64,6 +64,11 @@
     "height": 457,
     "hash": "e8c8939c44c93bbb"
   },
+  "bridge-inspection": {
+    "width": 800,
+    "height": 616,
+    "hash": "cb76052f38b9d89e"
+  },
   "building-floor": {
     "width": 800,
     "height": 496,
@@ -114,6 +119,11 @@
     "height": 1038,
     "hash": "39b87ea65191b99d"
   },
+  "conference-agenda": {
+    "width": 800,
+    "height": 924,
+    "hash": "857172af30314e41"
+  },
   "count-hall": {
     "width": 800,
     "height": 496,
@@ -134,6 +144,11 @@
     "height": 496,
     "hash": "dd0e419282180bd6"
   },
+  "deploy-calendar": {
+    "width": 800,
+    "height": 688,
+    "hash": "28dba5d45c22224d"
+  },
   "drone-routes": {
     "width": 800,
     "height": 496,
@@ -143,6 +158,11 @@
     "width": 800,
     "height": 496,
     "hash": "3d13f6b6ffd86fd7"
+  },
+  "exam-analysis": {
+    "width": 800,
+    "height": 938,
+    "hash": "2c22f8c3c65d72c5"
   },
   "factory-floor": {
     "width": 800,
@@ -188,6 +208,11 @@
     "width": 800,
     "height": 496,
     "hash": "a42e931709f2b499"
+  },
+  "herb-cabinet": {
+    "width": 800,
+    "height": 492,
+    "hash": "edbef02b42172004"
   },
   "home-eink": {
     "width": 800,
@@ -404,6 +429,11 @@
     "height": 496,
     "hash": "8ca4184b8824b553"
   },
+  "school-timetable": {
+    "width": 800,
+    "height": 496,
+    "hash": "0860327458169d82"
+  },
   "seoul-air": {
     "width": 800,
     "height": 496,
@@ -423,6 +453,16 @@
     "width": 800,
     "height": 496,
     "hash": "a5a6110cec647321"
+  },
+  "shelter-split": {
+    "width": 800,
+    "height": 656,
+    "hash": "342d8fb92ae98bfe"
+  },
+  "site-lanes": {
+    "width": 800,
+    "height": 496,
+    "hash": "b9cf60e048b6caf7"
   },
   "site-noise-score": {
     "width": 800,
@@ -458,6 +498,11 @@
     "width": 800,
     "height": 496,
     "hash": "e05aa6dc1e9b9948"
+  },
+  "status-page": {
+    "width": 800,
+    "height": 622,
+    "hash": "98065bdf70aa6a6e"
   },
   "telecom-noc": {
     "width": 800,

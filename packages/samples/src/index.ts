@@ -109,6 +109,15 @@ export { solarKiosk } from './packs/solar-kiosk.js';
 export { marathonDay } from './packs/marathon-day.js';
 export { parkGuide } from './packs/park-guide.js';
 export { wardShifts } from './packs/ward-shifts.js';
+export { siteLanes } from './packs/site-lanes.js';
+export { schoolTimetable } from './packs/school-timetable.js';
+export { statusPage } from './packs/status-page.js';
+export { conferenceAgenda } from './packs/conference-agenda.js';
+export { examAnalysis } from './packs/exam-analysis.js';
+export { shelterSplit } from './packs/shelter-split.js';
+export { herbCabinet } from './packs/herb-cabinet.js';
+export { bridgeInspection } from './packs/bridge-inspection.js';
+export { deployCalendar } from './packs/deploy-calendar.js';
 
 import { gwanghwamun } from './packs/gwanghwamun.js';
 import { seoulAir } from './packs/seoul-air.js';
@@ -217,7 +226,16 @@ import { solarKiosk } from './packs/solar-kiosk.js';
 import { marathonDay } from './packs/marathon-day.js';
 import { parkGuide } from './packs/park-guide.js';
 import { wardShifts } from './packs/ward-shifts.js';
+import { siteLanes } from './packs/site-lanes.js';
+import { schoolTimetable } from './packs/school-timetable.js';
+import { statusPage } from './packs/status-page.js';
+import { conferenceAgenda } from './packs/conference-agenda.js';
+import { examAnalysis } from './packs/exam-analysis.js';
+import { shelterSplit } from './packs/shelter-split.js';
+import { herbCabinet } from './packs/herb-cabinet.js';
+import { bridgeInspection } from './packs/bridge-inspection.js';
+import { deployCalendar } from './packs/deploy-calendar.js';
 import type { SamplePack } from './sample-pack.js';
 
 /** Every sample, in the gallery's order. A pack added here is added to `./lazy.ts` too, which loads each on its own. */
-export const SAMPLE_PACKS: readonly SamplePack[] = [portTerminal, commerceLive, bloodJourney, telecomNoc, railNetwork, airportDepartures, smartFarm, festivalOps, hotelGlass, clinicKiosk, libraryReport, breweryScada, homeEink, tunnelTbm, worldSupply, bakerySketch, waferMaps, groundStation, mallWayfinding, warehouseRacks, wardBeds, busTerminal, racePitwall, skiResort, palaceVisit, islandFerry, theatreBoxoffice, parkTrails, themePark, countHall, farmersMarket, harborAuction, bankBranch, bikeShare, pcCafe, fireDispatch, produceMarket, clinicVaccines, parcelHub, schoolChalkboard, parkingSigns, laundromatDesktop, kitchenTickets, offshoreWindChart, aquariumLabels, vetComic, apiaryStitch, damSteampunk, poolMosaic, callcenterCork, observatoryGlass, campsitePapercut, chargingPcb, daycareBricks, makerspaceShadowboard, quakeHelicorder, wineryEngraving, bowlingGoogie, elevatorTui, droneRoutes, orchardQuilt, lostFoundDossier, nightMarketNeon, siteNoiseScore, kilnPorcelain, museumNajeon, recyclingPolaroid, coldchainVapor, deliveryBoardgame, harborRadar, heatingNixie, wildlifeChaekgado, wildfireTopo, lighthouseStamps, gwanghwamun, seoulAir, seoulDistrictsAir, koreaWeatherGrid, seoulSubway, factoryFloor, lineSpc, waterPumps, powerSld, lineOee, lineFlow, pumpStation, utilityRegions, serverRoom, buildingFloor, microgrid, bodyGap, itTopology, assemblyWip, apronControl, bakeryDay, cityBudget, labLogger, salesBi, librarySignage, statusConsole, metroDiagram, stadiumGates, siteZones, solarKiosk, marathonDay, parkGuide, wardShifts];
+export const SAMPLE_PACKS: readonly SamplePack[] = [portTerminal, commerceLive, bloodJourney, telecomNoc, railNetwork, airportDepartures, smartFarm, festivalOps, hotelGlass, clinicKiosk, libraryReport, breweryScada, homeEink, tunnelTbm, worldSupply, bakerySketch, waferMaps, groundStation, mallWayfinding, warehouseRacks, wardBeds, busTerminal, racePitwall, skiResort, palaceVisit, islandFerry, theatreBoxoffice, parkTrails, themePark, countHall, farmersMarket, harborAuction, bankBranch, bikeShare, pcCafe, fireDispatch, produceMarket, clinicVaccines, parcelHub, schoolChalkboard, parkingSigns, laundromatDesktop, kitchenTickets, offshoreWindChart, aquariumLabels, vetComic, apiaryStitch, damSteampunk, poolMosaic, callcenterCork, observatoryGlass, campsitePapercut, chargingPcb, daycareBricks, makerspaceShadowboard, quakeHelicorder, wineryEngraving, bowlingGoogie, elevatorTui, droneRoutes, orchardQuilt, lostFoundDossier, nightMarketNeon, siteNoiseScore, kilnPorcelain, museumNajeon, recyclingPolaroid, coldchainVapor, deliveryBoardgame, harborRadar, heatingNixie, wildlifeChaekgado, wildfireTopo, lighthouseStamps, gwanghwamun, seoulAir, seoulDistrictsAir, koreaWeatherGrid, seoulSubway, factoryFloor, lineSpc, waterPumps, powerSld, lineOee, lineFlow, pumpStation, utilityRegions, serverRoom, buildingFloor, microgrid, bodyGap, itTopology, assemblyWip, apronControl, bakeryDay, cityBudget, labLogger, salesBi, librarySignage, statusConsole, metroDiagram, stadiumGates, siteZones, solarKiosk, marathonDay, parkGuide, wardShifts, siteLanes, schoolTimetable, statusPage, conferenceAgenda, examAnalysis, shelterSplit, herbCabinet, bridgeInspection, deployCalendar];

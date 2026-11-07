@@ -114,6 +114,15 @@ const LOADERS: Record<string, () => Promise<SamplePack>> = {
   'marathon-day': () => import('./packs/marathon-day.js').then(m => m.marathonDay),
   'park-guide': () => import('./packs/park-guide.js').then(m => m.parkGuide),
   'ward-shifts': () => import('./packs/ward-shifts.js').then(m => m.wardShifts),
+  'site-lanes': () => import('./packs/site-lanes.js').then(m => m.siteLanes),
+  'school-timetable': () => import('./packs/school-timetable.js').then(m => m.schoolTimetable),
+  'status-page': () => import('./packs/status-page.js').then(m => m.statusPage),
+  'conference-agenda': () => import('./packs/conference-agenda.js').then(m => m.conferenceAgenda),
+  'exam-analysis': () => import('./packs/exam-analysis.js').then(m => m.examAnalysis),
+  'shelter-split': () => import('./packs/shelter-split.js').then(m => m.shelterSplit),
+  'herb-cabinet': () => import('./packs/herb-cabinet.js').then(m => m.herbCabinet),
+  'bridge-inspection': () => import('./packs/bridge-inspection.js').then(m => m.bridgeInspection),
+  'deploy-calendar': () => import('./packs/deploy-calendar.js').then(m => m.deployCalendar),
 };
 
 /** The ids of the packs that can be loaded, in the gallery's order. */
