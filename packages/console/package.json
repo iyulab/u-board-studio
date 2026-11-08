@@ -21,11 +21,11 @@
     "node": ">=22.22.0"
   },
   "dependencies": {
-    "@iyulab/u-board": "^0.43.0",
+    "@iyulab/u-board": "^0.44.0",
     "@iyulab/u-board-designer": "*",
-    "@iyulab/u-board-mcp": "^0.28.1",
+    "@iyulab/u-board-mcp": "^0.29.0",
     "@iyulab/u-board-samples": "*",
-    "@iyulab/u-widgets": "^0.48.0",
+    "@iyulab/u-widgets": "^0.49.0",
     "@uplatform/brand": "^0.5.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",

@@ -28,7 +28,6 @@ describe('widgetFields', () => {
       'options.min:number',
       'options.max:number',
       'options.unit:text',
-      'options.label:text',
       'options.subtitle:text',
       'options.format:text',
       'options.form:choice',
@@ -45,8 +44,8 @@ describe('widgetFields', () => {
 
   it("names each field as the widget library does, in the labels' language", () => {
     const names = (locale?: string) => widgetFields(GAUGE, locale).fields.map(f => f.label);
-    expect(names()).toEqual(['Value', 'Tone', 'Minimum', 'Maximum', 'Unit', 'Label', 'Subtitle', 'Value format', 'Drawn as']);
-    expect(names('ko-KR')).toEqual(['값', '상태 톤', '최솟값', '최댓값', '단위', '라벨', '부제', '값 서식', '그리는 꼴']);
+    expect(names()).toEqual(['Value', 'Tone', 'Minimum', 'Maximum', 'Unit', 'Subtitle', 'Value format', 'Drawn as']);
+    expect(names('ko-KR')).toEqual(['값', '상태 톤', '최솟값', '최댓값', '단위', '부제', '값 서식', '그리는 꼴']);
     expect(widgetFields(GAUGE).fields[2].description).toBe('Minimum range value');
   });
 
