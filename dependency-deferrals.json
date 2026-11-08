@@ -1,4 +1,26 @@
 {
   "about": "Breaking releases not yet adopted — a new major, or below 1.0 a new minor (give `minor` too) — each with why and until when. Read by scripts/check-dependency-drift.mjs: an entry past its reviewBy date, or one matching nothing outdated, fails the check. Remove an entry in the commit that adopts the major.",
-  "deferrals": []
+  "deferrals": [
+    {
+      "package": "@iyulab/u-board",
+      "major": 0,
+      "minor": 44,
+      "reason": "the published MCP server (0.28.1) still depends on @iyulab/u-board ^0.43.0 and @iyulab/u-widgets ^0.48.0, so adopting 0.44 alone would install two copies of the board library in the console and the site and register the widget elements twice; adopt it in the commit that takes the next MCP release",
+      "reviewBy": "2026-11-15"
+    },
+    {
+      "package": "@iyulab/u-widgets",
+      "major": 0,
+      "minor": 49,
+      "reason": "the published MCP server (0.28.1) still depends on @iyulab/u-board ^0.43.0 and @iyulab/u-widgets ^0.48.0, so adopting 0.49 alone would install two copies of the board library in the console and the site and register the widget elements twice; adopt it in the commit that takes the next MCP release",
+      "reviewBy": "2026-11-15"
+    },
+    {
+      "package": "@canvas-kit/viewer",
+      "major": 0,
+      "minor": 11,
+      "reason": "the viewer is taken together with the board library that renders through it; that library's new line is deferred (see its entry), so this one follows it",
+      "reviewBy": "2026-11-15"
+    }
+  ]
 }
