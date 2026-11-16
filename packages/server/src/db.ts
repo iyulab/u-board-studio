@@ -270,6 +270,11 @@ CREATE INDEX IF NOT EXISTS idx_audit_events_occurred_at ON audit_events(occurred
 // to CREATE TABLE at once — not atomic on its own in Postgres.
 const SCHEMA_BOOTSTRAP_LOCK_KEY = 727101;
 
+/** The most connections one server process holds open to PostgreSQL (the driver's own default is 10). A small cap
+ *  keeps several servers that share one PostgreSQL inside its connection limit; a request that finds all of them busy
+ *  waits for one to come free instead of opening another. */
+const POSTGRES_POOL_MAX = 4;
+
 class PgDbClient implements DbClient {
   constructor(private readonly runner: Pool | PoolClient) {}
 
@@ -324,7 +329,7 @@ class PgliteDbClient implements DbClient {
 
 export async function createDb(url: string): Promise<Database> {
   if (url.startsWith('postgres://') || url.startsWith('postgresql://')) {
-    const pool = new Pool({ connectionString: url });
+    const pool = new Pool({ connectionString: url, max: POSTGRES_POOL_MAX });
     pool.on('error', err => {
       // A pooled client can emit this for an *idle* connection dropped by the network/gateway —
       // routine in cloud Postgres. Without a listener, Node's EventEmitter rethrows and crashes the
