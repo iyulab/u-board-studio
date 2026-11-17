@@ -7,6 +7,12 @@ import { openPglite, type Database, type DbClient } from '../db.js';
 // for the whole run; an engine here starts from the data directory it saved, schema included. Vitest
 // runs each test file in its own module scope, so `createTestDb` still holds one engine per test
 // file and empties it on each call instead of starting another.
+/**
+ * The Postgres image the `*.postgres.test.ts` files start (testcontainers). It is the server major the product runs on;
+ * set UBOARD_TEST_POSTGRES_IMAGE to run the same tests against another major (for example `postgres:16`).
+ */
+export const POSTGRES_TEST_IMAGE = process.env.UBOARD_TEST_POSTGRES_IMAGE ?? 'postgres:18';
+
 let template: Blob | undefined;
 let shared: Promise<{ db: DbClient; tables: string }> | undefined;
 

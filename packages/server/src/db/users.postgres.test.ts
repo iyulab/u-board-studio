@@ -5,7 +5,7 @@ import type { DbClient } from '../db.js';
 import { createDb } from '../db.js';
 import { createUser, deleteAccount } from './users.js';
 import { createWorkspace, addWorkspaceUser, listWorkspaceMembers } from './workspaces.js';
-import { truncateAllTables } from '../test-support/test-db.js';
+import { POSTGRES_TEST_IMAGE, truncateAllTables } from '../test-support/test-db.js';
 
 function dockerAvailable(): boolean {
   try {
@@ -25,7 +25,7 @@ describe.skipIf(!dockerAvailable())('deleteAccount — real Postgres concurrency
   let db: DbClient;
 
   beforeAll(async () => {
-    container = await new PostgreSqlContainer('postgres:16').start();
+    container = await new PostgreSqlContainer(POSTGRES_TEST_IMAGE).start();
     db = await createDb(container.getConnectionUri());
   }, 120_000);
 
