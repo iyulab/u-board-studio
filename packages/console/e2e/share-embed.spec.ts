@@ -70,7 +70,14 @@ test('create a share link, view the board unauthenticated, then revoke it', asyn
   expect(nodeBox.y + nodeBox.height).toBeLessThanOrEqual(canvasBox.y + canvasBox.height + 1);
   // 작은 보드는 확대하지 않는다 — 기본 크기(160×60) 부품이 1:1 그대로.
   expect(nodeBox.width).toBeLessThanOrEqual(161);
-  await expect(sharePage.getByRole('button', { name: '화면에 맞추기' })).toBeVisible();
+  // 확대 버튼은 기본으로 그려지지 않는다 — 보드 위 우클릭이 «보기» 메뉴(확대 · 축소 · 화면에 맞추기)를 연다.
+  await expect(sharePage.getByRole('button', { name: '화면에 맞추기' })).toHaveCount(0);
+  // 캔버스 한가운데는 부품 덮개가 받으므로 빈 구석을 우클릭한다.
+  await sharePage.getByTestId('canvas').click({ button: 'right', position: { x: 12, y: 12 } });
+  const viewMenu = sharePage.getByRole('menu', { name: '보기' });
+  await expect(viewMenu.getByRole('menuitem', { name: '화면에 맞추기' })).toBeVisible();
+  await sharePage.keyboard.press('Escape');
+  await expect(viewMenu).toHaveCount(0);
 
   // 창이 줄면(태블릿 회전·분할 화면) 사용자가 아직 움직이지 않은 보드는 새 크기에 다시 맞춰진다 —
   // 줄어든 캔버스 안에서 노드가 여전히 가운데 근처에 있다.
@@ -86,15 +93,14 @@ test('create a share link, view the board unauthenticated, then revoke it', asyn
   const nodeCenterX = movedNode.x + movedNode.width / 2;
   expect(Math.abs(nodeCenterX - (smallCanvas.x + smallCanvas.width / 2))).toBeLessThan(2);
 
-  // 확대/축소는 키보드로도 된다(WCAG 2.1.1) — 버튼에 포커스하고 Enter.
-  await sharePage.getByRole('button', { name: '확대' }).focus();
-  await sharePage.keyboard.press('Enter');
+  // 확대/축소는 키보드로도 된다(WCAG 2.1.1) — 보드 뷰(보드 이름으로 불린다)에 포커스하고 `+`.
+  const boardView = sharePage.getByRole('region', { name: 'Shared Board' });
+  await boardView.focus();
+  await sharePage.keyboard.press('+');
   const nodeOverlay = sharePage.locator('[data-testid^="overlay-"]:not([data-testid="overlay-layer"])').first();
   await expect.poll(async () => (await nodeOverlay.boundingBox())!.width).toBeGreaterThan(movedNode.width * 1.2);
 
-  // 팬도 키보드로 — 보드 뷰(보드 이름으로 불린다)에 포커스하고 →: 보기가 오른쪽으로 가 노드는 왼쪽으로 40px.
-  const boardView = sharePage.getByRole('region', { name: 'Shared Board' });
-  await boardView.focus();
+  // 팬도 키보드로 — 같은 보드 뷰에서 →: 보기가 오른쪽으로 가 노드는 왼쪽으로 40px.
   const beforePan = (await nodeOverlay.boundingBox())!;
   await sharePage.keyboard.press('ArrowRight');
   await expect.poll(async () => Math.round((await nodeOverlay.boundingBox())!.x)).toBe(Math.round(beforePan.x - 40));
