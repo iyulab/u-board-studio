@@ -74,9 +74,8 @@ describe('design-system tokens.css — solid-fill contrast', () => {
 
 // The pairs actually combined by component CSS (Alert.css/Badge.css) as text-on-tint — the
 // role a theme edit can break (re-tuning one side of the pair but not the other).
-// Only pairs where BOTH tokens are plain hex are covered: alpha-blended tokens like
-// `--ub-brand-subtle` (rgba, used by AppShell's active nav link) composite against whatever
-// sits behind them, which this parser — reading tokens.css in isolation — cannot resolve.
+// Only pairs where BOTH tokens are plain hex are covered here: an alpha-blended token such as
+// `--ub-brand-subtle` (rgba) is composited over the backdrops it is drawn on in the next block.
 const TEXT_ROLE_PAIRS: Array<[text: string, background: string]> = [
   ['--ub-error', '--ub-error-bg'],
   ['--ub-success', '--ub-success-bg'],
@@ -102,4 +101,42 @@ describe('design-system tokens.css — text-role tint contrast', () => {
     const ratio = contrastRatio(textValue, bgValue);
     expect(ratio).toBeGreaterThanOrEqual(WCAG_AA_NORMAL_TEXT);
   });
+});
+
+// `--ub-brand-subtle` is a translucent tint: the active nav link draws it over the sidebar's gradient and the
+// workspace switcher over the surface. The backdrop is not one colour, but the ones it can be are all in this file —
+// the two ends of the sidebar gradient (a gradient's contrast is between its ends) and the surface — so the tint is
+// composited over each and the brand text must clear AA on every result.
+function compositeOver(rgba: string, backdropHex: string): string {
+  const m = /^rgba\(\s*(\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\s*\)$/.exec(rgba);
+  if (!m) throw new Error(`not an rgba() token: ${rgba}`);
+  const alpha = Number(m[4]);
+  const back = backdropHex.replace('#', '');
+  const channels = [0, 2, 4].map((i) => parseInt(back.slice(i, i + 2), 16));
+  const mixed = [Number(m[1]), Number(m[2]), Number(m[3])].map((c, i) => Math.round(c * alpha + channels[i] * (1 - alpha)));
+  return `#${mixed.map((c) => c.toString(16).padStart(2, '0')).join('')}`;
+}
+
+function gradientEnds(value: string): string[] {
+  const ends = value.match(/#[0-9a-fA-F]{6}/g);
+  if (!ends || ends.length < 2) throw new Error(`not a two-colour gradient: ${value}`);
+  return [ends[0], ends[ends.length - 1]];
+}
+
+describe('design-system tokens.css — brand tint over the backdrops it is drawn on', () => {
+  const themes: Array<[name: string, overrides: Record<string, string>]> = [['light', {}], ['dark', darkOverrides]];
+  for (const [name, overrides] of themes) {
+    it(`--ub-brand on --ub-brand-subtle clears WCAG AA 4.5:1 over the sidebar's ends and the surface in ${name} mode`, () => {
+      const tint = effectiveColor(lightTokens, overrides, '--ub-brand-subtle');
+      const brand = effectiveColor(lightTokens, overrides, '--ub-brand');
+      const backdrops = [
+        ...gradientEnds(effectiveColor(lightTokens, overrides, '--ub-bg-sidebar')),
+        effectiveColor(lightTokens, overrides, '--ub-bg-surface'),
+      ];
+      expect(backdrops).toHaveLength(3);
+      for (const backdrop of backdrops) {
+        expect(contrastRatio(brand, compositeOver(tint, backdrop)), `over ${backdrop}`).toBeGreaterThanOrEqual(WCAG_AA_NORMAL_TEXT);
+      }
+    });
+  }
 });

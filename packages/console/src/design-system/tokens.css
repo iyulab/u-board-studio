@@ -1,7 +1,7 @@
 :root {
   color-scheme: light dark;
 
-  --ub-brand: #0f766e;
+  --ub-brand: #0e7069;
   --ub-brand-end: #0e7490;
   --ub-brand-solid: #0f766e;
   --ub-brand-gradient: linear-gradient(135deg, var(--ub-brand-solid), var(--ub-brand-end));
