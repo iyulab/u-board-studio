@@ -123,6 +123,7 @@ const LOADERS: Record<string, () => Promise<SamplePack>> = {
   'herb-cabinet': () => import('./packs/herb-cabinet.js').then(m => m.herbCabinet),
   'bridge-inspection': () => import('./packs/bridge-inspection.js').then(m => m.bridgeInspection),
   'deploy-calendar': () => import('./packs/deploy-calendar.js').then(m => m.deployCalendar),
+  'bookshop-riso': () => import('./packs/bookshop-riso.js').then(m => m.bookshopRiso),
 };
 
 /** The ids of the packs that can be loaded, in the gallery's order. */
