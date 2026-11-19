@@ -18,10 +18,14 @@ const SHARE_PREFIX = '/share';
 // `script-src 'self'` keeps an injected script from running in either app — the share viewer shows
 // boards other people authored, on the console's origin. `img-src` is the browser's own check of the same
 // list the viewer applies to a board's media (`UBOARD_MEDIA_ORIGINS`): the page's own origin and the ones the
-// operator listed, plus inline pictures (`data:`, `blob:`), which make no request. Styles are left open.
+// operator listed, plus inline pictures (`data:`, `blob:`), which make no request. `font-src` takes the same list —
+// a board's web font (`board.fonts`) is registered by the viewer from the address the board names, and the page's
+// policy is what decides which origins may serve it — plus inline fonts (`data:`). Styles are left open.
 function contentSecurityPolicy(frameAncestors: string, mediaOrigins: readonly string[]): string {
-  const images = ['data:', 'blob:', ...mediaOrigins.map(origin => (origin === 'self' ? "'self'" : origin))];
-  return `script-src 'self'; img-src ${images.join(' ')}; object-src 'none'; base-uri 'none'; frame-ancestors ${frameAncestors}`;
+  const origins = mediaOrigins.map(origin => (origin === 'self' ? "'self'" : origin));
+  const images = ['data:', 'blob:', ...origins];
+  const fonts = ['data:', ...origins];
+  return `script-src 'self'; img-src ${images.join(' ')}; font-src ${fonts.join(' ')}; object-src 'none'; base-uri 'none'; frame-ancestors ${frameAncestors}`;
 }
 
 function staticApp(dir: string, csp: string, extraHeaders: Record<string, string> = {}) {

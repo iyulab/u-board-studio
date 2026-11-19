@@ -16,18 +16,13 @@ do when upgrading. Each release's notes carry its section.
 
 - The server holds at most 4 connections per process open to PostgreSQL (the driver's default was 10), so several servers can share one PostgreSQL inside its connection limit. A request that finds every connection busy waits for one instead of opening another. Nothing to do when upgrading.
 - Built on `@iyulab/u-board` 0.42.0, `@iyulab/u-board-mcp` 0.28.0, `@canvas-kit/viewer` 0.9.0 and `@iyulab/u-widgets` 0.47.0. A board of more than 500 parts leaves out those well outside the view; a share link's board gets it with no setting. The gallery's boards write how large a heading or a text is with `scale`, as the library now asks.
-
-### Security
-
-- A share link's answers carry no `meta`: what an adapter writes beside a value (`ResolvedBinding.meta`, in a library that offers it) is for a host's own screens, and the one place the server reads through for the public leaves it out, as it already does `message`. The server's own data sources never give one.
-
-### Changed
-
 - The MCP server, `@iyulab/u-board-mcp`, moved to the library's repository and is under the MIT licence from 0.27.0; the console and the site take it from npm. The board check and the rulebook it reads moved there too (`@iyulab/u-board/check`), so the authoring tool's `check` entry point is gone. Nothing changes for an installation: the container image carries the same tools.
 
 ### Security
 
+- A share link's answers carry no `meta`: what an adapter writes beside a value (`ResolvedBinding.meta`, in a library that offers it) is for a host's own screens, and the one place the server reads through for the public leaves it out, as it already does `message`. The server's own data sources never give one.
 - The console and the share viewer now send the list of `UBOARD_MEDIA_ORIGINS` to the browser as the page's `img-src` (with `data:` and `blob:`), so a picture outside it is refused by the browser itself and not only by the viewer's own check. Nothing to do when upgrading unless a page loads pictures from an origin that is not listed — list it.
+- The console and the share viewer now send the list of `UBOARD_MEDIA_ORIGINS` to the browser as the page's `font-src` as well (with `data:`), so a web font a board names in `board.fonts` from an origin outside it is refused by the browser — a board's font address is no longer a way to reach any origin from the page. **When upgrading:** if your boards load web fonts from another origin, add that origin to `UBOARD_MEDIA_ORIGINS` (`https://fonts.example.com self`); a font from the page's own origin or written inline needs nothing.
 
 ## [0.32.0] - 2026-10-30
 

@@ -38,7 +38,7 @@ describe('serving the console and share viewer next to the API', () => {
     const res = await request(app).get('/').set('Accept', 'text/html');
     expect(res.status).toBe(200);
     expect(res.text).toContain('<title>console</title>');
-    expect(res.headers['content-security-policy']).toBe("script-src 'self'; img-src data: blob: 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'");
+    expect(res.headers['content-security-policy']).toBe("script-src 'self'; img-src data: blob: 'self'; font-src data: 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'");
     expect(res.headers['x-content-type-options']).toBe('nosniff');
     expect(res.headers['cache-control']).toBe('no-cache');
   });
@@ -60,7 +60,7 @@ describe('serving the console and share viewer next to the API', () => {
     const res = await request(app).get('/share/?board=b1&token=t').set('Accept', 'text/html');
     expect(res.status).toBe(200);
     expect(res.text).toContain('<title>share</title>');
-    expect(res.headers['content-security-policy']).toBe("script-src 'self'; img-src data: blob: 'self'; object-src 'none'; base-uri 'none'; frame-ancestors https:");
+    expect(res.headers['content-security-policy']).toBe("script-src 'self'; img-src data: blob: 'self'; font-src data: 'self'; object-src 'none'; base-uri 'none'; frame-ancestors https:");
     expect(res.headers['referrer-policy']).toBe('no-referrer');
     const asset = await request(app).get('/share/assets/index-abc123.js');
     expect(asset.text).toContain('"share"');
@@ -110,6 +110,21 @@ describe('serving the console and share viewer next to the API', () => {
     };
     for (const csp of await serve(['self', 'https://img.example.com'])) expect(csp).toContain("img-src data: blob: 'self' https://img.example.com;");
     for (const csp of await serve([])) expect(csp).toContain('img-src data: blob:;');
+  });
+
+  it("lets the pages load a board's web fonts from the same origins, and from no others", async () => {
+    const serve = async (mediaOrigins: string[]) => {
+      const db = await createTestDb();
+      const served = createApp({
+        db,
+        sessionSecret: SECRET,
+        mediaOrigins,
+        webApps: { consoleDir: path.join(root, 'console'), shareDir: path.join(root, 'share') },
+      });
+      return [(await request(served).get('/')).headers['content-security-policy'], (await request(served).get('/share/')).headers['content-security-policy']];
+    };
+    for (const csp of await serve(['self', 'https://fonts.example.com'])) expect(csp).toContain("font-src data: 'self' https://fonts.example.com;");
+    for (const csp of await serve([])) expect(csp).toContain('font-src data:;');
   });
 
   it('takes the list of pages allowed to embed the share viewer', async () => {
