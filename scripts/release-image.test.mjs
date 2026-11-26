@@ -82,8 +82,8 @@ test('the notes say what changed, then how to install from the registry and from
   assert.match(notes, /docker load -i u-board-0\.1\.0-linux-amd64\.tar\.gz/);
   assert.match(notes, /blob\/v0\.1\.0\/docs\/self-hosting\.md/);
   assert.match(notes, /Built from abc123\./);
-  assert.match(notes, /gh attestation verify oci:\/\/ghcr\.io\/iyulab\/u-board:0\.1\.0 --repo iyulab\/U-Board/);
-  assert.match(notes, /gh attestation verify u-board-0\.1\.0-linux-amd64\.tar\.gz --repo iyulab\/U-Board/);
+  assert.match(notes, /gh attestation verify oci:\/\/ghcr\.io\/iyulab\/u-board:0\.1\.0 --repo iyulab\/u-board-studio/);
+  assert.match(notes, /gh attestation verify u-board-0\.1\.0-linux-amd64\.tar\.gz --repo iyulab\/u-board-studio/);
 });
 
 test("reads the registry's digest for the image, not another repository's", () => {

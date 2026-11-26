@@ -26,6 +26,8 @@ import { createGzip } from 'node:zlib';
 
 export const IMAGE = 'ghcr.io/iyulab/u-board';
 export const REPOSITORY = 'https://github.com/iyulab/u-board-studio';
+// owner/repo, as `gh` takes it: the repository whose workflow builds the image and attests it.
+const SLUG = new URL(REPOSITORY).pathname.slice(1);
 // The platform installations run on. One archive per platform; another platform is another build.
 export const PLATFORM = 'linux/amd64';
 const OUT_DIR = 'release';
@@ -126,7 +128,7 @@ export function releaseNotes(plan, archiveSha256, changes) {
     '',
     `SHA-256 \`${archiveSha256}\`.`,
     '',
-    `Both the image and the archive carry a build provenance attestation: on a connected machine, \`gh attestation verify oci://${plan.image}:${plan.version} --repo iyulab/U-Board\` (or \`gh attestation verify ${plan.archive} --repo iyulab/U-Board\`) confirms it was built by this repository's release workflow${plan.revision ? ' from the commit below' : ''}.`,
+    `Both the image and the archive carry a build provenance attestation: on a connected machine, \`gh attestation verify oci://${plan.image}:${plan.version} --repo ${SLUG}\` (or \`gh attestation verify ${plan.archive} --repo ${SLUG}\`) confirms it was built by this repository's release workflow${plan.revision ? ' from the commit below' : ''}.`,
     '',
     `Settings, backups and upgrading: [docs/self-hosting.md](${docs}). Back up before upgrading — the server upgrades its database on start.`,
     '',
