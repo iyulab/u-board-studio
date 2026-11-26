@@ -12,11 +12,24 @@ do when upgrading. Each release's notes carry its section.
 
 ## [Unreleased]
 
+## [0.33.0] - 2026-11-27
+
+### Added
+
+- **A share link can ask the board's variables for values**: add `v.<name>=<value>` to its address, next to the board and the token. The board, its values and its state are read at those values; a value that is not one of the variable's options takes the default. A board that declares no variable is answered as before.
+- A board read through the API names, in `notLists`, the data a part is made per item of whose answer was an object keyed by names and not a list — such a part has no items.
+
 ### Changed
 
+- **Saving a board runs a stricter check than 0.32.0's** ([the library's changelog](https://github.com/iyulab/U-Board/blob/main/packages/core/CHANGELOG.md) lists what it now refuses). **When upgrading:** there is nothing to do beforehand. Stored boards are not rewritten, and the check does not run when a board is read; where it refuses something in a stored board, the next save of that board's document is refused, naming the place and the reason. All 92 sample boards that 0.32.0 shipped pass it.
+- The console's board view and the share viewer no longer draw zoom buttons. Right-click a canvas board (or press the Menu key or Shift+F10) for zoom in, zoom out and fit to view; on a touch screen two fingers pinch.
 - The server holds at most 4 connections per process open to PostgreSQL (the driver's default was 10), so several servers can share one PostgreSQL inside its connection limit. A request that finds every connection busy waits for one instead of opening another. Nothing to do when upgrading.
 - Built on `@iyulab/u-board` 0.46.0, `@iyulab/u-board-mcp` 0.31.0, `@canvas-kit/viewer` 0.12.0 and `@iyulab/u-widgets` 0.52.0 ([the library's changelog](https://github.com/iyulab/U-Board/blob/main/packages/core/CHANGELOG.md) lists what changed in the board since the last release). A board of more than 500 parts leaves out those well outside the view; a share link's board gets it with no setting. The gallery's boards write how large a heading or a text is with `scale`, as the library now asks.
 - The MCP server, `@iyulab/u-board-mcp`, moved to the library's repository and is under the MIT licence from 0.27.0; the console and the site take it from npm. The board check and the rulebook it reads moved there too (`@iyulab/u-board/check`), so the authoring tool's `check` entry point is gone. Nothing changes for an installation: the container image carries the same tools.
+
+### Fixed
+
+- The console's active navigation link is readable down to the foot of the sidebar (its contrast there was 4.42:1).
 
 ### Security
 
