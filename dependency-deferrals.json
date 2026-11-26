@@ -7,6 +7,13 @@
       "minor": 6,
       "reason": "0.6 is PostgreSQL 19 and does not open a data directory made by 0.5 (PostgreSQL 18); an installation on the embedded database would stop at start after an upgrade. Adopt it together with a tested step that carries an existing directory's data across",
       "reviewBy": "2026-12-11"
+    },
+    {
+      "package": "@iyulab/u-widgets",
+      "major": 0,
+      "minor": 53,
+      "reason": "the published board library (0.46.0) depends on @iyulab/u-widgets ^0.52.0, so adopting 0.53 in the studio alone would install two copies of the widget element; adopt it in the commit that takes the next board library release",
+      "reviewBy": "2026-12-04"
     }
   ]
 }
