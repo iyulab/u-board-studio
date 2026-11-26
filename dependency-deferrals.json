@@ -1,4 +1,12 @@
 {
   "about": "Breaking releases not yet adopted — a new major, or below 1.0 a new minor (give `minor` too) — each with why and until when. Read by scripts/check-dependency-drift.mjs: an entry past its reviewBy date, or one matching nothing outdated, fails the check. Remove an entry in the commit that adopts the major.",
-  "deferrals": []
+  "deferrals": [
+    {
+      "package": "@electric-sql/pglite",
+      "major": 0,
+      "minor": 6,
+      "reason": "0.6 is PostgreSQL 19 and does not open a data directory made by 0.5 (PostgreSQL 18); an installation on the embedded database would stop at start after an upgrade. Adopt it together with a tested step that carries an existing directory's data across",
+      "reviewBy": "2026-12-11"
+    }
+  ]
 }
