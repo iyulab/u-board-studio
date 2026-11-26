@@ -1,19 +1,4 @@
 {
   "about": "Breaking releases not yet adopted — a new major, or below 1.0 a new minor (give `minor` too) — each with why and until when. Read by scripts/check-dependency-drift.mjs: an entry past its reviewBy date, or one matching nothing outdated, fails the check. Remove an entry in the commit that adopts the major.",
-  "deferrals": [
-    {
-      "package": "@canvas-kit/viewer",
-      "major": 0,
-      "minor": 12,
-      "reason": "the published board library (0.45.0) still depends on @canvas-kit/viewer ^0.11.0, so adopting 0.12 in the designer alone would install two copies of the viewer; adopt it in the commit that takes the next board library release, which takes ^0.12.0",
-      "reviewBy": "2026-12-03"
-    },
-    {
-      "package": "@iyulab/u-widgets",
-      "major": 0,
-      "minor": 52,
-      "reason": "the published board library (0.45.0) depends on @iyulab/u-widgets ^0.51.0, so adopting 0.52 in the studio alone would install two copies of the widget element; adopt it in the commit that takes the next board library release",
-      "reviewBy": "2026-12-03"
-    }
-  ]
+  "deferrals": []
 }

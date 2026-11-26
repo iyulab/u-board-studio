@@ -23,11 +23,11 @@
     "node": ">=22.12.0"
   },
   "dependencies": {
-    "@iyulab/u-board": "^0.45.0",
+    "@iyulab/u-board": "^0.46.0",
     "@iyulab/u-board-designer": "*"
   },
   "devDependencies": {
-    "@iyulab/u-widgets": "^0.51.0",
+    "@iyulab/u-widgets": "^0.52.0",
     "@types/node": "^26.4.0",
     "jsdom": "^31.0.0",
     "typescript": "^7.0.2",

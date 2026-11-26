@@ -42,9 +42,9 @@
   "dependencies": {
     "@canvas-kit/core": "^0.9.0",
     "@canvas-kit/designer": "^0.10.1",
-    "@canvas-kit/viewer": "^0.11.0",
-    "@iyulab/u-board": "^0.45.0",
-    "@iyulab/u-widgets": "^0.51.0"
+    "@canvas-kit/viewer": "^0.12.0",
+    "@iyulab/u-board": "^0.46.0",
+    "@iyulab/u-widgets": "^0.52.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.62.1",
